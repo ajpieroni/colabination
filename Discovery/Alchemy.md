@@ -53,3 +53,35 @@ The player drags elements on top of each other. There are clicks to exit out of 
 
 ### Any other things you notice that are super interesting.
 - It’s interesting to see how players cannot create an existing element twice or more. It seems a little restrictive in that sense, but it seems to help with experimentation purposes.
+
+
+## Dasol's Notes on Little Alchemy
+### Gaming Mechanics
+- Rule 
+  - combine stuff together and create new things from basic elements (can combine with itself or new elements)
+- Players
+  - 1 necessary, but more is fun since more ideas
+- Steps 
+  - combine things together! Doesn't let you make same element unless its through a different method tho
+- Goals 
+  - make cool stuff like life and penguins :D (end goal is to make everything that exists)
+
+
+### User Experience
+- Art Style
+  - very cute drawings, cozy vibes with music
+- Music 
+  - has chill background music from a playlist
+  - has other sound effects for combining elements
+- Animation
+  - jiggle effect (and sounds) when you can't combine elements
+  - circle and ta da animations for when you combine and create new element
+- Interactions
+  - user can drag elements onto eachother to combine
+  - other general settings buttons to toggle music/sound
+  - can click for a hint/encyclopedia to see past work
+  - also clean up clears the board, very useful!
+
+### Other things to note:
+- hint system could be improved, currently not dependent on where you're stuck so it just suggests random stuff and it opens to a new tab - would be better if it's dependent on what elements you have
+- maybe like a line up feature could be nice to clean up the board without having to clear it?
