@@ -18,6 +18,7 @@
   - Circle around item attempted to combine with
   - Shaking effect on failed combination
   - Double clicking on item duplicates it
+  - If you click on a element below another, it's brought to the front
 - Visuals: 
   - New element is focused on screen
   - Some elements have boxes around them indicating... they're depleted?
