@@ -28,3 +28,13 @@
 - What can this tool make?
   - has a wide use. small plastic objects which can be anything based on design.
     - parts to a machine or build. medical implants/prosthetics. architectual models. figuirines. anything!!!
+
+
+### Dasol: Laser Cutter!
+
+- What tool is this and what does it do?
+  - It's a laser cutter! It uses a thin laser to vaporize materials to etch/cut them.
+- What materials does this tool use?
+  - Most people use wood and acrylic, but you can also use it to take off certain coatings of material (like paint on metal) and plastics/glass (but ask a staff to check specificity).
+- What can this tool make?
+  - This tool makes a variety of items: simple design projects, to cut pieces to certain sizes, and lots of presents (engravings/letterings/signs). 
