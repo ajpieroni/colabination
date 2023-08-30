@@ -138,8 +138,9 @@ The player drags elements on top of each other. There are clicks to exit out of 
 - perhaps during failed creation, item held can slowly float to where grabbed from.
 - maybe a bit boring? perhaps more mini goals + rewards along the way? missions maybe?
 
-##Kelvin's Notes on Alchemy
-###Gaming Mechanics
+## Kelvin's Notes on Alchemy
+
+### Gaming Mechanics
   
 Rules: 
 - Create everything possible in the game 
@@ -154,7 +155,7 @@ Goals:
 - Create all the items 
 - Explore your imagination
 
-###User Experience:
+### User Experience:
 Art style:
 - Very nice cartoon drawings of elements 
 Music:
@@ -164,7 +165,7 @@ Animation:
 - Some animation when a new item is created, when an item has been created or when a combination does not make a new item
 - I like the clear screen option very helpful when there are a lot of items on the screen
 
-###Notes:
+### Notes:
 Very fun game to play but can get boring after a while
 Achievements or a tree of how many items can be made would be fun. Kind of like the Cool Math Games’ Run series. Just to know how much you need to go until you finish making everything possible.
 
