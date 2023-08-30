@@ -38,3 +38,11 @@
   - Most people use wood and acrylic, but you can also use it to take off certain coatings of material (like paint on metal) and plastics/glass (but ask a staff to check specificity).
 - What can this tool make?
   - This tool makes a variety of items: simple design projects, to cut pieces to certain sizes, and lots of presents (engravings/letterings/signs). 
+
+### Kelvin: Sticker machine :D 
+- What tool is this and what does it do?
+  - Cricut Vinyl Machine makes stickers
+- What materials deos this tool use?
+  - Machine takes vinyl and paper
+- What can this tool make?
+  - This tool can make very cool stickers! As well as some cards and designs! 
