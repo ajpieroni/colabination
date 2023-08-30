@@ -137,3 +137,35 @@ The player drags elements on top of each other. There are clicks to exit out of 
 - board can get messy fast. idk if there's much of a fix.
 - perhaps during failed creation, item held can slowly float to where grabbed from.
 - maybe a bit boring? perhaps more mini goals + rewards along the way? missions maybe?
+
+##Kelvin's Notes on Alchemy
+###Gaming Mechanics
+  
+Rules: 
+- Create everything possible in the game 
+- Only allowed to combine two things at once
+- If a combination is not allowed or element is already created, it will make a sound that doesn’t allow for the combination to be made
+
+Number of Players: 
+- 1 player needed although adding a multiplayer option would make the time to create items faster
+Steps:
+- No true step to reach the end goal. Multiple ways to reach all item created
+Goals:
+- Create all the items 
+- Explore your imagination
+
+###User Experience:
+Art style:
+- Very nice cartoon drawings of elements 
+Music:
+- Some music to go along the creation of elements
+- Sound effects are made if a combination is not allowed or is allowed (very distinctive)
+Animation:
+- Some animation when a new item is created, when an item has been created or when a combination does not make a new item
+- I like the clear screen option very helpful when there are a lot of items on the screen
+
+###Notes:
+Very fun game to play but can get boring after a while
+Achievements or a tree of how many items can be made would be fun. Kind of like the Cool Math Games’ Run series. Just to know how much you need to go until you finish making everything possible.
+
+
