@@ -1,8 +1,17 @@
 version: '3.1'
 services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile # Path to your Dockerfile for Rails app
+    command: bundle exec rails s -p 8081 -b '0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "8081:8081"
   frontend:
     build: ./FrontEnd
     ports:
       - '3000:3000'
     stdin_open: true
-    tty: true
+    tty: true 
