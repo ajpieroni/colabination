@@ -15,3 +15,18 @@ services:
       - '3000:3000'
     stdin_open: true
     tty: true 
+  #db 
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_database
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:
+
