@@ -1,5 +1,6 @@
 # Meeting Notes
 ## September 8th
+Agenda:
 - [ ] Set MVP goals
 - [ ] Play Olly's game paper prototype
 - [ ] Vote on Sohpia's color theme
