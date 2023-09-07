@@ -1,25 +1,33 @@
-# August 30th, Discovery
+# Meeting Notes
+## September 8th
+- [ ] Set MVP goals
+- [ ] Play Olly's game paper prototype
+- [ ] Vote on Sohpia's color theme
+- [ ] Talk about Dasol's ERD table
+- [ ] Listen to Kelvin & Alex's music sample?
+
+## August 30th, Discovery
 - Frontend: Javascript
 - Database…?
 - Replace Pi on game machine
 - Mission setup, goals along the way
 
-# Stack
+### Stack
 
 - Backend: Rails
 - Database: MySQL
 - Frontend: Javascript (Kaboom.js)
 
-## Backend
+### Backend
 
 - Used to store leaderboard, tools and materials
 
-## Sprites
+### Sprites
 
 - Use sprite to grab and drop off object at another location
 
 
-# Game Mechanics
+### Game Mechanics
 
 - Singleplayer
 - Ending scene where you create everything in the game, restart?
