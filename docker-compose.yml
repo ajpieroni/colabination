@@ -15,6 +15,7 @@ services:
       - '3000:3000'
     stdin_open: true
     tty: true 
+  #db 
   db:
     image: mysql:latest
     ports:
