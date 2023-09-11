@@ -6,6 +6,7 @@ export const load = {
     assets: () => {
         loadSprite("colabdoors","./assets/colabsdoorsmall.jpeg")
         loadSprite("colablogo", "./assets/colablogo.png")
+        loadSprite("characterSprite", "./assets/sprite.png")
     }
 
 }

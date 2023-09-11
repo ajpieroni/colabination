@@ -1,6 +1,7 @@
 import kaboom from "./libs/unpkg.com_kaboom@3000.1.1_dist_kaboom.mjs"
 import { uiManager } from "./utils/UIManager.js"
 import { load } from "./utils/loader.js"
+import { characterMovement } from "./utils/CharacterMovement.js"
 
 kaboom({
     width: 1280,
@@ -18,6 +19,7 @@ const scenes = {
         uiManager.displayMainMenu()
     },
     controls: () =>{
+        characterMovement.display()
 
     },
     1: () => {
