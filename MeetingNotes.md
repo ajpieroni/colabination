@@ -1,12 +1,55 @@
 # Meeting Notes
 ## September 8th
 Agenda:
-- [ ] Set MVP goals
-- [ ] Play Olly's game paper prototype
-- [ ] Vote on Sohpia's color theme
-- [ ] Talk about Dasol's ERD table
+- [X] Set MVP goals
+- [X] Play Olly's game paper prototype
+- [X] Vote on Sophia's color theme
+- [X] Talk about Dasol's ERD table
 - [ ] Listen to Kelvin & Alex's music sample?
 
+### Set MVP Goals
+- Start the map in the CoLab, something we can keep expanding
+- Finish out the Co-Lab mini game
+    - How long do we want it to be?
+- Want it to be on the web and maybe on the game cabinet
+- Controls will vary between the game cabinet and the web app
+- Decide a name?
+- [ ] Controlling the character?
+  - Arrow keys or WASD
+  - keys binded to drop, pickup
+  - Search button, search in that area
+  - Colliding into items?
+  - How much guidance should we give the user?
+  - Tutorial to explain the types of things, tools/materials
+  - Build up; make a T-Shirt and make it into something else
+  - Make tree of items to find the ultimate things
+
+### Sophia's Color Theme & Style Guide 
+- [X] Figure out font
+- [X] Figure out color scheme
+- Jamer Font (Logo)
+- Atari Font (Body)
+- Middle color palatte for the logo, a bit more in your face
+
+### Talk about Dasol's ERD table
+- Since the game is a bit bigger than a mini game, you want the "Rare" accomplishments
+- Ability for players to come back
+- Username and Password/PIN
+- Need to have the table for the users
+  - Username, Password
+  - Their game progress
+- Game Progress
+- Tools
+- Materials
+- Blueprints
+- Finding a way to figure out what we need to store, when to callback
+
+# This Coming Week
+- [ ] Interview people in the CoLab and build a tree of items
+  - [ ] Look at the past CoLab projects  
+- [ ] Dasol and Ollie working on the ERD
+
+---
 ## August 30th, Discovery
 - Frontend: Javascript
 - Database…?
