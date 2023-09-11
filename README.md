@@ -6,5 +6,6 @@ docker-compose.yml
 
 ### How to Start Frontend
 - docker-compose build
-- docker run bash frontend
+- docker-compose run frontend bash
+
 - npm install
