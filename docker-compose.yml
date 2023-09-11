@@ -6,12 +6,18 @@ services:
       dockerfile: Dockerfile # Path to your Dockerfile for Rails app
     command: bundle exec rails s -p 8081 -b '0.0.0.0'
     volumes:
-      - .:/app
+      - ./backend:/backend
     ports:
       - "8081:8081"
+
   frontend:
     build: ./FrontEnd
     ports:
       - '3000:3000'
     stdin_open: true
     tty: true 
+    volumes:
+      - ./FrontEnd:/srv
+      - node_modules:/srv/node_modules
+volumes:
+  node_modules:
