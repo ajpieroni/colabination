@@ -7,6 +7,8 @@ export const load = {
         loadSprite("colabdoors","./assets/colabsdoorsmall.jpeg")
         loadSprite("colablogo", "./assets/colablogo.png")
         loadSprite("characterSprite", "./assets/sprite.png")
+        loadSprite("colabBackground", "./assets/colabbackground.png")
+        loadSprite("blackpixelborder", "./assets/blackpixelborder.png")
     }
 
 }

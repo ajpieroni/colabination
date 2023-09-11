@@ -18,7 +18,7 @@ const scenes = {
         // add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
     },
-    controls: () =>{
+    characterMovement: () =>{
         characterMovement.display()
 
     },
