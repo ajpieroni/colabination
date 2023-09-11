@@ -8,4 +8,5 @@ docker-compose.yml
 - docker-compose build
 - docker-compose run frontend bash
 
-- npm install
+    - npm install
+    - npm install nodemon
