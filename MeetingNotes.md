@@ -1,11 +1,28 @@
 # Meeting Notes
+
+## September 15th
+Agenda:
+- [ ] Show off the Kaboom mini games
+- [ ] Talk about accomplishments
+- ERD questions for the group
+
+Accomplishments/Blueprint: 
+- What should we keep track of in terms of # of items made, tools discovered…
+- Visual representation of the accomplishment
+- Have a report style that would show the past accomplishment
+
+Count of Items made:
+- Are we counting unique items? Can we make something multiple times?
+
+Global Accomplishments:
+- What should they be?
 ## September 8th
 Agenda:
 - [X] Set MVP goals
 - [X] Play Olly's game paper prototype
 - [X] Vote on Sophia's color theme
 - [X] Talk about Dasol's ERD table
-- [ ] Listen to Kelvin & Alex's music sample?
+- [X] Listen to Kelvin & Alex's music sample?
 
 ### Set MVP Goals
 - Start the map in the CoLab, something we can keep expanding
