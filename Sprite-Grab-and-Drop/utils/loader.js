@@ -9,6 +9,7 @@ export const load = {
         loadSprite("characterSprite", "./assets/sprite.png")
         loadSprite("colabBackground", "./assets/colabbackground.png")
         loadSprite("blackpixelborder", "./assets/blackpixelborder.png")
+        loadSprite("PLAalert", "./assets/PLAalert.png")
     }
 
 }
