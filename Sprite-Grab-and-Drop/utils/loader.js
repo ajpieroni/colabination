@@ -11,6 +11,7 @@ export const load = {
         loadSprite("blackpixelborder", "./assets/blackpixelborder.png")
         loadSprite("PLAalert", "./assets/PLAalert.png")
         loadSprite("noItems", "./assets/noItems.png")
+        loadSprite("machine1AlertBox", "./assets/machine1AlertBox.png")
     }
 
 }

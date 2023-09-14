@@ -1,18 +1,25 @@
 class CharacterMovement{
 
     display(){
-        
+
+// isColliding(o: GameObj) => boolean
+// If is currently colliding with another game obj.
 
     // Drawer functionality
     this.canInteractWithDrawer = false;
+
+    // Machine functionlaity
+    this.canInteractWithMachine1 = false;
+    let machine1AlertBox = null;
 
     // PLA Logic
     this.isAlerted = false;
     this.hasFoundPLA = false;
     let PLAalertBox = null;
-    let noItems = null;
+    let noItemsAlert = null;
+    
 
-    // Listen for spacebar key press
+//! Listen for spacebar key press, when near drawer activate alert
     onKeyDown("space", () => {
         if (this.canInteractWithDrawer && PLAalertBox === null && !this.hasFoundPLA) {
             // console.log("15: Passed");
@@ -30,9 +37,10 @@ class CharacterMovement{
             this.hasFoundPLA = true;
 
         }
+        
 
         if(this.hasFoundPLA && this.canInteractWithDrawer){
-            noItems = add([
+            noItemsAlert = add([
                 area(),
                 "alert",
                 pos(center().x - 100, center().y - 200),
@@ -41,32 +49,60 @@ class CharacterMovement{
                 sprite("noItems"),
                 scale(0.75)
             ]);
+            this.canInteractWithDrawer = false;
+            this.isAlerted = true;
+            this.hasFoundPLA = true;
         }  
+
+        if(this.canInteractWithMachine1){
+            machine1AlertBox = add([
+                area(),
+                "alert",
+                pos(center().x - 100, center().y - 200),
+                color(230, 230, 250),
+                z(10),
+                sprite("machine1AlertBox"),
+                scale(0.75)
+            ]);
+            this.isAlerted = true;
+            this.canInteractWithMachine1 = false;
+
+        }
     });
 
+    // dismiss alerts
     onKeyDown("enter", () => {
+        // console.log("pressed, 74", machine1AlertBox)
         if (this.isAlerted && PLAalertBox !== null) {
             destroy(PLAalertBox);
-            
             this.hasFoundPLA = true;
         }
-
-        if(this.isAlerted && noItems !== null){
-            destroy(noItems);
-
-
-            noItems = null;
+ 
+        if(this.isAlerted && noItemsAlert !== null){
+            destroy(noItemsAlert);
+            // noItemsAlert = null;
             // noItems = null;
         }
+
+        if(this.isAlerted && machine1AlertBox !== null){
+            console.log("passed, 88; machine1AlertBox", machine1AlertBox)
+            destroy(machine1AlertBox);
+            console.log("after destory, machine", machine1AlertBox)
+            machine1AlertBox = null;
+        }
+
     });
-
-
-            // 
-            // first if alert is open, set boolean of alert on to true
-            // if
-
-            // if press enter, and alert is true, then make alert dissapear
-          
+// ! Game Objects
+    // this is material one?
+    const machine1 = add([
+        "machine",
+        rect(50, 50),
+        area(),
+        color(50, 168, 82),
+        pos(160, 70),
+        z(10),
+        body({isStatic: true}),
+    ])
         // add creates game object to be displayed on the screen
         // add function returns game objects, can store in const or var
         add([
@@ -82,19 +118,7 @@ class CharacterMovement{
             scale(.75),
             
         ])
-        // this is material one?
-        const material1 = add([
-
-            // text() component is similar to sprite() but renders text
-            rect(50, 50),
-            // text("Hiiiiiii", { width: width() / 4 }),
-
-            area(),
-            body(),
-            color(50, 168, 82),
-            pos(140, 50),
-            z(10)
-        ])
+        
         add([
             // text() component is similar to sprite() but renders text
             text("Hiiiiiii", { width: width() / 4 }),
@@ -150,11 +174,14 @@ class CharacterMovement{
             // .moveTo() is provided by pos() component, changes the position
             player.moveTo(mousePos())
         })
-
+// Collide Logic: Player and Machine
+onCollide("player", "machine", (s,w) =>{
+    this.canInteractWithMachine1 = true;
+})
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
     this.canInteractWithDrawer = true;
-    console.log("157: Passed");
+    // console.log("157: Passed");
     // shake(30)
     // const newItemTemplate = add([
     //     rect(50, 50),
@@ -165,6 +192,12 @@ onCollide("player", "drawer", (s, w) => {
     // ])
 
   });
+  player.onUpdate(() =>{
+    
+  if(player.isColliding("drawer")){
+    this.canInteractWithDrawer = true;
+  }
+})
 // Level Schema
         const block_size = 64;
         
@@ -173,18 +206,28 @@ onCollide("player", "drawer", (s, w) => {
             // "=====================",
             "=$$$$$$$$$$$$$$$$$$$$$=",
             "=*********************=",
-            "=$(                   =",
-            "=$(                   =",
-            "=$(                   =",
             "=$                   =",
             "=$                   =",
             "=$                   =",
+            "=$                   =",
+            "=$(                  =",
+            "=$(                  =",
             "=$                   =",
             "=$                   =",
             "=$                   =",
             "=$                   =",
             "---------------------",
         ];
+
+        // const drawer = add([
+        //     rect(block_size, block_size*1.5),
+        //     color(50, 168, 82),
+        //     area(),
+        //     body({isStatic: true}),
+        //     pos(10, 55),
+        //     z(0),
+        //     "drawer",
+        // ]);
         
         const level_config = {
             tileWidth:64,
@@ -226,15 +269,14 @@ onCollide("player", "drawer", (s, w) => {
                     pos(0, 25),
                     z(1),
                 ],
-                "(":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(50, 168, 82),
+                "(":()=>[rect(block_size, block_size*1.5),
+                    color(46, 51, 48),
                     area(),
                     body({isStatic: true}),
                     pos(10, 55),
                     z(0),
-                    "drawer",
-                ],
+                    "drawer",]
+                // "(":drawer,
 
                 
             }
