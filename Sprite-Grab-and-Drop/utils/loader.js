@@ -10,6 +10,7 @@ export const load = {
         loadSprite("colabBackground", "./assets/colabbackground.png")
         loadSprite("blackpixelborder", "./assets/blackpixelborder.png")
         loadSprite("PLAalert", "./assets/PLAalert.png")
+        loadSprite("noItems", "./assets/noItems.png")
     }
 
 }

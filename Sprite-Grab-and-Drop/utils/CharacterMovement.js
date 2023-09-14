@@ -1,35 +1,64 @@
 class CharacterMovement{
 
     display(){
-        // Drawer functionality
- // Drawer functionality
-this.canInteractWithDrawer = false;
-this.isAlerted = false;
-let PLAalertBox = null; // Initialize PLAalertBox with null
+        
 
-// Listen for spacebar key press
-onKeyDown("space", () => {
-    if (this.canInteractWithDrawer && PLAalertBox === null) {
-        PLAalertBox = add([
-            area(),
-            "alert",
-            pos(center().x - 100, center().y - 200),
-            color(230, 230, 250),
-            z(10),
-            sprite("PLAalert"),
-            scale(0.75)
-        ]);
-        this.canInteractWithDrawer = false;
-        this.isAlerted = true;
-    }
-});
+    // Drawer functionality
+    this.canInteractWithDrawer = false;
 
-onKeyDown("enter", () => {
-    if (this.isAlerted && PLAalertBox !== null) {
-        destroy(PLAalertBox);
-        PLAalertBox = null; // Reset PLAalertBox to null after destruction
-    }
-});
+    // PLA Logic
+    this.isAlerted = false;
+    this.hasFoundPLA = false;
+    let PLAalertBox = null;
+    let noItems = null;
+
+    // Listen for spacebar key press
+    onKeyDown("space", () => {
+        if (this.canInteractWithDrawer && PLAalertBox === null && !this.hasFoundPLA) {
+            // console.log("15: Passed");
+            PLAalertBox = add([
+                area(),
+                "alert",
+                pos(center().x - 100, center().y - 200),
+                color(230, 230, 250),
+                z(10),
+                sprite("PLAalert"),
+                scale(0.75)
+            ]);
+            this.canInteractWithDrawer = false;
+            this.isAlerted = true;
+            this.hasFoundPLA = true;
+
+        }
+
+        if(this.hasFoundPLA && this.canInteractWithDrawer){
+            noItems = add([
+                area(),
+                "alert",
+                pos(center().x - 100, center().y - 200),
+                color(230, 230, 250),
+                z(10),
+                sprite("noItems"),
+                scale(0.75)
+            ]);
+        }  
+    });
+
+    onKeyDown("enter", () => {
+        if (this.isAlerted && PLAalertBox !== null) {
+            destroy(PLAalertBox);
+            
+            this.hasFoundPLA = true;
+        }
+
+        if(this.isAlerted && noItems !== null){
+            destroy(noItems);
+
+
+            noItems = null;
+            // noItems = null;
+        }
+    });
 
 
             // 
@@ -125,6 +154,7 @@ onKeyDown("enter", () => {
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
     this.canInteractWithDrawer = true;
+    console.log("157: Passed");
     // shake(30)
     // const newItemTemplate = add([
     //     rect(50, 50),
