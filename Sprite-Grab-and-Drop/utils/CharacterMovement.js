@@ -9,8 +9,9 @@ class CharacterMovement{
     this.canInteractWithDrawer = false;
 
     // Machine functionlaity
-    this.canInteractWithMachine1 = false;
-    let machine1AlertBox = null;
+    this.canInteractWithCricut = false;
+    let cricutAlertBox = null; 
+    let hasUnlockedCricut = false;
 
     // PLA Logic
     this.isAlerted = false;
@@ -28,9 +29,10 @@ class CharacterMovement{
                 "alert",
                 pos(center().x - 100, center().y - 200),
                 color(230, 230, 250),
-                z(10),
                 sprite("PLAalert"),
-                scale(0.75)
+                color(230, 230, 250),
+                z(10),
+                scale(0.45)
             ]);
             this.canInteractWithDrawer = false;
             this.isAlerted = true;
@@ -47,32 +49,33 @@ class CharacterMovement{
                 color(230, 230, 250),
                 z(10),
                 sprite("noItems"),
-                scale(0.75)
+                scale(0.45)
             ]);
             this.canInteractWithDrawer = false;
             this.isAlerted = true;
             this.hasFoundPLA = true;
         }  
 
-        if(this.canInteractWithMachine1){
-            machine1AlertBox = add([
+        if(this.canInteractWithCricut && !hasUnlockedCricut){
+            cricutAlertBox = add([
                 area(),
                 "alert",
                 pos(center().x - 100, center().y - 200),
                 color(230, 230, 250),
                 z(10),
-                sprite("machine1AlertBox"),
+                sprite("cricutAlertBox"),
                 scale(0.75)
             ]);
             this.isAlerted = true;
-            this.canInteractWithMachine1 = false;
+            this.canInteractWithCricut = false;
 
         }
+        if(this.canInteractWithCricut)
     });
 
     // dismiss alerts
     onKeyDown("enter", () => {
-        // console.log("pressed, 74", machine1AlertBox)
+        // console.log("pressed, 74", cricutAlertBox)
         if (this.isAlerted && PLAalertBox !== null) {
             destroy(PLAalertBox);
             this.hasFoundPLA = true;
@@ -84,23 +87,25 @@ class CharacterMovement{
             // noItems = null;
         }
 
-        if(this.isAlerted && machine1AlertBox !== null){
-            console.log("passed, 88; machine1AlertBox", machine1AlertBox)
-            destroy(machine1AlertBox);
-            console.log("after destory, machine", machine1AlertBox)
-            machine1AlertBox = null;
+        if(this.isAlerted && cricutAlertBox !== null){
+            console.log("passed, 88; cricutAlertBox", cricutAlertBox)
+            destroy(cricutAlertBox);
+            console.log("after destory, machine", cricutAlertBox)
+            cricutAlertBox = null;
         }
 
     });
 // ! Game Objects
     // this is material one?
-    const machine1 = add([
+    const cricut = add([
         "machine",
-        rect(50, 50),
+        sprite("cricut"),
         area(),
-        color(50, 168, 82),
-        pos(560, 650),
+        // color(50, 168, 82),
+        pos(560, 730),
         z(10),
+        scale(2.5),
+        rotate(180),
         body({isStatic: true}),
     ])
         // add creates game object to be displayed on the screen
@@ -176,7 +181,7 @@ class CharacterMovement{
         // })
 // Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
-    this.canInteractWithMachine1 = true;
+    this.canInteractWithCricut = true;
 })
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
