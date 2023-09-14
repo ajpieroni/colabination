@@ -99,7 +99,7 @@ class CharacterMovement{
         rect(50, 50),
         area(),
         color(50, 168, 82),
-        pos(160, 70),
+        pos(560, 650),
         z(10),
         body({isStatic: true}),
     ])
@@ -170,10 +170,10 @@ class CharacterMovement{
         onKeyDown("down", () => {
             player.move(0, SPEED)
         })
-        onClick(() => {
-            // .moveTo() is provided by pos() component, changes the position
-            player.moveTo(mousePos())
-        })
+        // onClick(() => {
+        //     // .moveTo() is provided by pos() component, changes the position
+        //     player.moveTo(mousePos())
+        // })
 // Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
     this.canInteractWithMachine1 = true;
@@ -215,7 +215,7 @@ onCollide("player", "drawer", (s, w) => {
             "=$                   =",
             "=$                   =",
             "=$                   =",
-            "=$                   =",
+            "=********************=",
             "---------------------",
         ];
 
@@ -232,7 +232,7 @@ onCollide("player", "drawer", (s, w) => {
         const level_config = {
             tileWidth:64,
             tileHeight:64,
-            pos: vec2(-65, -65),
+            pos: vec2(-65, -70),
         
             // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
             tiles: {
@@ -269,15 +269,23 @@ onCollide("player", "drawer", (s, w) => {
                     pos(0, 25),
                     z(1),
                 ],
-                "(":()=>[rect(block_size, block_size*1.5),
+                "(":()=>[
+                    rect(block_size, block_size*1.5),
                     color(46, 51, 48),
                     area(),
                     body({isStatic: true}),
                     pos(10, 55),
                     z(0),
-                    "drawer",]
+                    "drawer",],
+                "^":()=>[
+                    rect(block_size, block_size*1.5),
+                    color(128,128,128),
+                    area(),
+                    body({isStatic: true}),
+                    pos(0, 25),
+                    z(1),
+                ]
                 // "(":drawer,
-
                 
             }
         };
