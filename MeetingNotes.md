@@ -97,3 +97,25 @@ Agenda:
 - Web and game cabinet
 - Glowing for hints
 - You were the Xth person to make this!
+
+
+
+
+# Meeting: September 15th
+### Database
+- Option B: Joined table of userID and items
+
+
+### Accomplishments
+- Final item: a pet?
+- Leaderboard function or X amount of items discovered?
+  - 10th person to get this achievement?
+  - For achievement style, join users and achieve, aiu_uid (1,1), (1,2), and count number of accomplishments
+  - Global Achieve: would work for in-game notifications, not necessarily leaderboard since value would be updated after each user.
+
+### Hint System: to be talked about after initial development
+
+### Inventory Management
+- Items are stored in pocket, 2 items at a time
+- 2 items + blueprint
+- Items are dropped to combine them
