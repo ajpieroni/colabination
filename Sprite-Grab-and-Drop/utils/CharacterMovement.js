@@ -14,34 +14,72 @@ class CharacterMovement{
     let hasUnlockedCricut = false;
 
     // PLA Logic
-    this.isAlerted = false;
+    this.isAlertedPLA = false;
     this.hasFoundPLA = false;
-    let PLAalertBox = null;
+    let PLAalertBox = false;
     let noItemsAlert = null;
+    // Paper Drawer Logic
+    this.canInteractWithCDrawer = false;
+    // Scissors Logic
+    this.isAlertedScissors = false;
+    this.hasFoundScissors = false;
+    let scissorsAlertBox = null;
+    // Paper Logic
+    this.isAlertedPaper = false;
+    this.hasFoundPaper = false;
+    let paperAlertBox = null;
+
+    let canPopItem = true;
     
+    let myCDrawer = ["paper","scissors"];
+    const myCDrawerData = {
+        scissors: {alertBox: null, hasFound: false},
+        paper: {alertBox: null, hasFound: false},
+    };
+    let myDrawer = ["PLA"];
+    const myDrawerData = {
+        PLA: {alertBox: null, hasFound: false},
+    }
+
+    // let cdrawerItems = ["", "banana", "cherry"];
+
+
 
 //! Listen for spacebar key press, when near drawer activate alert
     onKeyDown("space", () => {
-        if (this.canInteractWithDrawer && PLAalertBox === null && !this.hasFoundPLA) {
-            // console.log("15: Passed");
-            PLAalertBox = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                sprite("PLAalert"),
-                color(230, 230, 250),
-                z(10),
-                scale(0.45)
-            ]);
-            this.canInteractWithDrawer = false;
-            this.isAlerted = true;
-            this.hasFoundPLA = true;
+        //! DRAWERS 
+        //* Cricut Drawer: Scissors, Paper
 
-        }
-        
+        if(this.canInteractWithCDrawer){
+            if(myCDrawer.length > 0 && canPopItem){
+                const itemName = myCDrawer.pop();
+                const foundCItem = myCDrawerData[itemName];
+                console.log(foundCItem);
 
-        if(this.hasFoundPLA && this.canInteractWithDrawer){
+                // console.log("item", item)
+                canPopItem = false;
+                if(foundCItem.alertBox === null && !foundCItem.hasFound){
+                    console.log("item name: ", itemName);
+                    console.log("item alert", foundCItem.alertBox)
+                    foundCItem.alertBox = add([
+                        area(),
+                        "alert",
+                        pos(center().x - 100, center().y - 200),
+                        color(230, 230, 250),
+                        sprite("scissorsAlert"),
+                        color(230, 230, 250),
+                        z(10),
+                        scale(0.25)
+                    ]);
+                    // myCDrawer.pop();
+                    console.log(myCDrawer);
+                    this.canInteractWithCDrawer = true;
+                    foundCItem.alertBox = true;
+                    foundCItem.hasFound = true;
+    
+                }
+            } 
+        }else{
             noItemsAlert = add([
                 area(),
                 "alert",
@@ -50,11 +88,53 @@ class CharacterMovement{
                 z(10),
                 sprite("noItems"),
                 scale(0.45)
-            ]);
-            this.canInteractWithDrawer = false;
-            this.isAlerted = true;
-            this.hasFoundPLA = true;
-        }  
+            ])
+        }
+        //* Printing Drawer: PLA Plastic, (Pliers)
+
+        if(this.canInteractWithDrawer){
+            if(myDrawer.length > 0 && canPopItem){
+                const itemName = myDrawer.pop();
+                const foundItem = myDrawerData[itemName];
+                console.log(foundItem);
+
+                // console.log("item", item)
+                canPopItem = false;
+                if(foundItem.alertBox === null && !foundItem.hasFound){
+                    console.log("item would print here")
+                    console.log("item name: ", itemName);
+                    console.log("item alert", foundItem.alertBox)
+                        PLAalertBox = add([
+                            area(),
+                            "alert",
+                            pos(center().x - 100, center().y - 200),
+                            color(230, 230, 250),
+                            sprite("PLAalert"),
+                            color(230, 230, 250),
+                            z(10),
+                            scale(0.45)
+                        ]);
+                    this.canInteractWithDrawer = false;
+                    foundItem.alertBox = true;
+                    foundItem.hasFound = true;
+    
+                }
+            } else{
+                noItemsAlert = add([
+                            area(),
+                            "alert",
+                            pos(center().x - 100, center().y - 200),
+                            color(230, 230, 250),
+                            z(10),
+                            sprite("noItems"),
+                            scale(0.45)
+                        ])
+            }
+       
+        }
+
+        // !Machines
+        //* Cricut   
 
         if(this.canInteractWithCricut && !hasUnlockedCricut){
             cricutAlertBox = add([
@@ -66,28 +146,40 @@ class CharacterMovement{
                 sprite("cricutAlertBox"),
                 scale(0.75)
             ]);
-            this.isAlerted = true;
+            this.isAlertedPLA = true;
             this.canInteractWithCricut = false;
 
         }
-        if(this.canInteractWithCricut)
+       
     });
 
     // dismiss alerts
     onKeyDown("enter", () => {
-        // console.log("pressed, 74", cricutAlertBox)
-        if (this.isAlerted && PLAalertBox !== null) {
-            destroy(PLAalertBox);
-            this.hasFoundPLA = true;
+            
+            destroyAll("alert");
+            canPopItem = true;
+
+        const scissorsObject = myCDrawerData.scissors;
+        if (scissorsObject.alertBox !== null) {
+            if(scissorsObject.hasFound){
+                add(
+                    [sprite("scissors"),
+                     pos(1000,600),
+                    scale(1.5),
+                z(15)])
+            }
+            // Accessing the scissors object
+
+            scissorsObject.hasFound = true;
         }
  
-        if(this.isAlerted && noItemsAlert !== null){
+        if(this.isAlertedPLA && noItemsAlert !== null){
             destroy(noItemsAlert);
             // noItemsAlert = null;
             // noItems = null;
         }
 
-        if(this.isAlerted && cricutAlertBox !== null){
+        if(this.isAlertedPLA && cricutAlertBox !== null){
             console.log("passed, 88; cricutAlertBox", cricutAlertBox)
             destroy(cricutAlertBox);
             console.log("after destory, machine", cricutAlertBox)
@@ -112,20 +204,12 @@ class CharacterMovement{
         // add function returns game objects, can store in const or var
         add([
             sprite("colabBackground"),
-
-            // area component will create a hitbox over the game object
-            // will also enable anchor component
             area(),
-            // color(1, 1, 1, 0.2),
-            // anchor("center"),
-            // moves logo up
-            // pos(center().x, center().y-200),
             scale(.75),
             
         ])
         
         add([
-            // text() component is similar to sprite() but renders text
             text("Hiiiiiii", { width: width() / 4 }),
             pos(12, 12),
             color(1,1,1)
@@ -133,9 +217,7 @@ class CharacterMovement{
         const player = add([
             sprite("characterSprite"),
             scale(.25),
-            pos(center(
-                
-            )),    // center() returns the center point vec2(width() / 2, height() / 2)
+            pos(center()),
             "player",
             area(),
             body()
@@ -175,34 +257,34 @@ class CharacterMovement{
         onKeyDown("down", () => {
             player.move(0, SPEED)
         })
-        // onClick(() => {
-        //     // .moveTo() is provided by pos() component, changes the position
-        //     player.moveTo(mousePos())
-        // })
+
 // Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
     this.canInteractWithCricut = true;
 })
+
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
     this.canInteractWithDrawer = true;
-    // console.log("157: Passed");
-    // shake(30)
-    // const newItemTemplate = add([
-    //     rect(50, 50),
-    //     area(),
-    //     pos(50,0),
-    //     color(230,230,250),
-    //     z(10)
-    // ])
 
+  });
+
+  onCollide("player", "cdrawer", (s, w) => {
+    this.canInteractWithCDrawer = true;
   });
   player.onUpdate(() =>{
     
+    
   if(player.isColliding("drawer")){
     this.canInteractWithDrawer = true;
+    console.log("Hit Drawer")
+  }
+  if(player.isColliding("cdrawer")){
+    this.canInteractWithCDrawer = true;
+    console.log("Hit CDrawer")
   }
 })
+
 // Level Schema
         const block_size = 64;
         
@@ -211,15 +293,15 @@ onCollide("player", "drawer", (s, w) => {
             // "=====================",
             "=$$$$$$$$$$$$$$$$$$$$$=",
             "=*********************=",
-            "=$                   =",
-            "=$                   =",
-            "=$                   =",
-            "=$                   =",
-            "=$(                  =",
-            "=$(                  =",
-            "=$                   =",
-            "=$                   =",
-            "=$                   =",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$(                 *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$          ^^^     *=",
             "=********************=",
             "---------------------",
         ];
@@ -284,12 +366,13 @@ onCollide("player", "drawer", (s, w) => {
                     "drawer",],
                 "^":()=>[
                     rect(block_size, block_size*1.5),
-                    color(128,128,128),
+                    color(46, 51, 48),
                     area(),
                     body({isStatic: true}),
-                    pos(0, 25),
-                    z(1),
-                ]
+                    pos(10, 55),
+                    z(0),
+                    "cdrawer",]
+                
                 // "(":drawer,
                 
             }

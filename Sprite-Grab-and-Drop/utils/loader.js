@@ -13,6 +13,11 @@ export const load = {
         loadSprite("noItems", "./assets/noItems.png")
         loadSprite("cricutAlertBox", "./assets/machine1AlertBox.png")
         loadSprite("cricut","./assets/cricut-transparent.png")
+        loadSprite("scissors", "./assets/scissor-pixel.png")
+        loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
+        loadSprite("paperAlert", "./assets/paperAlertBox.png")
+
+        
     }
 
 }
