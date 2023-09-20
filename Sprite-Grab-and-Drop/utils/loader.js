@@ -16,6 +16,7 @@ export const load = {
         loadSprite("scissors", "./assets/scissor-pixel.png")
         loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
+        loadSprite("paper", "./assets/paper.png")
 
         
     }

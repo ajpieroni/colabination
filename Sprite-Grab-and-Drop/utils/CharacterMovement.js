@@ -5,6 +5,9 @@ class CharacterMovement{
 // isColliding(o: GameObj) => boolean
 // If is currently colliding with another game obj.
 
+// !TO FIX:
+// - Found scissors found paper then no items not displaying
+
     // Drawer functionality
     this.canInteractWithDrawer = false;
 
@@ -54,19 +57,16 @@ class CharacterMovement{
             if(myCDrawer.length > 0 && canPopItem){
                 const itemName = myCDrawer.pop();
                 const foundCItem = myCDrawerData[itemName];
-                console.log(foundCItem);
-
                 // console.log("item", item)
                 canPopItem = false;
                 if(foundCItem.alertBox === null && !foundCItem.hasFound){
-                    console.log("item name: ", itemName);
-                    console.log("item alert", foundCItem.alertBox)
+                    let currSpriteAlert = `${itemName}Alert`; 
                     foundCItem.alertBox = add([
                         area(),
                         "alert",
                         pos(center().x - 100, center().y - 200),
                         color(230, 230, 250),
-                        sprite("scissorsAlert"),
+                        sprite(currSpriteAlert),
                         color(230, 230, 250),
                         z(10),
                         scale(0.25)
@@ -76,19 +76,21 @@ class CharacterMovement{
                     this.canInteractWithCDrawer = true;
                     foundCItem.alertBox = true;
                     foundCItem.hasFound = true;
-    
                 }
             } 
         }else{
-            noItemsAlert = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                z(10),
-                sprite("noItems"),
-                scale(0.45)
-            ])
+            if(this.canInteractWithCDrawer){
+                noItemsAlert = add([
+                    area(),
+                    "alert",
+                    pos(center().x - 100, center().y - 200),
+                    color(230, 230, 250),
+                    z(10),
+                    sprite("noItems"),
+                    scale(0.45)
+                ])
+            }
+            
         }
         //* Printing Drawer: PLA Plastic, (Pliers)
 
