@@ -7,10 +7,10 @@ class CharacterMovement{
 
 // !TO FIX:
 // - Found scissors found paper then no items not displaying
+// - paper not displaying
 
     // Drawer functionality
     this.canInteractWithDrawer = false;
-
     // Machine functionlaity
     this.canInteractWithCricut = false;
     let cricutAlertBox = null; 
@@ -33,12 +33,14 @@ class CharacterMovement{
     let paperAlertBox = null;
 
     let canPopItem = true;
-    
-    let myCDrawer = ["paper","scissors"];
+    // cricut drawer
+    let myCDrawer = ["","wood","paper","scissors"];
     const myCDrawerData = {
         scissors: {alertBox: null, hasFound: false},
         paper: {alertBox: null, hasFound: false},
+        wood: {alertBox: null, hasFound: false },
     };
+    // drawer by printers
     let myDrawer = ["PLA"];
     const myDrawerData = {
         PLA: {alertBox: null, hasFound: false},
@@ -49,63 +51,60 @@ class CharacterMovement{
 
 
 //! Listen for spacebar key press, when near drawer activate alert
-    onKeyDown("space", () => {
+    onKeyPress("space", () => {
         //! DRAWERS 
         //* Cricut Drawer: Scissors, Paper
-
         if(this.canInteractWithCDrawer){
-            if(myCDrawer.length > 0 && canPopItem){
+            if(myCDrawer.length >= 0 && canPopItem){
                 const itemName = myCDrawer.pop();
                 const foundCItem = myCDrawerData[itemName];
-                // console.log("item", item)
                 canPopItem = false;
-                if(foundCItem.alertBox === null && !foundCItem.hasFound){
-                    let currSpriteAlert = `${itemName}Alert`; 
-                    foundCItem.alertBox = add([
+                if(foundCItem){
+                    if(foundCItem.alertBox === null && !foundCItem.hasFound){
+                        let currSpriteAlert = `${itemName}Alert`; 
+                        foundCItem.alertBox = add([
+                            area(),
+                            "alert",
+                            pos(center().x - 100, center().y - 200),
+                            color(230, 230, 250),
+                            sprite(`${currSpriteAlert}`),
+                            color(230, 230, 250),
+                            z(10),
+                            scale(0.25)
+                        ]);
+                        this.canInteractWithCDrawer = true;
+                        foundCItem.alertBox = true;
+                        foundCItem.hasFound = true;
+                    }
+                }
+                
+            }
+            if(myCDrawer.length <= 0){
+                    noItemsAlert = add([
                         area(),
                         "alert",
                         pos(center().x - 100, center().y - 200),
                         color(230, 230, 250),
-                        sprite(currSpriteAlert),
-                        color(230, 230, 250),
                         z(10),
-                        scale(0.25)
-                    ]);
-                    // myCDrawer.pop();
-                    console.log(myCDrawer);
-                    this.canInteractWithCDrawer = true;
-                    foundCItem.alertBox = true;
-                    foundCItem.hasFound = true;
+                        sprite("noItems"),
+                        scale(0.45)
+                    ])
                 }
-            } 
-        }else{
-            if(this.canInteractWithCDrawer){
-                noItemsAlert = add([
-                    area(),
-                    "alert",
-                    pos(center().x - 100, center().y - 200),
-                    color(230, 230, 250),
-                    z(10),
-                    sprite("noItems"),
-                    scale(0.45)
-                ])
-            }
-            
+                
+
         }
+            
+        
         //* Printing Drawer: PLA Plastic, (Pliers)
 
         if(this.canInteractWithDrawer){
+            
             if(myDrawer.length > 0 && canPopItem){
                 const itemName = myDrawer.pop();
                 const foundItem = myDrawerData[itemName];
-                console.log(foundItem);
 
-                // console.log("item", item)
                 canPopItem = false;
                 if(foundItem.alertBox === null && !foundItem.hasFound){
-                    console.log("item would print here")
-                    console.log("item name: ", itemName);
-                    console.log("item alert", foundItem.alertBox)
                         PLAalertBox = add([
                             area(),
                             "alert",
@@ -156,17 +155,17 @@ class CharacterMovement{
     });
 
     // dismiss alerts
-    onKeyDown("enter", () => {
-            
-            destroyAll("alert");
-            canPopItem = true;
-
+    onKeyPress("enter", () => {
+        // *Destroys all alerts
+        destroyAll("alert");
+        canPopItem = true;
+        // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
         const scissorsObject = myCDrawerData.scissors;
         if (scissorsObject.alertBox !== null) {
             if(scissorsObject.hasFound){
                 add(
                     [sprite("scissors"),
-                     pos(1000,600),
+                     pos(center().x, center().y),
                     scale(1.5),
                 z(15)])
             }
@@ -174,7 +173,19 @@ class CharacterMovement{
 
             scissorsObject.hasFound = true;
         }
- 
+
+        const paperObject = myCDrawerData.paper;
+        if(paperObject.alertBox !== null){
+            if(paperObject.hasFound){
+                add(
+                    [sprite("paper"),
+                    pos(center().x, center().y),
+                    scale(1.5),
+                    z(16)])
+            }
+            paperObject.hasFound = true;
+        }
+       
         if(this.isAlertedPLA && noItemsAlert !== null){
             destroy(noItemsAlert);
             // noItemsAlert = null;
@@ -182,9 +193,7 @@ class CharacterMovement{
         }
 
         if(this.isAlertedPLA && cricutAlertBox !== null){
-            console.log("passed, 88; cricutAlertBox", cricutAlertBox)
             destroy(cricutAlertBox);
-            console.log("after destory, machine", cricutAlertBox)
             cricutAlertBox = null;
         }
 
