@@ -153,13 +153,18 @@ class CharacterMovement{
         }
        
     });
-
+// !TODO: make the enter function dynamic for sprite
     // dismiss alerts
     onKeyPress("enter", () => {
+        let xDisplace = 0;
         // *Destroys all alerts
         destroyAll("alert");
         canPopItem = true;
         // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
+        console.log("paper",myCDrawerData.paper);
+        console.log("scissors", myCDrawerData.scissors);
+
+        //* Scissors
         const scissorsObject = myCDrawerData.scissors;
         if (scissorsObject.alertBox !== null) {
             if(scissorsObject.hasFound){
@@ -167,35 +172,53 @@ class CharacterMovement{
                     [sprite("scissors"),
                      pos(center().x, center().y),
                     scale(1.5),
-                z(15)])
+                    body({isStatic: true}),
+                    area(),
+                    z(5)])
             }
             // Accessing the scissors object
-
+            xDisplace =xDisplace + 50;
             scissorsObject.hasFound = true;
         }
-
+        //* Paper
         const paperObject = myCDrawerData.paper;
         if(paperObject.alertBox !== null){
             if(paperObject.hasFound){
                 add(
                     [sprite("paper"),
-                    pos(center().x, center().y),
+                    pos(center().x +xDisplace, center().y),
                     scale(1.5),
-                    z(16)])
-            }
+                    body({isStatic: true}),
+                    area(),
+                    z(5)])
+            }xDisplace =xDisplace + 50;
             paperObject.hasFound = true;
         }
+        //* Wood
+        const woodObject = myCDrawerData.wood;        
+        if(woodObject.alertBox !== null){
+            if(woodObject.hasFound){
+                add(
+                    [sprite("colablogo"),
+                    pos(center().x, center().y),
+                    body({isStatic: true}),
+                    area(),
+                    scale(.05),
+                    z(5)])
+            }xDisplace =xDisplace + 50;
+            woodObject.hasFound = true;
+        }
        
-        if(this.isAlertedPLA && noItemsAlert !== null){
-            destroy(noItemsAlert);
-            // noItemsAlert = null;
-            // noItems = null;
-        }
+        // if(this.isAlertedPLA && noItemsAlert !== null){
+        //     destroy(noItemsAlert);
+        //     // noItemsAlert = null;
+        //     // noItems = null;
+        // }
 
-        if(this.isAlertedPLA && cricutAlertBox !== null){
-            destroy(cricutAlertBox);
-            cricutAlertBox = null;
-        }
+        // if(this.isAlertedPLA && cricutAlertBox !== null){
+        //     destroy(cricutAlertBox);
+        //     cricutAlertBox = null;
+        // }
 
     });
 // ! Game Objects
@@ -231,7 +254,8 @@ class CharacterMovement{
             pos(center()),
             "player",
             area(),
-            body()
+            body(),
+            z(5)
         ])
        
 // Player Movement
