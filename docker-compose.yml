@@ -9,6 +9,12 @@ services:
       - .:/app
     ports:
       - "8081:8081"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_database
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
   frontend:
     build: ./FrontEnd
     ports:
@@ -25,6 +31,7 @@ services:
       MYSQL_DATABASE: game_database
       MYSQL_USER: username
       MYSQL_PASSWORD: password
+      MYSQL_HOST: db
     volumes:
       - db-data:/var/lib/mysql
 volumes:
