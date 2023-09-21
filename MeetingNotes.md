@@ -1,9 +1,18 @@
 # Meeting Notes
 
+## September 22th
+Agenda:
+- [ ] talk about backend migration and seed, and this `bin/rails db:environment:set RAILS_ENV=development`
+- [ ] define the functions of pockets, vending machine and blueprints
+- [ ] decide on the blueprints
+- [ ] decide on the game name
+- [ ] check in on everyone's issue and assign new issues
+- [ ] combining code and next step...
+
 ## September 15th
 Agenda:
-- [ ] Show off the Kaboom mini games
-- [ ] Talk about accomplishments
+- [x] Show off the Kaboom mini games
+- [x] Talk about accomplishments
 - ERD questions for the group
 
 Accomplishments/Blueprint: 
