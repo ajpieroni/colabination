@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :username
       t.integer :pin
       # sprite
-      # usable items, maybe an array
       t.timestamps
       t.timestamps
     end

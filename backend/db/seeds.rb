@@ -17,6 +17,8 @@ item3 = Item.create(name: "item3", description: "pog3", item_type: "clothing", r
 scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
 
+user1 = User.create(name: "pandaMan", pin: 1234)
+user2 = User.create(name: "bruin36", pin: 2468)
 
 puts 'successfully seeded'
 
