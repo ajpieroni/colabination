@@ -31,6 +31,9 @@ class CharacterMovement{
 let benchyFound = false;
 let benchyAdded = false;
 
+let paperCraft = true;
+let scissorsCraft = true;
+
     // C Drawer Logic
     this.canInteractWithCDrawer = false;
     // Scissors Logic
@@ -59,7 +62,14 @@ let benchyAdded = false;
 
     // let cdrawerItems = ["", "banana", "cherry"];
 
-
+//! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE
+onKeyPress("b", () =>{
+    if(paperCraft&&scissorsCraft){
+        console.log("trueeeee");
+    }else{
+        console.log("fallsslssee")
+    }
+})
 
 //! Listen for spacebar key press, when near drawer activate alert
     onKeyPress("space", () => {
@@ -251,7 +261,7 @@ let benchyAdded = false;
                     z(5)])
                   
             }
-            xDisplace =xDisplace + 100;
+            xDisplace = xDisplace + 100;
             // Accessing the scissors object
             
         }
@@ -300,7 +310,7 @@ let benchyAdded = false;
                     scale(1.5),
                     z(5)])
 
-                    
+
             benchyAdded = true;
 
                 
@@ -424,6 +434,12 @@ onCollide("player", "drawer", (s, w) => {
     if(player.isColliding("cricut")){
         // this.canInteractWithCricut = true;
         cricut.access = true;
+    }
+    if(player.isColliding("paper")){
+        paperCraft = true;
+    }
+    if(player.isColliding("scissors")){
+        scissorsCraft = true;
     }
 })
 
