@@ -16,6 +16,7 @@ class CharacterMovement{
     let cricutAlertBox = null; 
     let hasUnlockedCricut = false;
     let neededAlert = null;
+    let neededBlueprintAlert = null;
     // Blueprint
     let foundBlueprint = false;
 
@@ -63,8 +64,8 @@ class CharacterMovement{
         //* Cricut Drawer: Scissors, Paper
         if(this.canInteractWithCDrawer){
             if(myCDrawer.length >= 0 && canPopItem){
-                const itemName = myCDrawer.pop();
-                const foundCItem = myCDrawerData[itemName];
+                let itemName = myCDrawer.pop();
+                let foundCItem = myCDrawerData[itemName];
                 canPopItem = false;
                 if(foundCItem){
                     if(foundCItem.alertBox === null && !foundCItem.hasFound){
@@ -107,7 +108,6 @@ class CharacterMovement{
                 const itemName = myDrawer.pop();
                 const foundItem = myDrawerData[itemName];
                 console.log("here is found item", foundItem);
-
                 canPopItem = false;
                 if(foundItem.alertBox === null && !foundItem.hasFound){
                         PLAalertBox = add([
@@ -169,8 +169,10 @@ class CharacterMovement{
             ])
             this.canInteractWithCricut = false;
         }
+        const foundPLA = myDrawerData["PLA"];
+        console.log(foundPLA);
         // if(this.canInteractWithCricut &&  && !this.foundBlueprint){
-            foundItem.hasFound = true;
+            // PLA.hasFound = true;
             neededBlueprintAlert = add([
                 area(),
                 "alert",
@@ -181,6 +183,7 @@ class CharacterMovement{
                 scale(0.75)
             ])
             this.canInteractWithCricut = false;
+            
         // }
        
     });
