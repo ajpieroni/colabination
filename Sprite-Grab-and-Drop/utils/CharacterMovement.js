@@ -27,9 +27,9 @@ class CharacterMovement{
     let PLAalertBox = false;
     let noItemsAlert = null;
 
-
 //! TEMP!
 let benchyFound = false;
+let benchyAdded = false;
 
     // C Drawer Logic
     this.canInteractWithCDrawer = false;
@@ -244,15 +244,16 @@ let benchyFound = false;
             if(scissorsObject.hasFound){
                 add(
                     [sprite("scissors"),
-                     pos(center().x, center().y),
+                     pos(center().x+xDisplace, center().y),
                     scale(1.5),
                     body({isStatic: true}),
                     area(),
                     z(5)])
+                  
             }
+            xDisplace =xDisplace + 100;
             // Accessing the scissors object
-            xDisplace = xDisplace + 50;
-            scissorsObject.hasFound = true;
+            
         }
 
         //* Paper
@@ -261,13 +262,15 @@ let benchyFound = false;
             if(paperObject.hasFound){
                 add(
                     [sprite("paper"),
-                    pos(center().x +xDisplace, center().y),
+                    pos(center().x+xDisplace, center().y),
                     scale(1.5),
                     body({isStatic: true}),
                     area(),
                     z(5)])
+        
+
             }
-            xDisplace =xDisplace + 50;
+            xDisplace =xDisplace + 100;
         }
 
         //* Wood
@@ -275,25 +278,37 @@ let benchyFound = false;
         if(woodObject.alertBox !== null){
             if(woodObject.hasFound){
                 add(
-                    [sprite("colablogo"),
-                    pos(center().x, center().y),
-                    body({isStatic: true}),
-                    area(),
-                    scale(.05),
-                    z(5)])
-            }xDisplace = xDisplace + 50;
-        }
-
-        // !TODO: Remove benchy, since final item
-            if(benchyFound){
-                add(
-                    [sprite("3DBenchy"),
-                    pos(center().x, center().y),
+                    [sprite("wood"),
+                    pos(center().x+xDisplace, center().y),
                     body({isStatic: true}),
                     area(),
                     scale(1.5),
                     z(5)])
-            }xDisplace = xDisplace + 50;
+                  
+            }
+            xDisplace = xDisplace + 100;
+           
+        }
+
+        // !TODO: Remove benchy, since final item
+            if(benchyFound && !benchyAdded){
+                add(
+                    [sprite("3DBenchy"),
+                    pos(center().x+xDisplace, center().y),
+                    body({isStatic: true}),
+                    area(),
+                    scale(1.5),
+                    z(5)])
+
+                    
+            benchyAdded = true;
+
+                
+            }
+            xDisplace = xDisplace + 100;
+            
+           
+
         }
     );
 
