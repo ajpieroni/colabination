@@ -19,6 +19,8 @@ export const load = {
         loadSprite("paper", "./assets/cricut-transparent.png")
         loadSprite("woodAlert", "./assets/colablogo.png")
         loadSprite("wood", "./assets/sprite.png")
+        loadSprite("neededAlert", "./assets/neededAlert.png")
+        loadSprite("neededBlueprintAlert", "./assets/neededBlueprintAlert.png")
 
 
         

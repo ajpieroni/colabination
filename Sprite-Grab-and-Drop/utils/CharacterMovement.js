@@ -6,8 +6,8 @@ class CharacterMovement{
 // If is currently colliding with another game obj.
 
 // !TO FIX:
-// - Found scissors found paper then no items not displaying
-// - paper not displaying
+
+// - after scissors found, then no machine 
 
     // Drawer functionality
     this.canInteractWithDrawer = false;
@@ -15,13 +15,20 @@ class CharacterMovement{
     this.canInteractWithCricut = false;
     let cricutAlertBox = null; 
     let hasUnlockedCricut = false;
+    let neededAlert = null;
+    // Blueprint
+    let foundBlueprint = false;
 
     // PLA Logic
     this.isAlertedPLA = false;
     this.hasFoundPLA = false;
     let PLAalertBox = false;
     let noItemsAlert = null;
-    // Paper Drawer Logic
+
+
+
+
+    // C Drawer Logic
     this.canInteractWithCDrawer = false;
     // Scissors Logic
     this.isAlertedScissors = false;
@@ -72,7 +79,7 @@ class CharacterMovement{
                             z(10),
                             scale(0.25)
                         ]);
-                        this.canInteractWithCDrawer = true;
+                        this.canInteractWithCDrawer = false;
                         foundCItem.alertBox = true;
                         foundCItem.hasFound = true;
                     }
@@ -93,15 +100,13 @@ class CharacterMovement{
                 
 
         }
-            
-        
         //* Printing Drawer: PLA Plastic, (Pliers)
-
         if(this.canInteractWithDrawer){
             
             if(myDrawer.length > 0 && canPopItem){
                 const itemName = myDrawer.pop();
                 const foundItem = myDrawerData[itemName];
+                console.log("here is found item", foundItem);
 
                 canPopItem = false;
                 if(foundItem.alertBox === null && !foundItem.hasFound){
@@ -149,8 +154,34 @@ class CharacterMovement{
             ]);
             this.isAlertedPLA = true;
             this.canInteractWithCricut = false;
+            hasUnlockedCricut = true;
 
         }
+        if(this.canInteractWithCricut && hasUnlockedCricut){
+            neededAlert = add([
+                area(),
+                "alert",
+                pos(center().x - 100, center().y - 200),
+                color(230, 230, 250),
+                z(10),
+                sprite("neededAlert"),
+                scale(0.75)
+            ])
+            this.canInteractWithCricut = false;
+        }
+        // if(this.canInteractWithCricut &&  && !this.foundBlueprint){
+            foundItem.hasFound = true;
+            neededBlueprintAlert = add([
+                area(),
+                "alert",
+                pos(center().x - 100, center().y - 200),
+                color(230, 230, 250),
+                z(10),
+                sprite("neededBlueprintAlert"),
+                scale(0.75)
+            ])
+            this.canInteractWithCricut = false;
+        // }
        
     });
 // !TODO: make the enter function dynamic for sprite
@@ -205,7 +236,7 @@ class CharacterMovement{
                     area(),
                     scale(.05),
                     z(5)])
-            }xDisplace =xDisplace + 50;
+            }xDisplace = xDisplace + 50;
             woodObject.hasFound = true;
         }
        
@@ -310,14 +341,14 @@ onCollide("player", "drawer", (s, w) => {
   player.onUpdate(() =>{
     
     
-  if(player.isColliding("drawer")){
-    this.canInteractWithDrawer = true;
-    console.log("Hit Drawer")
-  }
-  if(player.isColliding("cdrawer")){
-    this.canInteractWithCDrawer = true;
-    console.log("Hit CDrawer")
-  }
+//   if(player.isColliding("drawer")){
+//     this.canInteractWithDrawer = true;
+//     console.log("Hit Drawer")
+//   }
+//   if(player.isColliding("cdrawer")){
+//     this.canInteractWithCDrawer = true;
+//     console.log("Hit CDrawer")
+//   }
 })
 
 // Level Schema
