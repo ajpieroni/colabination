@@ -14,3 +14,6 @@ item2 = Item.create(name: "item2", description: "pog1", item_type: "sticker", ra
 item3 = Item.create(name: "item3", description: "pog3", item_type: "clothing", rarity: 0)
 
 puts 'successfully seeded'
+
+scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
+hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
