@@ -16,9 +16,10 @@ class CharacterMovement{
     let cricutAlertBox = null; 
     let hasUnlockedCricut = false;
     let neededAlert = null;
+    let buildAlert = null;
     let neededBlueprintAlert = null;
     // Blueprint
-    let foundBlueprint = false;
+    this.foundBlueprint = false;
 
     // PLA Logic
     this.isAlertedPLA = false;
@@ -27,7 +28,8 @@ class CharacterMovement{
     let noItemsAlert = null;
 
 
-
+//! TEMP!
+let benchyFound = false;
 
     // C Drawer Logic
     this.canInteractWithCDrawer = false;
@@ -46,7 +48,8 @@ class CharacterMovement{
     const myCDrawerData = {
         scissors: {alertBox: null, hasFound: false},
         paper: {alertBox: null, hasFound: false},
-        wood: {alertBox: null, hasFound: false },
+        wood: {alertBox: null, hasFound: false},
+        // benchy: {alertBox: null, hasFound: false}
     };
     // drawer by printers
     let myDrawer = ["PLA"];
@@ -141,8 +144,12 @@ class CharacterMovement{
 
         // !Machines
         //* Cricut   
+        
 
-        if(this.canInteractWithCricut && !hasUnlockedCricut){
+// Discovers Cricut
+// console.log("line 147", this.canInteractWithCricut && !hasUnlockedCricut)
+        // if(this.canInteractWithCricut && !hasUnlockedCricut){
+        if(cricut.access && !hasUnlockedCricut){
             cricutAlertBox = add([
                 area(),
                 "alert",
@@ -152,12 +159,18 @@ class CharacterMovement{
                 sprite("cricutAlertBox"),
                 scale(0.75)
             ]);
+            cricut.access = false;
             this.isAlertedPLA = true;
-            this.canInteractWithCricut = false;
+            // this.canInteractWithCricut = false;
+            // cricut.access = false;
             hasUnlockedCricut = true;
 
         }
-        if(this.canInteractWithCricut && hasUnlockedCricut){
+        const PLA = myDrawerData["PLA"];
+        
+// Needs a material to make something
+// console.log("line 163", this.canInteractWithCricut && hasUnlockedCricut)
+        if(cricut.access && hasUnlockedCricut && !PLA.hasFound){
             neededAlert = add([
                 area(),
                 "alert",
@@ -167,26 +180,56 @@ class CharacterMovement{
                 sprite("neededAlert"),
                 scale(0.75)
             ])
-            this.canInteractWithCricut = false;
+            // cricut.access = false;
+            cricut.access = false;
+            // cricut.buildNoBlueprint = true;
+
         }
-        const foundPLA = myDrawerData["PLA"];
-        console.log(foundPLA);
-        // if(this.canInteractWithCricut &&  && !this.foundBlueprint){
-            // PLA.hasFound = true;
-            neededBlueprintAlert = add([
+// MAKE ITEM, BLUEPRINT PENDING
+        if(cricut.access && hasUnlockedCricut && PLA.hasFound){
+            buildAlert = add([
                 area(),
                 "alert",
                 pos(center().x - 100, center().y - 200),
                 color(230, 230, 250),
                 z(10),
-                sprite("neededBlueprintAlert"),
+                sprite("3DBenchyAlert"),
                 scale(0.75)
             ])
-            this.canInteractWithCricut = false;
-            
-        // }
+            benchyFound = true;
+            // cricut.access = false;
+            cricut.access = false;
+            // cricut.buildNoBlueprint = true;
+
+        }
+
+//         
+//         console.log(foundPLA);
+//         console.log("has found pla", foundPLA.hasFound);
+//         console.log("can interact", cricut.access);
+//         console.log("not found blueprint", this.foundBlueprint)
+//         console.log("178 condition", cricut.access && foundPLA.hasFound && !this.foundBlueprint)
+// // Needs a blueprint to make an item
+
+
+//         if(cricut.buildNoBlueprint && foundPLA.hasFound && !this.foundBlueprint){
+//             // PLA.hasFound = true;
+//             neededBlueprintAlert = add([
+//                 area(),
+//                 "alert",
+//                 pos(center().x - 200, center().y - 200),
+//                 color(230, 230, 250),
+//                 z(10),
+//                 sprite("neededBlueprintAlert"),
+//                 scale(0.75)
+//             ])
+//             cricut.access = false;
+//             // cricut.access = false;
+//         }
        
+
     });
+
 // !TODO: make the enter function dynamic for sprite
     // dismiss alerts
     onKeyPress("enter", () => {
@@ -195,9 +238,6 @@ class CharacterMovement{
         destroyAll("alert");
         canPopItem = true;
         // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
-        console.log("paper",myCDrawerData.paper);
-        console.log("scissors", myCDrawerData.scissors);
-
         //* Scissors
         const scissorsObject = myCDrawerData.scissors;
         if (scissorsObject.alertBox !== null) {
@@ -211,9 +251,10 @@ class CharacterMovement{
                     z(5)])
             }
             // Accessing the scissors object
-            xDisplace =xDisplace + 50;
+            xDisplace = xDisplace + 50;
             scissorsObject.hasFound = true;
         }
+
         //* Paper
         const paperObject = myCDrawerData.paper;
         if(paperObject.alertBox !== null){
@@ -225,9 +266,10 @@ class CharacterMovement{
                     body({isStatic: true}),
                     area(),
                     z(5)])
-            }xDisplace =xDisplace + 50;
-            paperObject.hasFound = true;
+            }
+            xDisplace =xDisplace + 50;
         }
+
         //* Wood
         const woodObject = myCDrawerData.wood;        
         if(woodObject.alertBox !== null){
@@ -240,25 +282,26 @@ class CharacterMovement{
                     scale(.05),
                     z(5)])
             }xDisplace = xDisplace + 50;
-            woodObject.hasFound = true;
         }
-       
-        // if(this.isAlertedPLA && noItemsAlert !== null){
-        //     destroy(noItemsAlert);
-        //     // noItemsAlert = null;
-        //     // noItems = null;
-        // }
 
-        // if(this.isAlertedPLA && cricutAlertBox !== null){
-        //     destroy(cricutAlertBox);
-        //     cricutAlertBox = null;
-        // }
+        // !TODO: Remove benchy, since final item
+            if(benchyFound){
+                add(
+                    [sprite("3DBenchy"),
+                    pos(center().x, center().y),
+                    body({isStatic: true}),
+                    area(),
+                    scale(1.5),
+                    z(5)])
+            }xDisplace = xDisplace + 50;
+        }
+    );
 
-    });
 // ! Game Objects
     // this is material one?
     const cricut = add([
         "machine",
+        "cricut",
         sprite("cricut"),
         area(),
         // color(50, 168, 82),
@@ -267,6 +310,9 @@ class CharacterMovement{
         scale(2.5),
         rotate(180),
         body({isStatic: true}),
+        {access: false},
+        {buildNoBlueprint: false}
+
     ])
         // add creates game object to be displayed on the screen
         // add function returns game objects, can store in const or var
@@ -292,7 +338,7 @@ class CharacterMovement{
             z(5)
         ])
        
-// Player Movement
+//! Player Movement
 // Player search
 // WASD
     onKeyDown("a", () => {
@@ -329,7 +375,13 @@ class CharacterMovement{
 
 // Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
-    this.canInteractWithCricut = true;
+    // this.canInteractWithCricut = true;
+    cricut.access = true;
+})
+
+onCollide("player", "cricut", (s,w) =>{
+    // this.canInteractWithCricut = true;
+    cricut.access = true;
 })
 
 // Collide Logic: Player and Drawer
@@ -341,9 +393,10 @@ onCollide("player", "drawer", (s, w) => {
   onCollide("player", "cdrawer", (s, w) => {
     this.canInteractWithCDrawer = true;
   });
+
+
+//*isColliding
   player.onUpdate(() =>{
-    
-    
 //   if(player.isColliding("drawer")){
 //     this.canInteractWithDrawer = true;
 //     console.log("Hit Drawer")
@@ -352,9 +405,15 @@ onCollide("player", "drawer", (s, w) => {
 //     this.canInteractWithCDrawer = true;
 //     console.log("Hit CDrawer")
 //   }
+
+    if(player.isColliding("cricut")){
+        // this.canInteractWithCricut = true;
+        cricut.access = true;
+    }
 })
 
-// Level Schema
+
+//! Level Schema
         const block_size = 64;
         
         const SPEED = 300;
