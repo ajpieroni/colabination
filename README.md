@@ -9,6 +9,15 @@ Agenda:
 - [ ] check in on everyone's issue and assign new issues
 - [ ] combining code and next step...
 
+### <span style="color:lightblue">Game Name: Co-Labination</span>
+### Team Name: Studio Arbor (make stickers?)
+
+[Migrations and Backend Resources](https://www.rubyguides.com/2020/03/rails-scaffolding/)
+
+### Functions of Pockets
+- Pockets:
+- Vending Machine:
+- Blueprints:
 ## September 15th
 Agenda:
 - [x] Show off the Kaboom mini games
@@ -128,3 +137,4 @@ Agenda:
 - Items are stored in pocket, 2 items at a time
 - 2 items + blueprint
 - Items are dropped to combine them
+
