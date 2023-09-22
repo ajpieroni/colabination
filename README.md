@@ -15,9 +15,27 @@ Agenda:
 [Migrations and Backend Resources](https://www.rubyguides.com/2020/03/rails-scaffolding/)
 
 ### Functions of Pockets
-- Pockets:
-- Vending Machine:
-- Blueprints:
+Vending Machine: 
+- Either we walk up to it or are always able to press v from anywhere (pocket)
+- POCKET! 
+Blueprints:
+- Mission system
+- Item tree: ignoring 3d printing for now
+    - Try and finish the other items int he tree and think about where any 3d prints could fit into that 
+Final Items:
+- Put them in documentation station, just visua
+
+Tree
+- Move Thread instead of Fabric as starting material
+- Hammer + wood = paper
+- Scissors/tools go on workspace
+- 
+- 
+
+Next Steps
+- Anni will assign everyone something to do
+    - Coding frontend
+
 ## September 15th
 Agenda:
 - [x] Show off the Kaboom mini games
