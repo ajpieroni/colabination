@@ -8,6 +8,7 @@ class CharacterMovement{
 // !TO FIX:
 
 // - after scissors found, then no machine 
+// -if collide into drawer then into printer, both alerts show
 
     // Drawer functionality
     this.canInteractWithDrawer = false;
