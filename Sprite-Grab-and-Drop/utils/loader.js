@@ -21,8 +21,8 @@ export const load = {
         loadSprite("wood", "./assets/wood.png")
         loadSprite("neededAlert", "./assets/neededAlert.png")
         loadSprite("neededBlueprintAlert", "./assets/neededBlueprintAlert.png")
-        loadSprite("3DBenchy", "./assets/3DBenchy.png")
-        loadSprite("3DBenchyAlert", "./assets/3DBenchyAlert.png")
+        loadSprite("3DBenchy", "./assets/benchy.png")
+        loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
 
 
 

@@ -9,7 +9,7 @@ class CharacterMovement{
 
 // - after scissors found, then no machine 
 // -if collide into drawer then into printer, both alerts show
-
+//* Constructor
     // Drawer functionality
     this.canInteractWithDrawer = false;
     // Machine functionlaity
@@ -29,8 +29,8 @@ class CharacterMovement{
     let noItemsAlert = null;
 
 //! TEMP!
-let benchyFound = false;
-let benchyAdded = false;
+// let benchyFound = false;
+// let benchyAdded = false;
 
 let paperCraft = true;
 let scissorsCraft = true;
@@ -55,54 +55,100 @@ let scissorsCraft = true;
         wood: {alertBox: null, hasFound: false},
         // benchy: {alertBox: null, hasFound: false}
     };
+    const woodObject = myCDrawerData.wood; 
+    const finalItems = ["", "benchy"];
+    const finalItemsData = {
+        benchy: {alertBox: null, hasFound: false}
+    };
     // drawer by printers
     let myDrawer = ["PLA"];
     const myDrawerData = {
         PLA: {alertBox: null, hasFound: false},
     }
+    const PLA = myDrawerData["PLA"];
 
     // let cdrawerItems = ["", "banana", "cherry"];
+//*Player Collides and interacts
+function playerCraftsScissorsPaper(){
 
-//! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE
-onKeyPress("b", () =>{
     if(paperCraft&&scissorsCraft){
         console.log("trueeeee");
     }else{
         console.log("fallsslssee")
     }
-})
-
+}
 //! Listen for spacebar key press, when near drawer activate alert
-    onKeyPress("space", () => {
-        //! DRAWERS 
-        //* Cricut Drawer: Scissors, Paper
-        if(this.canInteractWithCDrawer){
-            if(myCDrawer.length >= 0 && canPopItem){
-                let itemName = myCDrawer.pop();
-                let foundCItem = myCDrawerData[itemName];
-                canPopItem = false;
-                if(foundCItem){
-                    if(foundCItem.alertBox === null && !foundCItem.hasFound){
-                        let currSpriteAlert = `${itemName}Alert`; 
-                        foundCItem.alertBox = add([
-                            area(),
-                            "alert",
-                            pos(center().x - 100, center().y - 200),
-                            color(230, 230, 250),
-                            sprite(`${currSpriteAlert}`),
-                            color(230, 230, 250),
-                            z(10),
-                            scale(0.25)
-                        ]);
-                        this.canInteractWithCDrawer = false;
-                        foundCItem.alertBox = true;
-                        foundCItem.hasFound = true;
-                    }
+// For the player's interaction with drawer: Scissors, Paper, Wood, noItems
+function interactWithCDrawer(){
+    if(this.canInteractWithCDrawer){
+        if(myCDrawer.length >= 0 && canPopItem){
+            let itemName = myCDrawer.pop();
+            let foundCItem = myCDrawerData[itemName];
+            canPopItem = false;
+            if(foundCItem){
+                if(foundCItem.alertBox === null && !foundCItem.hasFound){
+                    let currSpriteAlert = `${itemName}Alert`; 
+                    foundCItem.alertBox = add([
+                        area(),
+                        "alert",
+                        pos(center().x - 100, center().y - 200),
+                        color(230, 230, 250),
+                        sprite(`${currSpriteAlert}`),
+                        color(230, 230, 250),
+                        z(10),
+                        scale(0.25)
+                    ]);
+                    this.canInteractWithCDrawer = false;
+                    foundCItem.alertBox = true;
+                    foundCItem.hasFound = true;
                 }
-                
             }
-            if(myCDrawer.length <= 0){
-                    noItemsAlert = add([
+            
+        }
+        if(myCDrawer.length <= 0){
+                noItemsAlert = add([
+                    area(),
+                    "alert",
+                    pos(center().x - 100, center().y - 200),
+                    color(230, 230, 250),
+                    z(10),
+                    sprite("noItems"),
+                    scale(0.45)
+                ])
+            
+    }
+
+    }
+    
+        
+}
+// For the player's interaction with drawer: PLA, noItems
+function interactWithDrawer(){
+    if(this.canInteractWithDrawer){
+            
+        if(myDrawer.length > 0 && canPopItem){
+            const itemName = myDrawer.pop();
+            const foundItem = myDrawerData[itemName];
+            console.log("here is found item", foundItem);
+            canPopItem = false;
+            if(foundItem.alertBox === null && !foundItem.hasFound){
+                    PLAalertBox = add([
+                        area(),
+                        "alert",
+                        pos(center().x - 100, center().y - 200),
+                        color(230, 230, 250),
+                        sprite("PLAalert"),
+                        color(230, 230, 250),
+                        z(10),
+                        scale(0.45)
+                    ]);
+                this.canInteractWithDrawer = false;
+                foundItem.alertBox = true;
+                foundItem.hasFound = true;
+
+            }
+        } else{
+            noItemsAlert = add([
                         area(),
                         "alert",
                         pos(center().x - 100, center().y - 200),
@@ -111,217 +157,118 @@ onKeyPress("b", () =>{
                         sprite("noItems"),
                         scale(0.45)
                     ])
-                }
-                
-
         }
-        //* Printing Drawer: PLA Plastic, (Pliers)
-        if(this.canInteractWithDrawer){
-            
-            if(myDrawer.length > 0 && canPopItem){
-                const itemName = myDrawer.pop();
-                const foundItem = myDrawerData[itemName];
-                console.log("here is found item", foundItem);
-                canPopItem = false;
-                if(foundItem.alertBox === null && !foundItem.hasFound){
-                        PLAalertBox = add([
-                            area(),
-                            "alert",
-                            pos(center().x - 100, center().y - 200),
-                            color(230, 230, 250),
-                            sprite("PLAalert"),
-                            color(230, 230, 250),
-                            z(10),
-                            scale(0.45)
-                        ]);
-                    this.canInteractWithDrawer = false;
-                    foundItem.alertBox = true;
-                    foundItem.hasFound = true;
     
-                }
-            } else{
-                noItemsAlert = add([
-                            area(),
-                            "alert",
-                            pos(center().x - 100, center().y - 200),
-                            color(230, 230, 250),
-                            z(10),
-                            sprite("noItems"),
-                            scale(0.45)
-                        ])
-            }
-       
-        }
+    }
+}   
+function discoverCricut(){
+    if(cricut.access && !hasUnlockedCricut){
+        cricutAlertBox = add([
+            area(),
+            "alert",
+            pos(center().x - 100, center().y - 200),
+            color(230, 230, 250),
+            z(10),
+            sprite("cricutAlertBox"),
+            scale(0.75)
+        ]);
+        cricut.access = false;
+        this.isAlertedPLA = true;
+        // this.canInteractWithCricut = false;
+        // cricut.access = false;
+        hasUnlockedCricut = true;
 
-        // !Machines
-        //* Cricut   
-        
+    }
+    if(cricut.access && hasUnlockedCricut && !PLA.hasFound){
+        neededAlert = add([
+            area(),
+            "alert",
+            pos(center().x - 100, center().y - 200),
+            color(230, 230, 250),
+            z(10),
+            sprite("neededAlert"),
+            scale(0.75)
+        ])
+        // cricut.access = false;
+        cricut.access = false;
+        // cricut.buildNoBlueprint = true;
 
-// Discovers Cricut
-// console.log("line 147", this.canInteractWithCricut && !hasUnlockedCricut)
-        // if(this.canInteractWithCricut && !hasUnlockedCricut){
-        if(cricut.access && !hasUnlockedCricut){
-            cricutAlertBox = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                z(10),
-                sprite("cricutAlertBox"),
-                scale(0.75)
-            ]);
-            cricut.access = false;
-            this.isAlertedPLA = true;
-            // this.canInteractWithCricut = false;
-            // cricut.access = false;
-            hasUnlockedCricut = true;
+    }
+} 
+function cricutCraft(){
+    if(cricut.access && hasUnlockedCricut && PLA.hasFound){
 
-        }
-        const PLA = myDrawerData["PLA"];
-        
-// Needs a material to make something
-// console.log("line 163", this.canInteractWithCricut && hasUnlockedCricut)
-        if(cricut.access && hasUnlockedCricut && !PLA.hasFound){
-            neededAlert = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                z(10),
-                sprite("neededAlert"),
-                scale(0.75)
-            ])
-            // cricut.access = false;
-            cricut.access = false;
-            // cricut.buildNoBlueprint = true;
+        buildAlert = add([
+            area(),
+            "alert",
+            pos(center().x - 100, center().y - 200),
+            color(230, 230, 250),
+            z(10),
+            sprite("3DBenchyAlert"),
+            scale(0.75)
+        ])
+        benchyFound = true;
+        // cricut.access = false;
+        cricut.access = false;
+        // cricut.buildNoBlueprint = true;
+    }
+    
+}
+//! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE
+onKeyPress("b", () =>{
+    playerCraftsScissorsPaper();
+})
+onKeyPress("space", () => {
+    //! DRAWERS 
+    //* Cricut Drawer: Scissors, Paper, Wood, noItems
+    interactWithCDrawer.call(this);
+    //* Printing Drawer: PLA Plastic, (Pliers)
+    interactWithDrawer.call(this);
 
-        }
-// MAKE ITEM, BLUEPRINT PENDING
-        if(cricut.access && hasUnlockedCricut && PLA.hasFound){
-            buildAlert = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                z(10),
-                sprite("3DBenchyAlert"),
-                scale(0.75)
-            ])
-            benchyFound = true;
-            // cricut.access = false;
-            cricut.access = false;
-            // cricut.buildNoBlueprint = true;
-
-        }
-
-//         
-//         console.log(foundPLA);
-//         console.log("has found pla", foundPLA.hasFound);
-//         console.log("can interact", cricut.access);
-//         console.log("not found blueprint", this.foundBlueprint)
-//         console.log("178 condition", cricut.access && foundPLA.hasFound && !this.foundBlueprint)
-// // Needs a blueprint to make an item
+    // !Machines
+    //* Cricut: discovery, needs   
+    discoverCricut.call(this);
+    //* Cricut: craft
+    cricutCraft.call(this);
+});
 
 
-//         if(cricut.buildNoBlueprint && foundPLA.hasFound && !this.foundBlueprint){
-//             // PLA.hasFound = true;
-//             neededBlueprintAlert = add([
-//                 area(),
-//                 "alert",
-//                 pos(center().x - 200, center().y - 200),
-//                 color(230, 230, 250),
-//                 z(10),
-//                 sprite("neededBlueprintAlert"),
-//                 scale(0.75)
-//             ])
-//             cricut.access = false;
-//             // cricut.access = false;
-//         }
-       
-
-    });
-
-// !TODO: make the enter function dynamic for sprite
-    // dismiss alerts
-    onKeyPress("enter", () => {
-        let xDisplace = 0;
-        // *Destroys all alerts
-        destroyAll("alert");
-        canPopItem = true;
-        // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
-        //* Scissors
-        const scissorsObject = myCDrawerData.scissors;
-        if (scissorsObject.alertBox !== null) {
-            if(scissorsObject.hasFound){
-                add(
-                    [sprite("scissors"),
-                     pos(center().x+xDisplace, center().y),
-                    scale(1.5),
-                    body({isStatic: true}),
-                    area(),
-                    z(5)])
-                  
-            }
-            xDisplace = xDisplace + 100;
-            // Accessing the scissors object
-            
-        }
-
-        //* Paper
-        const paperObject = myCDrawerData.paper;
-        if(paperObject.alertBox !== null){
-            if(paperObject.hasFound){
-                add(
-                    [sprite("paper"),
+function addItemToFloor(itemObject, image){
+    let xDisplace = 0;
+    if (itemObject.alertBox !== null) {
+        if(itemObject.hasFound){
+            add(
+                [sprite(`${image}`),
                     pos(center().x+xDisplace, center().y),
-                    scale(1.5),
-                    body({isStatic: true}),
-                    area(),
-                    z(5)])
-        
-
-            }
-            xDisplace =xDisplace + 100;
-        }
-
-        //* Wood
-        const woodObject = myCDrawerData.wood;        
-        if(woodObject.alertBox !== null){
-            if(woodObject.hasFound){
-                add(
-                    [sprite("wood"),
-                    pos(center().x+xDisplace, center().y),
-                    body({isStatic: true}),
-                    area(),
-                    scale(1.5),
-                    z(5)])
-                  
-            }
-            xDisplace = xDisplace + 100;
-           
-        }
-
-        // !TODO: Remove benchy, since final item
-            if(benchyFound && !benchyAdded){
-                add(
-                    [sprite("3DBenchy"),
-                    pos(center().x+xDisplace, center().y),
-                    body({isStatic: true}),
-                    area(),
-                    scale(1.5),
-                    z(5)])
-
-
-            benchyAdded = true;
-
+                scale(1.5),
+                body({isStatic: true}),
+                area(),
+                z(5)])
                 
-            }
-            xDisplace = xDisplace + 100;
-            
-           
-
         }
-    );
+        xDisplace = xDisplace + 100;
+    }
+}
+// !TODO: make the enter function dynamic for sprite
+// dismiss alerts
+onKeyPress("enter", () => {
+    // Destroys all alerts
+    destroyAll("alert");
+    canPopItem = true;
+    // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
+    //* Scissors
+    const scissorsObject = myCDrawerData.scissors;
+    addItemToFloor(scissorsObject, "scissors");
+    //* Paper
+    const paperObject = myCDrawerData.paper;
+    addItemToFloor(paperObject, "paper")
+
+    //* Wood
+    const woodObject = myCDrawerData.wood; 
+    addItemToFloor(woodObject, "wood");   
+    
+    }
+);
 
 // ! Game Objects
     // this is material one?
@@ -383,21 +330,21 @@ onKeyPress("b", () =>{
         player.move(0, SPEED)
     })
 // Arrow Keys
-        onKeyDown("left", () => {
-            // .move() is provided by pos() component, move by pixels per second
-            player.move(-SPEED, 0)
-        })
-        onKeyDown("right", () => {
-            player.move(SPEED, 0)
-        })
+    onKeyDown("left", () => {
+        // .move() is provided by pos() component, move by pixels per second
+        player.move(-SPEED, 0)
+    })
+    onKeyDown("right", () => {
+        player.move(SPEED, 0)
+    })
 
-        onKeyDown("up", () => {
-            player.move(0, -SPEED)
-        })
+    onKeyDown("up", () => {
+        player.move(0, -SPEED)
+    })
 
-        onKeyDown("down", () => {
-            player.move(0, SPEED)
-        })
+    onKeyDown("down", () => {
+        player.move(0, SPEED)
+    })
 
 // Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
@@ -543,10 +490,9 @@ onCollide("player", "drawer", (s, w) => {
         
         }
     
-        
+
     }
    
-    
 
 
 export const characterMovement = new CharacterMovement()
