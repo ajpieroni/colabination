@@ -91,7 +91,7 @@ class CharacterMovement{
         sprite("cricut"),
         area(),
         // color(50, 168, 82),
-        pos(560, 730),
+        pos(460, 730),
         z(10),
         scale(2.5),
         rotate(180),
@@ -117,7 +117,7 @@ class CharacterMovement{
         color(46, 51, 48),
         area(),
         body({isStatic: true}),
-        pos(125, 400),
+        pos(60, 400),
         z(0),
         "drawer",
         {access: false}
@@ -153,12 +153,42 @@ class CharacterMovement{
         "craftingTable",
         {access: false}
     ])
+    const printer1 = add([
+        rect(block_size*.75, block_size*.75),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(20,100),
+        z(0),
+        "printer",
+        {access: false}
+    ])
+    const printer2 = add([
+        rect(block_size*.75, block_size*.75),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(20,200),
+        z(0),
+        "printer",
+        {access: false}
+    ])
+    const sewingMachine = add([
+        rect(block_size*.75, block_size*.75),
+        color(255,0,0),
+        area(),
+        body({isStatic: true}),
+        pos(500, 650),
+        z(0),
+        "printer",
+        {access: false}
+    ])
 
 
         // add creates game object to be displayed on the screen
         // add function returns game objects, can store in const or var
     
-        
+
     const player = add([
         sprite("characterSprite"),
         scale(.25),
