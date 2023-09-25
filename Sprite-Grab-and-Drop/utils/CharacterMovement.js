@@ -6,8 +6,6 @@ class CharacterMovement{
 // If is currently colliding with another game obj.
 
 // !TO FIX:
-
-// - after scissors found, then no machine 
 // -if collide into drawer then into printer, both alerts show
 //* Constructor
     // Drawer functionality
@@ -29,8 +27,8 @@ class CharacterMovement{
     let noItemsAlert = null;
 
 //! TEMP!
-// let benchyFound = false;
-// let benchyAdded = false;
+let benchyFound = false;
+let benchyAdded = false;
 
 let paperCraft = true;
 let scissorsCraft = true;
@@ -197,7 +195,6 @@ function discoverCricut(){
 } 
 function cricutCraft(){
     if(cricut.access && hasUnlockedCricut && PLA.hasFound){
-
         buildAlert = add([
             area(),
             "alert",
@@ -211,7 +208,9 @@ function cricutCraft(){
         // cricut.access = false;
         cricut.access = false;
         // cricut.buildNoBlueprint = true;
+
     }
+
     
 }
 //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE
@@ -267,11 +266,23 @@ onKeyPress("enter", () => {
     const woodObject = myCDrawerData.wood; 
     addItemToFloor(woodObject, "wood");   
     
+    // !TODO: Remove benchy, since final item
+    let xDisplace = 10;
+    if(benchyFound && !benchyAdded){
+        add(
+            [sprite("3DBenchy"),
+            pos(center().x+xDisplace, center().y),
+            body({isStatic: true}),
+            area(),
+            scale(1.5),
+            z(5)])
+        benchyAdded = true;
+    }
+   
     }
 );
 
 // ! Game Objects
-    // this is material one?
     const cricut = add([
         "machine",
         "cricut",
@@ -412,16 +423,6 @@ onCollide("player", "drawer", (s, w) => {
             "=********************=",
             "---------------------",
         ];
-
-        // const drawer = add([
-        //     rect(block_size, block_size*1.5),
-        //     color(50, 168, 82),
-        //     area(),
-        //     body({isStatic: true}),
-        //     pos(10, 55),
-        //     z(0),
-        //     "drawer",
-        // ]);
         
         const level_config = {
             tileWidth:64,
@@ -484,8 +485,7 @@ onCollide("player", "drawer", (s, w) => {
                 
             }
         };
-    
-        
+
         var level = addLevel(map, level_config);
         
         }
