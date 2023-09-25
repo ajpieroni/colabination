@@ -183,6 +183,16 @@ class CharacterMovement{
         "printer",
         {access: false}
     ])
+    const solderingStation = add([
+        rect(block_size*.75, block_size*.75),
+        color(255,0,0),
+        area(),
+        body({isStatic: true}),
+        pos(100, 35),
+        z(0),
+        "printer",
+        {access: false}
+    ])
 
 
         // add creates game object to be displayed on the screen
