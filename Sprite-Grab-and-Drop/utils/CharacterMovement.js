@@ -1,6 +1,103 @@
 class CharacterMovement{
 
     display(){
+        //! Level Schema
+        const block_size = 64;
+        
+        const map = [
+            // "=====================",
+            "=$$$$$$$$$$$$$$$$$$$$$=",
+            "=*********************=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$(                 *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$                  *=",
+            "=$          ^^^     *=",
+            "=********************=",
+            "---------------------",
+        ];
+        
+        add([
+            sprite("colabBackground"),
+            area(),
+            scale(.75),
+            z(0)
+            
+        ])
+
+        const level_config = {
+            tileWidth:64,
+            tileHeight:64,
+            pos: vec2(-65, -70),
+        
+            // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
+            tiles: {
+                "=": () => [
+                    rect(block_size, block_size),
+                    color(255, 0, 0),
+                    "wall",
+                    area(),
+                    body({isStatic: true}),
+                ],
+                "-":()=>[
+                    rect(block_size/2, block_size/2),
+                    color(255, 0, 0),
+                    "wall",
+                    area(),
+                    body({isStatic: true}),
+                    pos(0, 25),
+                    z(1),
+                ],
+                "$":()=>[
+                    rect(block_size*2, block_size),
+                    color(128,128,128),
+                    area(),
+                    body({isStatic: true}),
+                    pos(0, 25),
+                    z(1),
+
+                ],
+                "*":()=>[
+                    rect(block_size, block_size*1.5),
+                    color(128,128,128),
+                    area(),
+                    body({isStatic: true}),
+                    pos(0, 25),
+                    z(1),
+                ],
+                "(":()=>[
+                    rect(block_size, block_size*1.5),
+                    color(46, 51, 48),
+                    area(),
+                    body({isStatic: true}),
+                    pos(10, 55),
+                    z(0),
+                    "drawer",],
+                "^":()=>[
+                    rect(block_size, block_size*1.5),
+                    color(46, 51, 48),
+                    area(),
+                    body({isStatic: true}),
+                    pos(10, 55),
+                    z(0),
+                    "cdrawer",]
+                
+                // "(":drawer,
+                
+            }
+        };
+
+        var level = addLevel(map, level_config);
+        
+    }
+
+    play(){
+        const SPEED = 300;
+
 
 // isColliding(o: GameObj) => boolean
 // If is currently colliding with another game obj.
@@ -300,18 +397,8 @@ onKeyPress("enter", () => {
     ])
         // add creates game object to be displayed on the screen
         // add function returns game objects, can store in const or var
-        add([
-            sprite("colabBackground"),
-            area(),
-            scale(.75),
-            
-        ])
+    
         
-        add([
-            text("Hiiiiiii", { width: width() / 4 }),
-            pos(12, 12),
-            color(1,1,1)
-        ])
         const player = add([
             sprite("characterSprite"),
             scale(.25),
@@ -325,6 +412,7 @@ onKeyPress("enter", () => {
 //! Player Movement
 // Player search
 // WASD
+
     onKeyDown("a", () => {
         // .move() is provided by pos() component, move by pixels per second
         player.move(-SPEED, 0)
@@ -403,92 +491,9 @@ onCollide("player", "drawer", (s, w) => {
 })
 
 
-//! Level Schema
-        const block_size = 64;
-        
-        const SPEED = 300;
-        const map = [
-            // "=====================",
-            "=$$$$$$$$$$$$$$$$$$$$$=",
-            "=*********************=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$(                 *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$          ^^^     *=",
-            "=********************=",
-            "---------------------",
-        ];
-        
-        const level_config = {
-            tileWidth:64,
-            tileHeight:64,
-            pos: vec2(-65, -70),
-        
-            // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
-            tiles: {
-                "=": () => [
-                    rect(block_size, block_size),
-                    color(255, 0, 0),
-                    "wall",
-                    area(),
-                    body({isStatic: true}),
-                ],
-                "-":()=>[
-                    rect(block_size/2, block_size/2),
-                    color(255, 0, 0),
-                    "wall",
-                    area(),
-                    body({isStatic: true}),
-                    pos(0, 25),
-                    z(1),
-                ],
-                "$":()=>[
-                    rect(block_size*2, block_size),
-                    color(128,128,128),
-                    area(),
-                    body({isStatic: true}),
-                    pos(0, 25),
-                    z(1),
 
-                ],
-                "*":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(128,128,128),
-                    area(),
-                    body({isStatic: true}),
-                    pos(0, 25),
-                    z(1),
-                ],
-                "(":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(46, 51, 48),
-                    area(),
-                    body({isStatic: true}),
-                    pos(10, 55),
-                    z(0),
-                    "drawer",],
-                "^":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(46, 51, 48),
-                    area(),
-                    body({isStatic: true}),
-                    pos(10, 55),
-                    z(0),
-                    "cdrawer",]
-                
-                // "(":drawer,
-                
-            }
-        };
+    }
 
-        var level = addLevel(map, level_config);
-        
-        }
     
 
     }

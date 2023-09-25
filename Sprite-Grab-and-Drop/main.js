@@ -19,7 +19,9 @@ const scenes = {
         uiManager.displayMainMenu()
     },
     characterMovement: () =>{
+
         characterMovement.display()
+        characterMovement.play()
 
     },
     1: () => {
