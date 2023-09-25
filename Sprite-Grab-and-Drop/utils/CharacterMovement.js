@@ -1,5 +1,7 @@
 class CharacterMovement{
-
+    constructor(){
+        this.level =null;
+    }
     display(){
         //! Level Schema
         const block_size = 64;
@@ -12,11 +14,11 @@ class CharacterMovement{
             "=$                  *=",
             "=$                  *=",
             "=$                  *=",
-            "=$(                 *=",
             "=$                  *=",
             "=$                  *=",
             "=$                  *=",
-            "=$          ^^^     *=",
+            "=$                  *=",
+            "=$                  *=",
             "=********************=",
             "---------------------",
         ];
@@ -67,24 +69,9 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(1),
+                    z(10),
                 ],
-                "(":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(46, 51, 48),
-                    area(),
-                    body({isStatic: true}),
-                    pos(10, 55),
-                    z(0),
-                    "drawer",],
-                "^":()=>[
-                    rect(block_size, block_size*1.5),
-                    color(46, 51, 48),
-                    area(),
-                    body({isStatic: true}),
-                    pos(10, 55),
-                    z(0),
-                    "cdrawer",]
+                
                 
                 // "(":drawer,
                 
@@ -96,8 +83,62 @@ class CharacterMovement{
     }
 
     play(){
-        const SPEED = 300;
 
+// ! Game Objects
+    const cricut = add([
+        "machine",
+        "cricut",
+        sprite("cricut"),
+        area(),
+        // color(50, 168, 82),
+        pos(560, 730),
+        z(10),
+        scale(2.5),
+        rotate(180),
+        body({isStatic: true}),
+        {access: false},
+        {buildNoBlueprint: false}
+
+    ])
+    const block_size = 64;
+
+    const cdrawer = add([
+        rect(block_size*1.5, 12),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(600, 650),
+        z(0),
+        "cdrawer",
+        {access: false}
+    ])
+    const drawer = add([
+        rect(12, block_size*1.5),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(125, 400),
+        z(0),
+        "drawer",
+        {access: false}
+    ])
+
+
+        // add creates game object to be displayed on the screen
+        // add function returns game objects, can store in const or var
+    
+        
+    const player = add([
+        sprite("characterSprite"),
+        scale(.25),
+        pos(center()),
+        "player",
+        area(),
+        body(),
+        z(5)
+    ])
+
+        const SPEED = 300;
 
 // isColliding(o: GameObj) => boolean
 // If is currently colliding with another game obj.
@@ -106,9 +147,9 @@ class CharacterMovement{
 // -if collide into drawer then into printer, both alerts show
 //* Constructor
     // Drawer functionality
-    this.canInteractWithDrawer = false;
+    drawer.access = false;
     // Machine functionlaity
-    this.canInteractWithCricut = false;
+    cricut.access = false;
     let cricutAlertBox = null; 
     let hasUnlockedCricut = false;
     let neededAlert = null;
@@ -123,15 +164,15 @@ class CharacterMovement{
     let PLAalertBox = false;
     let noItemsAlert = null;
 
-//! TEMP!
-let benchyFound = false;
-let benchyAdded = false;
+    //! TEMP!
+    let benchyFound = false;
+    let benchyAdded = false;
 
-let paperCraft = true;
-let scissorsCraft = true;
+    let paperCraft = true;
+    let scissorsCraft = true;
 
     // C Drawer Logic
-    this.canInteractWithCDrawer = false;
+    cdrawer.access = false;
     // Scissors Logic
     this.isAlertedScissors = false;
     this.hasFoundScissors = false;
@@ -175,7 +216,7 @@ function playerCraftsScissorsPaper(){
 //! Listen for spacebar key press, when near drawer activate alert
 // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
 function interactWithCDrawer(){
-    if(this.canInteractWithCDrawer){
+    if(cdrawer.access){
         if(myCDrawer.length >= 0 && canPopItem){
             let itemName = myCDrawer.pop();
             let foundCItem = myCDrawerData[itemName];
@@ -193,7 +234,7 @@ function interactWithCDrawer(){
                         z(10),
                         scale(0.25)
                     ]);
-                    this.canInteractWithCDrawer = false;
+                    cdrawer.access = false;
                     foundCItem.alertBox = true;
                     foundCItem.hasFound = true;
                 }
@@ -219,7 +260,7 @@ function interactWithCDrawer(){
 }
 // For the player's interaction with drawer: PLA, noItems
 function interactWithDrawer(){
-    if(this.canInteractWithDrawer){
+    if(drawer.access){
             
         if(myDrawer.length > 0 && canPopItem){
             const itemName = myDrawer.pop();
@@ -237,7 +278,7 @@ function interactWithDrawer(){
                         z(10),
                         scale(0.45)
                     ]);
-                this.canInteractWithDrawer = false;
+                drawer.access = false;
                 foundItem.alertBox = true;
                 foundItem.hasFound = true;
 
@@ -269,7 +310,6 @@ function discoverCricut(){
         ]);
         cricut.access = false;
         this.isAlertedPLA = true;
-        // this.canInteractWithCricut = false;
         // cricut.access = false;
         hasUnlockedCricut = true;
 
@@ -379,35 +419,6 @@ onKeyPress("enter", () => {
     }
 );
 
-// ! Game Objects
-    const cricut = add([
-        "machine",
-        "cricut",
-        sprite("cricut"),
-        area(),
-        // color(50, 168, 82),
-        pos(560, 730),
-        z(10),
-        scale(2.5),
-        rotate(180),
-        body({isStatic: true}),
-        {access: false},
-        {buildNoBlueprint: false}
-
-    ])
-        // add creates game object to be displayed on the screen
-        // add function returns game objects, can store in const or var
-    
-        
-        const player = add([
-            sprite("characterSprite"),
-            scale(.25),
-            pos(center()),
-            "player",
-            area(),
-            body(),
-            z(5)
-        ])
        
 //! Player Movement
 // Player search
@@ -445,41 +456,33 @@ onKeyPress("enter", () => {
         player.move(0, SPEED)
     })
 
-// Collide Logic: Player and Machine
+//! Collide Logic: Player and Machine
 onCollide("player", "machine", (s,w) =>{
-    // this.canInteractWithCricut = true;
     cricut.access = true;
 })
 
 onCollide("player", "cricut", (s,w) =>{
-    // this.canInteractWithCricut = true;
     cricut.access = true;
+
 })
 
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
-    this.canInteractWithDrawer = true;
+    drawer.access = true;
+
+
 
   });
 
   onCollide("player", "cdrawer", (s, w) => {
-    this.canInteractWithCDrawer = true;
+    cdrawer.access = true;
   });
 
 
 //*isColliding
   player.onUpdate(() =>{
-//   if(player.isColliding("drawer")){
-//     this.canInteractWithDrawer = true;
-//     console.log("Hit Drawer")
-//   }
-//   if(player.isColliding("cdrawer")){
-//     this.canInteractWithCDrawer = true;
-//     console.log("Hit CDrawer")
-//   }
 
     if(player.isColliding("cricut")){
-        // this.canInteractWithCricut = true;
         cricut.access = true;
     }
     if(player.isColliding("paper")){
@@ -490,13 +493,8 @@ onCollide("player", "drawer", (s, w) => {
     }
 })
 
-
-
     }
-
-    
-
-    }
+}
    
 
 
