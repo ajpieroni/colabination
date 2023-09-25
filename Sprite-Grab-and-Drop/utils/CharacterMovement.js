@@ -4,7 +4,7 @@ class CharacterMovement{
     }
     display(){
         //! Level Schema
-        const block_size = 64;
+        const block_size = 32;
         
         const map = [
             // "=====================",
@@ -39,7 +39,7 @@ class CharacterMovement{
             // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
             tiles: {
                 "=": () => [
-                    rect(block_size, block_size),
+                    rect(block_size*2, block_size),
                     color(255, 0, 0),
                     "wall",
                     area(),
@@ -55,7 +55,7 @@ class CharacterMovement{
                     z(1),
                 ],
                 "$":()=>[
-                    rect(block_size*2, block_size),
+                    rect(block_size*2, block_size*2),
                     color(128,128,128),
                     area(),
                     body({isStatic: true}),
@@ -64,7 +64,7 @@ class CharacterMovement{
 
                 ],
                 "*":()=>[
-                    rect(block_size, block_size*1.5),
+                    rect(block_size*2, block_size*2),
                     color(128,128,128),
                     area(),
                     body({isStatic: true}),
@@ -120,6 +120,37 @@ class CharacterMovement{
         pos(125, 400),
         z(0),
         "drawer",
+        {access: false}
+    ])
+
+    const handTools = add([
+        rect(block_size*2, block_size*5),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(300,225),
+        z(0),
+        "handTools",
+        {access: false}
+    ])
+    const leatherTools = add([
+        rect(block_size*2, block_size*5),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(600,225),
+        z(0),
+        "leatherTools",
+        {access: false}
+    ])
+    const craftingTable = add([
+        rect(block_size*2, block_size*5),
+        color(46, 51, 48),
+        area(),
+        body({isStatic: true}),
+        pos(900,225),
+        z(0),
+        "craftingTable",
         {access: false}
     ])
 
