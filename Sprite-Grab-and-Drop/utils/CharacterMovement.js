@@ -703,6 +703,7 @@ onCollide("player", "drawer", (s, w) => {
                 // Check if the mouse click occurred within the bounds of itemEntity
                 if (isClicked(vendingItem)) {
                     // Handle click events on items by calling the updatePocket function
+                    console.log("CALLED")
                     updatePocketVending(vendingItem, inPocket);
                 }
             });
@@ -734,7 +735,7 @@ onCollide("player", "drawer", (s, w) => {
 
                 const item1 = add([
                     rect(material.width, material.height) ,
-                    pos(1440, 620),
+                    pos(1100, 540),
                     z(11),
                     color(material.color.r, material.color.g, material.color.b),
                
@@ -747,7 +748,7 @@ onCollide("player", "drawer", (s, w) => {
 
                 const item2 = add([
                     rect(material.width, material.height) ,
-                    pos(1440, 730),
+                    pos(1100, 640),
                     z(11),
                     color(material.color.r, material.color.g, material.color.b),
                 ]);
@@ -765,10 +766,10 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocket(material, inPocket) {
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
-                material.moveTo(1080+20, 520+10+10);
+                material.moveTo(1100, 540);
             } else {
                 // moves to spot 2
-                material.moveTo(1080+20, 520+120);
+                material.moveTo(1100, 640);
             }
             itemsInPocket++;
             inPocket.push(material);
