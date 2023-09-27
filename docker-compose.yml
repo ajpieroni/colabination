@@ -1,8 +1,39 @@
 version: '3.1'
 services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile # Path to your Dockerfile for Rails app
+    command: bundle exec rails s -p 8081 -b '0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "8081:8081"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_database
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
   frontend:
     build: ./FrontEnd
     ports:
       - '3000:3000'
     stdin_open: true
-    tty: true
+    tty: true 
+  #db 
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: game_database
+      MYSQL_USER: username
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+    volumes:
+      - db-data:/var/lib/mysql
+volumes:
+  db-data:
+
