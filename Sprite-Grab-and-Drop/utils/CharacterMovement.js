@@ -133,16 +133,16 @@ class CharacterMovement{
         "handTools",
         {access: false}
     ])
-    const leatherTools = add([
-        rect(block_size*2, block_size*5),
-        color(46, 51, 48),
-        area(),
-        body({isStatic: true}),
-        pos(600,225),
-        z(0),
-        "leatherTools",
-        {access: false}
-    ])
+    // const leatherTools = add([
+    //     rect(block_size*2, block_size*5),
+    //     color(46, 51, 48),
+    //     area(),
+    //     body({isStatic: true}),
+    //     pos(600,225),
+    //     z(0),
+    //     "leatherTools",
+    //     {access: false}
+    // ])
     const craftingTable = add([
         rect(block_size*2, block_size*5),
         color(46, 51, 48),
@@ -441,20 +441,36 @@ onKeyPress("space", () => {
 
 
 function addItemToFloor(itemObject, image){
+
     let xDisplace = 0;
     if (itemObject.alertBox !== null) {
         if(itemObject.hasFound){
+            console.log("Added")
+
             add(
                 [sprite(`${image}`),
                     pos(center().x+xDisplace, center().y),
                 scale(1.5),
-                body({isStatic: true}),
+                body(),
                 area(),
-                z(5)]),
+                z(10),
                 "material",
-                `${image}`
+                // "main"
+                `${image}`])
                 
         }
+        // const material1 = add([
+        //     pos(300,300),
+        //     rect(50, 50),
+        //     outline(4),
+        //     color(102, 178, 225),
+        //     area(),
+        //     body(),
+        //     z(10),
+        //     {'type': 'category1'},
+        //     "main",
+        //     "material",
+        // ]);
         xDisplace = xDisplace + 100;
     }
 }
@@ -573,16 +589,17 @@ onCollide("player", "drawer", (s, w) => {
     let inPocket = [];
     
     // vending machine
-    const vending = add([ 
-        pos(30, 50),
-        rect(50, 100),
-        outline(4),
-        color(105, 105, 105),
-        area(),
-        body({ isStatic: true }),
-        "vend",
-        z(0),
-    ]);
+    // !TO DO: Add stationery vending machine back if wanted
+    // const vending = add([ 
+    //     pos(30, 50),
+    //     rect(50, 100),
+    //     outline(4),
+    //     color(105, 105, 105),
+    //     area(),
+    //     body({ isStatic: true }),
+    //     "vend",
+    //     z(0),
+    // ]);
     
     // Character pocket
     const pocket = add([
@@ -793,6 +810,7 @@ onCollide("player", "drawer", (s, w) => {
     });
     
     player.onCollide("material", (material) => {
+        console.log("COLLIDED MAT")
         if (!vendingContents.includes(material)) {
             vendingContents.push(material);
         }
