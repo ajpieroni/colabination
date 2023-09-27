@@ -1,10 +1,14 @@
 class CharacterMovement{
+
+    // !TODO: add a "on floor" variable for game objects
+    // !TODO: figure out how to pass image parameter into vending contents
     constructor(){
         this.level =null;
     }
     display(){
         //! Level Schema
         const block_size = 32;
+        
         
         const map = [
             // "=====================",
@@ -453,8 +457,9 @@ function addItemToFloor(itemObject, image){
                 scale(1.5),
                 body(),
                 area(),
-                z(10),
+                z(5),
                 "material",
+                {image: `${image}`},
                 // "main"
                 `${image}`])
                 
@@ -687,7 +692,7 @@ onCollide("player", "drawer", (s, w) => {
         const popup = add([
             rect(500, 600),
             pos(480-5, 125),
-            z(10),
+            z(5),
             color(105, 105, 105),
             outline(4),
             scale(.75),
@@ -700,21 +705,34 @@ onCollide("player", "drawer", (s, w) => {
         let currentX = startX;
         let currentY = startY;
     
+        console.log("here are contents;", contents);
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
-    
+        // starts a new line 
+        // !TODO: if there are 3 items in the vending machine, make new line :)
             if (currentX + item.width > popup.pos.x + popup.width - 50) {
                 currentX = startX;
                 currentY += maxLineHeight + 50;
             }
     
             const vendingItem = add([
-                rect(item.width, item.height) ,
+                // rect(item.width, item.height) ,
                 pos(currentX, currentY),
                 z(11),
-                color(item.color.r, item.color.g, item.color.b),
-                "vending"
+                // color(item.color.r, item.color.g, item.color.b),
+                "vending",
+                // !TODO: Make sprite image dynamic
+                sprite("scissors"),
+                // rect(10,10),
+                // sprite(`${image}`),
+
+                scale(1.5),
+                z(11),
+                "material",
+               
             ]);
+            
+
     
             onClick(() => {
                 // Check if the mouse click occurred within the bounds of itemEntity
@@ -810,9 +828,10 @@ onCollide("player", "drawer", (s, w) => {
     });
     
     player.onCollide("material", (material) => {
-        console.log("COLLIDED MAT")
+      console.log("here is material", material)
         if (!vendingContents.includes(material)) {
             vendingContents.push(material);
+
         }
         updatePocket(material, inPocket);
         material.use(body({ isStatic: true }));
