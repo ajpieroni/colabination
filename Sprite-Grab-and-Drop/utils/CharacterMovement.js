@@ -127,6 +127,7 @@ class CharacterMovement{
         {access: false}
     ])
 
+    // !Tables
     const handTools = add([
         rect(block_size*2, block_size*5),
         color(46, 51, 48),
@@ -137,16 +138,7 @@ class CharacterMovement{
         "handTools",
         {access: false}
     ])
-    // const leatherTools = add([
-    //     rect(block_size*2, block_size*5),
-    //     color(46, 51, 48),
-    //     area(),
-    //     body({isStatic: true}),
-    //     pos(600,225),
-    //     z(0),
-    //     "leatherTools",
-    //     {access: false}
-    // ])
+
     const craftingTable = add([
         rect(block_size*2, block_size*5),
         color(46, 51, 48),
@@ -157,6 +149,7 @@ class CharacterMovement{
         "craftingTable",
         {access: false}
     ])
+    // !Machines
     const printer1 = add([
         rect(block_size*.75, block_size*.75),
         color(46, 51, 48),
@@ -197,11 +190,55 @@ class CharacterMovement{
         "printer",
         {access: false}
     ])
+    // !Materials
+    let currentIndex = 0;
+    const items = {
+        scissors:{
+            spriteName: 'scissors',
+            alertSprite: 'scissorsAlert',
+            initialPos: { x: 300, y: 300 },
+            hasFound: false,
+            alertBox: null
+        },
+        paper: {
+            spriteName: 'paper',
+            alertSprite: 'paperAlert',
+            initialPos: { x: 300, y: 300 },
+            hasFound: false,
+            alertBox: null
+        }
+    }
+
+    // !Init Functions
+    function interactWithItem(itemKey) {
+        const item = items[itemKey];
+        // console.log("here is item", item);
+        // console.log("here is item key", itemKey);
+
+        if (item.alertBox == null && !item.hasFound) {
+            // console.log("passed")
+            add([
+                sprite(item.spriteName),
+                // pos(item.initialPos.x, item.initialPos.y),
+                area(),
+                body(),
+                pos(center().x, center().y),
+                z(5),
+                scale(1.5),
+                "material",
+                { image: item.spriteName },
+                itemKey
+            ]);
+        }
+    }
+    
+    // !Player
 
 
         // add creates game object to be displayed on the screen
         // add function returns game objects, can store in const or var
     
+    let SPEED = 300;
 
     const player = add([
         sprite("characterSprite"),
@@ -213,7 +250,6 @@ class CharacterMovement{
         z(5)
     ])
 
-        let SPEED = 300;
 
 // isColliding(o: GameObj) => boolean
 // If is currently colliding with another game obj.
@@ -225,20 +261,13 @@ class CharacterMovement{
     drawer.access = false;
     // Machine functionlaity
     cricut.access = false;
-    let cricutAlertBox = null; 
     let hasUnlockedCricut = false;
-    let neededAlert = null;
-    let buildAlert = null;
-    let neededBlueprintAlert = null;
     // Blueprint
     this.foundBlueprint = false;
 
     // PLA Logic
     this.isAlertedPLA = false;
     this.hasFoundPLA = false;
-    let PLAalertBox = false;
-    let noItemsAlert = null;
-
     //! TEMP!
     let benchyFound = false;
     let benchyAdded = false;
@@ -251,11 +280,9 @@ class CharacterMovement{
     // Scissors Logic
     this.isAlertedScissors = false;
     this.hasFoundScissors = false;
-    let scissorsAlertBox = null;
     // Paper Logic
     this.isAlertedPaper = false;
     this.hasFoundPaper = false;
-    let paperAlertBox = null;
 
     let canPopItem = true;
     // cricut drawer
@@ -482,21 +509,48 @@ function addItemToFloor(itemObject, image){
 }
 // !TODO: make the enter function dynamic for sprite
 // dismiss alerts
+function handleEnterPress() {
+    const itemKeys = Object.keys(items);
+    
+    // Check if index is within bounds
+    if (currentIndex < itemKeys.length) {
+        const currentKey = itemKeys[currentIndex];
+        const currentValue = items[currentKey];
+        
+        console.log("Current item key:", currentKey);
+        console.log("Current item details:", currentValue);
+
+        interactWithItem(currentKey);
+        
+        // Move to the next item
+        currentIndex++;
+    } else {
+        console.log("No more items to process.");
+    }
+}
 onKeyPress("enter", () => {
     // Destroys all alerts
     destroyAll("alert");
     canPopItem = true;
     // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
     //* Scissors
-    const scissorsObject = myCDrawerData.scissors;
-    addItemToFloor(scissorsObject, "scissors");
-    //* Paper
-    const paperObject = myCDrawerData.paper;
-    addItemToFloor(paperObject, "paper")
+    console.log("cdrawer access", cdrawer.access)
+    if(cdrawer.access){
+        handleEnterPress();
 
-    //* Wood
-    const woodObject = myCDrawerData.wood; 
-    addItemToFloor(woodObject, "wood");   
+    }
+
+    // !OLD CODE:
+
+    // const scissorsObject = myCDrawerData.scissors;
+    // addItemToFloor(scissorsObject, "scissors");
+    // //* Paper
+    // const paperObject = myCDrawerData.paper;
+    // addItemToFloor(paperObject, "paper")
+
+    // //* Wood
+    // const woodObject = myCDrawerData.wood; 
+    // addItemToFloor(woodObject, "wood");   
     
     // !TODO: Remove benchy, since final item
     let xDisplace = 10;
@@ -552,6 +606,7 @@ onKeyPress("enter", () => {
     })
 
 //! Collide Logic: Player and Machine
+let wasCollidingWithCDrawer = false;
 onCollide("player", "machine", (s,w) =>{
     cricut.access = true;
 })
@@ -563,19 +618,28 @@ onCollide("player", "cricut", (s,w) =>{
 
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
+    console.log("Collided drawer");
     drawer.access = true;
-
-
 
   });
 
+
   onCollide("player", "cdrawer", (s, w) => {
+    console.log("Collided cdrawer");
     cdrawer.access = true;
   });
 
+    // player.onUpdate(() =>{
+    //     if(!player.isColliding())
+    // });
 
+
+    onCollideEnd("player", "cdrawer", () => {
+        console.log("collide end")
+    })
 //*isColliding
   player.onUpdate(() =>{
+    
 
     if(player.isColliding("cricut")){
         cricut.access = true;
@@ -594,19 +658,6 @@ onCollide("player", "drawer", (s, w) => {
     let vendingContents = [];
     let inPocket = [];
     
-    // vending machine
-    // !TO DO: Add stationery vending machine back if wanted
-    // const vending = add([ 
-    //     pos(30, 50),
-    //     rect(50, 100),
-    //     outline(4),
-    //     color(105, 105, 105),
-    //     area(),
-    //     body({ isStatic: true }),
-    //     "vend",
-    //     z(0),
-    // ]);
-    
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
@@ -619,59 +670,7 @@ onCollide("player", "drawer", (s, w) => {
         "pocket",
         z(0),
     ]);
-    
-    // character 
-    // const player = add([
-    //     pos(150, 150),
-    //     rect(100, 100),
-    //     outline(4),
-    //     color(220, 20, 60),
-    //     area(),
-    //     body(),
-    //     "player",
-    // ]);
-    
-    // // material #1
-    // const material1 = add([
-    //     pos(300,300),
-    //     rect(50, 50),
-    //     outline(4),
-    //     color(102, 178, 225),
-    //     area(),
-    //     body(),
-    //     z(10),
-    //     {'type': 'category1'},
-    //     "main",
-    //     "material",
-    // ]);
-    
-    // // material #2
-    // let material2 = add([
-    //     pos(300,600),
-    //     rect(50, 50),
-    //     outline(4),
-    //     color(153, 153, 225),
-    //     area(),
-    //     body(),
-    //     z(10),
-    //     "main",
-    //     "material",
-    //     {'type': 'category2'},
-    // ]);
-    
-    // // material #3
-    // let material3 = add([
-    //     pos(300,50),
-    //     rect(50, 50),
-    //     outline(4),
-    //     color(255, 178, 102),
-    //     area(),
-    //     body(),
-    //     z(10),
-    //     {'type': 'category3'},
-    //     "material",
-    // ]);
-    
+
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
