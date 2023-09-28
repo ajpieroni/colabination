@@ -431,6 +431,7 @@ onKeyPress("b", () =>{
 })
 onKeyPress("space", () => {
     //! DRAWERS 
+    
     //* Cricut Drawer: Scissors, Paper, Wood, noItems
     interactWithCDrawer.call(this);
     //* Printing Drawer: PLA Plastic, (Pliers)
@@ -630,46 +631,46 @@ onCollide("player", "drawer", (s, w) => {
     //     "player",
     // ]);
     
-    // material #1
-    const material1 = add([
-        pos(300,300),
-        rect(50, 50),
-        outline(4),
-        color(102, 178, 225),
-        area(),
-        body(),
-        z(10),
-        {'type': 'category1'},
-        "main",
-        "material",
-    ]);
+    // // material #1
+    // const material1 = add([
+    //     pos(300,300),
+    //     rect(50, 50),
+    //     outline(4),
+    //     color(102, 178, 225),
+    //     area(),
+    //     body(),
+    //     z(10),
+    //     {'type': 'category1'},
+    //     "main",
+    //     "material",
+    // ]);
     
-    // material #2
-    let material2 = add([
-        pos(300,600),
-        rect(50, 50),
-        outline(4),
-        color(153, 153, 225),
-        area(),
-        body(),
-        z(10),
-        "main",
-        "material",
-        {'type': 'category2'},
-    ]);
+    // // material #2
+    // let material2 = add([
+    //     pos(300,600),
+    //     rect(50, 50),
+    //     outline(4),
+    //     color(153, 153, 225),
+    //     area(),
+    //     body(),
+    //     z(10),
+    //     "main",
+    //     "material",
+    //     {'type': 'category2'},
+    // ]);
     
-    // material #3
-    let material3 = add([
-        pos(300,50),
-        rect(50, 50),
-        outline(4),
-        color(255, 178, 102),
-        area(),
-        body(),
-        z(10),
-        {'type': 'category3'},
-        "material",
-    ]);
+    // // material #3
+    // let material3 = add([
+    //     pos(300,50),
+    //     rect(50, 50),
+    //     outline(4),
+    //     color(255, 178, 102),
+    //     area(),
+    //     body(),
+    //     z(10),
+    //     {'type': 'category3'},
+    //     "material",
+    // ]);
     
     // // onKeyDown() registers an event that runs every frame as long as the user is holding a certain key
     // onKeyDown("left", () => {
@@ -691,7 +692,7 @@ onCollide("player", "drawer", (s, w) => {
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
-            pos(480-5, 125),
+            pos(475, 125),
             z(5),
             color(105, 105, 105),
             outline(4),
@@ -699,20 +700,21 @@ onCollide("player", "drawer", (s, w) => {
             "vending",
         ]);
     
-        const startX = popup.pos.x + 75;
-        const startY = popup.pos.y + 50;
-        const maxLineHeight = 40;
+        const startX = popup.pos.x + 37.5;
+        const startY = popup.pos.y + 30;
         let currentX = startX;
         let currentY = startY;
-    
+        let currRow = 0
+
         console.log("here are contents;", contents);
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
         // starts a new line 
-        // !TODO: if there are 3 items in the vending machine, make new line :)
-            if (currentX + item.width > popup.pos.x + popup.width - 50) {
-                currentX = startX;
-                currentY += maxLineHeight + 50;
+            if (currRow === 4) { 
+                currentY += item.height + 30
+                currentX = startX
+
+                currRow = 0
             }
     
             const vendingItem = add([
@@ -742,7 +744,7 @@ onCollide("player", "drawer", (s, w) => {
                     updatePocketVending(vendingItem, inPocket);
                 }
             });
-    
+            currRow ++;
             currentX += item.width + 50;
         }
     
@@ -761,7 +763,7 @@ onCollide("player", "drawer", (s, w) => {
     }
     
     let itemsInPocket = 0;
-    
+ 
     function updatePocketVending(material, inPocket){
         if (itemsInPocket < 2) {
             console.log("Passed 1")
@@ -769,10 +771,13 @@ onCollide("player", "drawer", (s, w) => {
             console.log("Passed 2")
 
                 const item1 = add([
-                    rect(material.width, material.height) ,
+                    // rect(material.width, material.height) ,
                     pos(1100, 540),
                     z(11),
-                    color(material.color.r, material.color.g, material.color.b),
+                    sprite("scissors"),
+                    // color(material.color.r, material.color.g, material.color.b),
+                    scale(1.5),
+                    "material"
                
                 ]);
                 inPocket.push(item1);
@@ -782,10 +787,13 @@ onCollide("player", "drawer", (s, w) => {
             console.log("Passed 4")
 
                 const item2 = add([
-                    rect(material.width, material.height) ,
                     pos(1100, 640),
                     z(11),
-                    color(material.color.r, material.color.g, material.color.b),
+
+                    sprite("scissors"),
+                    // color(material.color.r, material.color.g, material.color.b),
+                    scale(1.5),
+                    "material"
                 ]);
                 inPocket.push(item2)
             }
