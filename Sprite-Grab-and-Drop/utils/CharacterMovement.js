@@ -213,13 +213,21 @@ class CharacterMovement{
     function interactWithItem(itemKey) {
         const item = items[itemKey];
         // console.log("here is item", item);
-        // console.log("here is item key", itemKey);
+        console.log("here is item key", itemKey);
+        if(cdrawer.access){
+            add([
+                sprite(item.alertSprite),
+                pos(center().x-100, 20),
+                scale(.15),
+                "alert"
+                // pos(item.initialPos.x, item.initialPos.y),
+            ]);
+        }
 
         if (item.alertBox == null && !item.hasFound) {
             // console.log("passed")
             add([
                 sprite(item.spriteName),
-                // pos(item.initialPos.x, item.initialPos.y),
                 area(),
                 body(),
                 pos(center().x, center().y),
@@ -227,7 +235,7 @@ class CharacterMovement{
                 scale(1.5),
                 "material",
                 { image: item.spriteName },
-                itemKey
+                { itemKey : item.spriteName}
             ]);
         }
     }
@@ -449,10 +457,8 @@ function cricutCraft(){
         // cricut.buildNoBlueprint = true;
 
     }
-
-    
 }
-//! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE
+//! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
 onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
 })
@@ -472,41 +478,7 @@ onKeyPress("space", () => {
 });
 
 
-function addItemToFloor(itemObject, image){
 
-    let xDisplace = 0;
-    if (itemObject.alertBox !== null) {
-        if(itemObject.hasFound){
-            console.log("Added")
-
-            add(
-                [sprite(`${image}`),
-                    pos(center().x+xDisplace, center().y),
-                scale(1.5),
-                body(),
-                area(),
-                z(5),
-                "material",
-                {image: `${image}`},
-                // "main"
-                `${image}`])
-                
-        }
-        // const material1 = add([
-        //     pos(300,300),
-        //     rect(50, 50),
-        //     outline(4),
-        //     color(102, 178, 225),
-        //     area(),
-        //     body(),
-        //     z(10),
-        //     {'type': 'category1'},
-        //     "main",
-        //     "material",
-        // ]);
-        xDisplace = xDisplace + 100;
-    }
-}
 // !TODO: make the enter function dynamic for sprite
 // dismiss alerts
 function handleEnterPress() {
@@ -521,6 +493,8 @@ function handleEnterPress() {
         console.log("Current item details:", currentValue);
 
         interactWithItem(currentKey);
+
+        
         
         // Move to the next item
         currentIndex++;
@@ -530,27 +504,18 @@ function handleEnterPress() {
 }
 onKeyPress("enter", () => {
     // Destroys all alerts
-    destroyAll("alert");
     canPopItem = true;
     // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
     //* Scissors
     console.log("cdrawer access", cdrawer.access)
     if(cdrawer.access){
         handleEnterPress();
-
     }
+    setTimeout(() => {
+        destroyAll("alert");
+    }, 2000);
+    
 
-    // !OLD CODE:
-
-    // const scissorsObject = myCDrawerData.scissors;
-    // addItemToFloor(scissorsObject, "scissors");
-    // //* Paper
-    // const paperObject = myCDrawerData.paper;
-    // addItemToFloor(paperObject, "paper")
-
-    // //* Wood
-    // const woodObject = myCDrawerData.wood; 
-    // addItemToFloor(woodObject, "wood");   
     
     // !TODO: Remove benchy, since final item
     let xDisplace = 10;
@@ -606,7 +571,6 @@ onKeyPress("enter", () => {
     })
 
 //! Collide Logic: Player and Machine
-let wasCollidingWithCDrawer = false;
 onCollide("player", "machine", (s,w) =>{
     cricut.access = true;
 })
@@ -636,10 +600,11 @@ onCollide("player", "drawer", (s, w) => {
 
     onCollideEnd("player", "cdrawer", () => {
         console.log("collide end")
+        cdrawer.access = false;
     })
+
 //*isColliding
   player.onUpdate(() =>{
-    
 
     if(player.isColliding("cricut")){
         cricut.access = true;
@@ -671,6 +636,83 @@ onCollide("player", "drawer", (s, w) => {
         z(0),
     ]);
 
+    // !NEW VENDING
+    // function showVendingContents(contents) {
+    //     const popup = add([
+    //         rect(500, 600),
+    //         pos(475, 125),
+    //         z(5),
+    //         color(105, 105, 105),
+    //         outline(4),
+    //         scale(.75),
+    //         "vending",
+    //     ]);
+    
+    //     const startX = popup.pos.x + 37.5;
+    //     const startY = popup.pos.y + 30;
+    //     let currentX = startX;
+    //     let currentY = startY;
+    //     let currRow = 0
+
+    //     console.log("here are contents;", contents);
+    //     for (let i = 0; i < contents.length; i++) {
+    //         const item = contents[i];
+
+    //     console.log("here are contents at i;", contents[i]);
+    //     console.log("here is item", item)
+
+    //     // starts a new line 
+    //         if (currRow === 4) { 
+    //             currentY += item.height + 40
+    //             currentX = startX
+
+    //             currRow = 0
+    //         }
+
+    //         const vendingItem = add([
+    //             // rect(item.width, item.height) ,
+    //             pos(currentX, currentY),
+    //             z(11),
+    //             "vending",
+    //             // !TODO: Make sprite image dynamic
+    //             // sprite(`${contents[i]}`),
+    //             sprite("scissors"),
+
+    //             scale(1.5),
+    //             z(11),
+    //             "material",
+               
+    //         ]);
+    //         // console.log("item is paper", item === "paper");
+    //         // if(item === "paper") {
+    //         //     const vendingItem = add([
+    //         //         pos(currentX+10, currentY+10),
+    //         //         z(11),
+    //         //         "vending",
+    //         //         sprite("scissors"), // or the exact name/path if it's different
+    //         //         scale(1.5),
+    //         //         z(15),
+    //         //         "material",
+    //         //     ]);
+    //         // }
+            
+
+    
+    //         onClick(() => {
+    //             // Check if the mouse click occurred within the bounds of itemEntity
+    //             if (isClicked(vendingItem)) {
+    //                 // Handle click events on items by calling the updatePocket function
+    //                 console.log("CALLED")
+    //                 updatePocketVending(vendingItem, inPocket);
+    //             }
+    //         });
+    //         currRow ++;
+    //         currentX += item.width + 50;
+    //     }
+    
+    //     isPopupVisible = true;
+    // }
+    // !OLD VENDING
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
@@ -691,6 +733,8 @@ onCollide("player", "drawer", (s, w) => {
         console.log("here are contents;", contents);
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
+            console.log("here is item!!!", item.itemKey)
+            
         // starts a new line 
             if (currRow === 4) { 
                 currentY += item.height + 40
@@ -706,7 +750,7 @@ onCollide("player", "drawer", (s, w) => {
                 // color(item.color.r, item.color.g, item.color.b),
                 "vending",
                 // !TODO: Make sprite image dynamic
-                sprite("scissors"),
+                sprite(`${item.itemKey}`),
                 // rect(10,10),
                 // sprite(`${image}`),
 
@@ -732,6 +776,7 @@ onCollide("player", "drawer", (s, w) => {
     
         isPopupVisible = true;
     }
+
     function getDistance(x1, y1, x2, y2){
         let x = x2 - x1;
         let y = y2 - y1;
@@ -817,14 +862,28 @@ onCollide("player", "drawer", (s, w) => {
         }
     });
     
-    player.onCollide("material", (material) => {
-      console.log("here is material", material)
-        if (!vendingContents.includes(material)) {
-            vendingContents.push(material);
+    // player.onCollide("material", (materialEntity) => {
+    //   const materialKey = materialEntity.itemKey;
+        // if (!vendingContents.includes(materialKey)) {
+        //     vendingContents.push(materialKey);
+        //     console.log(`pushed ${materialKey}`)
+
+        // }
+        // updatePocket(materialEntity, inPocket);
+        // materialEntity.use(body({ isStatic: true }));
+    player.onCollide("material", (materialEntity) => {
+      const materialKey = materialEntity.itemKey;
+      console.log("here is material key", materialKey);
+      console.log("here is material entity", materialEntity);
+
+        if (!vendingContents.includes(materialEntity)) {
+            vendingContents.push(materialEntity);
+            console.log(`pushed ${materialEntity}`)
 
         }
-        updatePocket(material, inPocket);
-        material.use(body({ isStatic: true }));
+        updatePocket(materialEntity, inPocket);
+        materialEntity.use(body({ isStatic: true }));
+        
     });
     
     onKeyPress("q", () => {
