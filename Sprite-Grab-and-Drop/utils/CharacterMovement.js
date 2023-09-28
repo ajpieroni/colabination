@@ -213,7 +213,22 @@ class CharacterMovement{
             initialPos: { x: 300, y: 300 },
             hasFound: false,
             alertBox: null
-        }
+        },
+        yarn: {
+            spriteName: 'yarn',
+            alertSprite: 'yarnAlert',
+            initialPos: { x: 300, y: 300 },
+            hasFound: false,
+            alertBox: null
+        },
+        hammer: {
+            spriteName: 'hammer',
+            alertSprite: 'hammerAlert',
+            initialPos: { x: 300, y: 300 },
+            hasFound: false,
+            alertBox: null
+        },
+
     }
 
     // !Init Functions
