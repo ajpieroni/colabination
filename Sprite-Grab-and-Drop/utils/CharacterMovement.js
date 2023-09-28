@@ -219,8 +219,6 @@ class CharacterMovement{
     // !Init Functions
     function interactWithItem(itemKey) {
         const item = items[itemKey];
-        // console.log("here is item", item);
-        console.log("here is item key", itemKey);
         if(cdrawer.access){
             add([
                 sprite(item.alertSprite),
@@ -232,7 +230,6 @@ class CharacterMovement{
         }
 
         if (item.alertBox == null && !item.hasFound) {
-            // console.log("passed")
             add([
                 sprite(item.spriteName),
                 area(),
@@ -382,7 +379,6 @@ function interactWithDrawer(){
         if(myDrawer.length > 0 && canPopItem){
             const itemName = myDrawer.pop();
             const foundItem = myDrawerData[itemName];
-            console.log("here is found item", foundItem);
             canPopItem = false;
             if(foundItem.alertBox === null && !foundItem.hasFound){
                     PLAalertBox = add([
@@ -491,13 +487,12 @@ onKeyPress("space", () => {
 function handleEnterPress() {
     const itemKeys = Object.keys(items);
     
-    // Check if index is within bounds
     if (currentIndex < itemKeys.length) {
         const currentKey = itemKeys[currentIndex];
         const currentValue = items[currentKey];
-        
-        console.log("Current item key:", currentKey);
-        console.log("Current item details:", currentValue);
+        // *Add back to check items in array when searching in drawer
+        // console.log("Current item key:", currentKey);
+        // console.log("Current item details:", currentValue);
 
         interactWithItem(currentKey);
 
@@ -506,7 +501,7 @@ function handleEnterPress() {
         // Move to the next item
         currentIndex++;
     } else {
-        console.log("No more items to process.");
+        alert("There are no more items in this drawer.");
     }
 }
 onKeyPress("enter", () => {
@@ -514,7 +509,6 @@ onKeyPress("enter", () => {
     canPopItem = true;
     // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
     //* Scissors
-    console.log("cdrawer access", cdrawer.access)
     if(cdrawer.access){
         handleEnterPress();
     }
@@ -589,14 +583,12 @@ onCollide("player", "cricut", (s,w) =>{
 
 // Collide Logic: Player and Drawer
 onCollide("player", "drawer", (s, w) => {
-    console.log("Collided drawer");
     drawer.access = true;
 
   });
 
 
   onCollide("player", "cdrawer", (s, w) => {
-    console.log("Collided cdrawer");
     cdrawer.access = true;
   });
 
@@ -606,7 +598,6 @@ onCollide("player", "drawer", (s, w) => {
 
 
     onCollideEnd("player", "cdrawer", () => {
-        console.log("collide end")
         cdrawer.access = false;
     })
 
@@ -661,11 +652,9 @@ onCollide("player", "drawer", (s, w) => {
         let currentY = startY;
         let currRow = 0
 
-        console.log("here are contents;", contents);
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
             const itemKey = item.itemKey;
-            console.log("here is item!!!", item.itemKey)
             
         // starts a new line 
             if (currRow === 4) { 
@@ -701,14 +690,6 @@ onCollide("player", "drawer", (s, w) => {
             onClick(() => {
                 // Check if the mouse click occurred within the bounds of itemEntity
                 if (isClicked(vendingItem)) {
-                    const itemKey = vendingItem.itemKey;
-
-                    console.log("here is vending", vendingItem)
-                    console.log("here is vending", vendingItem.itemKey)
-
-
-                    // Handle click events on items by calling the updatePocket function
-                    console.log("CALLED")
                     updatePocketVending(vendingItem, inPocket);
                 }
             });
@@ -735,13 +716,7 @@ onCollide("player", "drawer", (s, w) => {
  
     function updatePocketVending(material, inPocket){
         if (itemsInPocket < 2) {
-            console.log("Passed 1")
             if (itemsInPocket === 0) {
-            console.log("Passed 2")
-            console.log("here is material", material);
-            console.log("here is materialkey", material.itemKey)
-
-
                 const item1 = add([
                     // rect(material.width, material.height) ,
                     pos(1100, 540),
@@ -753,16 +728,8 @@ onCollide("player", "drawer", (s, w) => {
                
                 ]);
                 inPocket.push(item1);
-            console.log("Passed 3")
 
             } else {
-            console.log("Passed 4")
-            console.log("here is material", material);
-            console.log("here is materialkey", material.itemKey)
-            // console.log("here is materialitemkey", material.item.itemKey)
-
-
-
                 const item2 = add([
                     pos(1100, 640),
                     z(11),
@@ -812,23 +779,10 @@ onCollide("player", "drawer", (s, w) => {
         }
     });
     
-    // player.onCollide("material", (materialEntity) => {
-    //   const materialKey = materialEntity.itemKey;
-        // if (!vendingContents.includes(materialKey)) {
-        //     vendingContents.push(materialKey);
-        //     console.log(`pushed ${materialKey}`)
-
-        // }
-        // updatePocket(materialEntity, inPocket);
-        // materialEntity.use(body({ isStatic: true }));
     player.onCollide("material", (materialEntity) => {
-      const materialKey = materialEntity.itemKey;
-      console.log("here is material key", materialKey);
-      console.log("here is material entity", materialEntity);
 
         if (!vendingContents.includes(materialEntity)) {
             vendingContents.push(materialEntity);
-            console.log(`pushed ${materialEntity}`)
 
         }
         updatePocket(materialEntity, inPocket);
@@ -837,7 +791,6 @@ onCollide("player", "drawer", (s, w) => {
     });
     
     onKeyPress("q", () => {
-        console.log(inPocket)
         if (itemsInPocket !== 0) {
             itemsInPocket--;
             let item = inPocket.pop();
