@@ -206,6 +206,13 @@ class CharacterMovement{
             initialPos: { x: 300, y: 300 },
             hasFound: false,
             alertBox: null
+        },
+        wood: {
+            spriteName: 'wood',
+            alertSprite: 'woodAlert',
+            initialPos: { x: 300, y: 300 },
+            hasFound: false,
+            alertBox: null
         }
     }
 
@@ -636,83 +643,7 @@ onCollide("player", "drawer", (s, w) => {
         z(0),
     ]);
 
-    // !NEW VENDING
-    // function showVendingContents(contents) {
-    //     const popup = add([
-    //         rect(500, 600),
-    //         pos(475, 125),
-    //         z(5),
-    //         color(105, 105, 105),
-    //         outline(4),
-    //         scale(.75),
-    //         "vending",
-    //     ]);
-    
-    //     const startX = popup.pos.x + 37.5;
-    //     const startY = popup.pos.y + 30;
-    //     let currentX = startX;
-    //     let currentY = startY;
-    //     let currRow = 0
-
-    //     console.log("here are contents;", contents);
-    //     for (let i = 0; i < contents.length; i++) {
-    //         const item = contents[i];
-
-    //     console.log("here are contents at i;", contents[i]);
-    //     console.log("here is item", item)
-
-    //     // starts a new line 
-    //         if (currRow === 4) { 
-    //             currentY += item.height + 40
-    //             currentX = startX
-
-    //             currRow = 0
-    //         }
-
-    //         const vendingItem = add([
-    //             // rect(item.width, item.height) ,
-    //             pos(currentX, currentY),
-    //             z(11),
-    //             "vending",
-    //             // !TODO: Make sprite image dynamic
-    //             // sprite(`${contents[i]}`),
-    //             sprite("scissors"),
-
-    //             scale(1.5),
-    //             z(11),
-    //             "material",
-               
-    //         ]);
-    //         // console.log("item is paper", item === "paper");
-    //         // if(item === "paper") {
-    //         //     const vendingItem = add([
-    //         //         pos(currentX+10, currentY+10),
-    //         //         z(11),
-    //         //         "vending",
-    //         //         sprite("scissors"), // or the exact name/path if it's different
-    //         //         scale(1.5),
-    //         //         z(15),
-    //         //         "material",
-    //         //     ]);
-    //         // }
-            
-
-    
-    //         onClick(() => {
-    //             // Check if the mouse click occurred within the bounds of itemEntity
-    //             if (isClicked(vendingItem)) {
-    //                 // Handle click events on items by calling the updatePocket function
-    //                 console.log("CALLED")
-    //                 updatePocketVending(vendingItem, inPocket);
-    //             }
-    //         });
-    //         currRow ++;
-    //         currentX += item.width + 50;
-    //     }
-    
-    //     isPopupVisible = true;
-    // }
-    // !OLD VENDING
+    // !VENDING
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
@@ -733,6 +664,7 @@ onCollide("player", "drawer", (s, w) => {
         console.log("here are contents;", contents);
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
+            const itemKey = item.itemKey;
             console.log("here is item!!!", item.itemKey)
             
         // starts a new line 
@@ -757,6 +689,10 @@ onCollide("player", "drawer", (s, w) => {
                 scale(1.5),
                 z(11),
                 "material",
+                {
+           
+                itemKey: itemKey
+                }
                
             ]);
             
@@ -765,6 +701,12 @@ onCollide("player", "drawer", (s, w) => {
             onClick(() => {
                 // Check if the mouse click occurred within the bounds of itemEntity
                 if (isClicked(vendingItem)) {
+                    const itemKey = vendingItem.itemKey;
+
+                    console.log("here is vending", vendingItem)
+                    console.log("here is vending", vendingItem.itemKey)
+
+
                     // Handle click events on items by calling the updatePocket function
                     console.log("CALLED")
                     updatePocketVending(vendingItem, inPocket);
@@ -796,12 +738,15 @@ onCollide("player", "drawer", (s, w) => {
             console.log("Passed 1")
             if (itemsInPocket === 0) {
             console.log("Passed 2")
+            console.log("here is material", material);
+            console.log("here is materialkey", material.itemKey)
+
 
                 const item1 = add([
                     // rect(material.width, material.height) ,
                     pos(1100, 540),
                     z(11),
-                    sprite("scissors"),
+                    sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
                     scale(1.5),
                     "material"
@@ -812,12 +757,17 @@ onCollide("player", "drawer", (s, w) => {
 
             } else {
             console.log("Passed 4")
+            console.log("here is material", material);
+            console.log("here is materialkey", material.itemKey)
+            // console.log("here is materialitemkey", material.item.itemKey)
+
+
 
                 const item2 = add([
                     pos(1100, 640),
                     z(11),
 
-                    sprite("scissors"),
+                    sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
                     scale(1.5),
                     "material"
