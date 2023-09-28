@@ -137,7 +137,7 @@ function showVendingContents(contents) {
             if (isClicked(vendingItem)) {
                 // Handle click events on items by calling the updatePocket function
                 updatePocketVending(vendingItem, inPocket);
-            }
+            } 
         });
 
         currentX += item.width + 50;

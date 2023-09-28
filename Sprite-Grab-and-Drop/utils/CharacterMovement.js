@@ -431,7 +431,7 @@ onKeyPress("b", () =>{
 })
 onKeyPress("space", () => {
     //! DRAWERS 
-    
+
     //* Cricut Drawer: Scissors, Paper, Wood, noItems
     interactWithCDrawer.call(this);
     //* Printing Drawer: PLA Plastic, (Pliers)
@@ -672,23 +672,6 @@ onCollide("player", "drawer", (s, w) => {
     //     "material",
     // ]);
     
-    // // onKeyDown() registers an event that runs every frame as long as the user is holding a certain key
-    // onKeyDown("left", () => {
-    //     player.move(-SPEED, 0);
-    // });
-    
-    // onKeyDown("right", () => {
-    //     player.move(SPEED, 0);
-    // });
-    
-    // onKeyDown("up", () => {
-    //     player.move(0, -SPEED);
-    // });
-    
-    // onKeyDown("down", () => {
-    //     player.move(0, SPEED);
-    // });
-    
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
@@ -711,7 +694,7 @@ onCollide("player", "drawer", (s, w) => {
             const item = contents[i];
         // starts a new line 
             if (currRow === 4) { 
-                currentY += item.height + 30
+                currentY += item.height + 40
                 currentX = startX
 
                 currRow = 0
@@ -845,7 +828,6 @@ onCollide("player", "drawer", (s, w) => {
         material.use(body({ isStatic: true }));
     });
     
-    
     onKeyPress("q", () => {
         console.log(inPocket)
         if (itemsInPocket !== 0) {
@@ -854,7 +836,33 @@ onCollide("player", "drawer", (s, w) => {
             destroy(item);
         }
     });
+    //TODO: allow to put many items on the table
+    // let table_x = 910
+    // let table_y = 230
+    // let atCraftingTable = false;
+    // let onItemsOnTable = 0
+    // player.onCollide("craftingTable", (table) => {
+    //     atCraftingTable = true
+
+        
+    //     onKeyPress("q", () => {
+            
+
+    //         if (itemsInPocket !== 0 && onItemsOnTable < 6) {
+    //             itemsInPocket--;
+                
+                
+    //             let item = inPocket.pop();
     
+    //             item.moveTo(table_x, table_y)
+    //             table_y += 50
+    //             onItemsOnTable ++;
+    //         }
+    //     }
+        
+    //     ) 
+    //     console.log("you are at table")
+    // })
 
     }
 
