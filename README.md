@@ -1,13 +1,20 @@
 # Meeting Notes
 
+## September 29th, Happy Mid-Autumn Festival
+Agenda:
+- [ ]  Show and Tell from the week
+- [ ]  Test play the game
+- [ ]  Anni will be out next friday
+- [ ]  Next step...
+
 ## September 22th
 Agenda:
-- [ ] talk about backend migration and seed, and this `bin/rails db:environment:set RAILS_ENV=development`
-- [ ] define the functions of pockets, vending machine and blueprints
-- [ ] decide on the blueprints
-- [ ] decide on the game name
-- [ ] check in on everyone's issue and assign new issues
-- [ ] combining code and next step...
+- [x] talk about backend migration and seed, and this `bin/rails db:environment:set RAILS_ENV=development`
+- [x] define the functions of pockets, vending machine and blueprints
+- [x] decide on the blueprints: TBD
+- [x] decide on the game name: Co-Labnation
+- [x] check in on everyone's issue and assign new issues
+- [x] combining code and next step...
 
 ### <span style="color:lightblue">Game Name: Co-Labination</span>
 ### Team Name: Studio Arbor (make stickers?)
