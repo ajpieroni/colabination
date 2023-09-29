@@ -2,10 +2,10 @@
 
 ## September 29th, Happy Mid-Autumn Festival
 Agenda:
-- [ ]  Show and Tell from the week
-- [ ]  Test play the game
-- [ ]  Anni will be out next friday
-- [ ]  Next step...
+- [x]  Show and Tell from the week
+- [x]  Test play the game
+- [x]  Anni will be out next friday
+- [x]  Next step...
 
 Possible Issues to Work on: 
 - Combine items
