@@ -7,6 +7,9 @@ Agenda:
 - [ ]  Anni will be out next friday
 - [ ]  Next step...
 
+### Possible Issues to Work on: 
+- Combine items
+
 ## September 22th
 Agenda:
 - [x] talk about backend migration and seed, and this `bin/rails db:environment:set RAILS_ENV=development`
