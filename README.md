@@ -7,8 +7,22 @@ Agenda:
 - [ ]  Anni will be out next friday
 - [ ]  Next step...
 
-### Possible Issues to Work on: 
+Possible Issues to Work on: 
 - Combine items
+- Arrow select on vending machine
+- Document what keys are required for a possible future tutorial
+- Upload backdrop and export layers as pngs to incorporate with functionality (on Box)
+- Look into adding buttons to computer to play test game with controls
+- Design individual sprites
+
+Handling Collisions
+- debug.inspect = true -> in main
+
+Frontend Over Backend
+- keep items in frontend, access when you need it from possibly a folder
+- not best to access from back end
+
+
 
 ## September 22th
 Agenda:
