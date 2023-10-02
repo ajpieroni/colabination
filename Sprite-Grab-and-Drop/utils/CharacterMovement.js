@@ -480,20 +480,20 @@ function cricutCraft(){
 onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
 })
-onKeyPress("space", () => {
-    //! DRAWERS 
+// onKeyPress("space", () => {
+//     //! DRAWERS 
 
-    //* Cricut Drawer: Scissors, Paper, Wood, noItems
-    interactWithCDrawer.call(this);
-    //* Printing Drawer: PLA Plastic, (Pliers)
-    interactWithDrawer.call(this);
+//     //* Cricut Drawer: Scissors, Paper, Wood, noItems
+//     interactWithCDrawer.call(this);
+//     //* Printing Drawer: PLA Plastic, (Pliers)
+//     interactWithDrawer.call(this);
 
-    // !Machines
-    //* Cricut: discovery, needs   
-    discoverCricut.call(this);
-    //* Cricut: craft
-    cricutCraft.call(this);
-});
+//     // !Machines
+//     //* Cricut: discovery, needs   
+//     discoverCricut.call(this);
+//     //* Cricut: craft
+//     cricutCraft.call(this);
+// });
 
 
 
