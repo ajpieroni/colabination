@@ -630,63 +630,7 @@ onCollide("player", "drawer", (s, w) => {
     }
 })
 
-    onKeyPress("left", () => {
-        if(isPopupVisible){
-            if (vendingSelect > 0){
-                vendingSelect --;
-                selectX -= 60;
-            }
-        }
-    })
-    onKeyPress("right", () => {
-        if(isPopupVisible){
-            if (vendingSelect < vendingContents.length -1){
-                vendingSelect ++;
-                selectX += 60;
-            }
-        }
-    })
-    onKeyPress("down", () => {
-        if(isPopupVisible){
-            if (vendingSelect+4 < vendingContents.length){
-                vendingSelect +=4;
-                selectY += 60
-            }
-        }
-    })
-    onKeyPress("up", () => {
-        if(isPopupVisible){
-            if (vendingSelect-4 >= 0){
-                vendingSelect -=4;
-                selectY -= 60;
-            }
-        }
-    })
-    onKeyPress("enter", () => {
-        if(isPopupVisible && vendingContents.length > 0){
-            let itemKey = vendingContents[vendingSelect].itemKey
-            // const vendingItem = add([
-            //     // rect(item.width, item.height) ,
-            //     pos(0, 0),
-            //     z(-10),
-            //     // color(item.color.r, item.color.g, item.color.b),
-            //     "vending",
-            //     // !TODO: Make sprite image dynamic
-            //     sprite(`${itemKey}`),
-            //     // rect(10,10),
-            //     // sprite(`${image}`),
 
-            //     scale(1.5),
-            //     "material",
-            //     {
-           
-            //     itemKey: itemKey
-            //     }
-               
-            // ])
-            updatePocketVendingArrow(itemKey, inPocket)
-        }
-    })
 
     function updatePocketVendingArrow(material, inPocket){
         if (itemsInPocket < 2) {
@@ -729,8 +673,6 @@ onCollide("player", "drawer", (s, w) => {
     let vendingContents = [];
     let inPocket = [];
     let vendingSelect = 0;
-    let selectX = 512.5;
-    let selectY = 155;
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
@@ -764,11 +706,86 @@ onCollide("player", "drawer", (s, w) => {
 
         const selected = add([
             rect(50, 50),
-            pos(selectX, selectY),
+            pos(startX, startY),
             z(10),
-            color(0,0,0),
-            "vending"
+            color(255,255,255),
+            "selected"
         ])
+
+        onKeyPress("left", () => {
+            if(isPopupVisible){
+                if (vendingSelect > 0){
+                    vendingSelect --;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 4;
+                    let gridY = Math.floor(vendingSelect/4)
+                    const selected = add([
+                        rect(50, 50),
+                        pos(startX+gridX*80, startY+gridY*80),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("right", () => {
+            if(isPopupVisible){
+                if (vendingSelect < vendingContents.length -1){
+                    vendingSelect ++;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 4;
+                    let gridY = Math.floor(vendingSelect/4)
+                    const selected = add([
+                        rect(50, 50),
+                        pos(startX+gridX*80, startY+gridY*80),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("down", () => {
+            if(isPopupVisible){
+                if (vendingSelect+4 < vendingContents.length){
+                    vendingSelect +=4;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 4;
+                    let gridY = Math.floor(vendingSelect/4)
+                    const selected = add([
+                        rect(50, 50),
+                        pos(startX+gridX*80, startY+gridY*80),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("up", () => {
+            if(isPopupVisible){
+                if (vendingSelect-4 >= 0){
+                    vendingSelect -=4;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 4;
+                    let gridY = Math.floor(vendingSelect/4)
+                    const selected = add([
+                        rect(50, 50),
+                        pos(startX+gridX*80, startY+gridY*80),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("enter", () => {
+            if(isPopupVisible && vendingContents.length > 0){
+                let itemKey = vendingContents[vendingSelect].itemKey
+                updatePocketVendingArrow(itemKey, inPocket)
+            }
+        })
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
             const itemKey = item.itemKey;
@@ -884,6 +901,7 @@ onCollide("player", "drawer", (s, w) => {
     onKeyPress("v", () => {
         if (isPopupVisible) {
             destroyAll("vending");
+            destroyAll("selected");
             isPopupVisible = false;
             SPEED = 300;
         } else {
