@@ -631,7 +631,6 @@ onCollide("player", "drawer", (s, w) => {
 })
 
 
-
     function updatePocketVendingArrow(material, inPocket){
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
@@ -721,7 +720,7 @@ onCollide("player", "drawer", (s, w) => {
                     let gridY = Math.floor(vendingSelect/4)
                     const selected = add([
                         rect(50, 50),
-                        pos(startX+gridX*80, startY+gridY*80),
+                        pos(startX+gridX*83, startY+gridY*80),
                         z(10),
                         color(255,255,255),
                         "selected"
@@ -738,7 +737,7 @@ onCollide("player", "drawer", (s, w) => {
                     let gridY = Math.floor(vendingSelect/4)
                     const selected = add([
                         rect(50, 50),
-                        pos(startX+gridX*80, startY+gridY*80),
+                        pos(startX+gridX*83, startY+gridY*80),
                         z(10),
                         color(255,255,255),
                         "selected"
@@ -755,7 +754,7 @@ onCollide("player", "drawer", (s, w) => {
                     let gridY = Math.floor(vendingSelect/4)
                     const selected = add([
                         rect(50, 50),
-                        pos(startX+gridX*80, startY+gridY*80),
+                        pos(startX+gridX*83, startY+gridY*80),
                         z(10),
                         color(255,255,255),
                         "selected"
@@ -772,7 +771,7 @@ onCollide("player", "drawer", (s, w) => {
                     let gridY = Math.floor(vendingSelect/4)
                     const selected = add([
                         rect(50, 50),
-                        pos(startX+gridX*80, startY+gridY*80),
+                        pos(startX+gridX*83, startY+gridY*80),
                         z(10),
                         color(255,255,255),
                         "selected"
