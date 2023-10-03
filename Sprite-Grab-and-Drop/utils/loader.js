@@ -16,17 +16,21 @@ export const load = {
         loadSprite("scissors", "./assets/scissor-pixel.png")
         loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
-        loadSprite("paper", "./assets/paper.png")
+        loadSprite("paper", "./assets/paper.PNG")
         loadSprite("woodAlert", "./assets/colablogo.png")
-        loadSprite("wood", "./assets/wood.png")
+        loadSprite("wood", "./assets/wood.PNG")
         loadSprite("neededAlert", "./assets/neededAlert.png")
         loadSprite("neededBlueprintAlert", "./assets/neededBlueprintAlert.png")
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
-        loadSprite("hammer", "./assets/hammer.png")
+        loadSprite("hammer", "./assets/hammer.PNG")
         loadSprite("yarn", "./assets/yarn.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
         loadSprite("yarnAlert", "./assets/yarn.png")
+
+        loadSprite("solder", "./assets/solder.PNG")
+        loadSprite("woodArtMario", "./assets/woodartmario.PNG")
+
 
 
 
