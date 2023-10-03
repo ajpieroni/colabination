@@ -1,6 +1,7 @@
 class ToolsController < ApplicationController
   before_action :set_tool, only: %i[ show edit update destroy ]
 
+
   # GET /tools or /tools.json
   def index
     @tools = Tool.all
@@ -47,6 +48,7 @@ class ToolsController < ApplicationController
     end
   end
 
+
   # DELETE /tools/1 or /tools/1.json
   def destroy
     @tool.destroy
@@ -65,6 +67,6 @@ class ToolsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tool_params
-      params.require(:tool).permit(:name, :description, :globalCount)
+      params.require(:tool).permit(:name, :description, :spriteLocation, :globalCount, :sprite)
     end
 end

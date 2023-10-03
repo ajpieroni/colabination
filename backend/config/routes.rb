@@ -9,3 +9,10 @@ Rails.application.routes.draw do
   # opens up all routes in items
   resources :items
 end
+
+Rails.application.routes.draw do
+  namespace :api do
+    get 'combinations', to: 'combinations#index'
+    put 'update_items', to: 'combinations#update_items'
+  end
+end
