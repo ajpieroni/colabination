@@ -630,12 +630,107 @@ onCollide("player", "drawer", (s, w) => {
     }
 })
 
+    onKeyPress("left", () => {
+        if(isPopupVisible){
+            if (vendingSelect > 0){
+                vendingSelect --;
+                selectX -= 60;
+            }
+        }
+    })
+    onKeyPress("right", () => {
+        if(isPopupVisible){
+            if (vendingSelect < vendingContents.length -1){
+                vendingSelect ++;
+                selectX += 60;
+            }
+        }
+    })
+    onKeyPress("down", () => {
+        if(isPopupVisible){
+            if (vendingSelect+4 < vendingContents.length){
+                vendingSelect +=4;
+                selectY += 60
+            }
+        }
+    })
+    onKeyPress("up", () => {
+        if(isPopupVisible){
+            if (vendingSelect-4 >= 0){
+                vendingSelect -=4;
+                selectY -= 60;
+            }
+        }
+    })
+    onKeyPress("enter", () => {
+        if(isPopupVisible && vendingContents.length > 0){
+            let itemKey = vendingContents[vendingSelect].itemKey
+            // const vendingItem = add([
+            //     // rect(item.width, item.height) ,
+            //     pos(0, 0),
+            //     z(-10),
+            //     // color(item.color.r, item.color.g, item.color.b),
+            //     "vending",
+            //     // !TODO: Make sprite image dynamic
+            //     sprite(`${itemKey}`),
+            //     // rect(10,10),
+            //     // sprite(`${image}`),
+
+            //     scale(1.5),
+            //     "material",
+            //     {
+           
+            //     itemKey: itemKey
+            //     }
+               
+            // ])
+            updatePocketVendingArrow(itemKey, inPocket)
+        }
+    })
+
+    function updatePocketVendingArrow(material, inPocket){
+        if (itemsInPocket < 2) {
+            if (itemsInPocket === 0) {
+                const item1 = add([
+                    // rect(material.width, material.height) ,
+                    pos(1100, 540),
+                    z(11),
+                    sprite(material),
+                    // color(material.color.r, material.color.g, material.color.b),
+                    scale(1.5),
+                    "material"
+               
+                ]);
+                inPocket.push(item1);
+
+            } else {
+                const item2 = add([
+                    pos(1100, 640),
+                    z(11),
+
+                    sprite(material),
+                    // color(material.color.r, material.color.g, material.color.b),
+                    scale(1.5),
+                    "material"
+                ]);
+                inPocket.push(item2)
+            }
+            itemsInPocket++;
+           
+        } else {
+            // shake(5);
+            alert("Remove items from pocket to select from vending machine")
+        }
+    
+    }
     // !INVENTORY
 
     let isPopupVisible = false;
     let vendingContents = [];
     let inPocket = [];
-    
+    let vendingSelect = 0;
+    let selectX = 512.5;
+    let selectY = 155;
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
@@ -660,17 +755,23 @@ onCollide("player", "drawer", (s, w) => {
             scale(.75),
             "vending",
         ]);
-    
+        
         const startX = popup.pos.x + 37.5;
         const startY = popup.pos.y + 30;
         let currentX = startX;
         let currentY = startY;
         let currRow = 0
 
+        const selected = add([
+            rect(50, 50),
+            pos(selectX, selectY),
+            z(10),
+            color(0,0,0),
+            "vending"
+        ])
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
             const itemKey = item.itemKey;
-            
         // starts a new line 
             if (currRow === 4) { 
                 currentY += item.height + 40
@@ -689,7 +790,6 @@ onCollide("player", "drawer", (s, w) => {
                 sprite(`${item.itemKey}`),
                 // rect(10,10),
                 // sprite(`${image}`),
-
                 scale(1.5),
                 z(11),
                 "material",
@@ -791,6 +891,7 @@ onCollide("player", "drawer", (s, w) => {
             showVendingContents(vendingContents);
             isPopupVisible = true;
             SPEED = 0;
+            vendingSelect = 0;
         }
     });
     
