@@ -75,10 +75,7 @@ class CharacterMovement{
                     pos(0, 25),
                     z(10),
                 ],
-                
-                
                 // "(":drawer,
-                
             }
         };
 
@@ -104,6 +101,12 @@ class CharacterMovement{
         {buildNoBlueprint: false}
 
     ])
+    // let cricutAlertBox;
+    // let neededAlert;
+    // let PLAalertBox;
+    // let buildAlert;
+
+
     const block_size = 64;
 
     const cdrawer = add([
@@ -114,7 +117,8 @@ class CharacterMovement{
         pos(600, 650),
         z(0),
         "cdrawer",
-        {access: false}
+        {access: false},
+        {alertSprite: "cricutAlert"}
     ])
     const drawer = add([
         rect(12, block_size*1.5),
@@ -480,20 +484,19 @@ function cricutCraft(){
 onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
 })
-// onKeyPress("space", () => {
-//     //! DRAWERS 
 
+// onKeyPress("enter", () => {
+//     //! DRAWER
 //     //* Cricut Drawer: Scissors, Paper, Wood, noItems
-//     interactWithCDrawer.call(this);
-//     //* Printing Drawer: PLA Plastic, (Pliers)
-//     interactWithDrawer.call(this);
-
-//     // !Machines
-//     //* Cricut: discovery, needs   
-//     discoverCricut.call(this);
-//     //* Cricut: craft
-//     cricutCraft.call(this);
-// });
+//      interactWithCDrawer.call(this);
+//    //* Printing Drawer: PLA Plastic, (Pliers)
+//    interactWithDrawer.call(this);
+//    // !Machines
+//    //* Cricut: discovery, needs   
+//    discoverCricut.call(this);
+//    //* Cricut: craft
+//    cricutCraft.call(this);
+//  });
 
 
 
