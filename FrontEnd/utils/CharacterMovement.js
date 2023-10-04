@@ -101,10 +101,10 @@ class CharacterMovement{
         {buildNoBlueprint: false}
 
     ])
-    // let cricutAlertBox;
-    // let neededAlert;
-    // let PLAalertBox;
-    // let buildAlert;
+    let cricutAlertBox;
+    let neededAlert;
+    let PLAalertBox;
+    let buildAlert;
 
 
     const block_size = 64;
@@ -485,18 +485,18 @@ onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
 })
 
-// onKeyPress("enter", () => {
-//     //! DRAWER
-//     //* Cricut Drawer: Scissors, Paper, Wood, noItems
-//      interactWithCDrawer.call(this);
-//    //* Printing Drawer: PLA Plastic, (Pliers)
+onKeyPress("enter", () => {
+    //! DRAWER
+    //* Cricut Drawer: Scissors, Paper, Wood, noItems
+    //  interactWithCDrawer.call(this);
+   //* Printing Drawer: PLA Plastic, (Pliers)
 //    interactWithDrawer.call(this);
-//    // !Machines
-//    //* Cricut: discovery, needs   
-//    discoverCricut.call(this);
-//    //* Cricut: craft
-//    cricutCraft.call(this);
-//  });
+   // !Machines
+   //* Cricut: discovery, needs   
+   discoverCricut.call(this);
+   //* Cricut: craft
+   cricutCraft.call(this);
+ });
 
 
 
