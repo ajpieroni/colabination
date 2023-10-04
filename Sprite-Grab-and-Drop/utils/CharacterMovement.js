@@ -631,41 +631,6 @@ onCollide("player", "drawer", (s, w) => {
 })
 
 
-    function updatePocketVendingArrow(material, inPocket){
-        if (itemsInPocket < 2) {
-            if (itemsInPocket === 0) {
-                const item1 = add([
-                    // rect(material.width, material.height) ,
-                    pos(1100, 540),
-                    z(11),
-                    sprite(material),
-                    // color(material.color.r, material.color.g, material.color.b),
-                    scale(1.5),
-                    "material"
-               
-                ]);
-                inPocket.push(item1);
-
-            } else {
-                const item2 = add([
-                    pos(1100, 640),
-                    z(11),
-
-                    sprite(material),
-                    // color(material.color.r, material.color.g, material.color.b),
-                    scale(1.5),
-                    "material"
-                ]);
-                inPocket.push(item2)
-            }
-            itemsInPocket++;
-           
-        } else {
-            // shake(5);
-            alert("Remove items from pocket to select from vending machine")
-        }
-    
-    }
     // !INVENTORY
 
     let isPopupVisible = false;
@@ -781,8 +746,8 @@ onCollide("player", "drawer", (s, w) => {
         })
         onKeyPress("enter", () => {
             if(isPopupVisible && vendingContents.length > 0){
-                let itemKey = vendingContents[vendingSelect].itemKey
-                updatePocketVendingArrow(itemKey, inPocket)
+                let item = vendingContents[vendingSelect]
+                updatePocketVending(item, inPocket)
             }
         })
         for (let i = 0; i < contents.length; i++) {
