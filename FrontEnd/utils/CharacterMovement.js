@@ -101,6 +101,8 @@ class CharacterMovement{
         {buildNoBlueprint: false}
 
     ])
+
+
     let cricutAlertBox;
     let neededAlert;
     let PLAalertBox;
@@ -490,7 +492,7 @@ onKeyPress("enter", () => {
     //* Cricut Drawer: Scissors, Paper, Wood, noItems
     //  interactWithCDrawer.call(this);
    //* Printing Drawer: PLA Plastic, (Pliers)
-//    interactWithDrawer.call(this);
+   interactWithDrawer.call(this);
    // !Machines
    //* Cricut: discovery, needs   
    discoverCricut.call(this);
@@ -545,7 +547,8 @@ onKeyPress("enter", () => {
             body({isStatic: true}),
             area(),
             scale(1.5),
-            z(5)])
+            z(5)],
+            "material")
         benchyAdded = true;
     }
    
