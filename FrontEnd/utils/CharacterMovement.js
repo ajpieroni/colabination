@@ -259,6 +259,20 @@ class CharacterMovement{
             ]);
         }
     }
+    function addItemToFloor(itemKey){
+console.log("item key 263", itemKey);
+        add([
+            sprite(`${itemKey}`),
+            area(),
+            body(),
+            pos(center().x+100, center().y-100),
+            z(5),
+            scale(1.5),
+            "material",
+            { image: `${itemKey}` },
+            { itemKey : `${itemKey}`}
+        ]);
+    }
     
     // !Player
 
@@ -817,7 +831,12 @@ onCollide("player", "drawer", (s, w) => {
         if (itemsInPocket !== 0) {
             itemsInPocket--;
             let item = inPocket.pop();
+            console.log(item)
+            console.log(item.itemKey)
             destroy(item);
+            addItemToFloor(item.itemKey);
+
+            
         }
     });
     //TODO: allow to put many items on the table
