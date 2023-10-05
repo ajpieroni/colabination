@@ -480,6 +480,9 @@ function cricutCraft(){
 //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
 onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
+    console.log("plays sound?");
+    // getSound("bubble");
+    play("bubble");
 })
 // onKeyPress("space", () => {
 //     //! DRAWERS 
