@@ -259,21 +259,23 @@ class CharacterMovement {
         { itemKey: `${itemKey}` },
       ]);
     }
+    let yPos = 250;
     function addItemToCraftingTable(itemKey) {
       // console.log("item key 263", itemKey);
       console.log("adding to crafting table");
       add([
         sprite(`${itemKey}`),
         area(),
-        body(),
+        // body(),
         // pos(center().x+100, center().y-100),
-        pos(900, 225),
-        z(10),
+        pos(950, `${yPos}`),
+        z(100),
         scale(1.5),
         "material",
         { image: `${itemKey}` },
         { itemKey: `${itemKey}` },
       ]);
+      yPos = yPos + 50;
     }
 
     // !Player
