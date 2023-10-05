@@ -268,7 +268,7 @@ class CharacterMovement {
         body(),
         // pos(center().x+100, center().y-100),
         pos(900, 225),
-        z(2),
+        z(10),
         scale(1.5),
         "material",
         { image: `${itemKey}` },
@@ -821,9 +821,12 @@ class CharacterMovement {
         let item = inPocket.pop();
         // console.log(item)
         // console.log(item.itemKey)
-        addItemToFloor(item.itemKey);
-        if (nearCraftingTable) {
-          addItemToCraftingTable(item.itemKey);
+        
+        if (!nearCraftingTable) {
+            addItemToFloor(item.itemKey);
+          
+        }else{
+            addItemToCraftingTable(item.itemKey);
         }
         destroy(item);
       }
