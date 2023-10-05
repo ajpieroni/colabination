@@ -15,12 +15,12 @@ Item.destroy_all
 Tool.destroy_all
 
 # Creating items
-paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
+paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, hasFound: false)
 # rock = Item.create(name: 'Rock', description: 'A small rock', item_type: 'material', rarity: 1, location: 'Garden')
 
 # Creating tools
-hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100)
-scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper', globalCount: 150)
+hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100, hasFound: false)
+scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper', globalCount: 150, hasFound: false)
 
 # Creating item-tools relationships
 ItemTool.create(item: paper, tool: hammer)

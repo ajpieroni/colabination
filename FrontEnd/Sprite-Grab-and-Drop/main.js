@@ -2,6 +2,18 @@ import kaboom from "./libs/unpkg.com_kaboom@3000.1.1_dist_kaboom.mjs"
 import { uiManager } from "./utils/UIManager.js"
 import { load } from "./utils/loader.js"
 import { characterMovement } from "./utils/CharacterMovement.js"
+// game.js
+import { loadItems, updateItem } from './api_routes.js';
+
+
+
+
+start("game");
+
+loadItems().then(items => {
+
+
+});
 
 kaboom({
     width: 1280,

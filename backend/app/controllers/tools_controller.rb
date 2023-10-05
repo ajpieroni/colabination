@@ -5,10 +5,12 @@ class ToolsController < ApplicationController
   # GET /tools or /tools.json
   def index
     @tools = Tool.all
+
   end
 
   # GET /tools/1 or /tools/1.json
   def show
+    render json: { data: @tool}, status: :ok
   end
 
   # GET /tools/new
