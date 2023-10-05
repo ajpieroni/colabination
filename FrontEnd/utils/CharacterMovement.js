@@ -203,28 +203,29 @@ class CharacterMovement{
         paper: {
             spriteName: 'paper',
             alertSprite: 'paperAlert',
-            initialPos: { x: 300, y: 300 },
+            initialPos: { x: 280, y: 300 },
             hasFound: false,
             alertBox: null
         },
-        wood: {
-            spriteName: 'wood',
-            alertSprite: 'woodAlert',
-            initialPos: { x: 300, y: 300 },
-            hasFound: false,
-            alertBox: null
-        },
+        // wood: {
+        //     spriteName: 'wood',
+        //     alertSprite: 'woodAlert',
+        //     initialPos: { x:200, y: 200 },
+        //     hasFound: false,
+        //     alertBox: null
+        // },
         yarn: {
             spriteName: 'yarn',
             alertSprite: 'yarnAlert',
-            initialPos: { x: 300, y: 300 },
+
+            initialPos: { x: 330, y: 300 },
             hasFound: false,
             alertBox: null
         },
         hammer: {
             spriteName: 'hammer',
             alertSprite: 'hammerAlert',
-            initialPos: { x: 300, y: 300 },
+            initialPos: { x: 310, y: 300 },
             hasFound: false,
             alertBox: null
         },
@@ -661,7 +662,7 @@ onCollide("player", "drawer", (s, w) => {
             "vending",
         ]);
     
-        const startX = popup.pos.x + 37.5;
+        const startX = popup.pos.x + 42.5;
         const startY = popup.pos.y + 30;
         let currentX = startX;
         let currentY = startY;
@@ -672,8 +673,10 @@ onCollide("player", "drawer", (s, w) => {
             const itemKey = item.itemKey;
             
         // starts a new line 
-            if (currRow === 4) { 
-                currentY += item.height + 40
+            
+            if (currRow === 3) { 
+                
+                currentY += item.height + 50
                 currentX = startX
 
                 currRow = 0
@@ -708,6 +711,7 @@ onCollide("player", "drawer", (s, w) => {
                     updatePocketVending(vendingItem, inPocket);
                 }
             });
+            console.log(currRow)
             currRow ++;
             currentX += item.width + 50;
         }
@@ -768,8 +772,10 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocket(material, inPocket) {
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
+                console.log("one")
                 material.moveTo(1100, 540);
             } else {
+                console.log("two")
                 // moves to spot 2
                 material.moveTo(1100, 640);
             }
@@ -787,7 +793,6 @@ onCollide("player", "drawer", (s, w) => {
             isPopupVisible = false;
             SPEED = 300;
         } else {
-            console.log("here")
             showVendingContents(vendingContents);
             isPopupVisible = true;
             SPEED = 0;
