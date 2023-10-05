@@ -808,6 +808,8 @@ onCollide("player", "drawer", (s, w) => {
             vendingContents.push(materialEntity);
 
         }
+        play("bubble");
+
         updatePocket(materialEntity, inPocket);
         materialEntity.use(body({ isStatic: true }));
         
