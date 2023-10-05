@@ -260,6 +260,8 @@ class CharacterMovement{
         }
     }
     
+
+    
     // !Player
 
 
@@ -343,6 +345,7 @@ function playerCraftsScissorsPaper(){
         console.log("fallsslssee")
     }
 }
+
 //! Listen for spacebar key press, when near drawer activate alert
 // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
 function interactWithCDrawer(){
@@ -819,6 +822,8 @@ onCollide("player", "drawer", (s, w) => {
         if (itemsInPocket !== 0) {
             itemsInPocket--;
             let item = inPocket.pop();
+            console.log("here is popped", item);
+            console.log("key?", item.itemKey)
             destroy(item);
         }
     });
