@@ -266,7 +266,7 @@ console.log("item key 263", itemKey);
             area(),
             body(),
             pos(center().x+100, center().y-100),
-            z(5),
+            z(2),
             scale(1.5),
             "material",
             { image: `${itemKey}` },
@@ -651,7 +651,9 @@ onCollide("player", "drawer", (s, w) => {
     // !INVENTORY
 
     let isPopupVisible = false;
-    let vendingContents = [];
+    // let vendingContents = [];
+    let vendingContents = []
+    let vendingSet = new Set(vendingContents);
     let inPocket = [];
     
     // Character pocket
@@ -820,7 +822,7 @@ onCollide("player", "drawer", (s, w) => {
 
         if (!vendingContents.includes(materialEntity)) {
             vendingContents.push(materialEntity);
-
+            console.log("item added to vending", materialEntity.itemKey);
         }
         updatePocket(materialEntity, inPocket);
         materialEntity.use(body({ isStatic: true }));
@@ -831,10 +833,11 @@ onCollide("player", "drawer", (s, w) => {
         if (itemsInPocket !== 0) {
             itemsInPocket--;
             let item = inPocket.pop();
-            console.log(item)
-            console.log(item.itemKey)
-            destroy(item);
+            // console.log(item)
+            // console.log(item.itemKey)
             addItemToFloor(item.itemKey);
+            destroy(item);
+
 
             
         }
