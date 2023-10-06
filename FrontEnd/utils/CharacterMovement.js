@@ -6,6 +6,7 @@ class CharacterMovement{
         this.level =null;
     }
     display(){
+      play("soundtrack")
         //! Level Schema
 
         play("soundtrack");
