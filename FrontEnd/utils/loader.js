@@ -33,6 +33,7 @@ export const load = {
 
         // !Sounds
         loadSound("bubble", "./assets/bubble.mp3")
+        loadSound("soundtrack", "./assets/soundtrack.mp3")
 
 
 

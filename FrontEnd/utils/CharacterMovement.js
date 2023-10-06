@@ -7,6 +7,8 @@ class CharacterMovement{
     }
     display(){
         //! Level Schema
+
+        play("soundtrack");
         const block_size = 32;
         
         
