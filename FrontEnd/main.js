@@ -9,11 +9,32 @@ kaboom({
     letterbox: true,
     
 })
+onLoad(() => {
+    fetch("http://localhost:8081/items")
+      .then((response) => response.json())
+      .then((foundItems) => {
+        console.log(foundItems);
+        go("menu", foundItems);
+        
+      })
+      .catch((error) => console.error("Error fetching found items:", error));
+  });
 
 load.assets()
 
 const scenes = {
     menu: () =>{
+        onLoad(() => {
+            fetch("http://localhost:8081/items")
+              .then((response) => response.json())
+              .then((foundItems) => {
+                console.log(foundItems);
+                go("menu", foundItems);
+                
+              })
+              .catch((error) => console.error("Error fetching found items:", error));
+          });
+        
         // add takes in an array of components
         // add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()

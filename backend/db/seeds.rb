@@ -16,6 +16,7 @@ Tool.destroy_all
 
 # Creating items
 paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, hasFound: false)
+wood = Item.create(name: 'Yarn', description: "string", item_type:"material", rarity:1, hasFound: true)
 # rock = Item.create(name: 'Rock', description: 'A small rock', item_type: 'material', rarity: 1, location: 'Garden')
 
 # Creating tools

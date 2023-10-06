@@ -3,9 +3,10 @@ class ItemsController < ApplicationController
   before_action :set_item, only: %i[show update destroy]
 
   # GET /items or /items.json
+# items_controller.rb
   def index
-    @items = Item.all
-    render json: { data: @items }, status: :ok
+    @items = Item.where(hasFound: true)
+    render json: @items
   end
 
   # GET /items/1 or /items/1.json
