@@ -8,18 +8,42 @@
     <link rel="stylesheet" href="save.css">
 </head>
 <body>
-    <div class = "esbuttons">
+    <!-- <div class = "overlay"></div> -->
+    <div class = "esbuttons" >
+        <button class = "popup exit " onclick="exit()"> Exit
+
+            <span class="popuptext" id = "exitCheck"> Are you sure you want to exit the game? </span>
+            <!-- <span class="overlay" ></span> -->
+        </button>
+        <button class = "popup save " onclick="save()"> Save
+            <span class="popuptext " id = "saveProgress"> Saving in progress... </span>
+        </button>
+       
+    </div>
+
+    <script>
+        function save() {
+            var popup = document.getElementById("saveProgress");
+            popup.classList.toggle("show");
+
+            var overlay = document.getElementById("overlay");
+            overlay.classList.toggle("show");
+            
+            // overlay.style.display = "block";
+            // overlay.classList.add("show");
+        }
+
+      
+        function exit() {
+            var popup = document.getElementById("exitCheck");
+            popup.classList.toggle("show");
+
+            var overlay = document.getElementById("overlay");
+            overlay.classList.toggle("show");
+
+        }
         
-        <a href = "">
-            <button class = "exit"> Exit </button>
-        </a>
-        <a href = "">
-            <button class = "save"> Save </button>
-        </a>
-    </div>
-    
-    <div class="popup" onclick="saveFunction()"> Click me!
-        <span class="popuptext" id="myPopup"> Saving in progress... </span>
-    </div>
+    </script>
+
 </body>
 </html>
