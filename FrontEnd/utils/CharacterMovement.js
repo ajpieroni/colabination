@@ -825,7 +825,7 @@ class CharacterMovement {
         // console.log(item.itemKey)
         
         if (!nearCraftingTable) {
-            addItemToFloor(item.itemKey);
+            // addItemToFloor(item.itemKey);
           
         }else{
             addItemToCraftingTable(item.itemKey);
