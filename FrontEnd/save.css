@@ -25,7 +25,6 @@
     float: right;
     margin-right: 5px;
     margin-top: 5px;
-    
 }
 
 .esbuttons .exit {
@@ -72,20 +71,19 @@
     padding: 24px;
 
     border: 2px #fff solid;
-    background: rgba(107, 107, 107, 0.1);
+    background: rgba(255, 255, 255, 0.6);
+    color: black;
     position: fixed;
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    z-index: 1;
+    z-index: 5;
 }
 
 .popup .popuptext::after {
-
     position: absolute;
     border: 2px #fff solid;
-    z-index: 10;
+    z-index: 5;
 }
 
 .popup .show {
@@ -100,26 +98,24 @@
   
   @keyframes fadeIn {
     from {opacity: 0;}
-    to {opacity:1 ;}
+    to {opacity: 1 ;}
   }
 
 
 .overlay {
     position: fixed;
     visibility: hidden;
-    /* display: block; */
 	top: 0;
 	left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
 	transition: opacity 200ms;
-    z-index: 5;
+    z-index: 1;
 }
 
 .overlay .show  {
     visibility: visible;
-    display:block;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
 }
