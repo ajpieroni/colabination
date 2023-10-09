@@ -793,9 +793,14 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocketVending(material, inPocket){
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
+                // material.moveTo(880, 700);
+            // } else {
+            //     console.log("two")
+            //     // moves to spot 2
+            //     material.moveTo(880, 775);
                 const item1 = add([
                     // rect(material.width, material.height) ,
-                    pos(1100, 540),
+                    pos(880, 700),
                     z(11),
                     sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
@@ -807,7 +812,7 @@ onCollide("player", "drawer", (s, w) => {
 
             } else {
                 const item2 = add([
-                    pos(1100, 640),
+                    pos(880, 775),
                     z(11),
                     sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
