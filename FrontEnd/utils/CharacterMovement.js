@@ -33,13 +33,13 @@ class CharacterMovement{
         add([
             sprite("walk"),
             pos(0,0),
-            z(0),
+            z(5),
             scale(.5)
         ])
         add([
             sprite("tables"),
             pos(0,0),
-            z(0),
+            z(6),
             // scale(.5)
         ])
         
@@ -57,7 +57,7 @@ class CharacterMovement{
                     "wall",
                     area(),
                     body({isStatic: true}),
-                    z(15)
+                    // z(15)
                 ],
                 "-":()=>[
                     rect(block_size/2, block_size/2),
@@ -66,7 +66,7 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(15)
+                    // z(15)
                     
                 ],
                 "$":()=>[
@@ -75,7 +75,7 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(15)
+                    // z(15)
                     
 
                 ],
@@ -86,7 +86,7 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(5, 25),
-                    z(15)
+                    // z(15)
 
                 ],
                 "9":()=>[
@@ -95,7 +95,7 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 15),
-                    z(15)
+                    // z(15)
 
                 ],
                 "!":()=>[
@@ -104,7 +104,7 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(-35, 0),
-                    z(15)
+                    // z(15)
 
                 ],
                 
@@ -184,24 +184,26 @@ class CharacterMovement{
         "craftingTable",
         {access: false}
     ])
+
+
     // !Machines
     const printer1 = add([
-        rect(block_size*.75, block_size*.75),
-        color(46, 51, 48),
+        rect(block_size, block_size*2),
+        color(0,0,255),
         area(),
         body({isStatic: true}),
-        pos(20,100),
-        z(0),
+        pos(65,200),
+        // z(10),
         "printer",
         {access: false}
     ])
     const printer2 = add([
-        rect(block_size*.75, block_size*.75),
-        color(46, 51, 48),
+        rect(block_size, block_size*2),
+        color(0,0,255),
         area(),
         body({isStatic: true}),
-        pos(20,200),
-        z(0),
+        pos(65,365),
+        // z(10),
         "printer",
         {access: false}
     ])
