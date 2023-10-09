@@ -837,7 +837,8 @@ onCollide("player", "drawer", (s, w) => {
             if (itemsInPocket === 0) {
                 console.log("one")
                 // pos(855,700)
-                material.moveTo(880, 700);
+                material.moveTo(880, 725);
+                material.scaleTo(1);
             } else {
                 console.log("two")
                 // moves to spot 2
