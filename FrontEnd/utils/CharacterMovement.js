@@ -14,31 +14,40 @@ class CharacterMovement{
             // "=====================",
             "=$$$$$$$$$$$$$$$$$$$$$=",
             "=*********************=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=********************=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                  *=",
+            "==$                    ",
+            "=9999999999    !99999=",
             "---------------------",
         ];
         
+
+
         add([
             sprite("walk"),
             pos(0,0),
             z(0),
             scale(.5)
-            
         ])
+        add([
+            sprite("tables"),
+            pos(0,0),
+            z(0),
+            // scale(.5)
+        ])
+        
 
         const level_config = {
             tileWidth:64,
             tileHeight:64,
-            // pos: vec2(-65, -70),
+            pos: vec2(-65, -70),
         
             // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
             tiles: {
@@ -48,6 +57,7 @@ class CharacterMovement{
                     "wall",
                     area(),
                     body({isStatic: true}),
+                    z(15)
                 ],
                 "-":()=>[
                     rect(block_size/2, block_size/2),
@@ -56,7 +66,8 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(1),
+                    z(15)
+                    
                 ],
                 "$":()=>[
                     rect(block_size*2, block_size*2),
@@ -64,18 +75,39 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(1),
+                    z(15)
+                    
 
                 ],
                 "*":()=>[
-                    rect(block_size*2, block_size*2),
+                    rect(block_size*2.5, block_size*2.5),
                     color(128,128,128),
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(10),
+                    z(15)
+
+                ],
+                "9":()=>[
+                    rect(block_size*3.5, block_size*3.25),
+                    color(128,128,128),
+                    area(),
+                    body({isStatic: true}),
+                    pos(0, 15),
+                    z(15)
+
+                ],
+                "!":()=>[
+                    rect(block_size*5, block_size*5),
+                    color(255,0,0),
+                    area(),
+                    body({isStatic: true}),
+                    pos(-35, 0),
+                    z(15)
+
                 ],
                 
+
                 
                 // "(":drawer,
                 
@@ -170,16 +202,16 @@ class CharacterMovement{
         "printer",
         {access: false}
     ])
-    const sewingMachine = add([
-        rect(block_size*.75, block_size*.75),
-        color(255,0,0),
-        area(),
-        body({isStatic: true}),
-        pos(500, 650),
-        z(0),
-        "printer",
-        {access: false}
-    ])
+    // const sewingMachine = add([
+    //     rect(block_size*.75, block_size*.75),
+    //     color(255,0,0),
+    //     area(),
+    //     body({isStatic: true}),
+    //     pos(500, 650),
+    //     z(0),
+    //     "printer",
+    //     {access: false}
+    // ])
     const solderingStation = add([
         rect(block_size*.75, block_size*.75),
         color(255,0,0),
@@ -271,11 +303,11 @@ class CharacterMovement{
     const player = add([
         sprite("characterSprite"),
         scale(.25),
-        pos(center()),
+        pos(center().x+250, center().y+300),
         "player",
         area(),
         body(),
-        z(5)
+        z(15)
     ])
 
 
