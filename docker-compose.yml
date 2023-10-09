@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile # Path to your Dockerfile for Rails app
     command: bundle exec rails s -p 8081 -b '0.0.0.0'
     volumes:
-      - ./backend:/backend
+      - .:/app
     ports:
       - "8081:8081"
     environment:
