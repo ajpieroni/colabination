@@ -677,14 +677,16 @@ onCollide("player", "drawer", (s, w) => {
         let currentX = startX;
         let currentY = startY;
         let currRow = 0
-
-        const selected = add([
-            rect(70, 70),
-            pos(startX, startY),
-            z(10),
-            color(255,255,255),
-            "selected"
-        ])
+        if (vendingContents.length > 0){
+            const selected = add([
+                rect(70, 70),
+                pos(startX, startY),
+                z(10),
+                color(255,255,255),
+                "selected"
+            ])
+        }
+        
 
         onKeyPress("left", () => {
             if(isPopupVisible){
