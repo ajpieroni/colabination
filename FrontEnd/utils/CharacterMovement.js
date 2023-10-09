@@ -14,15 +14,15 @@ class CharacterMovement{
             // "=====================",
             "=$$$$$$$$$$$$$$$$$$$$$=",
             "=*********************=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
-            "==$                  *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
             "==$                    ",
             "=9999999999    !99999=",
             "---------------------",
@@ -79,12 +79,13 @@ class CharacterMovement{
                     
 
                 ],
+
                 "*":()=>[
-                    rect(block_size*2.5, block_size*2.5),
-                    color(128,128,128),
+                    rect(block_size*2, block_size*2.5),
+                    color(255,0,0),
                     area(),
                     body({isStatic: true}),
-                    pos(0, 25),
+                    pos(5, 25),
                     z(15)
 
                 ],
@@ -161,22 +162,24 @@ class CharacterMovement{
 
     // !Tables
     const handTools = add([
-        rect(block_size*2, block_size*5),
-        color(46, 51, 48),
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
         area(),
         body({isStatic: true}),
-        pos(300,225),
+        pos(260,260),
         z(0),
         "handTools",
         {access: false}
     ])
 
+
+
     const craftingTable = add([
-        rect(block_size*2, block_size*5),
-        color(46, 51, 48),
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
         area(),
         body({isStatic: true}),
-        pos(900,225),
+        pos(670,260),
         z(0),
         "craftingTable",
         {access: false}
