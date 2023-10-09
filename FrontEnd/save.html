@@ -11,7 +11,10 @@
         
     <div class = "esbuttons" >
         <button class = "popup exit " onclick="exit()"> Exit
-            <span class="popuptext" id = "exitCheck"> Are you sure you want to exit the game? </span>
+            <span class="popuptext" id = "exitCheck"> Are you sure you want to exit the game? 
+                <button class = "exit " onclick="exit2()"> Cancel </button>
+                <button class = "exit " onclick="exit2()"> Exit </button>
+            </span>
             <span class ="overlay" id = "overlayId"></span>
         </button>
         <button class = "popup save " onclick="save()"> Save
@@ -29,17 +32,16 @@
             var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
         }
-
-      
         function exit() {
             var popup = document.getElementById("exitCheck");
             popup.classList.toggle("show");
 
             var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
+        }
+        function exit2(){
 
         }
-        
     </script>
 
 </body>
