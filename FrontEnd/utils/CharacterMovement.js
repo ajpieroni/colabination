@@ -141,7 +141,7 @@ const block_size = 64;
     ])
 
     const cdrawer = add([
-        rect(block_size*2, block_size),
+        rect(block_size*2, block_size), 
         color(0,0,225),
         area(),
         body({isStatic: true}),
@@ -151,13 +151,15 @@ const block_size = 64;
         "cdrawer",
         {access: false}
     ])
+
     const drawer = add([
-        rect(12, block_size*1.5),
-        color(46, 51, 48),
+        rect(block_size*2, block_size), 
+        color(0,100,0),
         area(),
         body({isStatic: true}),
-        pos(60, 400),
-        z(0),
+        pos(900-15-10, 250-10-10),
+        rotate(270),
+        // z(10),
         "drawer",
         {access: false}
     ])
