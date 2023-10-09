@@ -327,7 +327,7 @@ const block_size = 64;
         "player",
         area(),
         body(),
-        z(15)
+        z(10)
     ])
 
 
@@ -713,8 +713,8 @@ onCollide("player", "drawer", (s, w) => {
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
-            pos(475, 125),
-            z(5),
+            pos(475-150, 125+25),
+            z(11),
             color(105, 105, 105),
             outline(4),
             scale(.75),
