@@ -122,30 +122,32 @@ class CharacterMovement{
     play(){
 
 // ! Game Objects
+const block_size = 64;
+
+
     const cricut = add([
+        rect(block_size*2.25, block_size),
         "machine",
         "cricut",
-        sprite("cricut"),
+        // sprite("cricut"),
         area(),
-        // color(50, 168, 82),
-        pos(460, 730),
-        z(10),
-        scale(2.5),
-        rotate(180),
+        color(0,0,255),
+        pos(330, 710),
+        // z(10),
         body({isStatic: true}),
         {access: false},
         {buildNoBlueprint: false}
 
     ])
-    const block_size = 64;
 
     const cdrawer = add([
-        rect(block_size*1.5, 12),
-        color(46, 51, 48),
+        rect(block_size*2, block_size),
+        color(0,0,225),
         area(),
         body({isStatic: true}),
-        pos(600, 650),
-        z(0),
+        pos(85, 700),
+        rotate(270),
+        // z(10),
         "cdrawer",
         {access: false}
     ])
@@ -159,6 +161,8 @@ class CharacterMovement{
         "drawer",
         {access: false}
     ])
+
+    // let cricutAlertBox;
 
     // !Tables
     const handTools = add([
@@ -207,23 +211,24 @@ class CharacterMovement{
         "printer",
         {access: false}
     ])
-    // const sewingMachine = add([
-    //     rect(block_size*.75, block_size*.75),
-    //     color(255,0,0),
-    //     area(),
-    //     body({isStatic: true}),
-    //     pos(500, 650),
-    //     z(0),
-    //     "printer",
-    //     {access: false}
-    // ])
-    const solderingStation = add([
-        rect(block_size*.75, block_size*.75),
+    const sewingMachine = add([
+        rect(block_size*2.5, block_size),
         color(255,0,0),
         area(),
         body({isStatic: true}),
-        pos(100, 35),
+        pos(500, 710),
         z(0),
+        "printer",
+        {access: false}
+    ])
+    const solderingStation = add([
+        rect(block_size*2.25, block_size),
+        color(255,0,0),
+        area(),
+        body({isStatic: true}),
+        pos(140, 40),
+        // z(10),
+
         "printer",
         {access: false}
     ])
@@ -470,7 +475,7 @@ function discoverCricut(){
             "alert",
             pos(center().x - 100, center().y - 200),
             color(230, 230, 250),
-            z(10),
+            z(15),
             sprite("cricutAlertBox"),
             scale(0.75)
         ]);
@@ -531,9 +536,9 @@ onKeyPress("b", () =>{
 
 //     // !Machines
 //     //* Cricut: discovery, needs   
-//     discoverCricut.call(this);
+    // discoverCricut.call(this);
 //     //* Cricut: craft
-//     cricutCraft.call(this);
+    // cricutCraft.call(this);
 // });
 
 
@@ -541,6 +546,9 @@ onKeyPress("b", () =>{
 // !TODO: make the enter function dynamic for sprite
 // dismiss alerts
 function handleEnterPress() {
+    // discoverCricut.call(this);
+//     //* Cricut: craft
+    // cricutCraft.call(this);
     const itemKeys = Object.keys(items);
     
     if (currentIndex < itemKeys.length) {
