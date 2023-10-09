@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="save.css">
 </head>
 <body>
-    <!-- <div class = "overlay"></div> -->
+        
     <div class = "esbuttons" >
         <button class = "popup exit " onclick="exit()"> Exit
-
             <span class="popuptext" id = "exitCheck"> Are you sure you want to exit the game? </span>
-            <!-- <span class="overlay" ></span> -->
+            <span class ="overlay" id = "overlayId"></span>
         </button>
         <button class = "popup save " onclick="save()"> Save
-            <span class="popuptext " id = "saveProgress"> Saving in progress... </span>
+            <span class="popuptext" id = "saveProgress"> Saving in progress... </span>
+            <span class ="overlay" id = "overlayId"></span>
         </button>
        
     </div>
@@ -26,11 +26,8 @@
             var popup = document.getElementById("saveProgress");
             popup.classList.toggle("show");
 
-            var overlay = document.getElementById("overlay");
+            var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
-            
-            // overlay.style.display = "block";
-            // overlay.classList.add("show");
         }
 
       
@@ -38,7 +35,7 @@
             var popup = document.getElementById("exitCheck");
             popup.classList.toggle("show");
 
-            var overlay = document.getElementById("overlay");
+            var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
 
         }
