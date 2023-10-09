@@ -175,6 +175,16 @@ const block_size = 64;
         "handTools",
         {access: false}
     ])
+    const leatherTools = add([
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
+        area(),
+        body({isStatic: true}),
+        pos(470,260),
+        z(0),
+        "craftingTable",
+        {access: false}
+    ])
 
 
 
@@ -292,8 +302,8 @@ const block_size = 64;
                 sprite(item.spriteName),
                 area(),
                 body(),
-                pos(center().x, center().y),
-                z(5),
+                pos(center().x-100, center().y),
+                z(10),
                 scale(1.5),
                 "material",
                 { image: item.spriteName },
@@ -688,10 +698,11 @@ onCollide("player", "drawer", (s, w) => {
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
-        pos(1080,520),
+        // pos(1080,520),
+        pos(855,700),
         rect(200, 200),
         outline(4),
-        color(0, 5, 0),
+        color(0, 0,55),
         area(),
         body({ isStatic: true }),
         "pocket",
@@ -722,11 +733,9 @@ onCollide("player", "drawer", (s, w) => {
             
         // starts a new line 
             
-            if (currRow === 3) { 
-                
+            if (currRow === 3) {    
                 currentY += item.height + 50
                 currentX = startX
-
                 currRow = 0
             }
     
@@ -800,7 +809,6 @@ onCollide("player", "drawer", (s, w) => {
                 const item2 = add([
                     pos(1100, 640),
                     z(11),
-
                     sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
                     scale(1.5),
@@ -821,11 +829,12 @@ onCollide("player", "drawer", (s, w) => {
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
                 console.log("one")
-                material.moveTo(1100, 540);
+                // pos(855,700)
+                material.moveTo(880, 700);
             } else {
                 console.log("two")
                 // moves to spot 2
-                material.moveTo(1100, 640);
+                material.moveTo(880, 775);
             }
             itemsInPocket++;
             inPocket.push(material);
@@ -848,14 +857,12 @@ onCollide("player", "drawer", (s, w) => {
     });
     
     player.onCollide("material", (materialEntity) => {
-
         if (!vendingContents.includes(materialEntity)) {
             vendingContents.push(materialEntity);
-
         }
         updatePocket(materialEntity, inPocket);
         materialEntity.use(body({ isStatic: true }));
-        
+
     });
     
     onKeyPress("q", () => {
