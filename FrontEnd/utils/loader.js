@@ -4,6 +4,8 @@ export const load = {
     //     // loadFont("")
     // },
     assets: () => {
+        // loadSprite("walkable", "./assets/walkablelayer2.png")
+        loadSprite("walk", "./assets/walkable2048-1668.png")
         loadSprite("colabdoors","./assets/colabsdoorsmall.jpeg")
         loadSprite("colablogo", "./assets/colablogo.png")
         loadSprite("characterSprite", "./assets/sprite.png")

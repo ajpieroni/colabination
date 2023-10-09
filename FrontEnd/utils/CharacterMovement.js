@@ -28,17 +28,17 @@ class CharacterMovement{
         ];
         
         add([
-            sprite("colabBackground"),
-            area(),
-            scale(.75),
-            z(0)
+            sprite("walk"),
+            pos(0,0),
+            z(0),
+            scale(.5)
             
         ])
 
         const level_config = {
             tileWidth:64,
             tileHeight:64,
-            pos: vec2(-65, -70),
+            // pos: vec2(-65, -70),
         
             // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
             tiles: {
