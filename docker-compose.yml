@@ -9,6 +9,7 @@ services:
       - .:/app
     ports:
       - "8081:8081"
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: game_database

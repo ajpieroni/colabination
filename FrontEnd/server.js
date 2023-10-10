@@ -7,7 +7,7 @@ const PORT = 3000;
 const HOST = '0.0.0.0';
  
 // App
-// const app = express();
+const app = express();
 // app.get('/', (req, res) => {
 //   res.send('<html><body><p style="font-size: 24px; font-weight: bold;">Hello, Co-Lab! 🕺</p></body></html>');
 // });
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
         <title>Kaboom Game</title>
       </head>
       <body>
-        <script src="/Sprite-Drag-and-Drop/main.js"></script>
+        <script src="/main.js"></script>
     </html>
   `);
 });
