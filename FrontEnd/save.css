@@ -81,6 +81,7 @@
 }
 
 .popup .popuptext::after {
+    visibility: visible;
     position: absolute;
     border: 2px #fff solid;
     z-index: 5;

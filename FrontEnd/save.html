@@ -8,30 +8,30 @@
     <link rel="stylesheet" href="save.css">
 </head>
 <body>
-        
+    
     <div class = "esbuttons" >
-        <button class = "popup exit " onclick="exit()"> Exit
-            <span class="popuptext" id = "exitCheck"> Are you sure you want to exit the game? 
-                <button class = "exit " onclick="exit2()"> Cancel </button>
-                <button class = "exit " onclick="exit2()"> Exit </button>
-            </span>
-            <span class ="overlay" id = "overlayId"></span>
+
+        <button class = "popup exit" onclick="exit()"> Exit 
+            
+
         </button>
+        <div class="container" id = "exitCheck">
+            <!-- <div class = "popuptext" id = "exitCheck">  -->
+            <div class = "popuptext" > 
+                Are you sure you want to exit the game? </div>
+
+            <button class = "popup" onclick="cancel()"> Cancel </button> 
+            <button class = "exit" onclick="exit2()"> Exit </button>
+        </div>
+
         <button class = "popup save " onclick="save()"> Save
-            <span class="popuptext" id = "saveProgress"> Saving in progress... </span>
-            <span class ="overlay" id = "overlayId"></span>
+            <div class="popuptext" id = "saveProgress"> Saving in progress... </div>
+            <span class ="overlay" id = "overlayId"></span> 
         </button>
        
     </div>
 
     <script>
-        function save() {
-            var popup = document.getElementById("saveProgress");
-            popup.classList.toggle("show");
-
-            var overlay = document.getElementById("overlayId");
-            overlay.classList.toggle("show");
-        }
         function exit() {
             var popup = document.getElementById("exitCheck");
             popup.classList.toggle("show");
@@ -39,9 +39,36 @@
             var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
         }
-        function exit2(){
-
+        function cancel(){
+            var popup = document.getElementById("exitCheck");
+            var overlay = document.getElementById("overlayId");
+            popup.classList.toggle("show");
+            overlay.classList.toggle("show");
         }
+        // function exit2(){
+        //     document.body.style.background = 'url("FrontEnd/assets/background.jpg")';
+        // }
+
+        function save() {
+            var popup = document.getElementById("saveProgress");
+            popup.classList.toggle("show");
+
+            var overlay = document.getElementById("overlayId");
+            overlay.classList.toggle("show");
+
+            // setTimeout(function(){ popup.classList.toggle("show"); }, 3000);
+            setTimeout(function() {
+                //fix this, probably j make a diff html line show up, janky fix for now?
+                popup.innerHTML = "Saving complete!";
+  
+                setTimeout(function() {
+                    popup.classList.toggle("show");
+                    overlay.classList.toggle("show");
+                }, 1500);
+            }, 3000);
+
+            popup.innerHTML = "Saving in progress...";
+            }
     </script>
 
 </body>
