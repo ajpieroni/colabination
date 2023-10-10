@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "description": "Node.js on Docker",
     "author": "First Last <first.last@example.com>",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
-        "start": "nodemon server.js -e ejs,js,css,html,jpg,png,scss"
+        "start": "nodemon index.js -e ejs,js,css,html,jpg,png,scss"
     },
     "dependencies": {
         "express": "^4.18.2",
