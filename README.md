@@ -1,5 +1,11 @@
 # Meeting Notes
 
+## October 13th
+- [] Prepare for demo next wednesday
+- [] update on progress
+- [] assign issues
+- [] combining art with the frontend code
+
 ## October 6th
 - ↓ select, only works for items in vending machine
 - Being able to toggle soundtrack?
