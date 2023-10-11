@@ -75,10 +75,7 @@ class CharacterMovement{
                     pos(0, 25),
                     z(10),
                 ],
-                
-                
                 // "(":drawer,
-                
             }
         };
 
@@ -104,6 +101,14 @@ class CharacterMovement{
         {buildNoBlueprint: false}
 
     ])
+
+
+    let cricutAlertBox;
+    let neededAlert;
+    let PLAalertBox;
+    let buildAlert;
+
+
     const block_size = 64;
 
     const cdrawer = add([
@@ -114,7 +119,8 @@ class CharacterMovement{
         pos(600, 650),
         z(0),
         "cdrawer",
-        {access: false}
+        {access: false},
+        {alertSprite: "cricutAlert"}
     ])
     const drawer = add([
         rect(12, block_size*1.5),
@@ -203,28 +209,29 @@ class CharacterMovement{
         paper: {
             spriteName: 'paper',
             alertSprite: 'paperAlert',
-            initialPos: { x: 300, y: 300 },
+            initialPos: { x: 280, y: 300 },
             hasFound: false,
             alertBox: null
         },
-        wood: {
-            spriteName: 'wood',
-            alertSprite: 'woodAlert',
-            initialPos: { x: 300, y: 300 },
-            hasFound: false,
-            alertBox: null
-        },
+        // wood: {
+        //     spriteName: 'wood',
+        //     alertSprite: 'woodAlert',
+        //     initialPos: { x:200, y: 200 },
+        //     hasFound: false,
+        //     alertBox: null
+        // },
         yarn: {
             spriteName: 'yarn',
             alertSprite: 'yarnAlert',
-            initialPos: { x: 300, y: 300 },
+
+            initialPos: { x: 330, y: 300 },
             hasFound: false,
             alertBox: null
         },
         hammer: {
             spriteName: 'hammer',
             alertSprite: 'hammerAlert',
-            initialPos: { x: 300, y: 300 },
+            initialPos: { x: 310, y: 300 },
             hasFound: false,
             alertBox: null
         },
@@ -479,21 +486,23 @@ function cricutCraft(){
 //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
 onKeyPress("b", () =>{
     playerCraftsScissorsPaper();
+    console.log("plays sound?");
+    // getSound("bubble");
+    play("bubble");
 })
-// onKeyPress("space", () => {
-//     //! DRAWERS 
 
-//     //* Cricut Drawer: Scissors, Paper, Wood, noItems
-//     interactWithCDrawer.call(this);
-//     //* Printing Drawer: PLA Plastic, (Pliers)
-//     interactWithDrawer.call(this);
-
-//     // !Machines
-//     //* Cricut: discovery, needs   
-//     discoverCricut.call(this);
-//     //* Cricut: craft
-//     cricutCraft.call(this);
-// });
+onKeyPress("enter", () => {
+    //! DRAWER
+    //* Cricut Drawer: Scissors, Paper, Wood, noItems
+    //  interactWithCDrawer.call(this);
+   //* Printing Drawer: PLA Plastic, (Pliers)
+   interactWithDrawer.call(this);
+   // !Machines
+   //* Cricut: discovery, needs   
+   discoverCricut.call(this);
+   //* Cricut: craft
+   cricutCraft.call(this);
+ });
 
 
 
@@ -542,7 +551,8 @@ onKeyPress("enter", () => {
             body({isStatic: true}),
             area(),
             scale(1.5),
-            z(5)])
+            z(5)],
+            "material")
         benchyAdded = true;
     }
    
@@ -630,12 +640,13 @@ onCollide("player", "drawer", (s, w) => {
     }
 })
 
+
     // !INVENTORY
 
     let isPopupVisible = false;
     let vendingContents = [];
     let inPocket = [];
-    
+    let vendingSelect = 0;
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
@@ -661,19 +672,104 @@ onCollide("player", "drawer", (s, w) => {
             "vending",
         ]);
     
-        const startX = popup.pos.x + 37.5;
+        const startX = popup.pos.x + 42.5;
         const startY = popup.pos.y + 30;
         let currentX = startX;
         let currentY = startY;
         let currRow = 0
+        if (vendingContents.length > 0){
+            const selected = add([
+                rect(70, 70),
+                pos(startX, startY),
+                z(10),
+                color(255,255,255),
+                "selected"
+            ])
+        }
+        
 
+        onKeyPress("left", () => {
+            if(isPopupVisible){
+                if (vendingSelect > 0){
+                    vendingSelect --;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 3;
+                    let gridY = Math.floor(vendingSelect/3)
+                    const selected = add([
+                        rect(70, 70),
+                        pos(startX+gridX*110, startY+gridY*96),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("right", () => {
+            if(isPopupVisible){
+                if (vendingSelect < vendingContents.length -1){
+                    vendingSelect ++;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 3;
+                    let gridY = Math.floor(vendingSelect/3)
+                    const selected = add([
+                        rect(70, 70),
+                        pos(startX+gridX*110, startY+gridY*96),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("down", () => {
+            if(isPopupVisible){
+                if (vendingSelect+3 < vendingContents.length){
+                    vendingSelect +=3;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 3;
+                    let gridY = Math.floor(vendingSelect/3)
+                    const selected = add([
+                        rect(70, 70),
+                        pos(startX+gridX*110, startY+gridY*96),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("up", () => {
+            if(isPopupVisible){
+                if (vendingSelect-3 >= 0){
+                    vendingSelect -=3;
+                    destroyAll("selected")
+                    let gridX = vendingSelect % 3;
+                    let gridY = Math.floor(vendingSelect/3)
+                    const selected = add([
+                        rect(70, 70),
+                        pos(startX+gridX*110, startY+gridY*96),
+                        z(10),
+                        color(255,255,255),
+                        "selected"
+                    ])
+                }
+            }
+        })
+        onKeyPress("enter", () => {
+            if(isPopupVisible && vendingContents.length > 0){
+                let item = vendingContents[vendingSelect]
+                updatePocketVending(item, inPocket)
+            }
+        })
         for (let i = 0; i < contents.length; i++) {
             const item = contents[i];
             const itemKey = item.itemKey;
-            
         // starts a new line 
-            if (currRow === 4) { 
-                currentY += item.height + 40
+            
+            if (currRow === 3) { 
+                
+                currentY += item.height + 50
                 currentX = startX
 
                 currRow = 0
@@ -689,7 +785,6 @@ onCollide("player", "drawer", (s, w) => {
                 sprite(`${item.itemKey}`),
                 // rect(10,10),
                 // sprite(`${image}`),
-
                 scale(1.5),
                 z(11),
                 "material",
@@ -708,6 +803,7 @@ onCollide("player", "drawer", (s, w) => {
                     updatePocketVending(vendingItem, inPocket);
                 }
             });
+            console.log(currRow)
             currRow ++;
             currentX += item.width + 50;
         }
@@ -768,8 +864,10 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocket(material, inPocket) {
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
+                console.log("one")
                 material.moveTo(1100, 540);
             } else {
+                console.log("two")
                 // moves to spot 2
                 material.moveTo(1100, 640);
             }
@@ -784,13 +882,14 @@ onCollide("player", "drawer", (s, w) => {
     onKeyPress("v", () => {
         if (isPopupVisible) {
             destroyAll("vending");
+            destroyAll("selected");
             isPopupVisible = false;
             SPEED = 300;
         } else {
-            console.log("here")
             showVendingContents(vendingContents);
             isPopupVisible = true;
             SPEED = 0;
+            vendingSelect = 0;
         }
     });
     

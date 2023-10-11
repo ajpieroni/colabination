@@ -1,5 +1,21 @@
 # Meeting Notes
 
+## October 13th
+- [] Prepare for demo next wednesday
+- [] update on progress
+- [] assign issues
+- [] combining art with the frontend code
+
+## October 6th
+- ↓ select, only works for items in vending machine
+- Being able to toggle soundtrack?
+- player.pos.x, same for y
+- Undefined error after dropping item on table, grab from vend, then try to drop again
+- Combining game with assets
+- Organizing game files into a more structured and scalable model, start building based on - Anni's game structure
+- Logical error in crafting––would colliding with items on the table count as crafting, - button press? TBD
+- Issue of server hosting frontend
+
 ## September 29th, Happy Mid-Autumn Festival
 Agenda:
 - [x]  Show and Tell from the week
