@@ -1,6 +1,7 @@
 # Meeting Notes
 
 ## October 13th
+- [] Explain web server
 - [] Prepare for demo next wednesday
 - [] update on progress
 - [] assign issues
