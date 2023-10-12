@@ -147,7 +147,7 @@ const block_size = 64;
     let buildAlert;
 
 
-    const block_size = 64;
+    // const block_size = 64;
 
     const cdrawer = add([
         rect(block_size*2, block_size), 
