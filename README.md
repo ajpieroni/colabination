@@ -5,6 +5,7 @@
 - [] update on progress
 - [] assign issues
 - [] combining art with the frontend code
+- [] make sure no work is being overwritten
 
 ## October 6th
 - ↓ select, only works for items in vending machine
