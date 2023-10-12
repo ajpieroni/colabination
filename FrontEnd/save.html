@@ -7,29 +7,27 @@
     <title> Save & Exit </title>
     <link rel="stylesheet" href="save.css">
 </head>
-<body>
+<body class = "home">
     
     <div class = "esbuttons" >
-
-        <button class = "popup exit" onclick="exit()"> Exit 
-            
-
-        </button>
-        <div class="container" id = "exitCheck">
-            <!-- <div class = "popuptext" id = "exitCheck">  -->
-            <div class = "popuptext" > 
-                Are you sure you want to exit the game? </div>
-
-            <button class = "popup" onclick="cancel()"> Cancel </button> 
-            <button class = "exit" onclick="exit2()"> Exit </button>
-        </div>
-
-        <button class = "popup save " onclick="save()"> Save
-            <div class="popuptext" id = "saveProgress"> Saving in progress... </div>
-            <span class ="overlay" id = "overlayId"></span> 
-        </button>
-       
+        <button class = "exit" onclick="exit()"> Exit </button>
+        <button class = "save " onclick="save()"> Save </button>
     </div>
+    
+    <div class="popup">
+        <div class="popup popuptext" id = "exitCheck">    
+            Are you sure you want to exit the game? 
+            <div>
+                <button class = "ecbuttons" id = "canceled" onclick="exit()"> Cancel </button> 
+                <button class = "ecbuttons" id = "exitActually" onclick="exit2()"> Exit </button>
+            </div>
+        </div>
+        <span class ="overlay" id = "overlayId"></span> 
+    </div>
+    <div class="popup">
+        <div class="popuptext" id = "saveProgress"> Saving in progress... </div>
+    </div>
+
 
     <script>
         function exit() {
@@ -38,16 +36,18 @@
 
             var overlay = document.getElementById("overlayId");
             overlay.classList.toggle("show");
+
+            var exitButton = document.getElementById("exitActually");
+            exitButton.classList.toggle("show");
+
+            var cancelButton = document.getElementById("canceled");
+            cancelButton.classList.toggle("show");
+
         }
-        function cancel(){
-            var popup = document.getElementById("exitCheck");
-            var overlay = document.getElementById("overlayId");
-            popup.classList.toggle("show");
-            overlay.classList.toggle("show");
+        function exit2(){
+            document.body.style.background = 'url("/assets/background.jpg")';
+            exit();
         }
-        // function exit2(){
-        //     document.body.style.background = 'url("FrontEnd/assets/background.jpg")';
-        // }
 
         function save() {
             var popup = document.getElementById("saveProgress");
@@ -64,7 +64,7 @@
                 setTimeout(function() {
                     popup.classList.toggle("show");
                     overlay.classList.toggle("show");
-                }, 1500);
+                }, 1000);
             }, 3000);
 
             popup.innerHTML = "Saving in progress...";
