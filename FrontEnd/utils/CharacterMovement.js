@@ -6,10 +6,12 @@ class CharacterMovement{
         this.level =null;
     }
     display(){
-      play("soundtrack")
         //! Level Schema
 
-        play("soundtrack");
+        const audioPlay = play("soundtrack", {
+            loop: true
+        });
+        
         const block_size = 32;
         
         
