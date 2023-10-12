@@ -4,8 +4,8 @@ import { load } from "./utils/loader.js"
 import { characterMovement } from "./utils/CharacterMovement.js"
 
 kaboom({
-    width: 1280,
-    height: 720,
+    width: 2048/2,
+    height: 1668/2,
     letterbox: true,
     
 })
