@@ -6,6 +6,10 @@
 - [] assign issues
 - [] combining art with the frontend code
 - [] make sure no work is being overwritten
+- [] making squares rectangles in pocket
+- [] perspective of printers and tables
+- [] sprite for character?
+- [] ensuring that each asset is exactly 50x50px to fit properly in vending and pocket
 
 ## October 6th
 - ↓ select, only works for items in vending machine
