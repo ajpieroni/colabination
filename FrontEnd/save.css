@@ -37,9 +37,9 @@
     display: flex;
     width: 120px;
     padding: 5px;
-    background: rgba(107, 107, 107, 0.1);
-    color: #6B6B6B;
-    border: 2px #6B6B6B solid;
+    background: rgba(255, 255, 255, 0.3);
+    color: #363535;
+    border: 2px #363535 solid;
     font-family: 'Easvhs';
     font-size: 20px;
 
@@ -51,9 +51,9 @@
     display: flex;
     width: 120px;
     padding: 5px;
-    background: rgba(107, 107, 107, 0.1);
-    color: #6B6B6B;
-    border: 2px #6B6B6B solid;
+    background: rgba(255, 255, 255, 0.3);
+    color: #363535;
+    border: 2px #363535 solid;
     font-family: 'Easvhs';
     font-size: 20px;
 }
@@ -87,7 +87,7 @@
     font-family: 'Easvhs';
     font-size: 20px;
     text-align: center;
-    color: black;
+    color: #363535;
 
 }
 .ecbuttons{
@@ -96,9 +96,9 @@
     width: 100px;
     margin: 10px 5px 5px;
     padding: 5px;
-    background: rgba(107, 107, 107, 0.1);
-    color: #6B6B6B;
-    border: 2px #6B6B6B solid;
+    background: rgba(144, 143, 143, 0.1);
+    color: #363535;
+    border: 2px #363535 solid;
     font-family: 'Easvhs';
     font-size: 20px;
 }
