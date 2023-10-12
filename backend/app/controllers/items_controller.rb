@@ -5,8 +5,8 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
 # items_controller.rb
   def index
-    @items = Item.where(hasFound: true)
-    render json: @items
+    @item = Item.all
+    render json: @item
   end
 
   # GET /items/1 or /items/1.json

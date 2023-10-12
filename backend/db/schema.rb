@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_143247) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_154952) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,6 +67,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_143247) do
     t.boolean "hasFound"
   end
 
+  create_table "user_items", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_user_items_on_item_id"
+    t.index ["user_id"], name: "index_user_items_on_user_id"
+  end
+
+  create_table "user_tools", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tool_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tool_id"], name: "index_user_tools_on_tool_id"
+    t.index ["user_id"], name: "index_user_tools_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "username"
     t.integer "pin"
@@ -78,4 +96,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_143247) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "item_tools", "items"
   add_foreign_key "item_tools", "tools"
+  add_foreign_key "user_items", "items"
+  add_foreign_key "user_items", "users"
+  add_foreign_key "user_tools", "tools"
+  add_foreign_key "user_tools", "users"
 end

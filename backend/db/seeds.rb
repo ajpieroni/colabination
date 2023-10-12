@@ -13,6 +13,7 @@ puts 'seeding'
 ItemTool.destroy_all
 Item.destroy_all
 Tool.destroy_all
+UserItem.destroy_all
 
 # Creating items
 paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
@@ -27,6 +28,9 @@ scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper'
 ItemTool.create(item: paper, tool: hammer)
 ItemTool.create(item: paper, tool: scissors)
 ItemTool.create(item: paper, tool: hammer)
+
+user1 = User.create(username:"cats", pin:1234)
+
 
 # # seeds 3 items
 # item1 = Item.create(name: "paper", description: "pog", item_type: "sticker", rarity: 0)

@@ -4,8 +4,8 @@ class ToolsController < ApplicationController
 
   # GET /tools or /tools.json
   def index
-    @items = Item.where(hasFound: true)
-    render json: @items
+    @tool= Tool.all
+    render json: @tool
   end
 
 

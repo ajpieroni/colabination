@@ -1,3 +1,4 @@
+// import axios from 'axios'
 class CharacterMovement{
 
     // !TODO: add a "on floor" variable for game objects
@@ -640,6 +641,36 @@ onCollide("player", "drawer", (s, w) => {
     }
 })
 
+function handleSavingData(){
+    let currItems = ["paper", "yarn"]
+    const username = "cats"
+
+    for (let i = 0; i < currItems.length; i++){
+        const currItem = currItems[i]
+        fetch('http://localhost:8081/user_items', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+ 
+        },
+        body: JSON.stringify({ name: currItem, username: username })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject('Failed to save items');
+        }
+        console.log("Items saved!", response);
+    })
+    .catch(error => {
+        console.error("Error saving items:", error);
+    });
+    }
+}
+// saving for now :D
+onKeyPress("z", () => {
+    handleSavingData();
+
+});
 
     // !INVENTORY
 
