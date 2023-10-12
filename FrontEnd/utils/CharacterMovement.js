@@ -916,6 +916,7 @@ onCollide("player", "drawer", (s, w) => {
     
     onKeyPress("q", () => {
         if (itemsInPocket !== 0) {
+            play("bubble");
             itemsInPocket--;
             let item = inPocket.pop();
             console.log("here is popped", item);
