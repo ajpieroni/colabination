@@ -9,7 +9,8 @@ class CharacterMovement{
         //! Level Schema
 
         const audioPlay = play("soundtrack", {
-            loop: true
+            loop: true,
+            volume: .5
         });
         
         const block_size = 32;
