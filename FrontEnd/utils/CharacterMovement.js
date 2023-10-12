@@ -20,26 +20,36 @@ class CharacterMovement{
             // "=====================",
             "=$$$$$$$$$$$$$$$$$$$$$=",
             "=*********************=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=$                  *=",
-            "=********************=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$            *=",
+            "==$                    ",
+            "=9999999999    !99999=",
+            "=9999999999    !99999=",
             "---------------------",
         ];
         
+
+
         add([
-            sprite("colabBackground"),
-            area(),
-            scale(.75),
-            z(0)
-            
+            sprite("walk"),
+            pos(0,0),
+            z(5),
+            scale(.5)
         ])
+        add([
+            sprite("tables"),
+            pos(0,0),
+            z(6),
+            // scale(.5)
+        ])
+        
 
         const level_config = {
             tileWidth:64,
@@ -54,6 +64,7 @@ class CharacterMovement{
                     "wall",
                     area(),
                     body({isStatic: true}),
+                    // z(15)
                 ],
                 "-":()=>[
                     rect(block_size/2, block_size/2),
@@ -62,7 +73,8 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(1),
+                    // z(15)
+                    
                 ],
                 "$":()=>[
                     rect(block_size*2, block_size*2),
@@ -70,17 +82,41 @@ class CharacterMovement{
                     area(),
                     body({isStatic: true}),
                     pos(0, 25),
-                    z(1),
+                    // z(15)
+                    
 
                 ],
+
                 "*":()=>[
-                    rect(block_size*2, block_size*2),
+                    rect(block_size*2, block_size*2.5),
+                    color(255,0,0),
+                    area(),
+                    body({isStatic: true}),
+                    pos(5, 25),
+                    // z(15)
+
+                ],
+                "9":()=>[
+                    rect(block_size*3.5, block_size*3.25),
                     color(128,128,128),
                     area(),
                     body({isStatic: true}),
-                    pos(0, 25),
-                    z(10),
+                    pos(0, 15),
+                    // z(15)
+
                 ],
+                "!":()=>[
+                    rect(block_size*5, block_size*5),
+                    color(255,0,0),
+                    area(),
+                    body({isStatic: true}),
+                    pos(-35, 0),
+                    // z(15)
+
+                ],
+                
+
+                
                 // "(":drawer,
             }
         };
@@ -92,16 +128,18 @@ class CharacterMovement{
     play(){
 
 // ! Game Objects
+const block_size = 64;
+
+
     const cricut = add([
+        rect(block_size*2.25, block_size),
         "machine",
         "cricut",
-        sprite("cricut"),
+        // sprite("cricut"),
         area(),
-        // color(50, 168, 82),
-        pos(460, 730),
-        z(10),
-        scale(2.5),
-        rotate(180),
+        color(0,0,255),
+        pos(330, 710),
+        // z(10),
         body({isStatic: true}),
         {access: false},
         {buildNoBlueprint: false}
@@ -115,90 +153,110 @@ class CharacterMovement{
     let buildAlert;
 
 
-    const block_size = 64;
+    // const block_size = 64;
 
     const cdrawer = add([
-        rect(block_size*1.5, 12),
-        color(46, 51, 48),
+        rect(block_size*2, block_size), 
+        color(0,0,225),
         area(),
         body({isStatic: true}),
-        pos(600, 650),
-        z(0),
+        pos(85, 700),
+        rotate(270),
+        // z(10),
         "cdrawer",
         {access: false},
         {alertSprite: "cricutAlert"}
     ])
+
     const drawer = add([
-        rect(12, block_size*1.5),
-        color(46, 51, 48),
+        rect(block_size*2, block_size), 
+        color(0,100,0),
         area(),
         body({isStatic: true}),
-        pos(60, 400),
-        z(0),
+        pos(900-15-10, 250-10-10),
+        rotate(270),
+        // z(10),
         "drawer",
         {access: false}
     ])
 
+    // let cricutAlertBox;
+
     // !Tables
     const handTools = add([
-        rect(block_size*2, block_size*5),
-        color(46, 51, 48),
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
         area(),
         body({isStatic: true}),
-        pos(300,225),
+        pos(260,260),
         z(0),
         "handTools",
         {access: false}
     ])
-
-    const craftingTable = add([
-        rect(block_size*2, block_size*5),
-        color(46, 51, 48),
+    const leatherTools = add([
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
         area(),
         body({isStatic: true}),
-        pos(900,225),
+        pos(470,260),
         z(0),
         "craftingTable",
         {access: false}
     ])
-    // !Machines
-    const printer1 = add([
-        rect(block_size*.75, block_size*.75),
-        color(46, 51, 48),
+
+
+
+    const craftingTable = add([
+        rect(block_size*1.65, block_size*4),
+        color(256,0,0),
         area(),
         body({isStatic: true}),
-        pos(20,100),
+        pos(670,260),
         z(0),
+        "craftingTable",
+        {access: false}
+    ])
+
+
+    // !Machines
+    const printer1 = add([
+        rect(block_size, block_size*2),
+        color(0,0,255),
+        area(),
+        body({isStatic: true}),
+        pos(65,200),
+        // z(10),
         "printer",
         {access: false}
     ])
     const printer2 = add([
-        rect(block_size*.75, block_size*.75),
-        color(46, 51, 48),
+        rect(block_size, block_size*2),
+        color(0,0,255),
         area(),
         body({isStatic: true}),
-        pos(20,200),
-        z(0),
+        pos(65,365),
+        // z(10),
         "printer",
         {access: false}
     ])
     const sewingMachine = add([
-        rect(block_size*.75, block_size*.75),
+        rect(block_size*2.5, block_size),
         color(255,0,0),
         area(),
         body({isStatic: true}),
-        pos(500, 650),
+        pos(500, 710),
         z(0),
         "printer",
         {access: false}
     ])
     const solderingStation = add([
-        rect(block_size*.75, block_size*.75),
+        rect(block_size*2.25, block_size),
         color(255,0,0),
         area(),
         body({isStatic: true}),
-        pos(100, 35),
-        z(0),
+        pos(140, 40),
+        // z(10),
+
         "printer",
         {access: false}
     ])
@@ -262,8 +320,8 @@ class CharacterMovement{
                 sprite(item.spriteName),
                 area(),
                 body(),
-                pos(center().x, center().y),
-                z(5),
+                pos(center().x-100, center().y),
+                z(10),
                 scale(1.5),
                 "material",
                 { image: item.spriteName },
@@ -285,11 +343,11 @@ class CharacterMovement{
     const player = add([
         sprite("characterSprite"),
         scale(.25),
-        pos(center()),
+        pos(center().x+250, center().y+300),
         "player",
         area(),
         body(),
-        z(5)
+        z(10)
     ])
 
 
@@ -448,7 +506,7 @@ function discoverCricut(){
             "alert",
             pos(center().x - 100, center().y - 200),
             color(230, 230, 250),
-            z(10),
+            z(15),
             sprite("cricutAlertBox"),
             scale(0.75)
         ]);
@@ -518,6 +576,9 @@ onKeyPress("enter", () => {
 // !TODO: make the enter function dynamic for sprite
 // dismiss alerts
 function handleEnterPress() {
+    // discoverCricut.call(this);
+//     //* Cricut: craft
+    // cricutCraft.call(this);
     const itemKeys = Object.keys(items);
     
     if (currentIndex < itemKeys.length) {
@@ -659,10 +720,11 @@ onCollide("player", "drawer", (s, w) => {
     // Character pocket
     const pocket = add([
         // pos(1300, 600),
-        pos(1080,520),
+        // pos(1080,520),
+        pos(855,700),
         rect(200, 200),
         outline(4),
-        color(0, 5, 0),
+        color(0, 0,55),
         area(),
         body({ isStatic: true }),
         "pocket",
@@ -673,8 +735,8 @@ onCollide("player", "drawer", (s, w) => {
     function showVendingContents(contents) {
         const popup = add([
             rect(500, 600),
-            pos(475, 125),
-            z(5),
+            pos(475-150, 125+25),
+            z(11),
             color(105, 105, 105),
             outline(4),
             scale(.75),
@@ -777,11 +839,9 @@ onCollide("player", "drawer", (s, w) => {
             const itemKey = item.itemKey;
         // starts a new line 
             
-            if (currRow === 3) { 
-                
+            if (currRow === 3) {    
                 currentY += item.height + 50
                 currentX = startX
-
                 currRow = 0
             }
     
@@ -841,7 +901,7 @@ onCollide("player", "drawer", (s, w) => {
                 play("bubble");
                 const item1 = add([
                     // rect(material.width, material.height) ,
-                    pos(1100, 540),
+                    pos(880, 700),
                     z(11),
                     sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
@@ -854,9 +914,8 @@ onCollide("player", "drawer", (s, w) => {
             } else {
                 play("bubble");
                 const item2 = add([
-                    pos(1100, 640),
+                    pos(880, 775),
                     z(11),
-
                     sprite(`${material.itemKey}`),
                     // color(material.color.r, material.color.g, material.color.b),
                     scale(1.5),
@@ -877,11 +936,13 @@ onCollide("player", "drawer", (s, w) => {
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
                 console.log("one")
-                material.moveTo(1100, 540);
+                // pos(855,700)
+                material.moveTo(880, 725);
+                material.scaleTo(1);
             } else {
                 console.log("two")
                 // moves to spot 2
-                material.moveTo(1100, 640);
+                material.moveTo(880, 775);
             }
             itemsInPocket++;
             inPocket.push(material);
@@ -906,16 +967,14 @@ onCollide("player", "drawer", (s, w) => {
     });
     
     player.onCollide("material", (materialEntity) => {
-
         if (!vendingContents.includes(materialEntity)) {
             vendingContents.push(materialEntity);
-
         }
         play("bubble");
 
         updatePocket(materialEntity, inPocket);
         materialEntity.use(body({ isStatic: true }));
-        
+
     });
     
     onKeyPress("q", () => {
