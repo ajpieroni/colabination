@@ -768,6 +768,7 @@ onCollide("player", "drawer", (s, w) => {
         onKeyPress("enter", () => {
             if(isPopupVisible && vendingContents.length > 0){
                 let item = vendingContents[vendingSelect]
+                // play("bubble");
                 updatePocketVending(item, inPocket)
             }
         })
@@ -837,6 +838,7 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocketVending(material, inPocket){
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
+                play("bubble");
                 const item1 = add([
                     // rect(material.width, material.height) ,
                     pos(1100, 540),
@@ -850,6 +852,7 @@ onCollide("player", "drawer", (s, w) => {
                 inPocket.push(item1);
 
             } else {
+                play("bubble");
                 const item2 = add([
                     pos(1100, 640),
                     z(11),
