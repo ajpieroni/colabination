@@ -1,20 +1,18 @@
 class CharacterMovement {
-    
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
   music = null;
   constructor() {
     this.level = null;
-
   }
-  
+
   display() {
     //! Level Schema
     // stop("soundtrack");
-    // const music = 
+    // const music =
     this.music = play("soundtrack", {
-        volume: 0.50,
-        loop: true
+      volume: 0.5,
+      loop: true,
     });
     const block_size = 32;
 
@@ -957,17 +955,63 @@ class CharacterMovement {
 
     // ! Load settings screen
     onKeyPress("space", () => {
-        this.music.paused = true
+      this.music.paused = true;
       go("settings");
     });
   }
 
   displaySettingsMenu() {
-    add([sprite("colabdoors"), scale(0.85)]);
+    let exitCheckPopup = false;
+    add([sprite("trees"), scale(0.85)]);
+    // Exit function
+    const exitBtn = add([
+      text("exitBtn"),
+      pos(800, 150),
+      "exitbutton",
+      area(),
+      // rect(50,50)
+    ]);
+    const saveBtn = add([text("saveBtn"), pos(800, 50), "savebutton", area()]);
+
+
+    onClick("exitbutton", (exit) => {
+      console.log("exit clicked");
+      add([
+        text("Are you sure you want to exit the game?"),
+        "exitPopUp",
+        area(),
+        scale(.5),
+        pos(400, 400)
+      ])
+      add([text("Cancel"),
+      "cancelExit",
+      area(),
+      scale(.5),
+      pos(350, 500)])
+      add([text("Exit"),
+      "exitfr",
+      area(),
+      scale(.5),
+      pos(450, 500)])
+      
+  });
+  
+
+    // , add[(text("POPUP"),
+    // pos(800, 150),
+    // "popup",
+    // )}
+    // rect(50,50))])};
+    onClick("savebutton", (save) => console.log("save clicked"));
+
+    function exit() {}
+    // Save function
+    function save() {}
+
+    // Exit menu
     onKeyPress("space", () => {
-       
-        go("characterMovement")
-      })
+      go("characterMovement");
+    });
   }
 }
 

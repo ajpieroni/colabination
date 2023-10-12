@@ -39,6 +39,9 @@ export const load = {
         loadSound("bubble", "./assets/bubble.m4a")
         loadSound("soundtrack", "./assets/soundtrack.mp3")
 
+        // !Save Menu
+        loadSprite("trees", "./assets/background.jpg")
+
 
 
 
