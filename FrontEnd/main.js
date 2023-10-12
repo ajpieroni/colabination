@@ -24,6 +24,9 @@ const scenes = {
         characterMovement.play()
 
     },
+    settings: () =>{
+        characterMovement.displaySettingsMenu()
+    }, 
     1: () => {
 
     },
