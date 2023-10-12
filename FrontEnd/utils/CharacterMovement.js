@@ -640,9 +640,10 @@ onCollide("player", "drawer", (s, w) => {
         scissorsCraft = true;
     }
 })
-
+//handle saving data and uploading to DB
 function handleSavingData(){
     let currItems = ["paper", "yarn"]
+    let currTools = ["hammer"]
     const username = "cats"
 
     for (let i = 0; i < currItems.length; i++){
@@ -664,6 +665,25 @@ function handleSavingData(){
     .catch(error => {
         console.error("Error saving items:", error);
     });
+    }
+    for (let j = 0; j < currTools.length; j++){
+        const currTool = currTools[j]
+        fetch("http://localhost:8081/user_tools",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: currTool, username: username })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject('Failed to save items');
+            }
+            console.log("Items saved!", response);
+        })
+        .catch(error => {
+            console.error("Error saving items:", error);
+        });
     }
 }
 // saving for now :D
