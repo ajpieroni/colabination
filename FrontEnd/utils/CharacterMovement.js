@@ -829,6 +829,11 @@ class CharacterMovement {
           
         }else{
             addItemToCraftingTable(item.itemKey);
+            // check items on crafting table
+            // if there's a item trail, offer "Craft?" and they hit enter
+            // then redirect to craft scene? popup?
+            // after, remove all items from crafting table
+            // add new item to pocket (should be empty!)
         }
         destroy(item);
       }
