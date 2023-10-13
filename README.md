@@ -2,6 +2,9 @@
 
 ## October 13th
 - [] Prepare for demo next wednesday
+Danai, Zhichen, Sandra, Alexis
+  - Make a demo branch that we can keep stable
+  - Where we're at with our project & how far can we get
 - [] update on progress
 - [] assign issues
 - [] combining art with the frontend code
@@ -22,7 +25,7 @@
 - Logical error in crafting––would colliding with items on the table count as crafting, - button press? TBD
 - Issue of server hosting frontend
 
-## September 29th, Happy Mid-Autumn Festival
+ ## September 29th, Happy Mid-Autumn Festival
 Agenda:
 - [x]  Show and Tell from the week
 - [x]  Test play the game
