@@ -3,9 +3,18 @@
 ## October 13th
 - [] Explain web server
 - [] Prepare for demo next wednesday
+Danai, Zhichen, Sandra, Alexis
+  - Make a demo branch that we can keep stable
+  - Where we're at with our project & how far can we get
 - [] update on progress
 - [] assign issues
 - [] combining art with the frontend code
+- [] make sure no work is being overwritten
+- [] making rectangles squares  in pocket
+- [] perspective of printers and tables
+- [] sprite for character?
+- [] ensuring that each asset is exactly 50x50px to fit properly in vending and pocket
+- [] let's talk crafting? once two items are on the crafting table, should they press a button? etc.
 
 ## October 6th
 - ↓ select, only works for items in vending machine
@@ -17,7 +26,7 @@
 - Logical error in crafting––would colliding with items on the table count as crafting, - button press? TBD
 - Issue of server hosting frontend
 
-## September 29th, Happy Mid-Autumn Festival
+ ## September 29th, Happy Mid-Autumn Festival
 Agenda:
 - [x]  Show and Tell from the week
 - [x]  Test play the game
