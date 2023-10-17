@@ -7,6 +7,12 @@ class CharacterMovement{
     }
     display(){
         //! Level Schema
+
+        const audioPlay = play("soundtrack", {
+            loop: true,
+            volume: .5
+        });
+        
         const block_size = 32;
         
         
@@ -324,6 +330,8 @@ const block_size = 64;
         }
     }
     
+
+    
     // !Player
 
 
@@ -407,6 +415,7 @@ function playerCraftsScissorsPaper(){
         console.log("fallsslssee")
     }
 }
+
 //! Listen for spacebar key press, when near drawer activate alert
 // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
 function interactWithCDrawer(){
@@ -821,6 +830,7 @@ onCollide("player", "drawer", (s, w) => {
         onKeyPress("enter", () => {
             if(isPopupVisible && vendingContents.length > 0){
                 let item = vendingContents[vendingSelect]
+                // play("bubble");
                 updatePocketVending(item, inPocket)
             }
         })
@@ -888,11 +898,7 @@ onCollide("player", "drawer", (s, w) => {
     function updatePocketVending(material, inPocket){
         if (itemsInPocket < 2) {
             if (itemsInPocket === 0) {
-                // material.moveTo(880, 700);
-            // } else {
-            //     console.log("two")
-            //     // moves to spot 2
-            //     material.moveTo(880, 775);
+                play("bubble");
                 const item1 = add([
                     // rect(material.width, material.height) ,
                     pos(880, 700),
@@ -906,6 +912,7 @@ onCollide("player", "drawer", (s, w) => {
                 inPocket.push(item1);
 
             } else {
+                play("bubble");
                 const item2 = add([
                     pos(880, 775),
                     z(11),
@@ -963,6 +970,8 @@ onCollide("player", "drawer", (s, w) => {
         if (!vendingContents.includes(materialEntity)) {
             vendingContents.push(materialEntity);
         }
+        play("bubble");
+
         updatePocket(materialEntity, inPocket);
         materialEntity.use(body({ isStatic: true }));
 
@@ -970,8 +979,11 @@ onCollide("player", "drawer", (s, w) => {
     
     onKeyPress("q", () => {
         if (itemsInPocket !== 0) {
+            play("bubble");
             itemsInPocket--;
             let item = inPocket.pop();
+            console.log("here is popped", item);
+            console.log("key?", item.itemKey)
             destroy(item);
         }
     });

@@ -36,7 +36,8 @@ export const load = {
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
 
         // !Sounds
-        loadSound("bubble", "./assets/bubble.mp3")
+        loadSound("bubble", "./assets/bubble.m4a")
+        loadSound("soundtrack", "./assets/soundtrack.mp3")
 
 
 
