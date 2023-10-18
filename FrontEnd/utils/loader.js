@@ -4,6 +4,9 @@ export const load = {
     //     // loadFont("")
     // },
     assets: () => {
+        // loadSprite("walkable", "./assets/walkablelayer2.png")
+        loadSprite("walk", "./assets/walkable2048-1668.png")
+        loadSprite("tables", "./assets/avoid1024-834.png")
         loadSprite("colabdoors","./assets/colabsdoorsmall.jpeg")
         loadSprite("colablogo", "./assets/colablogo.png")
         loadSprite("characterSprite", "./assets/sprite.png")
@@ -16,14 +19,15 @@ export const load = {
         loadSprite("scissors", "./assets/scissor-pixel.png")
         loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
-        loadSprite("paper", "./assets/paperOld.png")
+        loadSprite("paper", "./assets/paper.png")
+        
         loadSprite("woodAlert", "./assets/colablogo.png")
-        loadSprite("wood", "./assets/wood.PNG")
+        loadSprite("wood", "./assets/wood.png")
         loadSprite("neededAlert", "./assets/neededAlert.png")
         loadSprite("neededBlueprintAlert", "./assets/neededBlueprintAlert.png")
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
-        loadSprite("hammer", "./assets/hammer.PNG")
+        loadSprite("hammer", "./assets/hammer.png")
         loadSprite("yarn", "./assets/yarn.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
         loadSprite("yarnAlert", "./assets/yarn.png")
@@ -32,7 +36,8 @@ export const load = {
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
 
         // !Sounds
-        loadSound("bubble", "./assets/bubble.mp3")
+        loadSound("bubble", "./assets/bubble.m4a")
+        loadSound("soundtrack", "./assets/soundtrack.mp3")
 
 
 
