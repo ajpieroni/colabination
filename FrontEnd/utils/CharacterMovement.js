@@ -924,7 +924,10 @@ class CharacterMovement {
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
-
+    let atCraftingTable = false;
+    let table_x = 700;
+    let table_y = 300;
+    let onItemsOnTable = 0;
     onKeyPress("q", () => {
       if (itemsInPocket !== 0 && onItemsOnTable < 6) {
         itemsInPocket--;
@@ -932,8 +935,8 @@ class CharacterMovement {
         let item = inPocket.pop();
 
         item.moveTo(table_x, table_y);
-        // table_y += 50
-        // onItemsOnTable ++;
+        table_y += 50
+        onItemsOnTable ++;
       }else{
         if (itemsInPocket !== 0) {
           play("bubble");
@@ -945,18 +948,16 @@ class CharacterMovement {
           // destroy(item);
         }
       }
-      
+    
     });
 
-    //TODO: allow to put many items on the table
-    let table_x = 700;
-    let table_y = 400;
-    let atCraftingTable = false;
-    let onItemsOnTable = 0;
-    player.onCollide("craftingTable", (table) => {
+// Crafting Collisions
+    onCollide("player", "craftingTable", (s,w) => {
       atCraftingTable = true;
-
-      console.log("you are at table");
+   
+    });
+    onCollideEnd("player","craftingTable", (s,w)=>{
+      atCraftingTable = false;
     });
   }
 }
