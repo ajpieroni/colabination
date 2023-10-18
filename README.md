@@ -1,6 +1,7 @@
 # Meeting Notes
 
 ## October 13th
+- [] Explain web server
 - [] Prepare for demo next wednesday
 Danai, Zhichen, Sandra, Alexis
   - Make a demo branch that we can keep stable
