@@ -979,8 +979,8 @@ function handleEnterPress() {
         }
     });
     //TODO: allow to put many items on the table
-    let table_x = 670;
-    let table_y = 260;
+    let table_x = 0;
+    let table_y = 0;
     let atCraftingTable = false;
     let onItemsOnTable = 0
     player.onCollide("craftingTable", (table) => {
