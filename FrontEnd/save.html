@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Save & Exit </title>
+    <link rel="stylesheet" href="save.css">
+</head>
+<body class = "home">
+    
+    <div class = "esbuttons" >
+        <button class = "exit" onclick="exit()"> Exit </button>
+        <button class = "save " onclick="save()"> Save </button>
+    </div>
+    
+    <div class="popup">
+        <div class="popup popuptext" id = "exitCheck">    
+            Are you sure you want to exit the game? 
+            <div>
+                <button class = "ecbuttons" id = "canceled" onclick="exit()"> Cancel </button> 
+                <button class = "ecbuttons" id = "exitActually" onclick="exit2()"> Exit </button>
+            </div>
+        </div>
+        <span class ="overlay" id = "overlayId"></span> 
+    </div>
+    <div class="popup">
+        <div class="popuptext" id = "saveProgress"> Saving in progress... </div>
+    </div>
+
+
+    <script>
+        function exit() {
+            var popup = document.getElementById("exitCheck");
+            popup.classList.toggle("show");
+
+            var overlay = document.getElementById("overlayId");
+            overlay.classList.toggle("show");
+
+            var exitButton = document.getElementById("exitActually");
+            exitButton.classList.toggle("show");
+
+            var cancelButton = document.getElementById("canceled");
+            cancelButton.classList.toggle("show");
+
+        }
+        function exit2(){
+            document.body.style.background = 'url("/assets/background.jpg")';
+            exit();
+        }
+
+        function save() {
+            var popup = document.getElementById("saveProgress");
+            popup.classList.toggle("show");
+
+            var overlay = document.getElementById("overlayId");
+            overlay.classList.toggle("show");
+
+            // setTimeout(function(){ popup.classList.toggle("show"); }, 3000);
+            setTimeout(function() {
+                //fix this, probably j make a diff html line show up, janky fix for now?
+                popup.innerHTML = "Saving complete!";
+  
+                setTimeout(function() {
+                    popup.classList.toggle("show");
+                    overlay.classList.toggle("show");
+                }, 1000);
+            }, 3000);
+
+            popup.innerHTML = "Saving in progress...";
+            }
+    </script>
+
+</body>
+</html>

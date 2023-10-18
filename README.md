@@ -1,5 +1,57 @@
 # Meeting Notes
 
+## October 18th
+Demo Summary:
+- once you have items in vending machine, you can pick any item
+- 5 base materials
+- still a game of guessing -> game has clues
+  - need correct 2 items in pocket to craft
+- save progress everytime we play game -> login and password
+  - vending machine/backpack is saved state
+  - do we need a "save" feature? 
+    - not saving as we go along
+- hot keys -> how will users use?
+  - prompt/tutorial
+  - "press 'x' to open"
+  - possible question mark button to show users what to press
+- backend is in rails (isn't needed for project)
+  - needed to add express -> renders Kaboom
+- docker for consistency
+
+Suggestions/Feedback/Questions:
+- find a way to illustrate something you can interact with or not
+- have character go in all 4 directions (change visualizations of character)
+- talk to people about what objects make other final objects -> learn more about equipment
+- something weird/certain prompt is triggered when you have wrong objects in pocket
+- scope for quantity of created items should be reasonable
+- progress saved -> documentation station
+- be able to create a robot -> robot cat!!!
+
+## October 13th
+- [] Explain web server
+- [] Prepare for demo next wednesday
+Danai, Zhichen, Sandra, Alexis
+  - Make a demo branch that we can keep stable
+  - Where we're at with our project & how far can we get
+  - Distribute topics/demo:
+    - One person explains, one person plays
+    - Another person explain art/sound
+    - Alex: Moving, playing
+    - Ollie: Talking about what the game is, talking about alex is doing
+    - Sophia/Dasol: show off art! 🎨
+    - Dasol: ERD
+    - Kelvin: Docker (sorry)
+    
+- [] update on progress
+- [] assign issues
+- [] combining art with the frontend code
+- [] make sure no work is being overwritten
+- [] making rectangles squares  in pocket
+- [] perspective of printers and tables
+- [] sprite for character?
+- [] ensuring that each asset is exactly 50x50px to fit properly in vending and pocket
+- [] let's talk crafting? once two items are on the crafting table, should they press a button? etc.
+
 ## October 6th
 - ↓ select, only works for items in vending machine
 - Being able to toggle soundtrack?
@@ -10,7 +62,7 @@
 - Logical error in crafting––would colliding with items on the table count as crafting, - button press? TBD
 - Issue of server hosting frontend
 
-## September 29th, Happy Mid-Autumn Festival
+ ## September 29th, Happy Mid-Autumn Festival
 Agenda:
 - [x]  Show and Tell from the week
 - [x]  Test play the game
