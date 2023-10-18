@@ -642,6 +642,7 @@ onCollide("player", "drawer", (s, w) => {
 })
 //handle saving data and uploading to DB
 function handleSavingData(){
+    //hard coded items and tools, should be dynamic at some point
     let currItems = ["paper", "yarn"]
     let currTools = ["hammer"]
     const username = "cats"
