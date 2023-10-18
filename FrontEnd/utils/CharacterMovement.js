@@ -744,8 +744,8 @@ onCollide("player", "drawer", (s, w) => {
                 let gridY = Math.floor(vendingSelect/3)
                 const selected = add([
                     rect(70, 70),
-                    pos(517.5+gridX*110, 155+gridY*96),
-                    z(10),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
                     color(255,255,255),
                     "selected"
                 ])
@@ -762,8 +762,8 @@ onCollide("player", "drawer", (s, w) => {
                 let gridY = Math.floor(vendingSelect/3)
                 const selected = add([
                     rect(70, 70),
-                    pos(517.5+gridX*110, 155+gridY*96),
-                    z(10),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
                     color(255,255,255),
                     "selected"
                 ])
@@ -780,8 +780,8 @@ onCollide("player", "drawer", (s, w) => {
                 let gridY = Math.floor(vendingSelect/3)
                 const selected = add([
                     rect(70, 70),
-                    pos(517.5+gridX*110, 155+gridY*96),
-                    z(10),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
                     color(255,255,255),
                     "selected"
                 ])
@@ -798,8 +798,8 @@ onCollide("player", "drawer", (s, w) => {
                 let gridY = Math.floor(vendingSelect/3)
                 const selected = add([
                     rect(70, 70),
-                    pos(517.5+gridX*110, 155+gridY*96),
-                    z(10),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
                     color(255,255,255),
                     "selected"
                 ])
@@ -833,7 +833,7 @@ onCollide("player", "drawer", (s, w) => {
             const selected = add([
                 rect(70, 70),
                 pos(startX, startY),
-                z(10),
+                z(11),
                 color(255,255,255),
                 "selected"
             ])
@@ -862,7 +862,7 @@ onCollide("player", "drawer", (s, w) => {
                 // rect(10,10),
                 // sprite(`${image}`),
                 scale(1.5),
-                z(11),
+                z(12),
                 "material",
                 {
            
