@@ -931,7 +931,32 @@ class CharacterMovement {
     let tableItems = [];
 
     // Crafting logic:
+    // !TODO: Remove hardcode after Ollie's code
+    let isCraftable = false;
+      player.onUpdate(() =>{
+        if(tableItems.includes("paper") && (tableItems.includes("yarn"))){
+          isCraftable = true;
+          console.log("hi!")
+        
+        }
+      
+        // if()/
+    });
+    if(isCraftable){
+      add([
+        text("Craft?"),
+        body(),
+        pos(center().x, center().y),
+        z(100)
+      ]);
+    }
+
+
+    // prompting trail
+  
+
     
+    // Dropping item on table
     onKeyPress("q", () => {
 // !TODO: set max items on table
       if (itemsInPocket !== 0 && onItemsOnTable < 6) {
