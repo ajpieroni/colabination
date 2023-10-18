@@ -928,13 +928,20 @@ class CharacterMovement {
     let table_x = 700;
     let table_y = 300;
     let onItemsOnTable = 0;
+    let tableItems = [];
+
+    // Crafting logic:
+    
     onKeyPress("q", () => {
+// !TODO: set max items on table
       if (itemsInPocket !== 0 && onItemsOnTable < 6) {
         itemsInPocket--;
 
         let item = inPocket.pop();
 
         item.moveTo(table_x, table_y);
+        tableItems[onItemsOnTable] = item.itemKey;
+        console.log(tableItems);
         table_y += 50
         onItemsOnTable ++;
       }else{
@@ -954,6 +961,7 @@ class CharacterMovement {
 // Crafting Collisions
     onCollide("player", "craftingTable", (s,w) => {
       atCraftingTable = true;
+      
    
     });
     onCollideEnd("player","craftingTable", (s,w)=>{
