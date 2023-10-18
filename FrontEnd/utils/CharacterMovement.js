@@ -131,6 +131,7 @@ class CharacterMovement{
 // ! Game Objects
 const block_size = 64;
 
+    
 
     const cricut = add([
         rect(block_size*2.25, block_size),
@@ -261,6 +262,33 @@ const block_size = 64;
         "printer",
         {access: false}
     ])
+    //loading items
+    function fetchUserItems(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_items?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemNames => {
+                resolve(itemNames);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserItems('cats').then(itemNames => {
+
+        console.log(itemNames);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
     // !Materials
     let currentIndex = 0;
     const items = {
