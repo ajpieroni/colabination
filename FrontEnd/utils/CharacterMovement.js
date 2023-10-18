@@ -309,6 +309,7 @@ const block_size = 64;
           sprite(item.alertSprite),
           pos(center().x - 100, 20),
           scale(0.15),
+          z(10),
           "alert",
           // pos(item.initialPos.x, item.initialPos.y),
         ]);
@@ -675,6 +676,11 @@ function handleEnterPress() {
       cdrawer.access = false;
     });
 
+    onCollideEnd("player", "craftingTable", ()=>{
+      //end crafting access
+      atCraftingTable = false; 
+    })
+
     //*isColliding
     player.onUpdate(() => {
       if (player.isColliding("cricut")) {
@@ -973,29 +979,29 @@ function handleEnterPress() {
         }
     });
     //TODO: allow to put many items on the table
-    // let table_x = 910
-    // let table_y = 230
-    // let atCraftingTable = false;
-    // let onItemsOnTable = 0
-    // player.onCollide("craftingTable", (table) => {
-    //     atCraftingTable = true
+    let table_x = 670;
+    let table_y = 260;
+    let atCraftingTable = false;
+    let onItemsOnTable = 0
+    player.onCollide("craftingTable", (table) => {
+        atCraftingTable = true
 
-    //     onKeyPress("q", () => {
+        onKeyPress("q", () => {
 
-    //         if (itemsInPocket !== 0 && onItemsOnTable < 6) {
-    //             itemsInPocket--;
+            if (itemsInPocket !== 0 && onItemsOnTable < 6) {
+                itemsInPocket--;
 
-    //             let item = inPocket.pop();
+                let item = inPocket.pop();
 
-    //             item.moveTo(table_x, table_y)
-    //             table_y += 50
-    //             onItemsOnTable ++;
-    //         }
-    //     }
+                item.moveTo(table_x, table_y)
+                table_y += 50
+                onItemsOnTable ++;
+            }
+        }
 
-    //     )
-    //     console.log("you are at table")
-    // })
+        )
+        console.log("you are at table")
+    })
   }
 }
    
