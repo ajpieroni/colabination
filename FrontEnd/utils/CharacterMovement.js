@@ -937,7 +937,6 @@ class CharacterMovement {
         if(tableItems.includes("paper") && (tableItems.includes("yarn"))){
           isCraftable = true;
           console.log("hi!")
-        
         }
       
         // if()/
@@ -959,6 +958,9 @@ class CharacterMovement {
     // Dropping item on table
     onKeyPress("q", () => {
 // !TODO: set max items on table
+      if(onItemsOnTable >= 6 ){
+        alert("There are too many items on the table; try crafting!");
+      }
       if (itemsInPocket !== 0 && onItemsOnTable < 6) {
         itemsInPocket--;
 
