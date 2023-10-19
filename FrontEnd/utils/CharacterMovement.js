@@ -965,8 +965,38 @@ class CharacterMovement {
 
   // ------------- MENU DISPLAY ------------------------------------------------------------------
   displaySettingsMenu() {
+    let arrowX= 442-25;
+    let arrowY = 240;
+
+    // Arrow settings
+    const arrowSelect = 
+    add([
+      rect(200,50),
+      pos(arrowX, arrowY),
+      color(255),
+      z(1)
+    ])
+
+    onKeyPress("down", () => {
+      arrowY=50+arrowY;
+      arrowSelect.moveTo(arrowX, arrowY)
+      
+    });
+    onKeyPress("up", () => {
+      arrowY=arrowY-50;
+      arrowSelect.moveTo(arrowX, arrowY)
+    });
+
+    // !TODO: remove music lmao
+
+    let music = play("soundtrack", {
+      volume: 0.5,
+      loop: true,
+    });
+
     let exitCheckPopup = false;
     add([sprite("trees"), scale(0.85)]);
+    
 
     // width: 2048/2,
     // height: 1668/2,
@@ -988,7 +1018,8 @@ class CharacterMovement {
       pos((1024 - 90)/2, 250),
       color(70, 70, 70),  
       "savebutton", 
-      area()
+      area(),
+      z(2)
     ]);
 
     // Exit function
@@ -998,7 +1029,26 @@ class CharacterMovement {
       color(70, 70, 70),  
       "exitbutton",
       area(),
+      z(2)
       // rect(50,50)
+    ]);
+
+    const controlsBtn = add([
+      text("Controls"), 
+      pos((1024 - 180)/2, 350),
+      color(70, 70, 70),  
+      "savebutton", 
+      area(),
+      z(2)
+    ]);
+
+    const soundsBtn = add([
+      text("Sounds"), 
+      pos((1024 - 120)/2, 400),
+      color(70, 70, 70),  
+      "savebutton", 
+      area(),
+      z(2)
     ]);
 
 
@@ -1053,7 +1103,8 @@ class CharacterMovement {
       scale(.5),
       color(70, 70, 70),  
       pos(550, 550)])
-      
+
+ 
     });
 
     // onClick("cancelExit", (cancelExit) => 
@@ -1068,6 +1119,7 @@ class CharacterMovement {
       destroyAll("exitPopUp"),
       destroyAll("cancelExit"),
       destroyAll("exitfr"),
+      music.paused = true;
       go("characterMovement");
     })
 
@@ -1084,6 +1136,7 @@ class CharacterMovement {
 
     // Exit menu
     onKeyPress("m", () => {
+      music.paused = true;
       go("characterMovement");
     });
   }
