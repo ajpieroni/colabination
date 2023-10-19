@@ -1,5 +1,5 @@
 class UserToolsController < ApplicationController
- def create
+def create
     username = params[:username]
     tool_name = params[:name]
         
@@ -16,6 +16,16 @@ class UserToolsController < ApplicationController
         render json: { message: 'Tool successfully associated with user' }, status: :created
     else
         render json: { error: user_tool.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+    def index
+        user = User.find_by(username: params[:username])
+        
+        if user
+            tool_names = user.tools.pluck(:name)
+            render json: { items: tool_names }
+        else
+            render json: { error: "User not found" }, status: :not_found
         end
     end
     end

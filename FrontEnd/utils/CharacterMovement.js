@@ -289,6 +289,35 @@ const block_size = 64;
         console.error('Error fetching user items:', error);
 
     });
+    // load in tools
+    function fetchUserTools(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_tools?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemTools => {
+                resolve(itemTools);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserTools('cats').then(itemTools => {
+
+        console.log(itemTools);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
+
+     
     // !Materials
     let currentIndex = 0;
     const items = {
@@ -790,7 +819,6 @@ onKeyPress("z", () => {
     handleSavingData();
 
 });
-
     // !INVENTORY
 
     let isPopupVisible = false;
