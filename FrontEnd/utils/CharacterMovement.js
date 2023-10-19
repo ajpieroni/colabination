@@ -1027,11 +1027,8 @@ class CharacterMovement {
     //     updatePocketVending(item, inPocket);
     //   }
     // });
-    onKeyPress("right", () => {
-      if (is)
-    })
     
-    // onClick(""", () =>
+    // onClick("exitbutton", () =>
     onKeyPress("enter", (exit) => {
       console.log("exit clicked");
       add([
@@ -1059,16 +1056,18 @@ class CharacterMovement {
       
     });
 
-    onClick("cancelExit", (cancelExit) => {
+    // onClick("cancelExit", (cancelExit) => 
+    onKeyPress("enter", () => {
       destroyAll("exitPopUp"),
       destroyAll("cancelExit"),
       destroyAll("exitfr")
     })
   
-    onClick("exitfr", (exitfr) => {
+    // onClick("exitfr", (exitfr) => 
+    onKeyPress("enter", () => {
       destroyAll("exitPopUp"),
       destroyAll("cancelExit"),
-      destroyAll("exitfr")
+      destroyAll("exitfr"),
       go("characterMovement");
     })
 
