@@ -33,7 +33,7 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(0, 0), z(5), scale(0.5)]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
     add([
       sprite("tables"),
       pos(0, 0),
