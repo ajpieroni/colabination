@@ -954,48 +954,92 @@ class CharacterMovement {
     // })
 
     // ! Load settings screen
-    onKeyPress("space", () => {
+    onKeyPress("m", () => {
       this.music.paused = true;
       go("settings");
     });
   }
 
+
+
+  // ------------- MENU DISPLAY ------------------------------------------------------------------
   displaySettingsMenu() {
     let exitCheckPopup = false;
     add([sprite("trees"), scale(0.85)]);
+
+    // width: 2048/2,
+    // height: 1668/2,
+    // let showMenuPopup = false;
+    const menuBox = add([
+      rect(600, 400),
+      // z(1),
+      pos((1024 - 600)/2, 200),
+      color(255, 255, 255),
+      opacity(0.5), 
+      outline(6, rgb(255, 255, 255)),
+      "menuButton",
+      area(),
+    ])
+
+    // Save funtion
+    const saveBtn = add([
+      text("Save"), 
+      pos((1024 - 90)/2, 250),
+      color(70, 70, 70),  
+      "savebutton", 
+      area()
+    ]);
+
     // Exit function
     const exitBtn = add([
-      text("exitBtn"),
-      pos(800, 150),
+      text("Exit"),
+      pos((1024 - 90)/2, 300),
+      color(70, 70, 70),  
       "exitbutton",
       area(),
       // rect(50,50)
     ]);
-    const saveBtn = add([text("saveBtn"), pos(800, 50), "savebutton", area()]);
 
-
-    onClick("exitbutton", (exit) => {
+    // onClick("exitbutton", (exit) => 
+    onKeyPress("m", () =>{
       console.log("exit clicked");
       add([
         text("Are you sure you want to exit the game?"),
         "exitPopUp",
         area(),
         scale(.5),
-        pos(400, 400)
+        color(70, 70, 70),  
+        pos((1024 - 420)/2, 500)
       ])
+
       add([text("Cancel"),
       "cancelExit",
       area(),
       scale(.5),
-      pos(350, 500)])
+      color(70, 70, 70),  
+      pos(425, 550)])
+      
       add([text("Exit"),
       "exitfr",
       area(),
       scale(.5),
-      pos(450, 500)])
+      color(70, 70, 70),  
+      pos(550, 550)])
       
-  });
+    });
+
+    onClick("cancelExit", (cancelExit) => {
+      destroyAll("exitPopUp"),
+      destroyAll("cancelExit"),
+      destroyAll("exitfr")
+    })
   
+    onClick("exitfr", (exitfr) => {
+      destroyAll("exitPopUp"),
+      destroyAll("cancelExit"),
+      destroyAll("exitfr")
+      go("characterMovement");
+    })
 
     // , add[(text("POPUP"),
     // pos(800, 150),
@@ -1009,10 +1053,13 @@ class CharacterMovement {
     function save() {}
 
     // Exit menu
-    onKeyPress("space", () => {
+    onKeyPress("m", () => {
       go("characterMovement");
     });
   }
+
+
+
 }
 
 export const characterMovement = new CharacterMovement();
