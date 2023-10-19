@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: 0.5,
+      volume: 0,
     });
 
     const block_size = 32;
@@ -933,66 +933,110 @@ class CharacterMovement {
     // Crafting logic:
     // !TODO: Remove hardcode after Ollie's code
     let isCraftable = false;
-      player.onUpdate(() =>{
-        if(tableItems.includes("paper") && (tableItems.includes("yarn"))){
-          isCraftable = true;
-          console.log("hi!")
-        }
-      
-        // if()/
-    });
-    if(isCraftable){
-      add([
-        text("Craft?"),
-        body(),
-        pos(center().x, center().y),
-        z(100)
-      ]);
-    }
+    // player.onUpdate(() => {
+      // if (
+      //   atCraftingTable &&
+        
+      // ) {
+      //   isCraftable = true;
+      //   // console.log("hi!")
+      //   // console.log(isCraftable);
+      // }
+      // craftLogic();
 
+      // if()/
+    // });
+
+    // if(isCraftable){
+    //   add([
+    //     text("Craft?"),
+    //     body(),
+    //     pos(center().x, center().y),
+    //     z(100)
+    //   ]);
+    // }
 
     // prompting trail
-  
 
-    
+
     // Dropping item on table
     onKeyPress("q", () => {
-// !TODO: set max items on table
-      if(onItemsOnTable >= 6 ){
+      // !TODO: set max items on table
+
+      if (atCraftingTable && onItemsOnTable >= 6) {
         alert("There are too many items on the table; try crafting!");
+        checkCraftable();
       }
-      if (itemsInPocket !== 0 && onItemsOnTable < 6) {
+      if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
+        
+
         itemsInPocket--;
 
         let item = inPocket.pop();
+        console.log("here's item:", item);
+        console.log("here item key", item.itemKey);
 
         item.moveTo(table_x, table_y);
         tableItems[onItemsOnTable] = item.itemKey;
         console.log(tableItems);
-        table_y += 50
-        onItemsOnTable ++;
-      }else{
+        table_y += 50;
+        onItemsOnTable++;
+        checkCraftable(tableItems);
+      } else {
+        checkCraftable();
+        
+
         if (itemsInPocket !== 0) {
           play("bubble");
           itemsInPocket--;
           let item = inPocket.pop();
           console.log("here is popped", item);
           console.log("key?", item.itemKey);
-  
-          // destroy(item);
+
+          destroy(item);
         }
       }
-    
     });
 
-// Crafting Collisions
-    onCollide("player", "craftingTable", (s,w) => {
-      atCraftingTable = true;
+    function checkCraftable(){
+      if(atCraftingTable && tableItems.includes("paper") &&
+        tableItems.includes("yarn")){
+          isCraftable = true;
+          if (isCraftable) {
+            console.log("hit");
+            add(["craft",
+              text("Craft?", {
+                // optional object
+                size: 36,
+                outline: 4,
+                color: (0,0,0),
+                // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+              pos(500, 500),
+              z(20),
+              
+
+              
+              // scale(.5)
+            ]);
+          }
+        }
+      if(!atCraftingTable){
+        destroyAll("craft")
+      }
       
-   
+    }
+
+    // Crafting Collisions
+    onCollide("player", "craftingTable", (s, w) => {
+      atCraftingTable = true;
+      checkCraftable();
     });
-    onCollideEnd("player","craftingTable", (s,w)=>{
+    onCollideEnd("player", "craftingTable", (s, w) => {
       atCraftingTable = false;
+      checkCraftable();
     });
   }
 }
