@@ -38,6 +38,7 @@ export const load = {
         // !Sounds
         loadSound("bubble", "./assets/bubble.m4a")
         loadSound("soundtrack", "./assets/soundtrack.mp3")
+        loadSound("craftFX", "./assets/crafting.m4a")
 
 
 

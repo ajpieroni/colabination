@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: 0,
+      volume: .5,
     });
 
     const block_size = 32;
@@ -523,11 +523,34 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       // !Craft
       if (isCraftable) {
+        destroyAll("craft");
+        add([
+          "craft",
+          text("Crafting...", {
+            // optional object
+            size: 36,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500, 500),
+          z(20),
+
+          // scale(.5)
+        ]);
+        play("craftFX");
+        
+        
+        setTimeout(clearTable, 3000);
+
+
         console.log(`change scene here to ${tableItems}`);
 
         console.log("here is tableItems", tableItems);
 
-        clearTable();
+        // clearTable();
 
         // go(`${tableItems}trail`);
       }
@@ -663,6 +686,10 @@ class CharacterMovement {
       atCraftingTable = false;
     });
 
+    onCollideEnd("player", "cricut", () => {
+      //end crafting access
+      cricut.access = false;
+    });
     //*isColliding
     player.onUpdate(() => {
       if (player.isColliding("cricut")) {
