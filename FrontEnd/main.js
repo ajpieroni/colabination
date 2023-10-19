@@ -15,7 +15,7 @@ load.assets()
 const scenes = {
     menu: () =>{
         // add takes in an array of components
-        // add([text("test"), pos(500, 500), color(0,0,0)])
+        add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
     },
     characterMovement: () =>{
