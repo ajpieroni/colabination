@@ -929,30 +929,7 @@ class CharacterMovement {
         destroy(item);
       }
     });
-    //TODO: allow to put many items on the table
-    // let table_x = 910
-    // let table_y = 230
-    // let atCraftingTable = false;
-    // let onItemsOnTable = 0
-    // player.onCollide("craftingTable", (table) => {
-    //     atCraftingTable = true
-
-    //     onKeyPress("q", () => {
-
-    //         if (itemsInPocket !== 0 && onItemsOnTable < 6) {
-    //             itemsInPocket--;
-
-    //             let item = inPocket.pop();
-
-    //             item.moveTo(table_x, table_y)
-    //             table_y += 50
-    //             onItemsOnTable ++;
-    //         }
-    //     }
-
-    //     )
-    //     console.log("you are at table")
-    // })
+   
 
     // ! Load settings screen
     onKeyPress("m", () => {
@@ -967,6 +944,7 @@ class CharacterMovement {
   displaySettingsMenu() {
     let arrowX= 442-25;
     let arrowY = 240;
+    let index = 0;
 
     // Arrow settings
     const arrowSelect = 
@@ -974,17 +952,37 @@ class CharacterMovement {
       rect(200,50),
       pos(arrowX, arrowY),
       color(255),
-      z(1)
+      z(1),
+      {posX: arrowX,
+      posY: arrowY}
     ])
 
     onKeyPress("down", () => {
+      let indexTemp = index;
+      index = index-1;
+      if(index>=-3){
+
       arrowY=50+arrowY;
-      arrowSelect.moveTo(arrowX, arrowY)
+      arrowSelect.moveTo(arrowX, arrowY);
+      }else{
+        index=indexTemp;
+      }
+
+      
       
     });
     onKeyPress("up", () => {
-      arrowY=arrowY-50;
-      arrowSelect.moveTo(arrowX, arrowY)
+      let indexTemp = index;
+      index = index+1;
+      if(index<=0){
+        arrowY=arrowY-50;
+        arrowSelect.moveTo(arrowX, arrowY)
+      }else{
+        index=indexTemp;
+      }
+      
+
+
     });
 
     // !TODO: remove music lmao
@@ -993,6 +991,8 @@ class CharacterMovement {
       volume: 0.5,
       loop: true,
     });
+
+    // *on key press enter, select that option
 
     let exitCheckPopup = false;
     add([sprite("trees"), scale(0.85)]);
