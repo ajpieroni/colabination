@@ -883,10 +883,12 @@ class CharacterMovement {
           const item2 = add([
             pos(880, 775),
             z(11),
+            z(11),
             sprite(`${material.itemKey}`),
-            // color(material.color.r, material.color.g, material.color.b),
             scale(1.5),
             "material",
+            { image: material.itemKey },
+            { itemKey:  material.itemKey },
           ]);
           inPocket.push(item2);
         }
