@@ -176,7 +176,7 @@ class CharacterMovement {
       body({ isStatic: true }),
       pos(470, 260),
       z(0),
-      "craftingTable",
+      "leatherTable",
       { access: false },
     ]);
 
@@ -243,6 +243,7 @@ class CharacterMovement {
         initialPos: { x: 300, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
       paper: {
         spriteName: "paper",
@@ -250,6 +251,7 @@ class CharacterMovement {
         initialPos: { x: 280, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
       // wood: {
       //     spriteName: 'wood',
@@ -265,6 +267,7 @@ class CharacterMovement {
         initialPos: { x: 330, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
       hammer: {
         spriteName: "hammer",
@@ -272,6 +275,7 @@ class CharacterMovement {
         initialPos: { x: 310, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
     };
 
@@ -517,6 +521,16 @@ class CharacterMovement {
     });
 
     onKeyPress("enter", () => {
+      // !Craft
+      if (isCraftable) {
+        console.log(`change scene here to ${tableItems}`);
+
+        console.log("here is tableItems", tableItems);
+
+        clearTable();
+
+        // go(`${tableItems}trail`);
+      }
       //! DRAWER
       //* Cricut Drawer: Scissors, Paper, Wood, noItems
       //  interactWithCDrawer.call(this);
@@ -924,40 +938,27 @@ class CharacterMovement {
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
+  
     let atCraftingTable = false;
     let table_x = 700;
     let table_y = 300;
     let onItemsOnTable = 0;
     let tableItems = [];
+    function clearTable() {
+      tableItems.length = 0;
+      destroyAll("onTable");
+      destroyAll("craft");
+      table_x = 700;
+      table_y = 300;
+      onItemsOnTable = 0;
+      tableItems = [];
+    }
 
     // Crafting logic:
     // !TODO: Remove hardcode after Ollie's code
     let isCraftable = false;
-    // player.onUpdate(() => {
-      // if (
-      //   atCraftingTable &&
-        
-      // ) {
-      //   isCraftable = true;
-      //   // console.log("hi!")
-      //   // console.log(isCraftable);
-      // }
-      // craftLogic();
-
-      // if()/
-    // });
-
-    // if(isCraftable){
-    //   add([
-    //     text("Craft?"),
-    //     body(),
-    //     pos(center().x, center().y),
-    //     z(100)
-    //   ]);
-    // }
 
     // prompting trail
-
 
     // Dropping item on table
     onKeyPress("q", () => {
@@ -968,13 +969,12 @@ class CharacterMovement {
         checkCraftable();
       }
       if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
-        
-
         itemsInPocket--;
 
         let item = inPocket.pop();
         console.log("here's item:", item);
         console.log("here item key", item.itemKey);
+        item.use("onTable");
 
         item.moveTo(table_x, table_y);
         tableItems[onItemsOnTable] = item.itemKey;
@@ -984,7 +984,6 @@ class CharacterMovement {
         checkCraftable(tableItems);
       } else {
         checkCraftable();
-        
 
         if (itemsInPocket !== 0) {
           play("bubble");
@@ -998,35 +997,36 @@ class CharacterMovement {
       }
     });
 
-    function checkCraftable(){
-      if(atCraftingTable && tableItems.includes("paper") &&
-        tableItems.includes("yarn")){
-          isCraftable = true;
-          if (isCraftable) {
-            console.log("hit");
-            add(["craft",
-              text("Craft?", {
-                // optional object
-                size: 36,
-                outline: 4,
-                color: (0,0,0),
-                // can specify font here,
+    function checkCraftable() {
+      if (
+        atCraftingTable &&
+        tableItems.includes("paper") &&
+        tableItems.includes("yarn")
+      ) {
+        isCraftable = true;
+        if (isCraftable) {
+          console.log("hit");
+          add([
+            "craft",
+            text("Craft?", {
+              // optional object
+              size: 36,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
             }),
             area(),
             anchor("center"),
-              pos(500, 500),
-              z(20),
-              
+            pos(500, 500),
+            z(20),
 
-              
-              // scale(.5)
-            ]);
-          }
+            // scale(.5)
+          ]);
         }
-      if(!atCraftingTable){
-        destroyAll("craft")
       }
-      
+      if (!atCraftingTable) {
+        destroyAll("craft");
+      }
     }
 
     // Crafting Collisions
