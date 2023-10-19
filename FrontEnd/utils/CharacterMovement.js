@@ -967,10 +967,8 @@ class CharacterMovement {
       }else{
         index=indexTemp;
       }
-
-      
-      
     });
+
     onKeyPress("up", () => {
       let indexTemp = index;
       index = index+1;
@@ -1080,7 +1078,17 @@ class CharacterMovement {
     
     // onClick("exitbutton", () =>
     onKeyPress("enter", (exit) => {
-      console.log("exit clicked");
+      console.log("here index:", index);
+
+      // save
+      if(index ==0){
+        console.log("save clicked")
+      }
+
+      
+      // exit
+      if(index == -1){
+        console.log("exit clicked");
       add([
         text("Are you sure you want to exit the game?"),
         "exitPopUp",
@@ -1102,33 +1110,45 @@ class CharacterMovement {
       area(),
       scale(.5),
       color(70, 70, 70),  
-      pos(550, 550)])
+      pos(550, 550)]);
 
- 
-    });
+      }
 
-    // onClick("cancelExit", (cancelExit) => 
-    onKeyPress("enter", () => {
-      destroyAll("exitPopUp"),
-      destroyAll("cancelExit"),
-      destroyAll("exitfr")
-    })
+      
+      // controls
+      if(index == -2){
+        console.log("here are controls!")
+      }
+      // sounds
+      if(index==-3){
+        console.log("here are sounds")
+      }});
+    
+      
+      
+
+    // // onClick("cancelExit", (cancelExit) => 
+    // onKeyPress("enter", () => {
+    //   destroyAll("exitPopUp"),
+    //   destroyAll("cancelExit"),
+    //   destroyAll("exitfr")
+    // })
   
-    // onClick("exitfr", (exitfr) => 
-    onKeyPress("enter", () => {
-      destroyAll("exitPopUp"),
-      destroyAll("cancelExit"),
-      destroyAll("exitfr"),
-      music.paused = true;
-      go("characterMovement");
-    })
+    // // onClick("exitfr", (exitfr) => 
+    // onKeyPress("enter", () => {
+    //   destroyAll("exitPopUp"),
+    //   destroyAll("cancelExit"),
+    //   destroyAll("exitfr"),
+    //   music.paused = true;
+    //   go("characterMovement");
+    // })
 
     // , add[(text("POPUP"),
     // pos(800, 150),
     // "popup",
     // )}
     // rect(50,50))])};
-    onClick("savebutton", (save) => console.log("save clicked"));
+    // onClick("savebutton", (save) => );
 
     function exit() {}
     // Save function
@@ -1139,7 +1159,7 @@ class CharacterMovement {
       music.paused = true;
       go("characterMovement");
     });
-  }
+  };
 
 
 
