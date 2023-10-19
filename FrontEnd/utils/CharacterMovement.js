@@ -721,6 +721,7 @@ class CharacterMovement {
           }
         }
       });
+
       onKeyPress("right", () => {
         if (isPopupVisible) {
           if (vendingSelect < vendingContents.length - 1) {
@@ -1000,8 +1001,38 @@ class CharacterMovement {
       // rect(50,50)
     ]);
 
-    // onClick("exitbutton", (exit) => 
-    onKeyPress("m", () =>{
+
+
+
+    // onKeyPress("up", () => {
+    //   if (isPopupVisible) {
+    //     if (vendingSelect - 3 >= 0) {
+    //       vendingSelect -= 3;
+    //       destroyAll("selected");
+    //       let gridX = vendingSelect % 3;
+    //       let gridY = Math.floor(vendingSelect / 3);
+    //       const selected = add([
+    //         rect(70, 70),
+    //         pos(startX + gridX * 110, startY + gridY * 96),
+    //         z(10),
+    //         color(255, 255, 255),
+    //         "selected",
+    //       ]);
+    //     }
+    //   }
+    // });
+    // onKeyPress("enter", () => {
+    //   if (isPopupVisible && vendingContents.length > 0) {
+    //     let item = vendingContents[vendingSelect];
+    //     updatePocketVending(item, inPocket);
+    //   }
+    // });
+    onKeyPress("right", () => {
+      if (is)
+    })
+    
+    // onClick(""", () =>
+    onKeyPress("enter", (exit) => {
       console.log("exit clicked");
       add([
         text("Are you sure you want to exit the game?"),
