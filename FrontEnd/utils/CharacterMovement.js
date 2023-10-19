@@ -866,15 +866,17 @@ class CharacterMovement {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
           play("bubble");
+          console.log(`Incoming material: ${material}, ${material.itemKey}` )
           const item1 = add([
-            // rect(material.width, material.height) ,
             pos(880, 700),
             z(11),
             sprite(`${material.itemKey}`),
-            // color(material.color.r, material.color.g, material.color.b),
             scale(1.5),
             "material",
+            { image: material.itemKey },
+            { itemKey:  material.itemKey },
           ]);
+          console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
           inPocket.push(item1);
         } else {
           play("bubble");
