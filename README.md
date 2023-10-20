@@ -18,8 +18,12 @@ Feedback Review:
 
 Progress Report:
 - Kelvin:
-  - 
-
+  - save implementation in progress
+  - make a base user
+- Dasol:
+  - menu integration with game (how to save items)
+- Sophia:
+  - simplify trail
 
 ## October 18th
 Demo Summary:
