@@ -16,6 +16,11 @@ Feedback Review:
   - split between people keep consistent style
 - get rid of drawers, first time playing have items spawn on floor
 
+Progress Report:
+- Kelvin:
+  - 
+
+
 ## October 18th
 Demo Summary:
 - once you have items in vending machine, you can pick any item
