@@ -1,5 +1,21 @@
 # Meeting Notes
 
+## October 20th
+Feedback Review:
+- could autosave or save button or interval saving
+- backend continue in rails
+- ways to illustrate items/tools that are interactable:
+  - items/tools glow when unlocked
+  - items/tools have thicker outline
+  - colliding w object has craft? prompt (still should prompt even if not craftable)
+- animate a way to indicate new object: short prompt pop up?
+- run the trees by someone who works in studio
+- visualization of character (not mvp)
+- you made dubious trash
+- focus on first/second layer of tree for sprites
+  - split between people keep consistent style
+- get rid of drawers, first time playing have items spawn on floor
+
 ## October 18th
 Demo Summary:
 - once you have items in vending machine, you can pick any item
