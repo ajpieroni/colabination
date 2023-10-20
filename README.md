@@ -28,29 +28,18 @@ Suggestions/Feedback/Questions:
 - be able to create a robot -> robot cat!!!
 ### Alex Demo Notes:
 My very scattered notes:
-Make Dremel instead
-
-Looking into the drawer to see all the items
-
-Looks like pocket could hold 4
-
-Come close to vending machine, press v
-
-Question mark button to bring up instructions
-
-Next big phase is the crafting
-
-It might be good to find someway to illustrate that something is either something you can or cannot interact with
-
-Lock on machines that haven’t been discovered yet
-
-Character being able to go in four directions
-
-Talk with people who work in the CoLab studio, what are all the objects you have, talk through with the course staff (sauntering)
-
-3d print, removing the supports, need a tool for that
-
-Something weird would happen if you had the wrong things in your pocket
+- Make Dremel instead
+- Looking into the drawer to see all the items
+- Looks like pocket could hold 4
+- Come close to vending machine, press v
+- Question mark button to bring up instructions
+- Next big phase is the crafting
+- It might be good to find someway to illustrate that something is either something you can or cannot interact with
+- Lock on machines that haven’t been discovered yet
+- Character being able to go in four directions
+- Talk with people who work in the CoLab studio, what are all the objects you have, talk through with the course staff (sauntering)
+- 3d print, removing the supports, need a tool for that
+- Something weird would happen if you had the wrong things in your pocket
 - You fool, can’t make anything abbot X and Y
 Contraband
 Stained glass window 
