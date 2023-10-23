@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: 0.5,
+      volume: 0,
     });
 
     const block_size = 32;
@@ -522,12 +522,13 @@ class CharacterMovement {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       let currentx = 400;
-      let currenty = 400;
+      let currenty = 300;
       add([
         text(`You possess ${ingredients.length} items:`),
-        pos(150, 125),
+        pos(215+150+50, 225-50),
         z(51),
         color(0, 0, 0),
+        scale(.5)
       ]);
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -538,6 +539,7 @@ class CharacterMovement {
           z(52),
           color(228, 228, 228),
         ]);
+        play("bubble");
         const trailItem = add([
           // rect(item.width, item.height) ,
           pos(currentx, currenty),
@@ -557,6 +559,22 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
+      add([
+        text(`Congratulations! You can make something with these items.`),
+        pos(215, 525),
+        z(51),
+        color(0, 0, 0),
+        scale(.5)
+      ]);
+      add([
+        text(`Would you like to proceed?`),
+        pos(215+150, 525+50),
+        z(51),
+        color(0, 0, 0),
+        scale(.5)
+      ]);
+      //  Would you like to proceed?
+
       // setTimeout(3000);
     }
     //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
