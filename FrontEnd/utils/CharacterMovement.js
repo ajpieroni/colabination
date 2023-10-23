@@ -237,13 +237,13 @@ class CharacterMovement {
     let nearCraftingTable = false;
     let currentIndex = 0;
     const items = {
-      // scissors: {
-      //   spriteName: "scissors",
-      //   alertSprite: "scissorsAlert",
-      //   initialPos: { x: 300, y: 300 },
-      //   hasFound: false,
-      //   alertBox: null,
-      // },
+      scissors: {
+        spriteName: "scissors",
+        alertSprite: "scissorsAlert",
+        initialPos: { x: 300, y: 300 },
+        hasFound: false,
+        alertBox: null,
+      },
       paper: {
         spriteName: "paper",
         alertSprite: "paperAlert",
@@ -253,14 +253,14 @@ class CharacterMovement {
         // onTable: false
       },
 
-      // yarn: {
-      //   spriteName: "yarn",
-      //   alertSprite: "yarnAlert",
+      yarn: {
+        spriteName: "yarn",
+        alertSprite: "yarnAlert",
 
-      //   initialPos: { x: 330, y: 300 },
-      //   hasFound: false,
-      //   alertBox: null,
-      // },
+        initialPos: { x: 330, y: 300 },
+        hasFound: false,
+        alertBox: null,
+      },
       hammer: {
         spriteName: "hammer",
         alertSprite: "hammerAlert",
@@ -647,12 +647,9 @@ class CharacterMovement {
           ]);
         await new Promise((resolve) => setTimeout(resolve, 3000));
         console.log("here result", madeItem.itemKey);
-        updatePocketVending(madeItem);
+        // updatePocketVending(madeItem);
         exitCraft();
-
         }
-
-
         async function exitCraft() {
           destroyAll("crafting");
           destroyAll("madeItem");
