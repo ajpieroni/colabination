@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: 0,
+      volume: 0.25,
     });
 
     const block_size = 32;
@@ -237,14 +237,13 @@ class CharacterMovement {
     let nearCraftingTable = false;
     let currentIndex = 0;
     const items = {
-      scissors: {
-        spriteName: "scissors",
-        alertSprite: "scissorsAlert",
-        initialPos: { x: 300, y: 300 },
-        hasFound: false,
-        alertBox: null,
-        // onTable: false
-      },
+      // scissors: {
+      //   spriteName: "scissors",
+      //   alertSprite: "scissorsAlert",
+      //   initialPos: { x: 300, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      // },
       paper: {
         spriteName: "paper",
         alertSprite: "paperAlert",
@@ -253,22 +252,15 @@ class CharacterMovement {
         alertBox: null,
         // onTable: false
       },
-      // wood: {
-      //     spriteName: 'wood',
-      //     alertSprite: 'woodAlert',
-      //     initialPos: { x:200, y: 200 },
-      //     hasFound: false,
-      //     alertBox: null
-      // },
-      yarn: {
-        spriteName: "yarn",
-        alertSprite: "yarnAlert",
 
-        initialPos: { x: 330, y: 300 },
-        hasFound: false,
-        alertBox: null,
-        // onTable: false
-      },
+      // yarn: {
+      //   spriteName: "yarn",
+      //   alertSprite: "yarnAlert",
+
+      //   initialPos: { x: 330, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      // },
       hammer: {
         spriteName: "hammer",
         alertSprite: "hammerAlert",
@@ -514,30 +506,35 @@ class CharacterMovement {
     }
 
     // !Crafting Function: Paper Trail
+    let isCraftingVisible = false;
     async function showContainer(tableItems) {
+      isCraftingVisible = true;
+      
       await new Promise((resolve) => setTimeout(resolve, 500));
       let ingredients = tableItems;
       console.log(ingredients);
-      add([rect(725, 550), pos(150, 125), z(50)]);
+      add([rect(725, 550), pos(150, 125), z(50), "craft-container"]);
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       let currentx = 400;
       let currenty = 300;
       add([
         text(`You possess ${ingredients.length} items:`),
-        pos(215+150+50, 225-50),
+        pos(215 + 150 + 50, 225 - 50),
         z(51),
         color(0, 0, 0),
-        scale(.5)
+        scale(0.5),
+        "crafting"
       ]);
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
         const trailCircle = add([
           circle(64),
-          pos(currentx+40, currenty+35),
+          pos(currentx + 40, currenty + 35),
           z(52),
           color(228, 228, 228),
+          "crafting"
         ]);
         play("bubble");
         const trailItem = add([
@@ -545,7 +542,7 @@ class CharacterMovement {
           pos(currentx, currenty),
           z(100),
           // color(item.color.r, item.color.g, item.color.b),
-          "vending",
+          "crafting",
           // !TODO: Make sprite image dynamic
           sprite(`${ingredients[index]}`),
           // rect(10,10),
@@ -555,24 +552,94 @@ class CharacterMovement {
           "material",
           {
             itemKey: ingredients[index],
-          },
+          }
         ]);
         currentx += 200;
       }
       add([
         text(`Congratulations! You can make something with these items.`),
-        pos(215, 525),
+        pos(215, 525 - 100),
         z(51),
         color(0, 0, 0),
-        scale(.5)
+        scale(0.5),
+        "crafting"
       ]);
       add([
         text(`Would you like to proceed?`),
-        pos(215+150, 525+50),
+        pos(215 + 150+50-25 , 525 + 50-100),
         z(51),
         color(0, 0, 0),
-        scale(.5)
+        scale(0.5),
+        "crafting"
       ]);
+      // *Craft Button
+      const craftButton = add([
+        rect(150, 50), 
+        pos(400+50, 600), 
+        z(52),
+        color(228, 228, 228), 
+        "crafting",
+      ]);
+      add([
+        text("Make!"),
+        pos(415+15+50+15, 615), // adjust as necessary to position the text on the button
+        z(53),
+        color(0, 0, 0), // color of the text,
+        scale(.5),
+        "crafting"
+      ]);
+      // Craft Button Flash
+      let isBright = true;
+      setInterval(() => {
+        if (isBright) {
+          craftButton.color = rgb(228, 228, 228); // less bright color
+        } else {
+          craftButton.color = rgb(80, 80, 80); // original color
+        }
+        isBright = !isBright;
+      }, 250); // the button color will toggle every 500ms
+
+      let result = "wood";
+      onKeyPress("enter", () =>{
+        destroyAll("crafting");
+        add([
+          text(`You made ${result}!`),
+          pos(440 + 40+25-50, 615), // adjust as necessary to position the text on the button
+          z(53),
+          color(0, 0, 0), // color of the text,
+          scale(.5),
+          "crafting"
+        ]);
+        // await new Promise((resolve) => setTimeout(resolve, 500));
+        play("bubble");
+
+        const trailCircle = add([
+          circle(64),
+          pos(440 + 40+25+25, 135+100),
+          z(52),
+          color(228, 228, 228),
+          "crafting"
+        ]);
+        const madeItem = add([
+            // rect(item.width, item.height) ,
+            pos(440 + 40+25+25-25-5-5-5, 135+100+25-50-10),
+            z(100),
+            // color(item.color.r, item.color.g, item.color.b),
+            "crafting",
+            sprite(`${result}`),
+            // rect(10,10),
+            // sprite(`${image}`),
+            scale(1.5),
+            // z(11),
+            "madeItem",
+            {
+              itemKey: result,
+            }
+
+        ]);
+        
+      })
+
       //  Would you like to proceed?
 
       // setTimeout(3000);
@@ -587,7 +654,7 @@ class CharacterMovement {
 
     onKeyPress("enter", () => {
       // !Craft
-      if (isCraftable) {
+      if (isCraftable && !isCraftingVisible) {
         destroyAll("craft");
         add([
           "craft",
@@ -1095,7 +1162,7 @@ class CharacterMovement {
       if (
         atCraftingTable &&
         tableItems.includes("paper") &&
-        tableItems.includes("yarn")
+        tableItems.includes("hammer")
       ) {
         isCraftable = true;
         if (isCraftable) {
