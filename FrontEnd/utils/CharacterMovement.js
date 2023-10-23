@@ -230,9 +230,64 @@ class CharacterMovement {
       pos(140, 40),
       // z(10),
 
-      "printer",
-      { access: false },
+        "printer",
+        {access: false}
     ]);
+    //loading items
+    function fetchUserItems(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_items?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemNames => {
+                resolve(itemNames);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserItems('cats').then(itemNames => {
+
+        console.log(itemNames);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
+    // load in tools
+    function fetchUserTools(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_tools?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemTools => {
+                resolve(itemTools);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserTools('cats').then(itemTools => {
+
+        console.log(itemTools);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
+
     // !Materials
     let nearCraftingTable = false;
     let currentIndex = 0;
@@ -700,8 +755,59 @@ class CharacterMovement {
       }
       if (player.isColliding("scissors")) {
         scissorsCraft = true;
-      }
+    }
+})
+//handle saving data and uploading to DB
+function handleSavingData(){
+    //hard coded items and tools, should be dynamic at some point
+    let currItems = ["paper", "yarn"]
+    let currTools = ["hammer"]
+    const username = "cats"
+
+    for (let i = 0; i < currItems.length; i++){
+        const currItem = currItems[i]
+        fetch('http://localhost:8081/user_items', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+ 
+        },
+        body: JSON.stringify({ name: currItem, username: username })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject('Failed to save items');
+        }
+        console.log("Items saved!", response);
+    })
+    .catch(error => {
+        console.error("Error saving items:", error);
     });
+    }
+    for (let j = 0; j < currTools.length; j++){
+        const currTool = currTools[j]
+        fetch("http://localhost:8081/user_tools",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: currTool, username: username })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject('Failed to save items');
+            }
+            console.log("Items saved!", response);
+        })
+        .catch(error => {
+            console.error("Error saving items:", error);
+        });
+    }
+}
+// saving for now :D
+onKeyPress("z", () => {
+    handleSavingData();
+});
 
     // !INVENTORY
 
@@ -1071,5 +1177,4 @@ class CharacterMovement {
     });
   }
 }
-
 export const characterMovement = new CharacterMovement();

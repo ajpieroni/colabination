@@ -9,6 +9,8 @@ gem "rails", "~> 7.0.3"
 # added mysql2???
 gem "mysql2", "~> 0.5.3"
 
+gem 'rack-cors'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
