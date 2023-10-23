@@ -509,11 +509,11 @@ class CharacterMovement {
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
       isCraftingVisible = true;
-      
+
       await new Promise((resolve) => setTimeout(resolve, 500));
       let ingredients = tableItems;
       console.log(ingredients);
-      add([rect(725, 550), pos(150, 125), z(50), "craft-container"]);
+      add([rect(725, 550), pos(150, 125), z(50), "craft-container", "craftPop"]);
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       let currentx = 400;
@@ -524,7 +524,7 @@ class CharacterMovement {
         z(51),
         color(0, 0, 0),
         scale(0.5),
-        "crafting"
+        "crafting",
       ]);
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -534,7 +534,7 @@ class CharacterMovement {
           pos(currentx + 40, currenty + 35),
           z(52),
           color(228, 228, 228),
-          "crafting"
+          "crafting",
         ]);
         play("bubble");
         const trailItem = add([
@@ -552,7 +552,7 @@ class CharacterMovement {
           "material",
           {
             itemKey: ingredients[index],
-          }
+          },
         ]);
         currentx += 200;
       }
@@ -562,31 +562,31 @@ class CharacterMovement {
         z(51),
         color(0, 0, 0),
         scale(0.5),
-        "crafting"
+        "crafting",
       ]);
       add([
         text(`Would you like to proceed?`),
-        pos(215 + 150+50-25 , 525 + 50-100),
+        pos(215 + 150 + 50 - 25, 525 + 50 - 100),
         z(51),
         color(0, 0, 0),
         scale(0.5),
-        "crafting"
+        "crafting",
       ]);
       // *Craft Button
       const craftButton = add([
-        rect(150, 50), 
-        pos(400+50, 600), 
+        rect(150, 50),
+        pos(400 + 50, 600),
         z(52),
-        color(228, 228, 228), 
+        color(228, 228, 228),
         "crafting",
       ]);
       add([
         text("Make!"),
-        pos(415+15+50+15, 615), // adjust as necessary to position the text on the button
+        pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
         z(53),
         color(0, 0, 0), // color of the text,
-        scale(.5),
-        "crafting"
+        scale(0.5),
+        "crafting",
       ]);
       // Craft Button Flash
       let isBright = true;
@@ -598,47 +598,68 @@ class CharacterMovement {
         }
         isBright = !isBright;
       }, 250); // the button color will toggle every 500ms
+      // !TODO: dynamic
+      // let result = "wood";
 
-      let result = "wood";
-      onKeyPress("enter", () =>{
-        destroyAll("crafting");
-        add([
-          text(`You made ${result}!`),
-          pos(440 + 40+25-50, 615), // adjust as necessary to position the text on the button
-          z(53),
-          color(0, 0, 0), // color of the text,
-          scale(.5),
-          "crafting"
-        ]);
-        // await new Promise((resolve) => setTimeout(resolve, 500));
-        play("bubble");
+      let result = {};
+      let madeItemKey = "wood";
+      result.itemKey = madeItemKey;
 
-        const trailCircle = add([
-          circle(64),
-          pos(440 + 40+25+25, 135+100),
-          z(52),
-          color(228, 228, 228),
-          "crafting"
-        ]);
-        const madeItem = add([
+      onKeyPress("enter", () => {
+        madeCraft(result);
+
+        async function madeCraft() {
+          destroyAll("crafting");
+          add([
+            text(`You made ${result.itemKey}!`),
+            pos(440 + 40 + 25 - 50, 615), // adjust as necessary to position the text on the button
+            z(53),
+            color(0, 0, 0), // color of the text,
+            scale(0.5),
+            "crafting",
+          ]);
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          play("bubble");
+
+          const trailCircle = add([
+            circle(64),
+            pos(440 + 40 + 25 + 25, 135 + 100),
+            z(52),
+            color(152, 251, 152),
+            "crafting",
+          ]);
+          const madeItem = add([
             // rect(item.width, item.height) ,
-            pos(440 + 40+25+25-25-5-5-5, 135+100+25-50-10),
+            pos(440 + 40 + 25 + 25 - 25 - 5 - 5 - 5, 135 + 100 + 25 - 50 - 10),
             z(100),
             // color(item.color.r, item.color.g, item.color.b),
             "crafting",
-            sprite(`${result}`),
+            sprite(`${result.itemKey}`),
             // rect(10,10),
             // sprite(`${image}`),
             scale(1.5),
             // z(11),
             "madeItem",
             {
-              itemKey: result,
-            }
+              itemKey: result.itemKey,
+            },
+          ]);
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        console.log("here result", madeItem.itemKey);
+        updatePocketVending(madeItem);
+        exitCraft();
 
-        ]);
-        
-      })
+        }
+
+
+        async function exitCraft() {
+          destroyAll("crafting");
+          destroyAll("madeItem");
+          destroyAll("craftPop");
+          isCraftingVisible = false;
+        }
+      });
 
       //  Would you like to proceed?
 
