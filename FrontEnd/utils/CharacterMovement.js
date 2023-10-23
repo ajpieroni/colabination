@@ -639,6 +639,7 @@ class CharacterMovement {
             // rect(10,10),
             // sprite(`${image}`),
             scale(1.5),
+            area(),
             // z(11),
             "madeItem",
             {
@@ -646,8 +647,15 @@ class CharacterMovement {
             },
           ]);
         await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log("here result", madeItem.itemKey);
-        // updatePocketVending(madeItem);
+        console.log("here result", result.itemKey);
+        // updatePocketVending(madeItem, inPocket);
+        if (!vendingContents.includes(madeItem)) {
+          vendingContents.push(madeItem);
+        }
+        play("bubble");
+  
+        updatePocket(madeItem, inPocket);
+        madeItem.use(body({ isStatic: true }))
         exitCraft();
         }
         async function exitCraft() {
