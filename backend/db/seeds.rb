@@ -13,6 +13,8 @@ item1 = Item.create(name: "item1", description: "pog", item_type: "sticker", rar
 item2 = Item.create(name: "item2", description: "pog1", item_type: "sticker", rarity: 1)
 item3 = Item.create(name: "item3", description: "pog3", item_type: "clothing", rarity: 0)
 
+paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: true)
+wood = Item.create(name: 'Yarn', description: "string", item_type:"material", rarity:1, isFinal: false)
 
 scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
