@@ -515,14 +515,29 @@ class CharacterMovement {
 
     // !Crafting Function: Paper Trail
     async function showContainer(tableItems) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
       let ingredients = tableItems;
       console.log(ingredients);
-      add([rect(725, 550), pos(150,125), z(50)]);
-      let currentx = 500;
-      let currenty = 500;
-      add([text(`You possess ${ingredients.length} items:`), pos(150,125), z(51), color(0,0,0)])
+      add([rect(725, 550), pos(150, 125), z(50)]);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      let currentx = 400;
+      let currenty = 400;
+      add([
+        text(`You possess ${ingredients.length} items:`),
+        pos(150, 125),
+        z(51),
+        color(0, 0, 0),
+      ]);
       for (let index = 0; index < ingredients.length; index++) {
-        
+        await new Promise((resolve) => setTimeout(resolve, 750));
+
+        const trailCircle = add([
+          circle(64),
+          pos(currentx+40, currenty+35),
+          z(52),
+          color(228, 228, 228),
+        ]);
         const trailItem = add([
           // rect(item.width, item.height) ,
           pos(currentx, currenty),
@@ -540,8 +555,7 @@ class CharacterMovement {
             itemKey: ingredients[index],
           },
         ]);
-        currentx += 100;
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        currentx += 200;
       }
       // setTimeout(3000);
     }
