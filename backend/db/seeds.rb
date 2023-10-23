@@ -19,6 +19,7 @@ hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount:
 
 user1 = User.create(username: "pandaMan", pin: 1234)
 user2 = User.create(username: "bruin36", pin: 2468)
+user3 = User.create(username: "cats", pin:1234)
 
 puts 'successfully seeded'
 
