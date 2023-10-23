@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: .5,
+      volume: 0.5,
     });
 
     const block_size = 32;
@@ -33,7 +33,7 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([
       sprite("tables"),
       pos(0, 0),
@@ -512,6 +512,39 @@ class CharacterMovement {
         // cricut.buildNoBlueprint = true;
       }
     }
+
+    // !Crafting Function: Paper Trail
+    async function showContainer(tableItems) {
+      let ingredients = tableItems;
+      console.log(ingredients);
+      add([rect(725, 550), pos(150,125), z(50)]);
+      let currentx = 500;
+      let currenty = 500;
+      add([text(`You possess ${ingredients.length} items:`), pos(150,125), z(51), color(0,0,0)])
+      for (let index = 0; index < ingredients.length; index++) {
+        
+        const trailItem = add([
+          // rect(item.width, item.height) ,
+          pos(currentx, currenty),
+          z(100),
+          // color(item.color.r, item.color.g, item.color.b),
+          "vending",
+          // !TODO: Make sprite image dynamic
+          sprite(`${ingredients[index]}`),
+          // rect(10,10),
+          // sprite(`${image}`),
+          scale(1.5),
+          // z(11),
+          "material",
+          {
+            itemKey: ingredients[index],
+          },
+        ]);
+        currentx += 100;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      // setTimeout(3000);
+    }
     //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
     onKeyPress("b", () => {
       playerCraftsScissorsPaper();
@@ -541,13 +574,11 @@ class CharacterMovement {
           // scale(.5)
         ]);
         play("craftFX");
-        
-        
+
         setTimeout(clearTable, 3000);
 
-
         console.log(`change scene here to ${tableItems}`);
-
+        showContainer(tableItems);
         console.log("here is tableItems", tableItems);
 
         // clearTable();
@@ -893,7 +924,7 @@ class CharacterMovement {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
           play("bubble");
-          console.log(`Incoming material: ${material}, ${material.itemKey}` )
+          console.log(`Incoming material: ${material}, ${material.itemKey}`);
           const item1 = add([
             pos(880, 700),
             z(11),
@@ -901,7 +932,7 @@ class CharacterMovement {
             scale(1.5),
             "material",
             { image: material.itemKey },
-            { itemKey:  material.itemKey },
+            { itemKey: material.itemKey },
           ]);
           console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
           inPocket.push(item1);
@@ -915,7 +946,7 @@ class CharacterMovement {
             scale(1.5),
             "material",
             { image: material.itemKey },
-            { itemKey:  material.itemKey },
+            { itemKey: material.itemKey },
           ]);
           inPocket.push(item2);
         }
@@ -969,7 +1000,7 @@ class CharacterMovement {
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
-  
+
     let atCraftingTable = false;
     let table_x = 700;
     let table_y = 300;
