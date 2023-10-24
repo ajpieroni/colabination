@@ -1204,8 +1204,7 @@ class CharacterMovement {
     //   music.paused = true;
     //   go("characterMovement");
     // })
-
-    // , add[(text("POPUP"),
+    //  add[(text("POPUP"),
     // pos(800, 150),
     // "popup",
     // )}
