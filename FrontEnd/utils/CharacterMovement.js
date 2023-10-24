@@ -942,8 +942,8 @@ class CharacterMovement {
 
   // ------------- MENU DISPLAY ------------------------------------------------------------------
   displaySettingsMenu() {
-    let arrowX= 442-25;
-    let arrowY = 240;
+    let arrowX= 412;
+    let arrowY = 215;
     let index = 0;
 
     // Arrow settings
@@ -960,7 +960,7 @@ class CharacterMovement {
     onKeyPress("down", () => {
       let indexTemp = index;
       index = index-1;
-      if(index>=-3){
+      if(index>=-4){
 
       arrowY=50+arrowY;
       arrowSelect.moveTo(arrowX, arrowY);
@@ -998,6 +998,7 @@ class CharacterMovement {
 
     // width: 2048/2,
     // height: 1668/2,
+    // centering: (width - boxSize)/2
     // let showMenuPopup = false;
     const menuBox = add([
       rect(600, 400),
@@ -1013,7 +1014,7 @@ class CharacterMovement {
     // Save funtion
     const saveBtn = add([
       text("Save"), 
-      pos((1024 - 90)/2, 250),
+      pos((1024 - 85)/2, 225),
       color(70, 70, 70),  
       "savebutton", 
       area(),
@@ -1023,7 +1024,7 @@ class CharacterMovement {
     // Exit function
     const exitBtn = add([
       text("Exit"),
-      pos((1024 - 90)/2, 300),
+      pos((1024 - 85)/2, 275),
       color(70, 70, 70),  
       "exitbutton",
       area(),
@@ -1033,7 +1034,7 @@ class CharacterMovement {
 
     const controlsBtn = add([
       text("Controls"), 
-      pos((1024 - 180)/2, 350),
+      pos((1024 - 170)/2, 325),
       color(70, 70, 70),  
       "savebutton", 
       area(),
@@ -1042,7 +1043,16 @@ class CharacterMovement {
 
     const soundsBtn = add([
       text("Sounds"), 
-      pos((1024 - 120)/2, 400),
+      pos((1024 - 130)/2, 375),
+      color(70, 70, 70),  
+      "savebutton", 
+      area(),
+      z(2)
+    ]);
+
+    const aboutBtn = add([
+      text("About Us"), 
+      pos((1024 - 170)/2, 425),
       color(70, 70, 70),  
       "savebutton", 
       area(),
@@ -1052,65 +1062,117 @@ class CharacterMovement {
 
 
 
-    // onKeyPress("up", () => {
-    //   if (isPopupVisible) {
-    //     if (vendingSelect - 3 >= 0) {
-    //       vendingSelect -= 3;
-    //       destroyAll("selected");
-    //       let gridX = vendingSelect % 3;
-    //       let gridY = Math.floor(vendingSelect / 3);
-    //       const selected = add([
-    //         rect(70, 70),
-    //         pos(startX + gridX * 110, startY + gridY * 96),
-    //         z(10),
-    //         color(255, 255, 255),
-    //         "selected",
-    //       ]);
-    //     }
-    //   }
-    // });
-    // onKeyPress("enter", () => {
-    //   if (isPopupVisible && vendingContents.length > 0) {
-    //     let item = vendingContents[vendingSelect];
-    //     updatePocketVending(item, inPocket);
-    //   }
-    // });
-    
-    // onClick("exitbutton", () =>
     onKeyPress("enter", (exit) => {
       console.log("here index:", index);
 
       // save
       if(index ==0){
-        console.log("save clicked")
+        console.log("save clicked");
+
+        const saveText = add([
+          text("Saving in progress..."),
+          area(),
+          scale(.5),
+          color(70, 70, 70),  
+          pos((1024 - 230)/2, 500),
+
+        ])       
+
+        
+        setTimeout(function() {
+          saveText.text = "Saving complete!",
+          saveText.pos = vec2((1024 - 170)/2, 500)
+
+          setTimeout(function() { destroy(saveText)}, 750);
+        }, 2000);
       }
 
       
       // exit
       if(index == -1){
         console.log("exit clicked");
-      add([
-        text("Are you sure you want to exit the game?"),
-        "exitPopUp",
+        const exitCheck = add([
+          text("Are you sure you want to exit the game?"),
+          "exitPopUp",
+          area(),
+          scale(.5),
+          color(70, 70, 70),  
+          z(2),
+          pos((1024 - 420)/2, 500)
+        ])
+
+        const exitCheckN = add([text("Cancel"),
+        "cancelExit",
+        area(),
+        scale(.5),
+        color(70, 70, 70), 
+        z(2), 
+        pos(425, 550)])
+        
+        const exitCheckY = add([text("Exit"),
+        "exitfr",
         area(),
         scale(.5),
         color(70, 70, 70),  
-        pos((1024 - 420)/2, 500)
-      ])
+        z(2),
+        pos(550, 550)]);
+        
 
-      add([text("Cancel"),
-      "cancelExit",
-      area(),
-      scale(.5),
-      color(70, 70, 70),  
-      pos(425, 550)])
-      
-      add([text("Exit"),
-      "exitfr",
-      area(),
-      scale(.5),
-      color(70, 70, 70),  
-      pos(550, 550)]);
+        let exitNx = 420;
+        let exitNy = 545;
+        let exitN = -1;
+        const exitArrowSelect = 
+          add([
+            rect(75,25),
+            pos(420,545),
+            color(255),
+            z(1),
+            {posX: exitNx,
+            posY: exitNy}
+          ])
+
+          onKeyPress("left", () => {
+            let exitNTemp = exitN;
+            if(exitN == -1){
+              exitN = 0;
+            } else if(exitN == 1){
+              exitNx = exitNx - 115;
+              exitArrowSelect.moveTo(exitNx, exitNy);
+              exitN = 0;
+            }else{
+              exitN = exitNTemp;
+
+            }
+          });
+
+          onKeyPress("right", () => {
+            let exitNTemp = exitN;
+
+            if(exitN == -1){
+              exitN = 1;
+            } else if(exitN == 0){
+              exitNx = exitNx + 115;
+              exitArrowSelect.moveTo(exitNx, exitNy)
+              exitN = 1;
+            }else{
+              exitN = exitNTemp;
+
+            }
+          });
+
+        onKeyPress("enter", () => {
+
+            
+          if(exitN == 0){
+            console.log("cancel:", exitN);
+            destroy(exitCheck),
+            destroy(exitCheckN),
+            destroy(exitCheckY)
+          } else if (exitN == 1 ){
+            console.log("exitfr:", exitN);
+              go("characterMovement");
+          }
+        })
 
       }
 
