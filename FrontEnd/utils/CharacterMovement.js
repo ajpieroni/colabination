@@ -230,9 +230,64 @@ class CharacterMovement {
       pos(140, 40),
       // z(10),
 
-      "printer",
-      { access: false },
+        "printer",
+        {access: false}
     ]);
+    //loading items
+    function fetchUserItems(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_items?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemNames => {
+                resolve(itemNames);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserItems('cats').then(itemNames => {
+
+        console.log(itemNames);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
+    // load in tools
+    function fetchUserTools(username) {
+        return new Promise((resolve, reject) => {
+            fetch(`http://localhost:8081/user_tools?username=${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(itemTools => {
+                resolve(itemTools);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+    fetchUserTools('cats').then(itemTools => {
+
+        console.log(itemTools);
+
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+
+    });
+
     // !Materials
     let nearCraftingTable = false;
     let currentIndex = 0;
@@ -700,8 +755,59 @@ class CharacterMovement {
       }
       if (player.isColliding("scissors")) {
         scissorsCraft = true;
-      }
+    }
+})
+//handle saving data and uploading to DB
+function handleSavingData(){
+    //hard coded items and tools, should be dynamic at some point
+    let currItems = ["paper", "yarn"]
+    let currTools = ["hammer"]
+    const username = "cats"
+
+    for (let i = 0; i < currItems.length; i++){
+        const currItem = currItems[i]
+        fetch('http://localhost:8081/user_items', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+ 
+        },
+        body: JSON.stringify({ name: currItem, username: username })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject('Failed to save items');
+        }
+        console.log("Items saved!", response);
+    })
+    .catch(error => {
+        console.error("Error saving items:", error);
     });
+    }
+    for (let j = 0; j < currTools.length; j++){
+        const currTool = currTools[j]
+        fetch("http://localhost:8081/user_tools",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: currTool, username: username })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject('Failed to save items');
+            }
+            console.log("Items saved!", response);
+        })
+        .catch(error => {
+            console.error("Error saving items:", error);
+        });
+    }
+}
+// saving for now :D
+onKeyPress("z", () => {
+    handleSavingData();
+});
 
     // !INVENTORY
 
@@ -726,6 +832,87 @@ class CharacterMovement {
     ]);
 
     // !VENDING
+
+    
+    onKeyPress("left", () => {
+        if(isPopupVisible){
+            if (vendingSelect > 0){
+                console.log(vendingSelect)
+                vendingSelect --;
+                destroyAll("selected")
+                let gridX = vendingSelect % 3;
+                let gridY = Math.floor(vendingSelect/3)
+                const selected = add([
+                    rect(70, 70),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
+                    color(255,255,255),
+                    "selected"
+                ])
+            }
+        }
+    })
+    onKeyPress("right", () => {
+        if(isPopupVisible){
+            if (vendingSelect < vendingContents.length -1){
+                vendingSelect ++;
+                console.log(vendingSelect)
+                destroyAll("selected")
+                let gridX = vendingSelect % 3;
+                let gridY = Math.floor(vendingSelect/3)
+                const selected = add([
+                    rect(70, 70),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
+                    color(255,255,255),
+                    "selected"
+                ])
+            }
+        }
+    })
+    onKeyPress("down", () => {
+        if(isPopupVisible){
+            if (vendingSelect+3 < vendingContents.length){
+                vendingSelect +=3;
+                console.log(vendingSelect)
+                destroyAll("selected")
+                let gridX = vendingSelect % 3;
+                let gridY = Math.floor(vendingSelect/3)
+                const selected = add([
+                    rect(70, 70),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
+                    color(255,255,255),
+                    "selected"
+                ])
+            }
+        }
+    })
+    onKeyPress("up", () => {
+        if(isPopupVisible){
+            if (vendingSelect-3 >= 0){
+                vendingSelect -=3;
+                console.log(vendingSelect)
+                destroyAll("selected")
+                let gridX = vendingSelect % 3;
+                let gridY = Math.floor(vendingSelect/3)
+                const selected = add([
+                    rect(70, 70),
+                    pos(517.5-150+gridX*110, 155+25+gridY*96),
+                    z(11),
+                    color(255,255,255),
+                    "selected"
+                ])
+            }
+        }
+    })
+    onKeyPress("enter", () => {
+        if(isPopupVisible && vendingContents.length > 0){
+            let item = vendingContents[vendingSelect]
+            updatePocketVending(item, inPocket)
+        }
+    })
+
     function showVendingContents(contents) {
       const popup = add([
         rect(500, 600),
@@ -746,87 +933,11 @@ class CharacterMovement {
         const selected = add([
           rect(70, 70),
           pos(startX, startY),
-          z(10),
+          z(11),
           color(255, 255, 255),
           "selected",
         ]);
       }
-
-      onKeyPress("left", () => {
-        if (isPopupVisible) {
-          if (vendingSelect > 0) {
-            vendingSelect--;
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("right", () => {
-        if (isPopupVisible) {
-          if (vendingSelect < vendingContents.length - 1) {
-            vendingSelect++;
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("down", () => {
-        if (isPopupVisible) {
-          if (vendingSelect + 3 < vendingContents.length) {
-            vendingSelect += 3;
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("up", () => {
-        if (isPopupVisible) {
-          if (vendingSelect - 3 >= 0) {
-            vendingSelect -= 3;
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("enter", () => {
-        if (isPopupVisible && vendingContents.length > 0) {
-          let item = vendingContents[vendingSelect];
-          // play("bubble");
-          updatePocketVending(item, inPocket);
-        }
-      });
       for (let i = 0; i < contents.length; i++) {
         const item = contents[i];
         const itemKey = item.itemKey;
@@ -849,7 +960,7 @@ class CharacterMovement {
           // rect(10,10),
           // sprite(`${image}`),
           scale(1.5),
-          z(11),
+          z(12),
           "material",
           {
             itemKey: itemKey,
@@ -1071,5 +1182,4 @@ class CharacterMovement {
     });
   }
 }
-
 export const characterMovement = new CharacterMovement();
