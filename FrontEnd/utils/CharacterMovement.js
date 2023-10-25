@@ -1,3 +1,4 @@
+
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -233,60 +234,53 @@ class CharacterMovement {
         "printer",
         {access: false}
     ]);
-    //loading items
-    function fetchUserItems(username) {
+ 
+    let curr_user = 'cats';
+
+    function fetchData(url) {
         return new Promise((resolve, reject) => {
-            fetch(`http://localhost:8081/user_items?username=${username}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(itemNames => {
-                resolve(itemNames);
-            })
-            .catch(error => {
-                reject(error);
-            });
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
         });
     }
-    fetchUserItems('cats').then(itemNames => {
-
-        console.log(itemNames);
-
-        
-    }).catch(error => {
-        console.error('Error fetching user items:', error);
-
-    });
-    // load in tools
-    function fetchUserTools(username) {
-        return new Promise((resolve, reject) => {
-            fetch(`http://localhost:8081/user_tools?username=${username}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(itemTools => {
-                resolve(itemTools);
-            })
-            .catch(error => {
-                reject(error);
-            });
+    
+    fetchData(`http://localhost:8081/user_items?username=${curr_user}`)
+        .then(itemNames => {
+            console.log(itemNames);
+        })
+        .catch(error => {
+            console.error('Error fetching user items:', error);
         });
-    }
-    fetchUserTools('cats').then(itemTools => {
+    
+    fetchData(`http://localhost:8081/user_tools?username=${curr_user}`)
+        .then(itemTools => {
+            console.log(itemTools);
+        })
+        .catch(error => {
+            console.error('Error fetching user tools:', error);
+        });
+    
+    fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching final items:', error);
+        });
+    
 
-        console.log(itemTools);
 
-        
-    }).catch(error => {
-        console.error('Error fetching user items:', error);
-
-    });
 
     // !Materials
     let nearCraftingTable = false;
@@ -760,7 +754,7 @@ class CharacterMovement {
 //handle saving data and uploading to DB
 function handleSavingData(){
     //hard coded items and tools, should be dynamic at some point
-    let currItems = ["paper", "yarn"]
+    let currItems = ["paper", "yarn", "trash"]
     let currTools = ["hammer"]
     const username = "cats"
 
