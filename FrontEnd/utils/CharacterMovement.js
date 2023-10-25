@@ -564,8 +564,6 @@ class CharacterMovement {
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
 
-
-      
       isCraftingVisible = true;
 
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -720,8 +718,13 @@ class CharacterMovement {
           await new Promise((resolve) => setTimeout(resolve, 3000));
           console.log("here result", result.itemKey);
           // updatePocketVending(madeItem, inPocket);
-          if (!vendingContents.includes(madeItem.itemKey)) {
+          console.log("here venidng", vendingContents)
+          console.log("here venidng contains", !vendingContents.includes(madeItem))
+
+          if (!vendingContents.includes(madeItem.itemKey) && !vendingKeys.includes(madeItem.itemKey)) {
             vendingContents.push(madeItem);
+            vendingKeys.push(madeItem.itemKey)
+            
           }
           play("bubble");
           let item = vendingContents[length-1];
@@ -994,6 +997,7 @@ onKeyPress("z", () => {
     let isPopupVisible = false;
     // let vendingContents = [];
     let vendingContents = [];
+    let vendingKeys = [];
     let vendingSet = new Set(vendingContents);
     let inPocket = [];
     let vendingSelect = 0;
@@ -1254,6 +1258,7 @@ onKeyPress("z", () => {
     player.onCollide("material", (materialEntity) => {
       if (!vendingContents.includes(materialEntity)) {
         vendingContents.push(materialEntity);
+        vendingKeys.push(materialEntity.itemKey);
       }
       play("bubble");
 
