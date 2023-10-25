@@ -574,9 +574,12 @@ class CharacterMovement {
 
       let currentx = 400;
       let currenty = 300;
+      if(ingredients.length == 3){
+        currentx = currentx -125;
+      }
       add([
         text(`You possess ${ingredients.length} items:`),
-        pos(215 + 150 + 50, 225 - 50),
+        pos(415, 175),
         z(51),
         color(0, 0, 0),
         scale(0.5),
@@ -612,22 +615,45 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
+      let result = {};
+      let dubious = true;
+
+        if(tableItems.includes("hammer") && tableItems.includes("paper")){
+          let madeItemKey = "wood";
+          result.itemKey = madeItemKey;
+          dubious = true;
+
+        }else{
+        
+          let madeItemKey = "trash";
+          result.itemKey = madeItemKey;
+          dubious = false;
+
+        }
+
+        console.log("dub", dubious)
+        let message = dubious 
+    ? "Congratulations! You can make something with these items." 
+    : "That's definitely creative... let's see what happens!";
+
+
+      console.log("result item key", result.itemKey)
       add([
-        text(`Congratulations! You can make something with these items.`),
-        pos(215, 525 - 100),
+        text(`${message}`),
+        pos(215, 525 - 100+50),
         z(51),
         color(0, 0, 0),
         scale(0.5),
         "crafting",
       ]);
-      add([
-        text(`Would you like to proceed?`),
-        pos(215 + 150 + 50 - 25, 525 + 50 - 100),
-        z(51),
-        color(0, 0, 0),
-        scale(0.5),
-        "crafting",
-      ]);
+      // add([
+      //   text(`Would you like to proceed?`),
+      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
+      //   z(51),
+      //   color(0, 0, 0),
+      //   scale(0.5),
+      //   "crafting",
+      // ]);
       // *Craft Button
       const craftButton = add([
         rect(150, 50),
@@ -657,19 +683,7 @@ class CharacterMovement {
       // !TODO: dynamic
       // let result = "wood";
 
-      let result = {};
-
-        if(tableItems.includes("hammer") && tableItems.includes("paper")){
-          let madeItemKey = "wood";
-          result.itemKey = madeItemKey;
-
-        }else{
-        
-          let madeItemKey = "trash";
-          result.itemKey = madeItemKey;
-        }
-
-      console.log("result item key", result.itemKey)
+      
       
 
 
@@ -715,7 +729,6 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-          await new Promise((resolve) => setTimeout(resolve, 3000));
           console.log("here result", result.itemKey);
           // updatePocketVending(madeItem, inPocket);
           console.log("here venidng", vendingContents)
@@ -726,6 +739,10 @@ class CharacterMovement {
             vendingKeys.push(madeItem.itemKey)
             
           }
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          exitCraft();
+
           play("bubble");
           let item = vendingContents[length-1];
           // console.log("here's item", item.itemKey)
@@ -733,8 +750,7 @@ class CharacterMovement {
     
           // updatePocket(madeItem, inPocket);
           madeItem.use(body({ isStatic: true }))
-          atCraftingTable = false;
-          exitCraft();
+          // atCraftingTable = false;
           }
           async function exitCraft() {
             clearTable();
@@ -1268,7 +1284,7 @@ onKeyPress("z", () => {
 
     let atCraftingTable = false;
     let table_x = 700;
-    let table_y = 300;
+    let table_y = 350;
     let onItemsOnTable = 0;
     let tableItems = [];
     function clearTable() {
@@ -1290,39 +1306,45 @@ onKeyPress("z", () => {
     // Dropping item on table
     onKeyPress("q", () => {
       // !TODO: set max items on table
-
-      if (atCraftingTable && onItemsOnTable >= 6) {
-        alert("There are too many items on the table; try crafting!");
-        checkCraftable();
+      if(tableItems.length ==0){
+        table_x = 700;
+        table_y = 350;
       }
-      console.log("check", atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6)
-      if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
-        itemsInPocket--;
 
-        let item = inPocket.pop();
-        console.log("here's item:", item);
-        console.log("here item key", item.itemKey);
-        item.use("onTable");
-
-        item.moveTo(table_x, table_y);
-        tableItems[onItemsOnTable] = item.itemKey;
-        console.log(tableItems);
-        table_y += 50;
-        onItemsOnTable++;
-        checkCraftable(tableItems);
-      } else {
-        checkCraftable();
-
-        if (itemsInPocket !== 0) {
-          play("bubble");
+      if (atCraftingTable && onItemsOnTable >= 3) {
+        alert("There are too many items on the table; try crafting!");
+        // checkCraftable();
+      }else{
+        console.log("check", atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6)
+        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
           itemsInPocket--;
+  
           let item = inPocket.pop();
-          console.log("here is popped", item);
-          console.log("key?", item.itemKey);
-
-          destroy(item);
+          console.log("here's item:", item);
+          console.log("here item key", item.itemKey);
+          item.use("onTable");
+  
+          item.moveTo(table_x, table_y);
+          tableItems[onItemsOnTable] = item.itemKey;
+          console.log(tableItems);
+          table_y += 50;
+          onItemsOnTable++;
+          checkCraftable(tableItems);
+        } else {
+          checkCraftable();
+  
+          if (itemsInPocket !== 0) {
+            play("bubble");
+            itemsInPocket--;
+            let item = inPocket.pop();
+            console.log("here is popped", item);
+            console.log("key?", item.itemKey);
+  
+            destroy(item);
+          }
         }
       }
+      
     });
 
     function checkCraftable() {
