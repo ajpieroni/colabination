@@ -256,24 +256,25 @@ class CharacterMovement {
     }
     
     fetchData(`http://localhost:8081/user_items?username=${curr_user}`)
-        .then(itemNames => {
-            console.log(itemNames);
+        .then(items => {
+            let userItems = items
+            
         })
         .catch(error => {
             console.error('Error fetching user items:', error);
         });
     
     fetchData(`http://localhost:8081/user_tools?username=${curr_user}`)
-        .then(itemTools => {
-            console.log(itemTools);
+        .then(tools=> {
+            let userTools = tools
         })
         .catch(error => {
             console.error('Error fetching user tools:', error);
         });
     
     fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
-        .then(data => {
-            console.log(data);
+        .then(isFinal => {
+            let finalItems = isFinal
         })
         .catch(error => {
             console.error('Error fetching final items:', error);

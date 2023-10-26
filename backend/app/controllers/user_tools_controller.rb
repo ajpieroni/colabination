@@ -23,7 +23,7 @@ def create
         
         if user
             tool_names = user.tools.pluck(:name)
-            render json: { items: tool_names }
+            render json: { tools: tool_names }
         else
             render json: { error: "User not found" }, status: :not_found
         end

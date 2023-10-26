@@ -37,7 +37,7 @@ def final_items
   if user
     final_items = user.items.where(isFinal: true)
     final_item_names = final_items.pluck(:name)
-    render json: { items: final_item_names}
+    render json: { final_items: final_item_names}
   else
     render json: { error: "User not found" }, status: :not_found
   end
