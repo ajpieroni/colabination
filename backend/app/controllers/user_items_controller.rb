@@ -1,6 +1,7 @@
 class UserItemsController < ApplicationController
 
   def create
+    Rails.logger.debug "Received parameters: #{params.inspect}"
     username = params[:username]
     item_name = params[:name]
 
