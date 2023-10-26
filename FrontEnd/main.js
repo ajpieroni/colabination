@@ -27,6 +27,9 @@ const scenes = {
     settings: () =>{
         characterMovement.displaySettingsMenu()
     }, 
+    aboutUs: () =>{
+        characterMovement.displayAboutUs()
+    },
     1: () => {
 
     },

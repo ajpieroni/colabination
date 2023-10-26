@@ -42,6 +42,8 @@ export const load = {
         // !Save Menu
         loadSprite("trees", "./assets/background.jpg")
 
+        loadSprite("mountains", "./assets/pixelbg2.jpeg")
+
 
 
 

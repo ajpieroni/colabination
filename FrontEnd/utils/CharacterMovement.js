@@ -4,16 +4,22 @@ class CharacterMovement {
   music = null;
   constructor() {
     this.level = null;
+    
   }
-
+  // let soundTog = 0;
   display() {
     //! Level Schema
     // stop("soundtrack");
     // const music =
-    this.music = play("soundtrack", {
-      volume: 0.5,
-      loop: true,
-    });
+    
+    // if (soundTog == 0){
+      this.music = play("soundtrack", {
+        volume: 0.5,
+        loop: true,
+      })
+    // } else {
+    //   this.music.paused =  true;
+    // }
     const block_size = 32;
 
     const map = [
@@ -942,14 +948,16 @@ class CharacterMovement {
 
   // ------------- MENU DISPLAY ------------------------------------------------------------------
   displaySettingsMenu() {
-    let arrowX= 412;
+    let arrowX= (1024 - 240)/2;
     let arrowY = 215;
     let index = 0;
+
+    // let soundTog = 0;
 
     // Arrow settings
     const arrowSelect = 
     add([
-      rect(200,50),
+      rect(240,50),
       pos(arrowX, arrowY),
       color(255),
       z(1),
@@ -1042,8 +1050,8 @@ class CharacterMovement {
     ]);
 
     const soundsBtn = add([
-      text("Sounds"), 
-      pos((1024 - 130)/2, 375),
+      text("Sounds:on"), 
+      pos((1024 - 195)/2, 375),
       color(70, 70, 70),  
       "savebutton", 
       area(),
@@ -1061,7 +1069,7 @@ class CharacterMovement {
 
 
 
-
+    let soundTog = 0;
     onKeyPress("enter", (exit) => {
       console.log("here index:", index);
 
@@ -1127,30 +1135,27 @@ class CharacterMovement {
             pos(420,545),
             color(255),
             z(1),
+            "exitBox",
             {posX: exitNx,
             posY: exitNy}
           ])
 
           onKeyPress("left", () => {
             let exitNTemp = exitN;
-            if(exitN == -1){
-              exitN = 0;
-            } else if(exitN == 1){
+
+            if(exitN == 1){
               exitNx = exitNx - 115;
               exitArrowSelect.moveTo(exitNx, exitNy);
               exitN = 0;
-            }else{
+            }else if (exitN == -1 || exitN == 0) {
               exitN = exitNTemp;
-
             }
           });
 
           onKeyPress("right", () => {
             let exitNTemp = exitN;
 
-            if(exitN == -1){
-              exitN = 1;
-            } else if(exitN == 0){
+            if(exitN == 0 || exitN == -1){
               exitNx = exitNx + 115;
               exitArrowSelect.moveTo(exitNx, exitNy)
               exitN = 1;
@@ -1161,13 +1166,14 @@ class CharacterMovement {
           });
 
         onKeyPress("enter", () => {
-
             
-          if(exitN == 0){
+          if(exitN == 0 ){
             console.log("cancel:", exitN);
-            destroy(exitCheck),
-            destroy(exitCheckN),
-            destroy(exitCheckY)
+            destroyAll("exitPopUp"),
+            destroyAll("cancelExit"),
+            destroyAll("exitfr"),
+            destroyAll("exitBox")
+            exitN = -1;
           } else if (exitN == 1 ){
             console.log("exitfr:", exitN);
               go("characterMovement");
@@ -1182,20 +1188,41 @@ class CharacterMovement {
         console.log("here are controls!")
       }
       // sounds
+
       if(index==-3){
-        console.log("here are sounds")
-      }});
+        console.log("here are sounds");
+        // overlay.classList.toggle("show"),
+
+        if(soundTog == 0){
+          soundsBtn.text = "Sounds:off",
+          soundsBtn.pos = vec2((1024 - 215)/2, 375),
+          soundTog = 1,
+          console.log("sounds: ", soundTog)  
+          
+        } else  {
+          soundsBtn.text = "Sounds:on",
+          soundsBtn.pos = vec2((1024 - 195)/2, 375),
+          soundTog = 0,
+          console.log("sounds: ", soundTog)
+        }
+      }
+    //about us 
+    if(index == -4){
+      console.log("here are developers!"),
+      go("aboutUs")
+    }
+
+    
+    }
+      
+    );
+
+      
     
       
       
 
-    // // onClick("cancelExit", (cancelExit) => 
-    // onKeyPress("enter", () => {
-    //   destroyAll("exitPopUp"),
-    //   destroyAll("cancelExit"),
-    //   destroyAll("exitfr")
-    // })
-  
+   
     // // onClick("exitfr", (exitfr) => 
     // onKeyPress("enter", () => {
     //   destroyAll("exitPopUp"),
@@ -1221,6 +1248,10 @@ class CharacterMovement {
       go("characterMovement");
     });
   };
+
+  displayAboutUs() {
+    add([sprite("mountains"), scale(0.85)]);
+  }
 
 
 
