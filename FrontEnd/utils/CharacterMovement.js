@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: 0.25,
+      volume: 0.15,
     });
 
     const block_size = 32;
@@ -959,7 +959,9 @@ class CharacterMovement {
 //handle saving data and uploading to DB
 function handleSavingData(){
     //hard coded items and tools, should be dynamic at some point
-    let currItems = ["paper", "yarn"]
+    console.log("vending keys", vendingKeys);
+    let currItems = vendingKeys;
+    // * will be renamed as machines
     let currTools = ["hammer"]
     const username = "cats"
 
