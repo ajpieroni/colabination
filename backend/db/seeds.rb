@@ -10,10 +10,10 @@ puts 'seeding'
 
 
 # Clear previous data
-ItemTool.destroy_all
-Item.destroy_all
-Tool.destroy_all
-UserItem.destroy_all
+# ItemTool.destroy_all
+# Item.destroy_all
+# Tool.destroy_all
+# UserItem.destroy_all
 
 # Creating items
 paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
