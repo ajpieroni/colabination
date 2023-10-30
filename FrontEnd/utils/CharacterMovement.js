@@ -1382,7 +1382,10 @@ class CharacterMovement {
     });
 
     player.onCollide("material", (materialEntity) => {
-      if (!vendingContents.includes(materialEntity)) {
+      console.log(`Here's the current vending keys: ${vendingKeys}`)
+      console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
+      if (!vendingContents.includes(materialEntity) && !vendingKeys.includes(materialEntity.itemKey)) {
+        console.log(`Pushing ${materialEntity.itemKey} to vending machine`)
         vendingContents.push(materialEntity);
         vendingKeys.push(materialEntity.itemKey);
       }
