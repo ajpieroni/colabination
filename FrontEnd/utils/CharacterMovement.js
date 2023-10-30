@@ -234,6 +234,10 @@ class CharacterMovement {
       { access: false },
     ]);
     //loading items
+    let hasSavedItems = [];
+
+    let hasSavedTools = [];
+
     function fetchUserItems(username) {
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_items?username=${username}`)
@@ -243,14 +247,24 @@ class CharacterMovement {
             }
             return response.json();
           })
-          .then((itemNames) => {
+          .then((data) => {
+            const itemNames = data.items; // Access the items property
+
+            itemNames.forEach(itemName => {
+                console.log(`itemNames values: ${itemName}`);
+                hasSavedItems.push(itemName);
+                console.log(`pushed`);
+            });
             resolve(itemNames);
-          })
+        })
           .catch((error) => {
             reject(error);
           });
+          
       });
+     
     }
+
     fetchUserItems("cats")
       .then((itemNames) => {
         console.log(itemNames);
@@ -268,12 +282,20 @@ class CharacterMovement {
             }
             return response.json();
           })
-          .then((itemTools) => {
-            resolve(itemTools);
-          })
+          .then((data) => {
+            const toolNames = data.items; // Access the items property
+
+            toolNames.forEach(toolName => {
+                console.log(`toolNames values: ${toolName}`);
+                hasSavedTools.push(toolName);
+                console.log(`pushed`);
+            });
+            resolve(toolNames);
+        })
           .catch((error) => {
             reject(error);
           });
+          
       });
     }
     fetchUserTools("cats")
@@ -960,10 +982,10 @@ class CharacterMovement {
         scissorsCraft = true;
       }
     });
-    let hasSavedItems = [];
-    let hasSavedTools = [];
+   
     //handle saving data and uploading to DB
     function handleSavingData() {
+
       //hard coded items and tools, should be dynamic at some point
       console.log("vending keys", vendingKeys);
       let currItems = [];
@@ -984,10 +1006,14 @@ class CharacterMovement {
 
       const username = "cats";
 
+
       for (let i = 0; i < currItems.length; i++) {
         const currItem = currItems[i];
-        if (!hasSavedItems.includes(currItems[i])){
+        // console.log(`hasSaved: ${hasSavedItems}`);
+        if (!hasSavedItems.includes(currItems[i])) {
           {
+            console.log(`Attempting to save ${currItem}`);
+
             fetch("http://localhost:8081/user_items", {
               method: "POST",
               headers: {
@@ -999,20 +1025,24 @@ class CharacterMovement {
                 if (!response.ok) {
                   return Promise.reject("Failed to save items");
                 }
-                console.log("Items saved!", response);
+                console.log(`Item ${currItem} saved!`, response);
               })
               .catch((error) => {
                 console.error("Error saving items:", error);
               });
             hasSavedItems.push(currItem);
           }
-        } 
-        console.log(`You've already saved ${currItem}`)
+        } else {
+          console.log(`You've already saved ${currItem}`);
+        }
       }
       for (let j = 0; j < currTools.length; j++) {
         const currTool = currTools[j];
+        // console.log(`hasSaved: ${hasSavedTools}`);
+
         // if hasn't saved
         if (!hasSavedTools.includes(currTools[j])) {
+          console.log(`Attempting to save ${currTool}`);
           fetch("http://localhost:8081/user_tools", {
             method: "POST",
             headers: {
@@ -1024,15 +1054,15 @@ class CharacterMovement {
               if (!response.ok) {
                 return Promise.reject("Failed to save items");
               }
-              console.log("Items saved!", response);
+              console.log(`Tool ${currTool} saved!`, response);
             })
             .catch((error) => {
               console.error("Error saving items:", error);
             });
           hasSavedTools.push(currTool);
+        } else {
+          console.log(`You've already saved ${currTool}`);
         }
-        console.log(`You've already saved ${currTool}`)
-        
       }
     }
     // saving for now :D
