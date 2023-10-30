@@ -493,6 +493,7 @@ class CharacterMovement {
               pos(center().x - 100, center().y - 200),
               color(230, 230, 250),
               sprite("PLAalert"),
+
               color(230, 230, 250),
               z(10),
               scale(0.45),
@@ -714,7 +715,7 @@ class CharacterMovement {
       cricut.access = true;
     });
 
-    // Collide Logic: Player and Drawer
+    // Collide Logic: Player and Drawer 
     onCollide("player", "drawer", (s, w) => {
       drawer.access = true;
     });
@@ -962,35 +963,12 @@ onKeyPress("z", () => {
           },
         ]);
 
-        onClick(() => {
-          // Check if the mouse click occurred within the bounds of itemEntity
-          if (isClicked(vendingItem)) {
-            updatePocketVending(vendingItem, inPocket);
-          }
-        });
         console.log(currRow);
         currRow++;
         currentX += item.width + 50;
       }
 
       isPopupVisible = true;
-    }
-
-    function getDistance(x1, y1, x2, y2) {
-      let x = x2 - x1;
-      let y = y2 - y1;
-
-      return Math.sqrt(x * x + y * y);
-    }
-    // Function to check if the mouse click occurred within the bounds of an entity
-    function isClicked(item) {
-      let distance = getDistance(
-        mousePos().x,
-        mousePos().y,
-        item.pos.x,
-        item.pos.y
-      );
-      return distance <= 55;
     }
 
     let itemsInPocket = 0;
@@ -1063,6 +1041,74 @@ onKeyPress("z", () => {
         isPopupVisible = true;
         SPEED = 0;
         vendingSelect = 0;
+      }
+    });
+    const areFinal = ["trash"]
+    function showFinalItems(areFinal) {
+      const docPop = add([
+        rect(500, 600),
+        pos(325, 150),
+        z(11),
+        color(204, 229, 255),
+        outline(4),
+        scale(0.75),
+        "final",
+      ]);
+
+      // const startX = docPop.pos.x + 42.5;
+      // const startY = docPop.pos.y + 30;
+      // let currentX = startX;
+      // let currentY = startY;
+      // let currRow = 0;
+
+      // for (let i = 0; i < final_items.length; i++) {
+      //   const item = final_items[i];
+      //   const itemName = item.itemName;
+      //   // starts a new line
+
+      //   if (currRow === 3) {
+      //     currentY += item.height + 50;
+      //     currentX = startX;
+      //     currRow = 0;
+      //   }
+
+      //   const vendingItem = add([
+      //     // rect(item.width, item.height) ,
+      //     pos(currentX, currentY),
+      //     z(11),
+      //     // color(item.color.r, item.color.g, item.color.b),
+      //     "final",
+      //     // !TODO: Make sprite image dynamic
+      //     sprite(`${item.itemName}`),
+      //     // rect(10,10),
+      //     // sprite(`${image}`),
+      //     scale(1.5),
+      //     z(12),
+      //     "material",
+      //     {
+      //       itemName: itemName
+      //     },
+      //   ]);
+
+      //   console.log(currRow);
+      //   currRow++;
+      //   currentX += item.width + 50;
+      // }
+
+      isDocVisible = true;
+    }
+
+    // preliminary doc station
+    const isDocVisible = false
+    onKeyPress("e", () => {
+      if (isDocVisible) {
+        destroyAll("final")
+        isDocVisible = false;
+        SPEED = 300;
+      } else {
+        showFinalItems(areFinal)
+        isDocVisible = true
+        SPEED = 0;
       }
     });
 
@@ -1178,3 +1224,4 @@ onKeyPress("z", () => {
   }
 }
 export const characterMovement = new CharacterMovement();
+
