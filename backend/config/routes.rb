@@ -17,8 +17,12 @@ Rails.application.routes.draw do
   resources :user_tools, only: [:create, :index]  
   resources :user_tools, only: [:index]
 
-  namespace :api do
-    resources :combinations, only: [:index, :update]
-    put 'update_items', to: 'combinations#update_items'
-  end
+  # namespace :api do
+  #   resources :combinations, only: [:index, :update]
+  #   put 'update_items', to: 'combinations#update_items'
+  # end
+
+  resources :combinations, only: [:index]
+  get 'combinations_all', to: 'combinations#all'
+
 end
