@@ -268,11 +268,11 @@ class CharacterMovement {
                   itemKey: itemName,
                 },
               ]);
-              console.log(`itemNames values: ${itemName}`);
+              // console.log(`itemNames values: ${itemName}`);
               hasSavedItems.push(itemName);
               vendingKeys.push(savedItem.itemKey);
               vendingContents.push(savedItem);
-              console.log(`pushed`);
+              // console.log(`pushed`);
             });
             resolve(itemNames);
           })
@@ -303,9 +303,9 @@ class CharacterMovement {
             const toolNames = data.items; // Access the items property
 
             toolNames.forEach((toolName) => {
-              console.log(`toolNames values: ${toolName}`);
+              // console.log(`toolNames values: ${toolName}`);
               hasSavedTools.push(toolName);
-              console.log(`pushed`);
+              // console.log(`pushed`);
             });
             resolve(toolNames);
           })
@@ -667,7 +667,7 @@ class CharacterMovement {
         dubious = false;
       }
 
-      console.log("dub", dubious);
+      // console.log("dub", dubious);
       let message = dubious
         ? "Congratulations! You can make something with these items."
         : "That's definitely creative... let's see what happens!";
@@ -763,13 +763,13 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-            console.log("here result", result.itemKey);
+            // console.log("here result", result.itemKey);
             // updatePocketVending(madeItem, inPocket);
-            console.log("here venidng", vendingContents);
-            console.log(
-              "here venidng contains",
-              !vendingContents.includes(madeItem)
-            );
+            // console.log("here venidng", vendingContents);
+            // console.log(
+            //   "here venidng contains",
+            //   !vendingContents.includes(madeItem)
+            // );
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
@@ -842,9 +842,9 @@ class CharacterMovement {
 
         // setTimeout(clearTable, 3000);
 
-        console.log(`change scene here to ${tableItems}`);
+        // console.log(`change scene here to ${tableItems}`);
         showContainer(tableItems);
-        console.log("here is tableItems", tableItems);
+        // console.log("here is tableItems", tableItems);
 
         // clearTable();
 
@@ -1090,7 +1090,7 @@ class CharacterMovement {
         menuOpen = true;
         SPEED = 0;
         const saveButton = add([
-          text("Save!"),
+          text("Press Enter to Save!"),
           pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
           z(53),
           color(0, 0, 0), // color of the text,
@@ -1147,7 +1147,7 @@ class CharacterMovement {
     onKeyPress("left", () => {
       if (isPopupVisible) {
         if (vendingSelect > 0) {
-          console.log(vendingSelect);
+          // console.log(vendingSelect);
           vendingSelect--;
           destroyAll("selected");
           let gridX = vendingSelect % 3;
@@ -1166,7 +1166,7 @@ class CharacterMovement {
       if (isPopupVisible) {
         if (vendingSelect < vendingContents.length - 1) {
           vendingSelect++;
-          console.log(vendingSelect);
+          // console.log(vendingSelect);
           destroyAll("selected");
           let gridX = vendingSelect % 3;
           let gridY = Math.floor(vendingSelect / 3);
@@ -1184,7 +1184,7 @@ class CharacterMovement {
       if (isPopupVisible) {
         if (vendingSelect + 3 < vendingContents.length) {
           vendingSelect += 3;
-          console.log(vendingSelect);
+          // console.log(vendingSelect);
           destroyAll("selected");
           let gridX = vendingSelect % 3;
           let gridY = Math.floor(vendingSelect / 3);
@@ -1202,7 +1202,7 @@ class CharacterMovement {
       if (isPopupVisible) {
         if (vendingSelect - 3 >= 0) {
           vendingSelect -= 3;
-          console.log(vendingSelect);
+          // console.log(vendingSelect);
           destroyAll("selected");
           let gridX = vendingSelect % 3;
           let gridY = Math.floor(vendingSelect / 3);
@@ -1283,7 +1283,7 @@ class CharacterMovement {
             updatePocketVending(vendingItem, inPocket);
           }
         });
-        console.log(currRow);
+        // console.log(currRow);
         currRow++;
         currentX += item.width + 50;
       }
@@ -1314,7 +1314,7 @@ class CharacterMovement {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
           play("bubble");
-          console.log(`Incoming material: ${material}, ${material.itemKey}`);
+          // console.log(`Incoming material: ${material}, ${material.itemKey}`);
           const item1 = add([
             pos(880, 700),
             z(11),
@@ -1350,12 +1350,12 @@ class CharacterMovement {
     function updatePocket(material, inPocket) {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
-          console.log("one");
+          // console.log("one");
           // pos(855,700)
           material.moveTo(880, 725);
           material.scaleTo(1);
         } else {
-          console.log("two");
+          // console.log("two");
           // moves to spot 2
           material.moveTo(880, 775);
         }
@@ -1382,8 +1382,8 @@ class CharacterMovement {
     });
 
     player.onCollide("material", (materialEntity) => {
-      console.log(`Here's the current vending keys: ${vendingKeys}`)
-      console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
+      // console.log(`Here's the current vending keys: ${vendingKeys}`)
+      // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
       if (!vendingContents.includes(materialEntity) && !vendingKeys.includes(materialEntity.itemKey)) {
         console.log(`Pushing ${materialEntity.itemKey} to vending machine`)
         vendingContents.push(materialEntity);
@@ -1436,8 +1436,8 @@ class CharacterMovement {
           itemsInPocket--;
 
           let item = inPocket.pop();
-          console.log("here's item:", item);
-          console.log("here item key", item.itemKey);
+          // console.log("here's item:", item);
+          // console.log("here item key", item.itemKey);
           item.use("onTable");
 
           item.moveTo(table_x, table_y);
@@ -1471,7 +1471,7 @@ class CharacterMovement {
       ) {
         isCraftable = true;
         if (isCraftable) {
-          console.log("hit");
+          // console.log("hit");
           add([
             "craft",
             text("Craft?", {
