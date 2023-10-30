@@ -10,19 +10,21 @@ puts 'seeding'
 
 
 # Clear previous data
-ItemTool.destroy_all
-Item.destroy_all
-Tool.destroy_all
-UserItem.destroy_all
+# ItemTool.destroy_all
+# Item.destroy_all
+# Tool.destroy_all
+# UserItem.destroy_all
 
 # Creating items
 paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
-wood = Item.create(name: 'Yarn', description: "string", item_type:"material", rarity:1)
-# rock = Item.create(name: 'Rock', description: 'A small rock', item_type: 'material', rarity: 1, location: 'Garden')
+wood = Item.create(name: 'Wood', description: "It comes from trees", item_type:"material", rarity:1)
+cutpaper = Item.create(name: 'Cut Paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
+card = Item.create(name: 'Card', description: 'Paper folded in half', item_type: 'material', rarity:1)
 
 # Creating tools
 hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100)
 scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper', globalCount: 150)
+hands = Tool.create(name: 'Hands', description: 'Use your hands to craft things', globalCount: 100)
 
 # Creating item-tools relationships
 ItemTool.create(item: paper, tool: hammer)
@@ -31,11 +33,8 @@ ItemTool.create(item: paper, tool: hammer)
 
 user1 = User.create(username:"cats", pin:1234)
 
-
-# # seeds 3 items
-# item1 = Item.create(name: "paper", description: "pog", item_type: "sticker", rarity: 0)
-# item2 = Item.create(name: "paper", description: "pog1", item_type: "sticker", rarity: 1)
-# item3 = Item.create(name: "paper", description: "pog3", item_type: "clothing", rarity: 0)
+Combination.create(tool: hammer, item1: paper, item2: paper, creation: wood)
+Combination.create(tool: hands, item1:paper, creation: card)
 
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
