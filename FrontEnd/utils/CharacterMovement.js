@@ -34,13 +34,13 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
-    add([
-      sprite("tables"),
-      pos(0, 0),
-      z(6),
-      // scale(.5)
-    ]);
+    // add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
+    // add([
+    //   sprite("tables"),
+    //   pos(0, 0),
+    //   z(6),
+    //   // scale(.5)
+    // ]);
 
     const level_config = {
       tileWidth: 64,
@@ -144,18 +144,29 @@ class CharacterMovement {
       { access: false },
       { alertSprite: "cricutAlert" },
     ]);
-
-    const drawer = add([
-      rect(block_size * 2, block_size),
+    const documentationStation = add([
+      rect(block_size, block_size*2),
       color(0, 100, 0),
       area(),
       body({ isStatic: true }),
-      pos(900 - 15 - 10, 250 - 10 - 10),
+      pos(900 - 15 - 10-50-50, 250 - 10 - 10+20-100-50),
       rotate(270),
       // z(10),
-      "drawer",
+      "documentationStation",
       { access: false },
     ]);
+
+    // const drawer = add([
+    //   rect(block_size * 2, block_size),
+    //   color(0, 100, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(900 - 15 - 10, 250 - 10 - 10),
+    //   rotate(270),
+    //   // z(10),
+    //   "drawer",
+    //   { access: false },
+    // ]);
 
     // let cricutAlertBox;
 
@@ -382,7 +393,7 @@ class CharacterMovement {
     // -if collide into drawer then into printer, both alerts show
     //* Constructor
     // Drawer functionality
-    drawer.access = false;
+    // drawer.access = false;
     // Machine functionlaity
     cricut.access = false;
     let hasUnlockedCricut = false;
@@ -498,7 +509,7 @@ class CharacterMovement {
               z(10),
               scale(0.45),
             ]);
-            drawer.access = false;
+            // drawer.access = false;
             foundItem.alertBox = true;
             foundItem.hasFound = true;
           }
@@ -719,6 +730,15 @@ class CharacterMovement {
     onCollide("player", "drawer", (s, w) => {
       drawer.access = true;
     });
+
+    onCollide("player", "documentationStation", (s,w) => {
+      console.log("hit station"
+      )
+    })
+    onCollideEnd("player", "documentationStation", (s,w) => {
+      console.log("left station"
+      )
+    })
 
     onCollide("player", "cdrawer", (s, w) => {
       cdrawer.access = true;
