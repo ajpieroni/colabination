@@ -45,6 +45,14 @@ export const load = {
         loadSprite("mountains", "./assets/pixelbg2.jpeg")
 
 
+        //Developer sprites
+        loadSprite("Alex", "./assets/1Alex.png")
+        loadSprite("Dasol", "./assets/1Dasol.png")
+        loadSprite("Kelvin", "./assets/1Kelvin.png")
+        loadSprite("Olly", "./assets/1Olly.png")
+        loadSprite("Sophia", "./assets/1Sophia.png")
+
+
 
 
 

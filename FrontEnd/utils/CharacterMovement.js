@@ -1249,8 +1249,39 @@ class CharacterMovement {
     });
   };
 
+
   displayAboutUs() {
-    add([sprite("mountains"), scale(0.85)]);
+    add([
+      sprite("mountains"), 
+      scale(0.85)
+    ]);
+    
+    add([
+      sprite("Alex"), 
+      pos(50,300),
+      scale(6)
+    ]);
+    add([
+      sprite("Dasol"), 
+      pos(225,300),
+      scale(6)
+    ]);
+    add([
+      sprite("Kelvin"), 
+      pos(400,300),
+      scale(6)
+    ]);
+    add([
+      sprite("Olly"), 
+      pos(575,300),
+      scale(6)
+    ]);
+    add([
+      sprite("Sophia"), 
+      pos(750,300),
+      scale(6)
+    ]);
+
   }
 
 
