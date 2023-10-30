@@ -249,10 +249,29 @@ class CharacterMovement {
           })
           .then((data) => {
             const itemNames = data.items; // Access the items property
+            
 
             itemNames.forEach((itemName) => {
+              const savedItem = add([
+                // rect(item.width, item.height) ,
+                pos(0,0),
+                z(0),
+                // color(item.color.r, item.color.g, item.color.b),
+                sprite(`${itemName}`),
+                // rect(10,10),
+                // sprite(`${image}`),
+                scale(1.5),
+                area(),
+                // z(11),
+                "material",
+                {
+                  itemKey: itemName,
+                },
+              ]);
               console.log(`itemNames values: ${itemName}`);
               hasSavedItems.push(itemName);
+              vendingKeys.push(savedItem.itemKey);
+              vendingContents.push(savedItem);
               console.log(`pushed`);
             });
             resolve(itemNames);
@@ -986,6 +1005,7 @@ class CharacterMovement {
       console.log("vending keys", vendingKeys);
       let currItems = [];
       let currTools = [];
+
 
       for (let i = 0; i < vendingKeys.length; i++) {
         if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
