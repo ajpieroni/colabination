@@ -34,13 +34,13 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    // add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
-    // add([
-    //   sprite("tables"),
-    //   pos(0, 0),
-    //   z(6),
-    //   // scale(.5)
-    // ]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
+    add([
+      sprite("tables"),
+      pos(0, 0),
+      z(6),
+      // scale(.5)
+    ]);
 
     const level_config = {
       tileWidth: 64,
@@ -269,6 +269,7 @@ class CharacterMovement {
     fetchData(`http://localhost:8081/user_items?username=${curr_user}`)
         .then(items => {
             let userItems = items
+            console.log(userItems)
             
         })
         .catch(error => {
@@ -278,6 +279,7 @@ class CharacterMovement {
     fetchData(`http://localhost:8081/user_tools?username=${curr_user}`)
         .then(tools=> {
             let userTools = tools
+            console.log(userTools)
         })
         .catch(error => {
             console.error('Error fetching user tools:', error);
@@ -286,6 +288,7 @@ class CharacterMovement {
     fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
         .then(isFinal => {
             let finalItems = isFinal
+            console.log(finalItems)
         })
         .catch(error => {
             console.error('Error fetching final items:', error);
@@ -491,41 +494,41 @@ class CharacterMovement {
       }
     }
     // For the player's interaction with drawer: PLA, noItems
-    function interactWithDrawer() {
-      if (drawer.access) {
-        if (myDrawer.length > 0 && canPopItem) {
-          const itemName = myDrawer.pop();
-          const foundItem = myDrawerData[itemName];
-          canPopItem = false;
-          if (foundItem.alertBox === null && !foundItem.hasFound) {
-            PLAalertBox = add([
-              area(),
-              "alert",
-              pos(center().x - 100, center().y - 200),
-              color(230, 230, 250),
-              sprite("PLAalert"),
+    // function interactWithDrawer() {
+    //   if (drawer.access) {
+    //     if (myDrawer.length > 0 && canPopItem) {
+    //       const itemName = myDrawer.pop();
+    //       const foundItem = myDrawerData[itemName];
+    //       canPopItem = false;
+    //       if (foundItem.alertBox === null && !foundItem.hasFound) {
+    //         PLAalertBox = add([
+    //           area(),
+    //           "alert",
+    //           pos(center().x - 100, center().y - 200),
+    //           color(230, 230, 250),
+    //           sprite("PLAalert"),
 
-              color(230, 230, 250),
-              z(10),
-              scale(0.45),
-            ]);
-            // drawer.access = false;
-            foundItem.alertBox = true;
-            foundItem.hasFound = true;
-          }
-        } else {
-          noItemsAlert = add([
-            area(),
-            "alert",
-            pos(center().x - 100, center().y - 200),
-            color(230, 230, 250),
-            z(10),
-            sprite("noItems"),
-            scale(0.45),
-          ]);
-        }
-      }
-    }
+    //           color(230, 230, 250),
+    //           z(10),
+    //           scale(0.45),
+    //         ]);
+    //         // drawer.access = false;
+    //         foundItem.alertBox = true;
+    //         foundItem.hasFound = true;
+    //       }
+    //     } else {
+    //       noItemsAlert = add([
+    //         area(),
+    //         "alert",
+    //         pos(center().x - 100, center().y - 200),
+    //         color(230, 230, 250),
+    //         z(10),
+    //         sprite("noItems"),
+    //         scale(0.45),
+    //       ]);
+    //     }
+    //   }
+    // }
     function discoverCricut() {
       if (cricut.access && !hasUnlockedCricut) {
         cricutAlertBox = add([
@@ -620,7 +623,7 @@ class CharacterMovement {
       //* Cricut Drawer: Scissors, Paper, Wood, noItems
       //  interactWithCDrawer.call(this);
       //* Printing Drawer: PLA Plastic, (Pliers)
-      interactWithDrawer.call(this);
+      // interactWithDrawer.call(this);
       // !Machines
       //* Cricut: discovery, needs
       discoverCricut.call(this);
@@ -727,18 +730,18 @@ class CharacterMovement {
     });
 
     // Collide Logic: Player and Drawer 
-    onCollide("player", "drawer", (s, w) => {
-      drawer.access = true;
-    });
+    // onCollide("player", "drawer", (s, w) => {
+    //   drawer.access = true;
+    // });
 
-    onCollide("player", "documentationStation", (s,w) => {
-      console.log("hit station"
-      )
-    })
-    onCollideEnd("player", "documentationStation", (s,w) => {
-      console.log("left station"
-      )
-    })
+    // onCollide("player", "documentationStation", (s,w) => {
+    //   console.log("hit station"
+    //   )
+    // })
+    // onCollideEnd("player", "documentationStation", (s,w) => {
+    //   console.log("left station"
+    //   )
+    // })
 
     onCollide("player", "cdrawer", (s, w) => {
       cdrawer.access = true;
@@ -1063,8 +1066,9 @@ onKeyPress("z", () => {
         vendingSelect = 0;
       }
     });
-    const areFinal = ["trash"]
-    function showFinalItems(areFinal) {
+    let isDocVisible = false
+    let areFinal = ["trash"]
+    function showFinalItems() {
       const docPop = add([
         rect(500, 600),
         pos(325, 150),
@@ -1074,64 +1078,47 @@ onKeyPress("z", () => {
         scale(0.75),
         "final",
       ]);
-
-      // const startX = docPop.pos.x + 42.5;
-      // const startY = docPop.pos.y + 30;
-      // let currentX = startX;
-      // let currentY = startY;
-      // let currRow = 0;
-
-      // for (let i = 0; i < final_items.length; i++) {
-      //   const item = final_items[i];
-      //   const itemName = item.itemName;
-      //   // starts a new line
-
-      //   if (currRow === 3) {
-      //     currentY += item.height + 50;
-      //     currentX = startX;
-      //     currRow = 0;
-      //   }
-
-      //   const vendingItem = add([
-      //     // rect(item.width, item.height) ,
-      //     pos(currentX, currentY),
-      //     z(11),
-      //     // color(item.color.r, item.color.g, item.color.b),
-      //     "final",
-      //     // !TODO: Make sprite image dynamic
-      //     sprite(`${item.itemName}`),
-      //     // rect(10,10),
-      //     // sprite(`${image}`),
-      //     scale(1.5),
-      //     z(12),
-      //     "material",
-      //     {
-      //       itemName: itemName
-      //     },
-      //   ]);
-
-      //   console.log(currRow);
-      //   currRow++;
-      //   currentX += item.width + 50;
-      // }
-
       isDocVisible = true;
     }
+    let canAccessDocumentation = false;
+    let eventListenerAttached = false;
 
-    // preliminary doc station
-    const isDocVisible = false
-    onKeyPress("e", () => {
-      if (isDocVisible) {
-        destroyAll("final")
-        isDocVisible = false;
-        SPEED = 300;
-      } else {
-        showFinalItems(areFinal)
-        isDocVisible = true
-        SPEED = 0;
-      }
-    });
+  player.onCollide("documentationStation", () => {
+    canAccessDocumentation = true;
 
+    if (!eventListenerAttached) {
+      eventListenerAttached = true;
+
+      onKeyPress("enter", () => {
+        // If documentation cannot be accessed, simply return
+        if (!canAccessDocumentation) return;
+
+        if (isDocVisible) {
+          destroyAll("final");
+          isDocVisible = false;
+          SPEED = 500;
+        } else {
+          const docPop = add([
+            rect(500, 600),
+            pos(325, 150),
+            z(11),
+            color(204, 229, 255),
+            outline(4),
+            scale(0.75),
+            "final",
+          ]);
+          isDocVisible = true;
+          SPEED = 0;
+        }
+      });
+    }
+});
+
+player.onCollideEnd("documentationStation", () => {
+  canAccessDocumentation = false;
+});
+
+    
     player.onCollide("material", (materialEntity) => {
       if (!vendingContents.includes(materialEntity)) {
         vendingContents.push(materialEntity);
