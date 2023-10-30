@@ -250,19 +250,17 @@ class CharacterMovement {
           .then((data) => {
             const itemNames = data.items; // Access the items property
 
-            itemNames.forEach(itemName => {
-                console.log(`itemNames values: ${itemName}`);
-                hasSavedItems.push(itemName);
-                console.log(`pushed`);
+            itemNames.forEach((itemName) => {
+              console.log(`itemNames values: ${itemName}`);
+              hasSavedItems.push(itemName);
+              console.log(`pushed`);
             });
             resolve(itemNames);
-        })
+          })
           .catch((error) => {
             reject(error);
           });
-          
       });
-     
     }
 
     fetchUserItems("cats")
@@ -285,17 +283,16 @@ class CharacterMovement {
           .then((data) => {
             const toolNames = data.items; // Access the items property
 
-            toolNames.forEach(toolName => {
-                console.log(`toolNames values: ${toolName}`);
-                hasSavedTools.push(toolName);
-                console.log(`pushed`);
+            toolNames.forEach((toolName) => {
+              console.log(`toolNames values: ${toolName}`);
+              hasSavedTools.push(toolName);
+              console.log(`pushed`);
             });
             resolve(toolNames);
-        })
+          })
           .catch((error) => {
             reject(error);
           });
-          
       });
     }
     fetchUserTools("cats")
@@ -982,10 +979,9 @@ class CharacterMovement {
         scissorsCraft = true;
       }
     });
-   
+
     //handle saving data and uploading to DB
     function handleSavingData() {
-
       //hard coded items and tools, should be dynamic at some point
       console.log("vending keys", vendingKeys);
       let currItems = [];
@@ -1005,7 +1001,6 @@ class CharacterMovement {
       console.log(currTools, "currTools");
 
       const username = "cats";
-
 
       for (let i = 0; i < currItems.length; i++) {
         const currItem = currItems[i];
@@ -1068,6 +1063,40 @@ class CharacterMovement {
     // saving for now :D
     onKeyPress("z", () => {
       handleSavingData();
+    });
+    let menuOpen = false;
+    onKeyPress("m", () => {
+      if (!menuOpen) {
+        menuOpen = true;
+        SPEED = 0;
+        const saveButton = add([
+          text("Save!"),
+          pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+          z(53),
+          color(0, 0, 0), // color of the text,
+          scale(0.5),
+          "saving",
+        ]);
+        // Craft Button Flash
+        let isBright = true;
+        setInterval(() => {
+          if (isBright) {
+            saveButton.color = rgb(228, 228, 228); // less bright color
+          } else {
+            saveButton.color = rgb(80, 80, 80); // original color
+          }
+          isBright = !isBright;
+        }, 250);
+      }
+    });
+    onKeyPress("enter", () => {
+      if(menuOpen){
+        handleSavingData();
+        SPEED = 300;
+        menuOpen = false;
+        destroyAll("saving")
+      }
+
     });
 
     // !INVENTORY
