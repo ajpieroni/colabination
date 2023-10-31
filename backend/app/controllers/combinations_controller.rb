@@ -27,8 +27,8 @@ class CombinationsController < ApplicationController
     item2 = Item.find_by(name: params[:item2])
     if (tool && item1 && item2)
       combo = Combination.find_by(tool: tool.id, item1: item1.id, item2: item2.id)
-      creation = Item.find(combo.creation.id).name
-      render json: {creation: creation}
+      creation = Item.find(combo.creation.id)
+      render json: {creation: creation.name, rarity: creation.rarity}
     else 
       render json: {creation: "These items don't go together"}
     end
