@@ -269,7 +269,6 @@ class CharacterMovement {
     fetchData(`http://localhost:8081/user_items?username=${curr_user}`)
         .then(items => {
             let userItems = items
-            console.log(userItems)
             
         })
         .catch(error => {
@@ -279,17 +278,41 @@ class CharacterMovement {
     fetchData(`http://localhost:8081/user_tools?username=${curr_user}`)
         .then(tools=> {
             let userTools = tools
-            console.log(userTools)
         })
         .catch(error => {
             console.error('Error fetching user tools:', error);
         });
     
     fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
-        .then(isFinal => {
-            let finalItems = isFinal
-            console.log(finalItems)
-        })
+        .then(final => {
+          console.log(final)
+          const itemNames = final.items;
+            itemNames.forEach((itemName) => {
+              const savedItem = add([
+                // rect(item.width, item.height) ,
+                  pos(0,0),
+                  z(0),
+                  // color(item.color.r, item.color.g, item.color.b),
+                  sprite(`${itemName}`),
+                  // rect(10,10),
+                  // sprite(`${image}`),
+                  scale(1.5),
+                  area(),
+                  // z(11),
+                  "material",
+                  {
+                    itemKey: itemName,
+                  },
+                ]);
+            // console.log(`itemNames values: ${itemName}`);
+            areFinal.push(itemName);
+            // vendingKeys.push(savedItem.itemKey);
+            docPop.push(savedItem);
+            // console.log(`pushed`);
+          });
+          resolve(itemNames);
+          }
+        )
         .catch(error => {
             console.error('Error fetching final items:', error);
         });
@@ -1067,7 +1090,8 @@ onKeyPress("z", () => {
       }
     });
     let isDocVisible = false
-    let areFinal = ["trash"]
+    let areFinal = []
+    console.log(areFinal);
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -1078,13 +1102,41 @@ onKeyPress("z", () => {
         scale(0.75),
         "final",
       ]);
+      const startX = docPop.pos.x + 42.5;
+      const startY = docPop.pos.y + 30;
+      let currentX = startX;
+      let currentY = startY;
+      let currRow = 0;
+      for (let i = 0; i < areFinal.length; i++) {
+        const item = areFinal[i];
+        const itemKey = item.itemKey;
+        // starts a new line
+
+        if (currRow === 3) {
+          currentY += item.height + 50;
+          currentX = startX;
+          currRow = 0;
+        }
+
+        const finalItem = add([
+          pos(currentX, currentY),
+          z(11),
+          sprite(`${item.itemKey}`),
+          "final",
+          { itemKey: itemKey },
+        ]);
+        currRow++;
+        currentX += item.width + 50;
+      }
+
       isDocVisible = true;
     }
+
     let canAccessDocumentation = false;
     let eventListenerAttached = false;
 
-  player.onCollide("documentationStation", () => {
-    canAccessDocumentation = true;
+    player.onCollide("documentationStation", () => {
+      canAccessDocumentation = true;
 
     if (!eventListenerAttached) {
       eventListenerAttached = true;
@@ -1098,15 +1150,7 @@ onKeyPress("z", () => {
           isDocVisible = false;
           SPEED = 500;
         } else {
-          const docPop = add([
-            rect(500, 600),
-            pos(325, 150),
-            z(11),
-            color(204, 229, 255),
-            outline(4),
-            scale(0.75),
-            "final",
-          ]);
+          showFinalItems();
           isDocVisible = true;
           SPEED = 0;
         }
