@@ -14,7 +14,8 @@ class CharacterMovement {
     
     // if (soundTog == 0){
       this.music = play("soundtrack", {
-        volume: 0.5,
+        // volume: 0.5,
+        volume: 0,
         loop: true,
       })
     // } else {
@@ -994,7 +995,8 @@ class CharacterMovement {
     // !TODO: remove music lmao
 
     let music = play("soundtrack", {
-      volume: 0.5,
+      // volume: 0.5,
+      volume: 0,
       loop: true,
     });
 
@@ -1187,8 +1189,13 @@ class CharacterMovement {
       if(index == -2){
         console.log("here are controls!")
       }
-      // sounds
 
+
+
+
+
+
+      // sounds
       if(index==-3){
         console.log("here are sounds");
         // overlay.classList.toggle("show"),
@@ -1258,29 +1265,150 @@ class CharacterMovement {
     
     add([
       sprite("Alex"), 
-      pos(50,300),
-      scale(6)
-    ]);
-    add([
-      sprite("Dasol"), 
-      pos(225,300),
-      scale(6)
-    ]);
-    add([
-      sprite("Kelvin"), 
-      pos(400,300),
-      scale(6)
+      pos(-60,350),
+      scale(6.5),
+      z(2)
     ]);
     add([
       sprite("Olly"), 
-      pos(575,300),
-      scale(6)
+      pos(120,350),
+      scale(6.5),
+      z(2)
+    ]);
+    add([
+      sprite("Kelvin"), 
+      pos(300,350),
+      scale(6.5),
+      z(2)
+    ]);
+    add([
+      sprite("Dasol"), 
+      pos(480,350),
+      scale(6.5),
+      z(2)
     ]);
     add([
       sprite("Sophia"), 
-      pos(750,300),
-      scale(6)
+      pos(660,350),
+      scale(6.5),
+      z(2)
     ]);
+
+    let devIndex = 0;
+    let devIndexX = -60;
+    if (devIndex == 0){
+      add([
+        sprite("AlexGlow"), 
+        pos(-60,350),
+        scale(6.5),
+        z(1)
+      ]);
+    } 
+
+    onKeyPress("right", () => {
+      let devIndexTemp = devIndex;
+      
+      if(devIndex<=3){
+        devIndex =  devIndex+1;
+        
+        if (devIndex == 1){
+          add([
+            sprite("OllyGlow"), 
+            pos(120,350),
+            scale(6.5),
+            z(1)
+          ]);
+          
+        } else if (devIndex == 2){
+          add([
+            sprite("KelvinGlow"), 
+            pos(300,350),
+            scale(6.5),
+            z(1)
+          ]);
+        } else if (devIndex == 3){
+          add([
+            sprite("DasolGlow"), 
+            pos(480,350),
+            scale(6.5),
+            z(1)
+          ]);
+        }  (devIndex == 4)
+          add([
+            sprite("SophiaGlow"), 
+            pos(660,350),
+            scale(6.5),
+            z(1)
+          ]);
+
+      }else{
+        devIndex= devIndexTemp;
+      }
+    });
+    onKeyPress("left", () => {
+      let devIndexTemp = devIndex;
+      
+      if(devIndex>=1){
+        devIndex =  devIndex-1;
+        
+        if (devIndex == 0){
+          add([
+            sprite("AlexGlow"), 
+            pos(-60,350),
+            scale(6.5),
+            z(1)
+          ]);
+          
+        } else if (devIndex == 1){
+          add([
+            sprite("OllyGlow"), 
+            pos(120,350),
+            scale(6.5),
+            z(1)
+          ]);
+
+        } else if (devIndex == 2){
+          add([
+            sprite("KelvinGlow"), 
+            pos(300,350),
+            scale(6.5),
+            z(1)
+          ]);
+        } else if (devIndex == 3){
+          add([
+            sprite("DasolGlow"), 
+            pos(480,350),
+            scale(6.5),
+            z(1)
+          ]);
+        }  (devIndex == 4)
+          add([
+            sprite("SophiaGlow"), 
+            pos(660,350),
+            scale(6.5),
+            z(1)
+          ]);
+        
+      }else{
+        devIndex= devIndexTemp;
+      }
+    });
+
+
+
+    
+    
+
+
+    
+
+
+    // add([
+    //   sprite("glow"), 
+    //   pos(-60,350),
+    //   scale(6.5),
+    //   z(1)
+    // ]);
 
   }
 
