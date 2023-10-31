@@ -9,7 +9,7 @@ class CharacterMovement {
 
     const audioPlay = play("soundtrack", {
       loop: true,
-      volume: .5,
+      volume: 0.25,
     });
 
     const block_size = 32;
@@ -33,7 +33,7 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(-50, -50), z(5), scale(.65)]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([
       sprite("tables"),
       pos(0, 0),
@@ -298,7 +298,6 @@ class CharacterMovement {
         initialPos: { x: 300, y: 300 },
         hasFound: false,
         alertBox: null,
-        // onTable: false
       },
       paper: {
         spriteName: "paper",
@@ -308,13 +307,7 @@ class CharacterMovement {
         alertBox: null,
         // onTable: false
       },
-      // wood: {
-      //     spriteName: 'wood',
-      //     alertSprite: 'woodAlert',
-      //     initialPos: { x:200, y: 200 },
-      //     hasFound: false,
-      //     alertBox: null
-      // },
+
       yarn: {
         spriteName: "yarn",
         alertSprite: "yarnAlert",
@@ -322,7 +315,6 @@ class CharacterMovement {
         initialPos: { x: 330, y: 300 },
         hasFound: false,
         alertBox: null,
-        // onTable: false
       },
       hammer: {
         spriteName: "hammer",
@@ -567,6 +559,215 @@ class CharacterMovement {
         // cricut.buildNoBlueprint = true;
       }
     }
+
+    // !Crafting Function: Paper Trail
+    let isCraftingVisible = false;
+    async function showContainer(tableItems) {
+
+      isCraftingVisible = true;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      let ingredients = tableItems;
+      console.log(ingredients);
+      add([rect(725, 550), pos(150, 125), z(50), "craft-container", "craftPop"]);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      let currentx = 400;
+      let currenty = 300;
+      if(ingredients.length == 3){
+        currentx = currentx -125;
+      }
+      add([
+        text(`You possess ${ingredients.length} items:`),
+        pos(415, 175),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+      for (let index = 0; index < ingredients.length; index++) {
+        await new Promise((resolve) => setTimeout(resolve, 750));
+
+        const trailCircle = add([
+          circle(64),
+          pos(currentx + 40, currenty + 35),
+          z(52),
+          color(228, 228, 228),
+          "crafting",
+        ]);
+        play("bubble");
+        const trailItem = add([
+          // rect(item.width, item.height) ,
+          pos(currentx, currenty),
+          z(100),
+          // color(item.color.r, item.color.g, item.color.b),
+          "crafting",
+          // !TODO: Make sprite image dynamic
+          sprite(`${ingredients[index]}`),
+          // rect(10,10),
+          // sprite(`${image}`),
+          scale(1.5),
+          // z(11),
+          "material",
+          {
+            itemKey: ingredients[index],
+          },
+        ]);
+        currentx += 200;
+      }
+      let result = {};
+      let dubious = true;
+
+        if(tableItems.includes("hammer") && tableItems.includes("paper")){
+          let madeItemKey = "wood";
+          result.itemKey = madeItemKey;
+          dubious = true;
+
+        }else{
+        
+          let madeItemKey = "trash";
+          result.itemKey = madeItemKey;
+          dubious = false;
+
+        }
+
+        console.log("dub", dubious)
+        let message = dubious 
+    ? "Congratulations! You can make something with these items." 
+    : "That's definitely creative... let's see what happens!";
+
+
+      console.log("result item key", result.itemKey)
+      add([
+        text(`${message}`),
+        pos(215, 525 - 100+50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+      // add([
+      //   text(`Would you like to proceed?`),
+      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
+      //   z(51),
+      //   color(0, 0, 0),
+      //   scale(0.5),
+      //   "crafting",
+      // ]);
+      // *Craft Button
+      const craftButton = add([
+        rect(150, 50),
+        pos(400 + 50, 600),
+        z(52),
+        color(228, 228, 228),
+        "crafting",
+      ]);
+      add([
+        text("Make!"),
+        pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+        z(53),
+        color(0, 0, 0), // color of the text,
+        scale(0.5),
+        "crafting",
+      ]);
+      // Craft Button Flash
+      let isBright = true;
+      setInterval(() => {
+        if (isBright) {
+          craftButton.color = rgb(228, 228, 228); // less bright color
+        } else {
+          craftButton.color = rgb(80, 80, 80); // original color
+        }
+        isBright = !isBright;
+      }, 250); // the button color will toggle every 500ms
+      // !TODO: dynamic
+      // let result = "wood";
+
+      
+      
+
+
+      onKeyPress("enter", () => {
+        if(tableItems.length >= 2){
+          madeCraft(result);
+
+          async function madeCraft() {
+            destroyAll("crafting");
+            add([
+              text(`You made ${result.itemKey}!`),
+              pos(440 + 40 + 25 - 50, 615), // adjust as necessary to position the text on the button
+              z(53),
+              color(0, 0, 0), // color of the text,
+              scale(0.5),
+              "crafting",
+            ]);
+  
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            play("bubble");
+  
+            const trailCircle = add([
+              circle(64),
+              pos(440 + 40 + 25 + 25, 135 + 100),
+              z(52),
+              color(152, 251, 152),
+              "crafting",
+            ]);
+            const madeItem = add([
+              // rect(item.width, item.height) ,
+              pos(440 + 40 + 25 + 25 - 25 - 5 - 5 - 5, 135 + 100 + 25 - 50 - 10),
+              z(100),
+              // color(item.color.r, item.color.g, item.color.b),
+              "crafting",
+              sprite(`${result.itemKey}`),
+              // rect(10,10),
+              // sprite(`${image}`),
+              scale(1.5),
+              area(),
+              // z(11),
+              "madeItem",
+              {
+                itemKey: result.itemKey,
+              },
+            ]);
+          console.log("here result", result.itemKey);
+          // updatePocketVending(madeItem, inPocket);
+          console.log("here venidng", vendingContents)
+          console.log("here venidng contains", !vendingContents.includes(madeItem))
+
+          if (!vendingContents.includes(madeItem.itemKey) && !vendingKeys.includes(madeItem.itemKey)) {
+            vendingContents.push(madeItem);
+            vendingKeys.push(madeItem.itemKey)
+            
+          }
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          exitCraft();
+
+          play("bubble");
+          let item = vendingContents[length-1];
+          // console.log("here's item", item.itemKey)
+          updatePocketVending(result, inPocket)
+    
+          // updatePocket(madeItem, inPocket);
+          madeItem.use(body({ isStatic: true }))
+          // atCraftingTable = false;
+          }
+          async function exitCraft() {
+            clearTable();
+            destroyAll("crafting");
+            destroyAll("madeItem");
+            destroyAll("craftPop");
+            isCraftingVisible = false;
+          }
+
+        }
+       
+      });
+
+      //  Would you like to proceed?
+
+      // setTimeout(3000);
+    }
     //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
     onKeyPress("b", () => {
       playerCraftsScissorsPaper();
@@ -577,7 +778,7 @@ class CharacterMovement {
 
     onKeyPress("enter", () => {
       // !Craft
-      if (isCraftable) {
+      if (atCraftingTable && isCraftable && !isCraftingVisible && tableItems.length >= 2) {
         destroyAll("craft");
         add([
           "craft",
@@ -596,13 +797,11 @@ class CharacterMovement {
           // scale(.5)
         ]);
         play("craftFX");
-        
-        
-        setTimeout(clearTable, 3000);
 
+        // setTimeout(clearTable, 3000);
 
         console.log(`change scene here to ${tableItems}`);
-
+        showContainer(tableItems);
         console.log("here is tableItems", tableItems);
 
         // clearTable();
@@ -814,6 +1013,7 @@ onKeyPress("z", () => {
     let isPopupVisible = false;
     // let vendingContents = [];
     let vendingContents = [];
+    let vendingKeys = [];
     let vendingSet = new Set(vendingContents);
     let inPocket = [];
     let vendingSelect = 0;
@@ -1004,15 +1204,15 @@ onKeyPress("z", () => {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
           play("bubble");
-          console.log(`Incoming material: ${material}, ${material.itemKey}` )
+          console.log(`Incoming material: ${material}, ${material.itemKey}`);
           const item1 = add([
             pos(880, 700),
             z(11),
             sprite(`${material.itemKey}`),
-            scale(1.5),
+            scale(1),
             "material",
             { image: material.itemKey },
-            { itemKey:  material.itemKey },
+            { itemKey: material.itemKey },
           ]);
           console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
           inPocket.push(item1);
@@ -1023,10 +1223,10 @@ onKeyPress("z", () => {
             z(11),
             z(11),
             sprite(`${material.itemKey}`),
-            scale(1.5),
+            scale(1),
             "material",
             { image: material.itemKey },
-            { itemKey:  material.itemKey },
+            { itemKey: material.itemKey },
           ]);
           inPocket.push(item2);
         }
@@ -1074,16 +1274,17 @@ onKeyPress("z", () => {
     player.onCollide("material", (materialEntity) => {
       if (!vendingContents.includes(materialEntity)) {
         vendingContents.push(materialEntity);
+        vendingKeys.push(materialEntity.itemKey);
       }
       play("bubble");
 
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
-  
+
     let atCraftingTable = false;
     let table_x = 700;
-    let table_y = 300;
+    let table_y = 350;
     let onItemsOnTable = 0;
     let tableItems = [];
     function clearTable() {
@@ -1105,45 +1306,53 @@ onKeyPress("z", () => {
     // Dropping item on table
     onKeyPress("q", () => {
       // !TODO: set max items on table
-
-      if (atCraftingTable && onItemsOnTable >= 6) {
-        alert("There are too many items on the table; try crafting!");
-        checkCraftable();
+      if(tableItems.length ==0){
+        table_x = 700;
+        table_y = 350;
       }
-      if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
-        itemsInPocket--;
 
-        let item = inPocket.pop();
-        console.log("here's item:", item);
-        console.log("here item key", item.itemKey);
-        item.use("onTable");
-
-        item.moveTo(table_x, table_y);
-        tableItems[onItemsOnTable] = item.itemKey;
-        console.log(tableItems);
-        table_y += 50;
-        onItemsOnTable++;
-        checkCraftable(tableItems);
-      } else {
-        checkCraftable();
-
-        if (itemsInPocket !== 0) {
-          play("bubble");
+      if (atCraftingTable && onItemsOnTable >= 3) {
+        alert("There are too many items on the table; try crafting!");
+        // checkCraftable();
+      }else{
+        console.log("check", atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6)
+        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
           itemsInPocket--;
+  
           let item = inPocket.pop();
-          console.log("here is popped", item);
-          console.log("key?", item.itemKey);
-
-          destroy(item);
+          console.log("here's item:", item);
+          console.log("here item key", item.itemKey);
+          item.use("onTable");
+  
+          item.moveTo(table_x, table_y);
+          tableItems[onItemsOnTable] = item.itemKey;
+          console.log(tableItems);
+          table_y += 50;
+          onItemsOnTable++;
+          checkCraftable(tableItems);
+        } else {
+          checkCraftable();
+  
+          if (itemsInPocket !== 0) {
+            play("bubble");
+            itemsInPocket--;
+            let item = inPocket.pop();
+            console.log("here is popped", item);
+            console.log("key?", item.itemKey);
+  
+            destroy(item);
+          }
         }
       }
+      
     });
 
     function checkCraftable() {
       if (
         atCraftingTable &&
-        tableItems.includes("paper") &&
-        tableItems.includes("yarn")
+        // tableItems.includes("paper") &&
+        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
+        tableItems.length >=2
       ) {
         isCraftable = true;
         if (isCraftable) {
