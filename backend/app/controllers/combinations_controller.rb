@@ -22,13 +22,15 @@ class CombinationsController < ApplicationController
   #   end
   # end
   def index
-    tool = Tool.find_by(name: params[:tool])
-    item1 = Item.find_by(name: params[:item1])
-    item2 = Item.find_by(name: params[:item2])
-    if (tool && item1 && item2)
-      combo = Combination.find_by(tool: tool.id, item1: item1.id, item2: item2.id)
+
+    combo = Combination.find_by(tool: params[:tool], item1: params[:item1], item2: params[:item2])
+    comboSwitch = Combination.find_by(tool: params[:tool], item1: params[:item2], item2: params[:item1])
+    if combo
       creation = Item.find(combo.creation.id)
-      render json: {creation: creation.name, rarity: creation.rarity}
+      render json: {creation: creation.name, rarity: creation.rarity} 
+    elsif comboSwitch
+      creationSwitch = Item.find(comboSwitch.creation.id)
+      render json: {creation: creationSwitch.name, rarity: creationSwitch.rarity}
     else 
       render json: {creation: "These items don't go together"}
     end
