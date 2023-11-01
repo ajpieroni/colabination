@@ -291,7 +291,7 @@ class Settings{
 
         // audio settings
         let music = {
-            volume: .05,
+            volume: 1,
             loop: true,
         }
         // onKeyPress("x", () =>{

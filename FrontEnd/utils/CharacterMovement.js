@@ -4,9 +4,8 @@ class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
   music = null;
-  constructor(testValue = null) {
+  constructor() {
     this.level = null;
-    this.testValue = testValue;
     // initailize music
   }
 
@@ -17,7 +16,7 @@ class CharacterMovement {
     this.music = play("soundtrack", {
     volume: soundSettings.volume,
     loop: soundSettings.loop,
-    detune: soundSettings.detune,
+    // detune: soundSettings.detune,
   });
 
     const block_size = 32;
