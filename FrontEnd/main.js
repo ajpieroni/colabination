@@ -11,22 +11,30 @@ kaboom({
     
 })
 
+let testValue = "colabFOX"
+// let testValue = settings.changeSettings();
+let soundSettings = settings.changeSettings();
+
+
+
 load.assets()
 
 const scenes = {
+    
     menu: () =>{
         // add takes in an array of components
         add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
+        
     },
     characterMovement: () =>{
 
-        characterMovement.display()
-        characterMovement.play()
+        characterMovement.display(soundSettings)
+        characterMovement.play(testValue)
 
     },
     settings: () =>{
-        settings.displaySettingsMenu()
+        settings.displaySettingsMenu(testValue)
     }, 
     1: () => {
 

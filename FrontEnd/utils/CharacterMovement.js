@@ -6,16 +6,17 @@ class CharacterMovement {
   music = null;
   constructor() {
     this.level = null;
+    // initailize music
   }
 
-  display() {
+  display(soundSettings) {
     //! Level Schema
     // stop("soundtrack");
-    // const music =
     this.music = play("soundtrack", {
-      volume: 0.5,
-      loop: true,
-    });
+    volume: soundSettings.volume,
+    loop: soundSettings.loop,
+  });
+
     const block_size = 32;
 
     const map = [
@@ -110,10 +111,11 @@ class CharacterMovement {
     var level = addLevel(map, level_config);
   }
 // !TODO: remove
-  play() {
-    onKeyPress("k", () => {
-      go("settings")
-  })
+  play(testValue) {
+          // !todo: remove
+    // let testValue = "colabROCKS"
+    console.log(testValue);
+
 
     // ! Game Objects
     const block_size = 64;

@@ -1,5 +1,11 @@
 class Settings{
-    displaySettingsMenu = () =>  {
+    displaySettingsMenu = (testValue) =>  {
+        // !todo: remove
+        testValue = "colabSOCKS"
+        console.log(testValue)
+
+
+
         let arrowX= 412;
         let arrowY = 215;
         let index = 0;
@@ -44,7 +50,7 @@ class Settings{
         // !TODO: remove music lmao
     
         let music = play("soundtrack", {
-          volume: 0.5,
+          volume: 0.01,
           loop: true,
         });
     
@@ -270,10 +276,22 @@ class Settings{
         // Exit menu
         onKeyPress("m", () => {
           music.paused = true;
+
           go("characterMovement");
         });
       };
-    
+
+
+    changeSettings = () =>{
+
+        // audio settings
+        let music = {
+            volume: 1,
+            loop: true,
+        }
+        // return "colabJOCKS"
+        return music;
+    }
     
 }
 
