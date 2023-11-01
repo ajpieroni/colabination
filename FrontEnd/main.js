@@ -11,11 +11,12 @@ kaboom({
     
 })
 
+
 // let testValue = settings.changeSettings();
-let soundSettings = settings.changeSettings();
-console.log(soundSettings);
+// let soundSettings = settings.changeSettings();
+let soundSettings = {volume: 1, loop: true};
 
-
+console.log("soundsettings in main", soundSettings);
 
 load.assets()
 
@@ -27,15 +28,17 @@ const scenes = {
         uiManager.displayMainMenu()
         
     },
-    // characterMovement: () =>{
-
-    //     characterMovement.display(soundSettings)
-    //     characterMovement.play()
+    characterMovement: () =>{
+        console.log("here are sound settings in cm", soundSettings);
+        characterMovement.display(soundSettings)
+        characterMovement.play()
         
 
-    // },
+    },
     settings: () =>{
         settings.displaySettingsMenu()
+        soundSettings = settings.changeSettings();
+
     }, 
     1: () => {
 
@@ -55,19 +58,19 @@ const scenes = {
 }
 
 // anni's game
-scene('characterMovement', ({ testValue }) => {
-    add([text(`Till Next Time! The score is ${testValue.testValue}!`, {
-        size: 36,
-        align: "center"
-    }), pos(50, 50)])
-    add([text("Press Space Bar to Play Again", {
-        size: 36,
-        align: "center"
-    }), pos(50, 150)])
-    // onKeyDown('space', () => {
-    //     go('game', defaultGame)
-    // })
-})
+// scene('characterMovement', () => {
+//     add([text(`Till Next Time! The score is ${soundSettings.hunger}!`, {
+//         size: 36,
+//         align: "center"
+//     }), pos(50, 50)])
+//     add([text("Press Space Bar to Play Again", {
+//         size: 36,
+//         align: "center"
+//     }), pos(50, 150)])
+//     // onKeyDown('space', () => {
+//     //     go('game', defaultGame)
+//     // })
+// })
 
 // initalize scenes
 

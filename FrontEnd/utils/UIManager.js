@@ -1,4 +1,5 @@
 class UIManager{
+    
 
     displayBlinkingUIMessage(content, position){
         // PARAMS:
@@ -21,7 +22,7 @@ class UIManager{
         ])
 // kaboom event listeners (key, funciton)
         onKeyPress("enter", () => {
-            go("settings")
+            go("characterMovement")
         })
 
         message.onStateEnter("flash-up", async () =>{

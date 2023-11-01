@@ -291,12 +291,13 @@ class Settings{
 
         // audio settings
         let music = {
-            volume: 1,
+            volume: .05,
             loop: true,
         }
-        onKeyPress("x", () =>{
-            music.detune = -1000;
-        })
+        // onKeyPress("x", () =>{
+        //     music.detune = -1000;
+        // })
+        console.log("here's music in settings:", music)
         // return "colabJOCKS"
         return music;
     }
