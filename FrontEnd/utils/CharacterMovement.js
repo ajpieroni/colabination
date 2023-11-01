@@ -284,31 +284,23 @@ class CharacterMovement {
         });
     
     fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
-        .then(final => {
+        .then((final) => {
           console.log(final)
-          const itemNames = final.items;
+          const itemNames = final.final_items; 
             itemNames.forEach((itemName) => {
-              const savedItem = add([
-                // rect(item.width, item.height) ,
-                  pos(0,0),
-                  z(0),
-                  // color(item.color.r, item.color.g, item.color.b),
+              const savedItem = add([     
+                  pos(0,0),           
                   sprite(`${itemName}`),
-                  // rect(10,10),
-                  // sprite(`${image}`),
+
                   scale(1.5),
                   area(),
-                  // z(11),
+                  z(0),
                   "material",
                   {
                     itemKey: itemName,
                   },
                 ]);
-            // console.log(`itemNames values: ${itemName}`);
             areFinal.push(itemName);
-            // vendingKeys.push(savedItem.itemKey);
-            docPop.push(savedItem);
-            // console.log(`pushed`);
           });
           resolve(itemNames);
           }
@@ -1091,7 +1083,7 @@ onKeyPress("z", () => {
     });
     let isDocVisible = false
     let areFinal = []
-    console.log(areFinal);
+    areFinal.push("paper")
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -1109,7 +1101,7 @@ onKeyPress("z", () => {
       let currRow = 0;
       for (let i = 0; i < areFinal.length; i++) {
         const item = areFinal[i];
-        const itemKey = item.itemKey;
+        // const itemKey = item.itemKey;
         // starts a new line
 
         if (currRow === 3) {
@@ -1121,12 +1113,12 @@ onKeyPress("z", () => {
         const finalItem = add([
           pos(currentX, currentY),
           z(11),
-          sprite(`${item.itemKey}`),
+          sprite(`${item}`),
           "final",
-          { itemKey: itemKey },
+          { itemKey: item},
         ]);
         currRow++;
-        currentX += item.width + 50;
+        currentX += 100;
       }
 
       isDocVisible = true;

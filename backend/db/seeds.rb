@@ -8,18 +8,14 @@
 
 puts 'seeding'
 
-paper = Item.create(name: 'Paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
-wood = Item.create(name: 'Yarn', description: "string", item_type:"material", rarity:1, isFinal: false)
-trash = Item.create(name: 'Trash', description:"dubious trash", item_type:"material", rarity: 1, isFinal:true)
+paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
+wood = Item.create(name: 'yarn', description: "string", item_type:"material", rarity:1, isFinal: false)
+trash = Item.create(name: 'trash', description:"dubious trash", item_type:"material", rarity: 1, isFinal:true)
 
 # Creating tools
-hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100)
+# hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100)
 scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper', globalCount: 150)
 
-# Creating item-tools relationships
-ItemTool.create(item: paper, tool: hammer)
-ItemTool.create(item: paper, tool: scissors)
-ItemTool.create(item: paper, tool: hammer)
 
 
 user1 = User.create(username: "pandaMan", pin: 1234)
