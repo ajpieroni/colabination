@@ -1065,33 +1065,6 @@ class CharacterMovement {
         scissorsCraft = true;
     }
 })
-//handle saving data and uploading to DB
-function handleSavingData(){
-    //hard coded items and tools, should be dynamic at some point
-    let currItems = ["paper", "yarn", "trash"]
-    let currTools = ["hammer"]
-    const username = "cats"
-
-    for (let i = 0; i < currItems.length; i++){
-        const currItem = currItems[i]
-        fetch('http://localhost:8081/user_items', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
- 
-        },
-        body: JSON.stringify({ name: currItem, username: username })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return Promise.reject('Failed to save items');
-        }
-        console.log("Items saved!", response);
-    })
-    .catch(error => {
-        console.error("Error saving items:", error);
-      }
-    );
 
     //handle saving data and uploading to DB
     function handleSavingData() {
@@ -1525,9 +1498,9 @@ function handleSavingData(){
     }
 });
 
-player.onCollideEnd("documentationStation", () => {
-  canAccessDocumentation = false;
-});
+      player.onCollideEnd("documentationStation", () => {
+        canAccessDocumentation = false;
+      });
 
     
     player.onCollide("material", (materialEntity) => {
@@ -1643,7 +1616,6 @@ player.onCollideEnd("documentationStation", () => {
         destroyAll("craft");
       }
     }
-
     // Crafting Collisions
     onCollide("player", "craftingTable", (s, w) => {
       atCraftingTable = true;
@@ -1654,8 +1626,8 @@ player.onCollideEnd("documentationStation", () => {
       checkCraftable();
     });
   }
+
 }
-}}
 
 
 export const characterMovement = new CharacterMovement();

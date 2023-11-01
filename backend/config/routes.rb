@@ -16,7 +16,8 @@ Rails.application.routes.draw do
     collection do
       get 'final_items'
     end
-  resources :user_items, only: [:create, :index]  
+  end
+  # resources :user_items, only: [:create, :index]  
 
   resources :user_tools, only: [:create, :index]  
 
