@@ -1083,7 +1083,6 @@ onKeyPress("z", () => {
     });
     let isDocVisible = false
     let areFinal = []
-    areFinal.push("paper")
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
