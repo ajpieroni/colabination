@@ -16,6 +16,13 @@ Rails.application.routes.draw do
     collection do
       get 'final_items'
     end
+  resources :user_items, only: [:create, :index]  
+
+  resources :user_tools, only: [:create, :index]  
+
+  namespace :api do
+    resources :combinations, only: [:index, :update]
+    put 'update_items', to: 'combinations#update_items'
   end
 end
 

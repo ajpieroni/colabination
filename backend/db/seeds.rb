@@ -8,13 +8,27 @@
 
 puts 'seeding'
 
-paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
-wood = Item.create(name: 'yarn', description: "string", item_type:"material", rarity:1, isFinal: false)
-trash = Item.create(name: 'trash', description:"dubious trash", item_type:"material", rarity: 1, isFinal:true)
+
+# Clear previous data
+# ItemTool.destroy_all
+# Item.destroy_all
+# Tool.destroy_all
+# UserItem.destroy_all
+
+# Creating items
+paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
+yarn = Item.create(name: 'yarn', description: "string", item_type:"material", rarity:1)
+wood = Item.create(name: 'wood', description: "string", item_type:"material", rarity:1)
+trash = Item.create(name: 'trash', description: "string", item_type:"material", rarity:1)
+
+
+# wood = Item.create(name: 'Yarn', description: "string", item_type:"material", rarity:1)
+
+# rock = Item.create(name: 'Rock', description: 'A small rock', item_type: 'material', rarity: 1, location: 'Garden')
 
 # Creating tools
-# hammer = Tool.create(name: 'Hammer', description: 'Useful for hammering things', globalCount: 100)
-scissors = Tool.create(name: 'Scissors', description: 'Useful for cutting paper', globalCount: 150)
+hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
+scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
 
 
 

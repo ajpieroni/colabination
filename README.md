@@ -1,5 +1,22 @@
 # Meeting Notes
 
+## October 27th
+
+Future Issues Notes:
+- Slight art clash with pixel art and background, do we want to fix?
+  - making tools look interactive on the table
+  - add some more machines
+- Put tools into array
+
+Progress Report:
+- Olly: 
+  - can collide with tools on the table in the middle
+  - also made pretty png images :D
+- Kelvin: 
+  - discussed comb table and how to get item 
+- Dasol: 
+  - shared more on menu button
+
 ## October 20th
 Feedback Review:
 - could autosave or save button or interval saving
