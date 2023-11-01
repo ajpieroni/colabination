@@ -1,4 +1,7 @@
 class Settings{
+    constructor(){
+        let testValue = 0;
+    }
     displaySettingsMenu = (testValue) =>  {
         // !todo: remove
         testValue = "colabSOCKS"
@@ -276,10 +279,12 @@ class Settings{
         // Exit menu
         onKeyPress("m", () => {
           music.paused = true;
+          this.testValue += 5;
 
-          go("characterMovement");
+          go("characterMovement", { testValue: this.testValue});
         });
       };
+
 
 
     changeSettings = () =>{
@@ -289,6 +294,9 @@ class Settings{
             volume: 1,
             loop: true,
         }
+        onKeyPress("x", () =>{
+            music.detune = -1000;
+        })
         // return "colabJOCKS"
         return music;
     }

@@ -4,17 +4,20 @@ class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
   music = null;
-  constructor() {
+  constructor(testValue = null) {
     this.level = null;
+    this.testValue = testValue;
     // initailize music
   }
 
   display(soundSettings) {
     //! Level Schema
     // stop("soundtrack");
+    console.log("here is new tv", this.testValue);
     this.music = play("soundtrack", {
     volume: soundSettings.volume,
     loop: soundSettings.loop,
+    detune: soundSettings.detune,
   });
 
     const block_size = 32;
@@ -114,7 +117,7 @@ class CharacterMovement {
   play(testValue) {
           // !todo: remove
     // let testValue = "colabROCKS"
-    console.log(testValue);
+    console.log("the original tv: ", testValue);
 
 
     // ! Game Objects
@@ -944,6 +947,7 @@ class CharacterMovement {
       this.music.paused = true;
       go("settings");
     });
+  return testValue +1;
   }
   
 

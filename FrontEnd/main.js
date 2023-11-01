@@ -11,9 +11,9 @@ kaboom({
     
 })
 
-let testValue = "colabFOX"
 // let testValue = settings.changeSettings();
 let soundSettings = settings.changeSettings();
+console.log(soundSettings);
 
 
 
@@ -27,14 +27,15 @@ const scenes = {
         uiManager.displayMainMenu()
         
     },
-    characterMovement: () =>{
+    // characterMovement: () =>{
 
-        characterMovement.display(soundSettings)
-        characterMovement.play(testValue)
+    //     characterMovement.display(soundSettings)
+    //     characterMovement.play()
+        
 
-    },
+    // },
     settings: () =>{
-        settings.displaySettingsMenu(testValue)
+        settings.displaySettingsMenu()
     }, 
     1: () => {
 
@@ -52,6 +53,21 @@ const scenes = {
 
     }
 }
+
+// anni's game
+scene('characterMovement', ({ testValue }) => {
+    add([text(`Till Next Time! The score is ${testValue.testValue}!`, {
+        size: 36,
+        align: "center"
+    }), pos(50, 50)])
+    add([text("Press Space Bar to Play Again", {
+        size: 36,
+        align: "center"
+    }), pos(50, 150)])
+    // onKeyDown('space', () => {
+    //     go('game', defaultGame)
+    // })
+})
 
 // initalize scenes
 

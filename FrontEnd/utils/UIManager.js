@@ -21,7 +21,7 @@ class UIManager{
         ])
 // kaboom event listeners (key, funciton)
         onKeyPress("enter", () => {
-            go("characterMovement")
+            go("settings")
         })
 
         message.onStateEnter("flash-up", async () =>{
