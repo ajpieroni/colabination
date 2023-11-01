@@ -1343,13 +1343,6 @@ class CharacterMovement {
             itemKey: itemKey,
           },
         ]);
-
-        onClick(() => {
-          // Check if the mouse click occurred within the bounds of itemEntity
-          if (isClicked(vendingItem)) {
-            updatePocketVending(vendingItem, inPocket);
-          }
-        });
         // console.log(currRow);
         currRow++;
         currentX += item.width + 50;
