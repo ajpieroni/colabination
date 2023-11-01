@@ -12,10 +12,8 @@ Rails.application.routes.draw do
   post 'user_tools', to: 'user_tools#create'
 
   resources :user_items, only: [:create, :index]  
-  resources :user_items, only: [:index]
 
   resources :user_tools, only: [:create, :index]  
-  resources :user_tools, only: [:index]
 
   # namespace :api do
   #   resources :combinations, only: [:index, :update]
