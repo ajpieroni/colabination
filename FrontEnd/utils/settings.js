@@ -2,23 +2,22 @@ class Settings {
   constructor() {
     this.testValue = 0;
     this.soundTog = 1;
-    
-    // this.audio.volume = this.soundTog;
-
-    // this.updateAudioVolume();
   }
-  // updateAudioVolume() {
-  // }
+  getGlobalVolume(){
+    return this.soundTog;
+  }
+  setGlobalVolume(volume){
+    this.soundTog = volume;
+    this.changeSettings(this.soundTog)
+  }
 
   // !SETTINGS DISPLAY
   displaySettingsMenu() {
-    this.soundTog = 0.5;
+    // this.soundTog = 0.5;
 
     let arrowX = (1024 - 240) / 2;
     let arrowY = 215;
     let index = 0;
-
-    // let soundTog = 0;
 
     // Arrow settings
     const arrowSelect = add([
@@ -254,8 +253,9 @@ class Settings {
             // (this.audio.volume = this.soundTog);
           console.log("sounds: ", this.soundTog);
           // turning sounds off
-          volTogg = 0;
+          this.setGlobalVolume(0)
           this.changeSettings();
+         
         } else {
           (soundsBtn.text = "Sounds:on"),
           volTogg = 1;
@@ -264,7 +264,10 @@ class Settings {
             (this.soundTog = 1),
           console.log("sounds: ", this.soundTog);
           // turning sounds off
-          this.changeSettings(1);
+          volTogg = 1;
+          this.setGlobalVolume(100)
+          // *add back voltogg 
+          this.changeSettings();
         }
         // music.volume = this.audio.volume;
       }
@@ -451,8 +454,14 @@ class Settings {
     });
   }
 
+  // add back parameter voltogg
   changeSettings = () => {
-    let volTogg = 100;
+    // *SHOW IN MEETING
+    let volTogg = this.getGlobalVolume()
+    // let volTogg = 100;
+    console.log("here's voltogg:", volTogg)
+    console.log("volTogg value:", volTogg, "type:", typeof volTogg);
+
     
     // console.log("here's val: ", val+100);
     // let 
@@ -460,31 +469,11 @@ class Settings {
       volume: volTogg,
       loop: true,
   }
-  // onKeyPress("x", () =>{
-  //     music.detune = -1000;
-  // })
-  // console.log("here's music in settings:", music)
-  // return "colabJOCKS"
+
+  console.log("here's music:", music)
+
   return music;
 
-    // let music = this.audio = {volume: val+10, loop: true};
-    // console.log("here's music in settings",music);
-// let music;
-//     music = {
-//       volume: val+10,
-//       loop: true
-
-//     }
-//     return music;
-    
-    // let music;
-    // console.log("Volume", this.audio.volume);
-
-    //   return (music = {
-    //     volume: this.audio.volume,
-    //     loop: true,
-    //   });
-   
   };
 
 }
