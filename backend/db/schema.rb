@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_154952) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_162928) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_154952) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "combinations", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "tool_id"
+    t.bigint "item1_id"
+    t.bigint "item2_id"
+    t.bigint "creation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creation_id"], name: "index_combinations_on_creation_id"
+    t.index ["item1_id"], name: "index_combinations_on_item1_id"
+    t.index ["item2_id"], name: "index_combinations_on_item2_id"
+    t.index ["tool_id"], name: "index_combinations_on_tool_id"
   end
 
   create_table "item_tools", charset: "utf8mb3", force: :cascade do |t|
@@ -94,6 +107,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_154952) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "combinations", "items", column: "creation_id"
+  add_foreign_key "combinations", "items", column: "item1_id"
+  add_foreign_key "combinations", "items", column: "item2_id"
+  add_foreign_key "combinations", "tools"
   add_foreign_key "item_tools", "items"
   add_foreign_key "item_tools", "tools"
   add_foreign_key "user_items", "items"
