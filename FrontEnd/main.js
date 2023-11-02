@@ -40,6 +40,12 @@ const scenes = {
         soundSettings = settings.changeSettings();
 
     }, 
+    aboutUs: () =>{
+        characterMovement.displayAboutUs()
+    },
+    controls: () =>{
+        characterMovement.displayControls()
+    },
     1: () => {
 
     },
