@@ -1187,7 +1187,8 @@ class CharacterMovement {
       
       // controls
       if(index == -2){
-        console.log("here are controls!")
+        console.log("here are controls!"),
+        go("controls")
       }
 
 
@@ -1256,7 +1257,61 @@ class CharacterMovement {
     });
   };
 
+  //for controls page
+  displayControls() {
+    add([
+      sprite("coolBG"), 
+      scale(1.4)
+    ]);
 
+    add([
+      rect(600, 400),
+      // z(1),
+      pos((1024 - 600)/2, 200),
+      color(255, 255, 255),
+      opacity(0.5), 
+      outline(6, rgb(255, 255, 255)),
+      "box",
+      area(),
+    ])
+
+    add([
+      text("Controls"), 
+      pos((1024 - 140)/2, 225),
+      color(70, 70, 70),  
+      area(),
+      z(2)
+    ]); 
+    
+    add([
+      text("Move -------- WASD/Arrow Keys", {
+        size: 24,
+        width: 450
+      }), 
+      pos((1024 - 450)/2, 300),
+      color(70, 70, 70),  
+      area(),
+      z(2)
+    ]);
+    add([
+      text("Menu ---------------------- M", {
+        size: 24,
+        width: 450
+      }), 
+      pos((1024 - 450)/2, 350),
+      color(70, 70, 70),  
+      area(),
+      z(2)
+    ]);
+    
+    // text("Move            WASD/Arrow Keys", {
+    //   size: 18, // 48 pixels tall
+    //   // width: 320, // it'll wrap to next line when width exceeds this value
+    //   // font: "sans-serif", // specify any font you loaded or browser built-in
+    // })
+  };
+
+  //for dev page
   displayAboutUs() {
     add([
       sprite("mountains"), 
@@ -1301,7 +1356,8 @@ class CharacterMovement {
         sprite("AlexGlow"), 
         pos(-60,350),
         scale(6.5),
-        z(1)
+        z(1),
+        "AlexGlow"
       ]);
     } 
 
@@ -1316,30 +1372,38 @@ class CharacterMovement {
             sprite("OllyGlow"), 
             pos(120,350),
             scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "OllyGlow"
+          ]),
+          destroyAll("AlexGlow")
           
         } else if (devIndex == 2){
           add([
             sprite("KelvinGlow"), 
             pos(300,350),
             scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "KelvinGlow"
+          ]),
+          destroyAll("OllyGlow")
         } else if (devIndex == 3){
           add([
             sprite("DasolGlow"), 
             pos(480,350),
             scale(6.5),
-            z(1)
-          ]);
-        }  (devIndex == 4)
+            z(1),
+            "DasolGlow"
+          ]),
+          destroyAll("KelvinGlow")
+        }  else if (devIndex == 4)
           add([
             sprite("SophiaGlow"), 
             pos(660,350),
             scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "SophiaGlow"
+          ]),
+          destroyAll("DasolGlow")
 
       }else{
         devIndex= devIndexTemp;
@@ -1356,59 +1420,51 @@ class CharacterMovement {
             sprite("AlexGlow"), 
             pos(-60,350),
             scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "AlexGlow"
+          ]),
+          destroyAll("OllyGlow")
           
         } else if (devIndex == 1){
           add([
             sprite("OllyGlow"), 
             pos(120,350),
             scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "OllyGlow"
+          ]),
+          destroyAll("KelvinGlow")
 
         } else if (devIndex == 2){
           add([
             sprite("KelvinGlow"), 
             pos(300,350),
             scale(6.5),
-            z(1)
-          ]);
-        } else if (devIndex == 3){
+            z(1),
+            "KelvinGlow"
+          ]),
+          destroyAll("DasolGlow")
+        } else {
           add([
             sprite("DasolGlow"), 
             pos(480,350),
             scale(6.5),
-            z(1)
-          ]);
-        }  (devIndex == 4)
-          add([
-            sprite("SophiaGlow"), 
-            pos(660,350),
-            scale(6.5),
-            z(1)
-          ]);
+            z(1),
+            "DasolGlow"
+          ]),
+          destroyAll("SophiaGlow")
+        } 
         
       }else{
         devIndex= devIndexTemp;
       }
     });
 
+    onKeyPress("m", () => {
+      // this.music.paused = true;
+      go("settings");
+    });
 
-
-    
-    
-
-
-    
-
-
-    // add([
-    //   sprite("glow"), 
-    //   pos(-60,350),
-    //   scale(6.5),
-    //   z(1)
-    // ]);
 
   }
 

@@ -58,6 +58,9 @@ export const load = {
         loadSprite("DasolGlow", "./assets/DasolGlow.png")
         loadSprite("SophiaGlow", "./assets/SophiaGlow.png")
 
+        //controls
+        loadSprite("coolBG", "./assets/coolClouds.png")
+
 
 
 

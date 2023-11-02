@@ -30,6 +30,9 @@ const scenes = {
     aboutUs: () =>{
         characterMovement.displayAboutUs()
     },
+    controls: () =>{
+        characterMovement.displayControls()
+    },
     1: () => {
 
     },
