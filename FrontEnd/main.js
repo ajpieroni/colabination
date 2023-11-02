@@ -41,10 +41,10 @@ const scenes = {
 
     }, 
     aboutUs: () =>{
-        characterMovement.displayAboutUs()
+        settings.displayAboutUs()
     },
     controls: () =>{
-        characterMovement.displayControls()
+        settings.displayControls()
     },
     1: () => {
 
