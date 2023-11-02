@@ -20,6 +20,9 @@ const scenes = {
         // add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
     },
+    // tutorial
+    // level 1: base colab
+    // level 2: garage unlocked
     characterMovement: () =>{
 
         characterMovement.display()
