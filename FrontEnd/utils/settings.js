@@ -2,8 +2,8 @@ class Settings {
   constructor() {
     this.testValue = 0;
     this.soundTog = 1;
-    this.audio = { volume: 0 }; // Initialize with a default value
-    this.audio.volume = this.soundTog;
+    
+    // this.audio.volume = this.soundTog;
 
     // this.updateAudioVolume();
   }
@@ -242,6 +242,7 @@ class Settings {
       }
 
       // sounds
+    let volTogg;
       if (index == -3) {
         console.log("here are sounds");
         // overlay.classList.toggle("show"),
@@ -250,25 +251,22 @@ class Settings {
           (soundsBtn.text = "Sounds:off"),
             (soundsBtn.pos = vec2((1024 - 215) / 2, 375)),
             (this.soundTog = 0),
-            (this.audio.volume = this.soundTog);
+            // (this.audio.volume = this.soundTog);
           console.log("sounds: ", this.soundTog);
-          this.audio.volume = this.soundTog;
-          music.volume = this.soundTog;
-          // turning sounds on
-          this.changeSettings(0);
+          // turning sounds off
+          volTogg = 0;
+          this.changeSettings();
         } else {
           (soundsBtn.text = "Sounds:on"),
+          volTogg = 1;
+
             (soundsBtn.pos = vec2((1024 - 195) / 2, 375)),
             (this.soundTog = 1),
-            (this.audio.volume = this.soundTog);
           console.log("sounds: ", this.soundTog);
-          this.audio.volume = this.soundTog;
-
-          music.volume = this.soundTog;
           // turning sounds off
           this.changeSettings(1);
         }
-        music.volume = this.audio.volume;
+        // music.volume = this.audio.volume;
       }
       //about us
       if (index == -4) {
@@ -453,11 +451,31 @@ class Settings {
     });
   }
 
-  changeSettings = (val) => {
-    console.log("here's val: ", val+10);
-    let music = this.audio = {volume: val+10, loop: true};
-    console.log("here's music in settings",music);
-    return music;
+  changeSettings = () => {
+    let volTogg = 100;
+    
+    // console.log("here's val: ", val+100);
+    // let 
+    let music = {
+      volume: volTogg,
+      loop: true,
+  }
+  // onKeyPress("x", () =>{
+  //     music.detune = -1000;
+  // })
+  // console.log("here's music in settings:", music)
+  // return "colabJOCKS"
+  return music;
+
+    // let music = this.audio = {volume: val+10, loop: true};
+    // console.log("here's music in settings",music);
+// let music;
+//     music = {
+//       volume: val+10,
+//       loop: true
+
+//     }
+//     return music;
     
     // let music;
     // console.log("Volume", this.audio.volume);
