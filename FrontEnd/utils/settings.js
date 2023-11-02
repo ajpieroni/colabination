@@ -1,7 +1,10 @@
 class Settings{
-    constructor(){
-        let testValue = 0;
-    }
+  constructor() {
+    this.testValue = 0;
+    this.soundTog = 1;
+    this.audio = { volume: 0 };
+}
+
     // !SETTINGS DISPLAY
     displaySettingsMenu() {
       let arrowX= (1024 - 240)/2;
@@ -126,7 +129,6 @@ class Settings{
   
   
   
-      let soundTog = 0;
       onKeyPress("enter", (exit) => {
         console.log("here index:", index);
   
@@ -256,17 +258,21 @@ class Settings{
           console.log("here are sounds");
           // overlay.classList.toggle("show"),
   
-          if(soundTog == 0){
+          if(this.soundTog == 1){
             soundsBtn.text = "Sounds:off",
             soundsBtn.pos = vec2((1024 - 215)/2, 375),
-            soundTog = 1,
-            console.log("sounds: ", soundTog)  
+            this.soundTog = 0,
+            // this.audio.volume = this.soundTog;
+            console.log("sounds: ", this.soundTog)  
+            this.changeSettings(this.soundTog)
             
           } else  {
             soundsBtn.text = "Sounds:on",
             soundsBtn.pos = vec2((1024 - 195)/2, 375),
-            soundTog = 0,
-            console.log("sounds: ", soundTog)
+            this.soundTog = 1,
+            // this.audio.volume = this.soundTog;
+            console.log("sounds: ", this.soundTog)
+            this.changeSettings(this.soundtog)
           }
         }
       //about us 
@@ -530,20 +536,30 @@ class Settings{
 
 
 
-    changeSettings = () =>{
+  changeSettings = (volume) => {
+    this.audio.volume = volume;
+    // Check if audio is undefined or null
+    if (!this.audio) {
+        throw new Error("Audio object is undefined or null");
+    }
 
-        // audio settings
-        let music = {
+
+    // audio settings
+    let music;
+    if (this.audio.volume === 1) {
+        music = {
+            volume: 1,
+            loop: true,
+        };
+    } else {
+        music = {
             volume: 0,
             loop: true,
-        }
-        // onKeyPress("x", () =>{
-        //     music.detune = -1000;
-        // })
-        console.log("here's music in settings:", music)
-        // return "colabJOCKS"
-        return music;
+        };
     }
+    
+    return music;
+}
 
   //for dev page
 
