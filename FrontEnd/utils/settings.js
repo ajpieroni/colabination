@@ -7,6 +7,8 @@ class Settings{
 
     // !SETTINGS DISPLAY
     displaySettingsMenu() {
+    this.soundTog = .5;
+
       let arrowX= (1024 - 240)/2;
       let arrowY = 215;
       let index = 0;
@@ -262,7 +264,7 @@ class Settings{
             soundsBtn.text = "Sounds:off",
             soundsBtn.pos = vec2((1024 - 215)/2, 375),
             this.soundTog = 0,
-            // this.audio.volume = this.soundTog;
+            this.audio.volume = this.soundTog;
             console.log("sounds: ", this.soundTog)  
             this.changeSettings(this.soundTog)
             
@@ -270,9 +272,9 @@ class Settings{
             soundsBtn.text = "Sounds:on",
             soundsBtn.pos = vec2((1024 - 195)/2, 375),
             this.soundTog = 1,
-            // this.audio.volume = this.soundTog;
+            this.audio.volume = this.soundTog;
             console.log("sounds: ", this.soundTog)
-            this.changeSettings(this.soundtog)
+            this.changeSettings(this.soundTog)
           }
         }
       //about us 
@@ -537,16 +539,29 @@ class Settings{
 
 
   changeSettings = (volume) => {
-    this.audio.volume = volume;
+      this.audio.volume = volume;
+
+    // if(volume){
+    //   this.audio.volume = volume;
+
+    // }else{
+    //   this.audio.volume = 1;
+
+    // }
     let music;
-    if (this.audio.volume != 1.5) {
+    console.log("here da volume",this.audio.volume);
+    if (this.audio.volume !== 0) {
+    console.log("not eq 0");
+
         return music = {
-            volume: 1.5,
+            volume: 0,
             loop: true,
         };
     } else {
+    console.log("else");
+
         return music = {
-            volume: 0,
+            volume: 5,
             loop: true,
         };
     }
