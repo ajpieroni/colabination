@@ -247,25 +247,24 @@ class Settings {
         // overlay.classList.toggle("show"),
 
         if (this.soundTog == 1) {
-          (soundsBtn.text = "Sounds:off"),
-            (soundsBtn.pos = vec2((1024 - 215) / 2, 375)),
-            (this.soundTog = 0),
+          soundsBtn.text = "Sounds:off";
+          soundsBtn.pos = vec2((1024 - 215) / 2, 375);
+          this.soundTog = 0;
             // (this.audio.volume = this.soundTog);
           console.log("sounds: ", this.soundTog);
           // turning sounds off
-          this.setGlobalVolume(0)
+          this.setGlobalVolume(0);
           this.changeSettings();
          
         } else {
-          (soundsBtn.text = "Sounds:on"),
+          soundsBtn.text = "Sounds:on";
           volTogg = 1;
-
-            (soundsBtn.pos = vec2((1024 - 195) / 2, 375)),
-            (this.soundTog = 1),
+          soundsBtn.pos = vec2((1024 - 195) / 2, 375);
+          this.soundTog = 1;
           console.log("sounds: ", this.soundTog);
           // turning sounds off
           volTogg = 1;
-          this.setGlobalVolume(100)
+          this.setGlobalVolume(1)
           // *add back voltogg 
           this.changeSettings();
         }
