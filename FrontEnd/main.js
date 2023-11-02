@@ -38,6 +38,7 @@ const scenes = {
     settings: () =>{
         settings.displaySettingsMenu()
         soundSettings = settings.changeSettings();
+        console.log("soundsettings in main", soundSettings);
 
     }, 
     aboutUs: () =>{
