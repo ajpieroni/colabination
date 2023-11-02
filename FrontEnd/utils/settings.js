@@ -2,7 +2,7 @@ class Settings{
   constructor() {
     this.testValue = 0;
     this.soundTog = 1;
-    this.audio = { volume: 0 };
+    this.audio = { volume: this.soundTog };
 }
 
     // !SETTINGS DISPLAY
@@ -538,27 +538,18 @@ class Settings{
 
   changeSettings = (volume) => {
     this.audio.volume = volume;
-    // Check if audio is undefined or null
-    if (!this.audio) {
-        throw new Error("Audio object is undefined or null");
-    }
-
-
-    // audio settings
     let music;
-    if (this.audio.volume === 1) {
-        music = {
-            volume: 1,
+    if (this.audio.volume != 1.5) {
+        return music = {
+            volume: 1.5,
             loop: true,
         };
     } else {
-        music = {
+        return music = {
             volume: 0,
             loop: true,
         };
     }
-    
-    return music;
 }
 
   //for dev page
