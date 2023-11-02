@@ -2,7 +2,11 @@ class Settings{
   constructor() {
     this.testValue = 0;
     this.soundTog = 1;
-    this.audio = { volume: this.soundTog };
+    this.audio = { volume: 0 };  // Initialize with a default value
+    this.updateAudioVolume(); 
+}
+updateAudioVolume() {
+  this.audio.volume = this.soundTog;
 }
 
     // !SETTINGS DISPLAY
@@ -265,16 +269,20 @@ class Settings{
             soundsBtn.pos = vec2((1024 - 215)/2, 375),
             this.soundTog = 0,
             this.audio.volume = this.soundTog;
-            console.log("sounds: ", this.soundTog)  
-            this.changeSettings(this.soundTog)
+            console.log("sounds: ", this.soundTog) 
+            this.updateAudioVolume(); 
+            music.volume = this.soundTog;
+            this.changeSettings(1)
             
           } else  {
             soundsBtn.text = "Sounds:on",
             soundsBtn.pos = vec2((1024 - 195)/2, 375),
             this.soundTog = 1,
             this.audio.volume = this.soundTog;
-            console.log("sounds: ", this.soundTog)
-            this.changeSettings(this.soundTog)
+            console.log("sounds: ", this.soundTog);
+            this.updateAudioVolume(); 
+            music.volume = this.soundTog;
+            this.changeSettings(0);
           }
         }
       //about us 
@@ -538,8 +546,8 @@ class Settings{
 
 
 
-  changeSettings = (volume) => {
-      this.audio.volume = volume;
+  changeSettings = (val) => {
+      this.audio.volume = val;
 
     // if(volume){
     //   this.audio.volume = volume;
@@ -554,14 +562,14 @@ class Settings{
     console.log("not eq 0");
 
         return music = {
-            volume: 0,
+            volume: 5,
             loop: true,
         };
     } else {
     console.log("else");
 
         return music = {
-            volume: 5,
+            volume: 0,
             loop: true,
         };
     }
