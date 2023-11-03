@@ -1,5 +1,19 @@
 # Meeting Notes
 
+## Nov 3rd
+Agenda:
+- [] updates from the week
+- [] discuss Class vs function and how to pass data between files
+- [] redefine end MVP goals
+  - [] piece code together to have a full playable game
+  - [] use APIs for initializing game, check crafting, save progress
+  - [] working menu bar
+  - [] login and sign up
+- [] assign small issues out
+  - [] items in vending machine vs in documentation station
+  - [] remove trash or any other final items from pocket
+  - [] 
+
 ## October 27th
 
 Future Issues Notes:
