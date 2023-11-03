@@ -1,5 +1,21 @@
 # Meeting Notes
 
+## November 3rd
+
+Progress Report:
+- Alex:
+  - figure out passing voume around scenes
+- Kelvin:
+  - discuss saving guest progress (not MVP)
+  - force new players to make account (new game or load game)
+  - documentation station, store final items
+    - discuss animation for final items
+    - some bugs to fix auto save to documentation
+- Dasol: 
+  - finish about us
+  - start on controls page
+- Olly:
+
 ## October 27th
 
 Future Issues Notes:
