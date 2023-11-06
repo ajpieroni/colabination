@@ -626,8 +626,10 @@ class CharacterMovement {
         "crafting",
       ]);
       // !POSTING
-      // http://localhost:8081/items/find_by_name/card
+      
+      // http://localhost:8081/items/find_by_name/paper
       // http://localhost:8081/tools/find_by_name/scissors
+      console.log("here are ingredients")
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
