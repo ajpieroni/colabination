@@ -40,6 +40,7 @@ class ItemsController < ApplicationController
     @item.destroy
     head :no_content
   end
+  
   def find_by_name
     @item = Item.find_by(name: params[:name])
     
