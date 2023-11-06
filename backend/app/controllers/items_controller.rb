@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
   def show
     render json: { data: @item }, status: :ok
   end
+  
 
   # POST /items or /items.json
   def create
@@ -38,6 +39,15 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     head :no_content
+  end
+  def find_by_name
+    @item = Item.find_by(name: params[:name])
+    
+    if @item
+      render json: { id: @item.id }
+    else
+      render json: { error: "Item not found" }, status: :not_found
+    end
   end
 
   private

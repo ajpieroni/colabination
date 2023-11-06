@@ -239,6 +239,7 @@ class CharacterMovement {
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
+      console.log(`Fetching for ${username}`)
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_items?username=${username}`)
           .then((response) => {

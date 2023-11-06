@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     resources :items, only: [:create, :update]
   end
   
-  resources :items
+  resources :items do
+    collection do
+      get 'find_by_name/:name', to: 'items#find_by_name', as: 'find_by_name'
+    end
+  end
   
   post 'user_items', to: 'user_items#create'
   post 'user_tools', to: 'user_tools#create'
