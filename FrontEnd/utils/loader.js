@@ -20,9 +20,10 @@ export const load = {
         loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
         loadSprite("paper", "./assets/paper.png")
+        loadSprite("trash", "./assets/trash.png")
         
         loadSprite("woodAlert", "./assets/colablogo.png")
-        loadSprite("wood", "./assets/wood.png")
+        loadSprite("wood", "./assets/woodsmall.png")
         loadSprite("neededAlert", "./assets/neededAlert.png")
         loadSprite("neededBlueprintAlert", "./assets/neededBlueprintAlert.png")
         loadSprite("3DBenchy", "./assets/benchy.png")
@@ -38,6 +39,7 @@ export const load = {
         // !Sounds
         loadSound("bubble", "./assets/bubble.m4a")
         loadSound("soundtrack", "./assets/soundtrack.mp3")
+        loadSound("craftFX", "./assets/crafting.m4a")
 
         // !Save Menu
         loadSprite("trees", "./assets/background.jpg")

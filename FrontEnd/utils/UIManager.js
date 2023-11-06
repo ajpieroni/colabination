@@ -20,10 +20,12 @@ class UIManager{
             state("flash-up", ["flash-up", "flash-down"])
 
         ])
+
+        
 // kaboom event listeners (key, funciton)
         onKeyPress("enter", () => {
-            go("characterMovement")
-        })
+            go("characterMovement");
+        });
 
         message.onStateEnter("flash-up", async () =>{
             // tweening: a component that allows you to gradually change the value from x to y

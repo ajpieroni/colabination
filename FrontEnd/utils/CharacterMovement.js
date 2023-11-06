@@ -1,29 +1,30 @@
 // import { settings } from "./settings.js"
 class CharacterMovement {
-  
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
   music = null;
   constructor() {
     this.level = null;
+    localStorage.setItem("soundTogg",1)
+
     // initailize music
   }
 
   display() {
-    let volumeSetting = localStorage.getItem('soundTogg') ? parseFloat(localStorage.getItem('soundTogg')) : 1;
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
+      console.log("here's volume setting", volumeSetting)
     //! Level Schema
     // stop("soundtrack");
     this.music = play("soundtrack", {
-    volume: volumeSetting,
-    loop: true,
+      volume: volumeSetting,
+      loop: true,
 
-
-    // detune: soundSettings.detune,
-  });
-  // console.log("here are sound settings: ", soundSettings);
-  // console.log("here is music settings: ", this.music.volume);
-
-
+      // detune: soundSettings.detune,
+    });
+    // console.log("here are sound settings: ", soundSettings);
+    // console.log("here is music settings: ", this.music.volume);
 
     const block_size = 32;
 
@@ -118,13 +119,8 @@ class CharacterMovement {
 
     var level = addLevel(map, level_config);
   }
-// !TODO: remove
+
   play() {
-          // !todo: remove
-    // let testValue = "colabROCKS"
-    // console.log("the original tv: ", testValue);
-
-
     // ! Game Objects
     const block_size = 64;
 
@@ -194,7 +190,7 @@ class CharacterMovement {
       body({ isStatic: true }),
       pos(470, 260),
       z(0),
-      "craftingTable",
+      "leatherTable",
       { access: false },
     ]);
 
@@ -251,7 +247,96 @@ class CharacterMovement {
       "printer",
       { access: false },
     ]);
+    //loading items
+    let hasSavedItems = [];
+
+    let hasSavedTools = [];
+
+    function fetchUserItems(username) {
+      return new Promise((resolve, reject) => {
+        fetch(`http://localhost:8081/user_items?username=${username}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const itemNames = data.items; // Access the items property
+
+            itemNames.forEach((itemName) => {
+              const savedItem = add([
+                // rect(item.width, item.height) ,
+                pos(0, 0),
+                z(0),
+                // color(item.color.r, item.color.g, item.color.b),
+                sprite(`${itemName}`),
+                // rect(10,10),
+                // sprite(`${image}`),
+                scale(1.5),
+                area(),
+                // z(11),
+                "material",
+                {
+                  itemKey: itemName,
+                },
+              ]);
+              // console.log(`itemNames values: ${itemName}`);
+              hasSavedItems.push(itemName);
+              vendingKeys.push(savedItem.itemKey);
+              vendingContents.push(savedItem);
+              // console.log(`pushed`);
+            });
+            resolve(itemNames);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    }
+
+    fetchUserItems("cats")
+      .then((itemNames) => {
+        console.log(itemNames);
+      })
+      .catch((error) => {
+        console.error("Error fetching user items:", error);
+      });
+    // load in tools
+    function fetchUserTools(username) {
+      return new Promise((resolve, reject) => {
+        fetch(`http://localhost:8081/user_tools?username=${username}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const toolNames = data.items; // Access the items property
+
+            toolNames.forEach((toolName) => {
+              // console.log(`toolNames values: ${toolName}`);
+              hasSavedTools.push(toolName);
+              // console.log(`pushed`);
+            });
+            resolve(toolNames);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    }
+    fetchUserTools("cats")
+      .then((itemTools) => {
+        console.log(itemTools);
+      })
+      .catch((error) => {
+        console.error("Error fetching user items:", error);
+      });
+
     // !Materials
+    let nearCraftingTable = false;
     let currentIndex = 0;
     const items = {
       scissors: {
@@ -267,14 +352,9 @@ class CharacterMovement {
         initialPos: { x: 280, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
-      // wood: {
-      //     spriteName: 'wood',
-      //     alertSprite: 'woodAlert',
-      //     initialPos: { x:200, y: 200 },
-      //     hasFound: false,
-      //     alertBox: null
-      // },
+
       yarn: {
         spriteName: "yarn",
         alertSprite: "yarnAlert",
@@ -289,6 +369,7 @@ class CharacterMovement {
         initialPos: { x: 310, y: 300 },
         hasFound: false,
         alertBox: null,
+        // onTable: false
       },
     };
 
@@ -300,6 +381,7 @@ class CharacterMovement {
           sprite(item.alertSprite),
           pos(center().x - 100, 20),
           scale(0.15),
+          z(10),
           "alert",
           // pos(item.initialPos.x, item.initialPos.y),
         ]);
@@ -325,7 +407,7 @@ class CharacterMovement {
     // add creates game object to be displayed on the screen
     // add function returns game objects, can store in const or var
 
-    let SPEED = 300;
+    let SPEED = 500;
 
     const player = add([
       sprite("characterSprite"),
@@ -524,15 +606,224 @@ class CharacterMovement {
         // cricut.buildNoBlueprint = true;
       }
     }
+
+    // !Crafting Function: Paper Trail
+    let isCraftingVisible = false;
+    async function showContainer(tableItems) {
+      isCraftingVisible = true;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      let ingredients = tableItems;
+      console.log(ingredients);
+      add([
+        rect(725, 550),
+        pos(150, 125),
+        z(50),
+        "craft-container",
+        "craftPop",
+      ]);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      let currentx = 400;
+      let currenty = 300;
+      if (ingredients.length == 3) {
+        currentx = currentx - 125;
+      }
+      add([
+        text(`You possess ${ingredients.length} items:`),
+        pos(415, 175),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+      for (let index = 0; index < ingredients.length; index++) {
+        await new Promise((resolve) => setTimeout(resolve, 750));
+
+        const trailCircle = add([
+          circle(64),
+          pos(currentx + 40, currenty + 35),
+          z(52),
+          color(228, 228, 228),
+          "crafting",
+        ]);
+        play("bubble");
+        const trailItem = add([
+          // rect(item.width, item.height) ,
+          pos(currentx, currenty),
+          z(100),
+          // color(item.color.r, item.color.g, item.color.b),
+          "crafting",
+          // !TODO: Make sprite image dynamic
+          sprite(`${ingredients[index]}`),
+          // rect(10,10),
+          // sprite(`${image}`),
+          scale(1.5),
+          // z(11),
+          "material",
+          {
+            itemKey: ingredients[index],
+          },
+        ]);
+        currentx += 200;
+      }
+      let result = {};
+      let dubious = true;
+
+      if (tableItems.includes("hammer") && tableItems.includes("paper")) {
+        let madeItemKey = "wood";
+        result.itemKey = madeItemKey;
+        dubious = true;
+      } else {
+        let madeItemKey = "trash";
+        result.itemKey = madeItemKey;
+        dubious = false;
+      }
+
+      // console.log("dub", dubious);
+      let message = dubious
+        ? "Congratulations! You can make something with these items."
+        : "That's definitely creative... let's see what happens!";
+
+      console.log("result item key", result.itemKey);
+      add([
+        text(`${message}`),
+        pos(215, 525 - 100 + 50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+      // add([
+      //   text(`Would you like to proceed?`),
+      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
+      //   z(51),
+      //   color(0, 0, 0),
+      //   scale(0.5),
+      //   "crafting",
+      // ]);
+      // *Craft Button
+      const craftButton = add([
+        rect(150, 50),
+        pos(400 + 50, 600),
+        z(52),
+        color(228, 228, 228),
+        "crafting",
+      ]);
+      add([
+        text("Make!"),
+        pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+        z(53),
+        color(0, 0, 0), // color of the text,
+        scale(0.5),
+        "crafting",
+      ]);
+      // Craft Button Flash
+      let isBright = true;
+      setInterval(() => {
+        if (isBright) {
+          craftButton.color = rgb(228, 228, 228); // less bright color
+        } else {
+          craftButton.color = rgb(80, 80, 80); // original color
+        }
+        isBright = !isBright;
+      }, 250); // the button color will toggle every 500ms
+      // !TODO: dynamic
+      // let result = "wood";
+
+      onKeyPress("enter", () => {
+        if (tableItems.length >= 2) {
+          madeCraft(result);
+
+          async function madeCraft() {
+            destroyAll("crafting");
+            add([
+              text(`You made ${result.itemKey}!`),
+              pos(440 + 40 + 25 - 50, 615), // adjust as necessary to position the text on the button
+              z(53),
+              color(0, 0, 0), // color of the text,
+              scale(0.5),
+              "crafting",
+            ]);
+
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            play("bubble");
+
+            const trailCircle = add([
+              circle(64),
+              pos(440 + 40 + 25 + 25, 135 + 100),
+              z(52),
+              color(152, 251, 152),
+              "crafting",
+            ]);
+            const madeItem = add([
+              // rect(item.width, item.height) ,
+              pos(
+                440 + 40 + 25 + 25 - 25 - 5 - 5 - 5,
+                135 + 100 + 25 - 50 - 10
+              ),
+              z(100),
+              // color(item.color.r, item.color.g, item.color.b),
+              "crafting",
+              sprite(`${result.itemKey}`),
+              // rect(10,10),
+              // sprite(`${image}`),
+              scale(1.5),
+              area(),
+              // z(11),
+              "madeItem",
+              {
+                itemKey: result.itemKey,
+              },
+            ]);
+            // console.log("here result", result.itemKey);
+            // updatePocketVending(madeItem, inPocket);
+            // console.log("here venidng", vendingContents);
+            // console.log(
+            //   "here venidng contains",
+            //   !vendingContents.includes(madeItem)
+            // );
+
+            if (
+              !vendingContents.includes(madeItem.itemKey) &&
+              !vendingKeys.includes(madeItem.itemKey)
+            ) {
+              vendingContents.push(madeItem);
+              vendingKeys.push(madeItem.itemKey);
+            }
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            exitCraft();
+
+            play("bubble");
+            let item = vendingContents[length - 1];
+            // console.log("here's item", item.itemKey)
+            updatePocketVending(result, inPocket);
+
+            // updatePocket(madeItem, inPocket);
+            madeItem.use(body({ isStatic: true }));
+            // atCraftingTable = false;
+          }
+          async function exitCraft() {
+            clearTable();
+            destroyAll("crafting");
+            destroyAll("madeItem");
+            destroyAll("craftPop");
+            isCraftingVisible = false;
+          }
+        }
+      });
+
+      //  Would you like to proceed?
+
+      // setTimeout(3000);
+    }
     //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
     onKeyPress("b", () => {
       playerCraftsScissorsPaper();
-      // console.log("plays sound?");
+      console.log("plays sound?");
       // getSound("bubble");
-      if (volumeSetting){
-        play("bubble");
-
-      }
+      play("bubble");
     });
 
     onKeyPress("enter", () => {
@@ -663,6 +954,15 @@ class CharacterMovement {
       cdrawer.access = false;
     });
 
+    onCollideEnd("player", "craftingTable", () => {
+      //end crafting access
+      atCraftingTable = false;
+    });
+
+    onCollideEnd("player", "cricut", () => {
+      //end crafting access
+      cricut.access = false;
+    });
     //*isColliding
     player.onUpdate(() => {
       if (player.isColliding("cricut")) {
@@ -676,10 +976,131 @@ class CharacterMovement {
       }
     });
 
+    //handle saving data and uploading to DB
+    function handleSavingData() {
+      //hard coded items and tools, should be dynamic at some point
+      console.log("vending keys", vendingKeys);
+      let currItems = [];
+      let currTools = [];
+
+      for (let i = 0; i < vendingKeys.length; i++) {
+        if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
+          currTools.push(vendingKeys[i]);
+        } else {
+          currItems.push(vendingKeys[i]);
+        }
+      }
+      // let currItems = vendingKeys;
+      // * will be renamed as machines
+      // let currTools = ["hammer"]
+      console.log(currItems, "currItems");
+      console.log(currTools, "currTools");
+
+      const username = "cats";
+
+      for (let i = 0; i < currItems.length; i++) {
+        const currItem = currItems[i];
+        // console.log(`hasSaved: ${hasSavedItems}`);
+        if (!hasSavedItems.includes(currItems[i])) {
+          {
+            console.log(`Attempting to save ${currItem}`);
+
+            fetch("http://localhost:8081/user_items", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: currItem, username: username }),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  return Promise.reject("Failed to save items");
+                }
+                console.log(`Item ${currItem} saved!`, response);
+              })
+              .catch((error) => {
+                console.error("Error saving items:", error);
+              });
+            hasSavedItems.push(currItem);
+          }
+        } else {
+          console.log(`You've already saved ${currItem}`);
+        }
+      }
+      for (let j = 0; j < currTools.length; j++) {
+        const currTool = currTools[j];
+        // console.log(`hasSaved: ${hasSavedTools}`);
+
+        // if hasn't saved
+        if (!hasSavedTools.includes(currTools[j])) {
+          console.log(`Attempting to save ${currTool}`);
+          fetch("http://localhost:8081/user_tools", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: currTool, username: username }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                return Promise.reject("Failed to save items");
+              }
+              console.log(`Tool ${currTool} saved!`, response);
+            })
+            .catch((error) => {
+              console.error("Error saving items:", error);
+            });
+          hasSavedTools.push(currTool);
+        } else {
+          console.log(`You've already saved ${currTool}`);
+        }
+      }
+    }
+    // saving for now :D
+    // onKeyPress("z", () => {
+    //   handleSavingData();
+    // });
+    let menuOpen = false;
+    onKeyPress("z", () => {
+      if (!menuOpen) {
+        menuOpen = true;
+        SPEED = 0;
+        const saveButton = add([
+          text("Press Enter to Save!"),
+          pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+          z(53),
+          color(0, 0, 0), // color of the text,
+          scale(0.5),
+          "saving",
+        ]);
+        // Craft Button Flash
+        let isBright = true;
+        setInterval(() => {
+          if (isBright) {
+            saveButton.color = rgb(228, 228, 228); // less bright color
+          } else {
+            saveButton.color = rgb(80, 80, 80); // original color
+          }
+          isBright = !isBright;
+        }, 250);
+      }
+    });
+    onKeyPress("enter", () => {
+      if (menuOpen) {
+        handleSavingData();
+        SPEED = 300;
+        menuOpen = false;
+        destroyAll("saving");
+      }
+    });
+
     // !INVENTORY
 
     let isPopupVisible = false;
+    // let vendingContents = [];
     let vendingContents = [];
+    let vendingKeys = [];
+    let vendingSet = new Set(vendingContents);
     let inPocket = [];
     let vendingSelect = 0;
     // Character pocket
@@ -726,32 +1147,33 @@ class CharacterMovement {
       onKeyPress("left", () => {
         if (isPopupVisible) {
           if (vendingSelect > 0) {
+            // console.log(vendingSelect);
             vendingSelect--;
             destroyAll("selected");
             let gridX = vendingSelect % 3;
             let gridY = Math.floor(vendingSelect / 3);
             const selected = add([
               rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
+              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+              z(11),
               color(255, 255, 255),
               "selected",
             ]);
           }
         }
       });
-
       onKeyPress("right", () => {
         if (isPopupVisible) {
           if (vendingSelect < vendingContents.length - 1) {
             vendingSelect++;
+            // console.log(vendingSelect);
             destroyAll("selected");
             let gridX = vendingSelect % 3;
             let gridY = Math.floor(vendingSelect / 3);
             const selected = add([
               rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
+              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+              z(11),
               color(255, 255, 255),
               "selected",
             ]);
@@ -762,13 +1184,14 @@ class CharacterMovement {
         if (isPopupVisible) {
           if (vendingSelect + 3 < vendingContents.length) {
             vendingSelect += 3;
+            // console.log(vendingSelect);
             destroyAll("selected");
             let gridX = vendingSelect % 3;
             let gridY = Math.floor(vendingSelect / 3);
             const selected = add([
               rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
+              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+              z(11),
               color(255, 255, 255),
               "selected",
             ]);
@@ -779,13 +1202,14 @@ class CharacterMovement {
         if (isPopupVisible) {
           if (vendingSelect - 3 >= 0) {
             vendingSelect -= 3;
+            // console.log(vendingSelect);
             destroyAll("selected");
             let gridX = vendingSelect % 3;
             let gridY = Math.floor(vendingSelect / 3);
             const selected = add([
               rect(70, 70),
-              pos(startX + gridX * 110, startY + gridY * 96),
-              z(10),
+              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+              z(11),
               color(255, 255, 255),
               "selected",
             ]);
@@ -795,177 +1219,302 @@ class CharacterMovement {
       onKeyPress("enter", () => {
         if (isPopupVisible && vendingContents.length > 0) {
           let item = vendingContents[vendingSelect];
-          // play("bubble");
           updatePocketVending(item, inPocket);
         }
       });
-      for (let i = 0; i < contents.length; i++) {
-        const item = contents[i];
-        const itemKey = item.itemKey;
-        // starts a new line
 
-        if (currRow === 3) {
-          currentY += item.height + 50;
-          currentX = startX;
-          currRow = 0;
-        }
-
-        const vendingItem = add([
-          // rect(item.width, item.height) ,
-          pos(currentX, currentY),
+      function showVendingContents(contents) {
+        const popup = add([
+          rect(500, 600),
+          pos(475 - 150, 125 + 25),
           z(11),
-          // color(item.color.r, item.color.g, item.color.b),
+          color(105, 105, 105),
+          outline(4),
+          scale(0.75),
           "vending",
-          // !TODO: Make sprite image dynamic
-          sprite(`${item.itemKey}`),
-          // rect(10,10),
-          // sprite(`${image}`),
-          scale(1.5),
-          z(11),
-          "material",
-          {
-            itemKey: itemKey,
-          },
         ]);
 
-        onClick(() => {
-          // Check if the mouse click occurred within the bounds of itemEntity
-          if (isClicked(vendingItem)) {
-            updatePocketVending(vendingItem, inPocket);
+        const startX = popup.pos.x + 42.5;
+        const startY = popup.pos.y + 30;
+        let currentX = startX;
+        let currentY = startY;
+        let currRow = 0;
+        if (vendingContents.length > 0) {
+          const selected = add([
+            rect(70, 70),
+            pos(startX, startY),
+            z(11),
+            color(255, 255, 255),
+            "selected",
+          ]);
+        }
+        for (let i = 0; i < contents.length; i++) {
+          const item = contents[i];
+          const itemKey = item.itemKey;
+          // starts a new line
+
+          if (currRow === 3) {
+            currentY += item.height + 50;
+            currentX = startX;
+            currRow = 0;
           }
-        });
-        console.log(currRow);
-        currRow++;
-        currentX += item.width + 50;
-      }
 
-      isPopupVisible = true;
-    }
-
-    function getDistance(x1, y1, x2, y2) {
-      let x = x2 - x1;
-      let y = y2 - y1;
-
-      return Math.sqrt(x * x + y * y);
-    }
-    // Function to check if the mouse click occurred within the bounds of an entity
-    function isClicked(item) {
-      let distance = getDistance(
-        mousePos().x,
-        mousePos().y,
-        item.pos.x,
-        item.pos.y
-      );
-      return distance <= 55;
-    }
-
-    let itemsInPocket = 0;
-
-    function updatePocketVending(material, inPocket) {
-      if (itemsInPocket < 2) {
-        if (itemsInPocket === 0) {
-          play("bubble");
-          const item1 = add([
-            // rect(material.width, material.height) ,
-            pos(880, 700),
+          const vendingItem = add([
+            // rect(item.width, item.height) ,
+            pos(currentX, currentY),
             z(11),
-            sprite(`${material.itemKey}`),
-            // color(material.color.r, material.color.g, material.color.b),
+            // color(item.color.r, item.color.g, item.color.b),
+            "vending",
+            // !TODO: Make sprite image dynamic
+            sprite(`${item.itemKey}`),
+            // rect(10,10),
+            // sprite(`${image}`),
             scale(1.5),
+            z(12),
             "material",
+            {
+              itemKey: itemKey,
+            },
           ]);
-          inPocket.push(item1);
-        } else {
-          play("bubble");
-          const item2 = add([
-            pos(880, 775),
-            z(11),
-            sprite(`${material.itemKey}`),
-            // color(material.color.r, material.color.g, material.color.b),
-            scale(1.5),
-            "material",
-          ]);
-          inPocket.push(item2);
-        }
-        itemsInPocket++;
-      } else {
-        // shake(5);
-        alert("Remove items from pocket to select from vending machine");
-      }
-    }
 
-    function updatePocket(material, inPocket) {
-      if (itemsInPocket < 2) {
-        if (itemsInPocket === 0) {
-          console.log("one");
-          // pos(855,700)
-          material.moveTo(880, 725);
-          material.scaleTo(1);
-        } else {
-          console.log("two");
-          // moves to spot 2
-          material.moveTo(880, 775);
+          onClick(() => {
+            // Check if the mouse click occurred within the bounds of itemEntity
+            if (isClicked(vendingItem)) {
+              updatePocketVending(vendingItem, inPocket);
+            }
+          });
+          // console.log(currRow);
+          currRow++;
+          currentX += item.width + 50;
         }
-        itemsInPocket++;
-        inPocket.push(material);
-      } else {
-        destroy(material);
-      }
-    }
 
-    // backpack functionality
-    onKeyPress("v", () => {
-      if (isPopupVisible) {
-        destroyAll("vending");
-        destroyAll("selected");
-        isPopupVisible = false;
-        SPEED = 300;
-      } else {
-        showVendingContents(vendingContents);
         isPopupVisible = true;
-        SPEED = 0;
-        vendingSelect = 0;
       }
-    });
 
-    player.onCollide("material", (materialEntity) => {
-      if (!vendingContents.includes(materialEntity)) {
-        vendingContents.push(materialEntity);
+      function getDistance(x1, y1, x2, y2) {
+        let x = x2 - x1;
+        let y = y2 - y1;
+
+        return Math.sqrt(x * x + y * y);
       }
-      play("bubble");
+      // Function to check if the mouse click occurred within the bounds of an entity
+      function isClicked(item) {
+        let distance = getDistance(
+          mousePos().x,
+          mousePos().y,
+          item.pos.x,
+          item.pos.y
+        );
+        return distance <= 55;
+      }
 
-      updatePocket(materialEntity, inPocket);
-      materialEntity.use(body({ isStatic: true }));
-    });
+      let itemsInPocket = 0;
 
-    onKeyPress("q", () => {
-      if (itemsInPocket !== 0) {
+      function updatePocketVending(material, inPocket) {
+        if (itemsInPocket < 2) {
+          if (itemsInPocket === 0) {
+            play("bubble");
+            // console.log(`Incoming material: ${material}, ${material.itemKey}`);
+            const item1 = add([
+              pos(880, 700),
+              z(11),
+              sprite(`${material.itemKey}`),
+              scale(1),
+              "material",
+              { image: material.itemKey },
+              { itemKey: material.itemKey },
+            ]);
+            console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
+            inPocket.push(item1);
+          } else {
+            play("bubble");
+            const item2 = add([
+              pos(880, 775),
+              z(11),
+              z(11),
+              sprite(`${material.itemKey}`),
+              scale(1),
+              "material",
+              { image: material.itemKey },
+              { itemKey: material.itemKey },
+            ]);
+            inPocket.push(item2);
+          }
+          itemsInPocket++;
+        } else {
+          // shake(5);
+          alert("Remove items from pocket to select from vending machine");
+        }
+      }
+
+      function updatePocket(material, inPocket) {
+        if (itemsInPocket < 2) {
+          if (itemsInPocket === 0) {
+            // console.log("one");
+            // pos(855,700)
+            material.moveTo(880, 725);
+            material.scaleTo(1);
+          } else {
+            // console.log("two");
+            // moves to spot 2
+            material.moveTo(880, 775);
+          }
+          itemsInPocket++;
+          inPocket.push(material);
+        } else {
+          destroy(material);
+        }
+      }
+
+      // backpack functionality
+      onKeyPress("v", () => {
+        if (isPopupVisible) {
+          destroyAll("vending");
+          destroyAll("selected");
+          isPopupVisible = false;
+          SPEED = 300;
+        } else {
+          showVendingContents(vendingContents);
+          isPopupVisible = true;
+          SPEED = 0;
+          vendingSelect = 0;
+        }
+      });
+
+      player.onCollide("material", (materialEntity) => {
+        // console.log(`Here's the current vending keys: ${vendingKeys}`)
+        // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
+        if (
+          !vendingContents.includes(materialEntity) &&
+          !vendingKeys.includes(materialEntity.itemKey)
+        ) {
+          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+          vendingContents.push(materialEntity);
+          vendingKeys.push(materialEntity.itemKey);
+        }
         play("bubble");
-        itemsInPocket--;
-        let item = inPocket.pop();
-        console.log("here is popped", item);
-        console.log("key?", item.itemKey);
-        destroy(item);
-      }
-    });
-   
 
-    // ! Load settings screen
+        updatePocket(materialEntity, inPocket);
+        materialEntity.use(body({ isStatic: true }));
+      });
+
+      let atCraftingTable = false;
+      let table_x = 700;
+      let table_y = 350;
+      let onItemsOnTable = 0;
+      let tableItems = [];
+      function clearTable() {
+        tableItems.length = 0;
+        destroyAll("onTable");
+        destroyAll("craft");
+        table_x = 700;
+        table_y = 300;
+        onItemsOnTable = 0;
+        tableItems = [];
+      }
+
+      // Crafting logic:
+      // !TODO: Remove hardcode after Ollie's code
+      let isCraftable = false;
+
+      // prompting trail
+
+      // Dropping item on table
+      onKeyPress("q", () => {
+        // !TODO: set max items on table
+        if (tableItems.length == 0) {
+          table_x = 700;
+          table_y = 350;
+        }
+
+        if (atCraftingTable && onItemsOnTable >= 3) {
+          alert("There are too many items on the table; try crafting!");
+          // checkCraftable();
+        } else {
+          console.log(
+            "check",
+            atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
+          );
+          if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
+            itemsInPocket--;
+
+            let item = inPocket.pop();
+            // console.log("here's item:", item);
+            // console.log("here item key", item.itemKey);
+            item.use("onTable");
+
+            item.moveTo(table_x, table_y);
+            tableItems[onItemsOnTable] = item.itemKey;
+            console.log(tableItems);
+            table_y += 50;
+            onItemsOnTable++;
+            checkCraftable(tableItems);
+          } else {
+            checkCraftable();
+
+            if (itemsInPocket !== 0) {
+              play("bubble");
+              itemsInPocket--;
+              let item = inPocket.pop();
+              console.log("here is popped", item);
+              console.log("key?", item.itemKey);
+
+              destroy(item);
+            }
+          }
+        }
+      });
+
+      function checkCraftable() {
+        if (
+          atCraftingTable &&
+          // tableItems.includes("paper") &&
+          // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
+          tableItems.length >= 2
+        ) {
+          isCraftable = true;
+          if (isCraftable) {
+            // console.log("hit");
+            add([
+              "craft",
+              text("Craft?", {
+                // optional object
+                size: 36,
+                outline: 4,
+                color: (0, 0, 0),
+                // can specify font here,
+              }),
+              area(),
+              anchor("center"),
+              pos(500, 500),
+              z(20),
+
+              // scale(.5)
+            ]);
+          }
+        }
+        if (!atCraftingTable) {
+          destroyAll("craft");
+        }
+      }
+
+      // Crafting Collisions
+      onCollide("player", "craftingTable", (s, w) => {
+        atCraftingTable = true;
+        checkCraftable();
+      });
+      onCollideEnd("player", "craftingTable", (s, w) => {
+        atCraftingTable = false;
+        checkCraftable();
+      });
+    }
     onKeyPress("m", () => {
       this.music.paused = true;
       
       go("settings");
     });
-  // return testValue +1;
+
   }
   
-
-
-
-  // ------------- MENU DISPLAY ------------------------------------------------------------------
-  // displaySettingsMenu;
-  
-
 }
-
 export const characterMovement = new CharacterMovement();
