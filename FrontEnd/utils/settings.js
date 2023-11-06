@@ -314,16 +314,16 @@ class Settings {
 
     add([
       text("Controls"),
-      pos((1024 - 140) / 2, 225),
+      pos((1024 - 160) / 2, 225),
       color(70, 70, 70),
       area(),
       z(2),
     ]);
 
     add([
-      text("Move -------- WASD/Arrow Keys", {
+      text("Move ---------- WASD/Arrow Keys", {
         size: 24,
-        width: 450,
+        width: 460,
       }),
       pos((1024 - 450) / 2, 300),
       color(70, 70, 70),
@@ -331,21 +331,42 @@ class Settings {
       z(2),
     ]);
     add([
-      text("Menu ---------------------- M", {
+      text("Menu ------------------------ M", {
         size: 24,
-        width: 450,
+        width: 460,
       }),
       pos((1024 - 450) / 2, 350),
       color(70, 70, 70),
       area(),
       z(2),
     ]);
-
+    add([
+      text("Interact with Items ----- Enter", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 400),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Menu ------------------------ M", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 450),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
     // text("Move            WASD/Arrow Keys", {
     //   size: 18, // 48 pixels tall
     //   // width: 320, // it'll wrap to next line when width exceeds this value
     //   // font: "sans-serif", // specify any font you loaded or browser built-in
     // })
+
+
     onKeyPress("m", () => {
       go("settings");
     });
