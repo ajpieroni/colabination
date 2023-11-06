@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   resources :users
   
+  post '/signup', to: 'users#create', defaults: { format: :json }
+  post '/login', to: 'sessions#create', defaults: { format: :json }
+  
   resources :tools do
     resources :items, only: [:create, :update]
   end

@@ -28,6 +28,7 @@ puts 'seeding'
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
 
+    trash = Item.create(name: 'trash', description: 'A piece of trash', item_type: 'material', rarity: 1, isFinal: true)
 
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
