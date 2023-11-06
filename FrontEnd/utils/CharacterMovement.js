@@ -12,7 +12,6 @@ class CharacterMovement {
   display(soundSettings) {
     //! Level Schema
     // stop("soundtrack");
-    console.log("here is new tv", this.testValue);
     console.log("here are sound settings: ", soundSettings);
     this.music = play("soundtrack", {
     volume: soundSettings.volume,

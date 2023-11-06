@@ -468,8 +468,8 @@ class Settings {
     // *SHOW IN MEETING
     let volTogg = this.getGlobalVolume()
     // let volTogg = 100;
-    console.log("here's voltogg:", volTogg)
-    console.log("volTogg value:", volTogg, "type:", typeof volTogg);
+    // console.log("here's voltogg:", volTogg)
+    // console.log("volTogg value:", volTogg, "type:", typeof volTogg);
 
     
     // console.log("here's val: ", val+100);

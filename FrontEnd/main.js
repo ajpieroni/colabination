@@ -14,7 +14,11 @@ kaboom({
 
 // let testValue = settings.changeSettings();
 // let soundSettings = settings.changeSettings();
+localStorage.setItem('soundTog', 1);
+console.log('Before getting soundTog:', localStorage.getItem('soundTog'));
 let volumeSetting = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTog')) : 1;
+console.log('After getting soundTog, volumeSetting is:', volumeSetting);
+
 
 let soundSettings = {volume: volumeSetting, loop: true};
 
@@ -28,6 +32,7 @@ const scenes = {
         // add takes in an array of components
         add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
+        
         
     },
     characterMovement: () =>{
