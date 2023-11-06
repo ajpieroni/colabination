@@ -14,7 +14,9 @@ kaboom({
 
 // let testValue = settings.changeSettings();
 // let soundSettings = settings.changeSettings();
-let soundSettings = {volume: 1, loop: true};
+let volumeSetting = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTog')) : 1;
+
+let soundSettings = {volume: volumeSetting, loop: true};
 
 console.log("soundsettings in main", soundSettings);
 

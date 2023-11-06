@@ -1,18 +1,28 @@
 class Settings {
   constructor() {
     this.testValue = 0;
-    this.soundTog = 1;
+    // this.soundTog = 1;
+    this.soundTog = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTog')) : 1;
   }
   getGlobalVolume(){
     return this.soundTog;
   }
   setGlobalVolume(volume){
     this.soundTog = volume;
+    localStorage.setItem('soundTog', volume);
     this.changeSettings(this.soundTog)
   }
 
   // !SETTINGS DISPLAY
   displaySettingsMenu() {
+    let soundtext = null;
+
+    if(this.soundTog == 1){
+      soundtext = "Sounds:on"
+    }
+    if(this.soundTog == 0){
+      soundtext = "Sounds:off"
+    }
     // this.soundTog = 0.5;
 
     let arrowX = (1024 - 240) / 2;
@@ -109,7 +119,7 @@ class Settings {
     ]);
 
     const soundsBtn = add([
-      text("Sounds:on"),
+      text(`${soundtext}`),
       pos((1024 - 195) / 2, 375),
       color(70, 70, 70),
       "savebutton",
