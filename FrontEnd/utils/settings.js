@@ -468,7 +468,7 @@ class Settings {
   changeSettings = () => {
     // *SHOW IN MEETING
     let volTogg = this.getGlobalVolume()
-    console.log("here is gotten volume", volTogg);
+    // console.log("here is gotten volume", volTogg);
     localStorage.setItem('soundTogg', volTogg);
   
     let music = {
@@ -476,7 +476,7 @@ class Settings {
       loop: true,
   }
 
-  console.log("here's music:", music)
+  // console.log("here's music:", music)
 
   return music;
 
