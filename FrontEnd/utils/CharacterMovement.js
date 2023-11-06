@@ -529,7 +529,10 @@ class CharacterMovement {
       playerCraftsScissorsPaper();
       // console.log("plays sound?");
       // getSound("bubble");
-      play("bubble");
+      if (volumeSetting){
+        play("bubble");
+
+      }
     });
 
     onKeyPress("enter", () => {
@@ -950,6 +953,7 @@ class CharacterMovement {
     // ! Load settings screen
     onKeyPress("m", () => {
       this.music.paused = true;
+      
       go("settings");
     });
   // return testValue +1;
