@@ -9,15 +9,21 @@ class CharacterMovement {
     // initailize music
   }
 
-  display(soundSettings) {
+  display() {
+    let volumeSetting = localStorage.getItem('soundTogg') ? parseFloat(localStorage.getItem('soundTogg')) : 1;
     //! Level Schema
     // stop("soundtrack");
-    console.log("here are sound settings: ", soundSettings);
     this.music = play("soundtrack", {
-    volume: soundSettings.volume,
-    loop: soundSettings.loop,
+    volume: volumeSetting,
+    loop: true,
+
+
     // detune: soundSettings.detune,
   });
+  // console.log("here are sound settings: ", soundSettings);
+  // console.log("here is music settings: ", this.music.volume);
+
+
 
     const block_size = 32;
 
@@ -113,10 +119,10 @@ class CharacterMovement {
     var level = addLevel(map, level_config);
   }
 // !TODO: remove
-  play(testValue) {
+  play() {
           // !todo: remove
     // let testValue = "colabROCKS"
-    console.log("the original tv: ", testValue);
+    // console.log("the original tv: ", testValue);
 
 
     // ! Game Objects
@@ -521,7 +527,7 @@ class CharacterMovement {
     //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
     onKeyPress("b", () => {
       playerCraftsScissorsPaper();
-      console.log("plays sound?");
+      // console.log("plays sound?");
       // getSound("bubble");
       play("bubble");
     });
@@ -946,7 +952,7 @@ class CharacterMovement {
       this.music.paused = true;
       go("settings");
     });
-  return testValue +1;
+  // return testValue +1;
   }
   
 

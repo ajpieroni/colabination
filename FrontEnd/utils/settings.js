@@ -2,15 +2,16 @@ class Settings {
   constructor() {
     this.testValue = 0;
     // this.soundTog = 1;
-    this.soundTog = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTog')) : 1;
+    this.soundTog = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTogg')) : 1;
   }
   getGlobalVolume(){
     return this.soundTog;
   }
   setGlobalVolume(volume){
     this.soundTog = volume;
-    localStorage.setItem('soundTog', volume);
-    this.changeSettings(this.soundTog)
+    localStorage.setItem('soundTogg', volume);
+    // console.log(`Sound set to ${volume}`)
+    // this.changeSettings();
   }
 
   // !SETTINGS DISPLAY
@@ -261,7 +262,7 @@ class Settings {
           soundsBtn.pos = vec2((1024 - 215) / 2, 375);
           this.soundTog = 0;
             // (this.audio.volume = this.soundTog);
-          console.log("sounds: ", this.soundTog);
+          // console.log("sounds: ", this.soundTog);
           // turning sounds off
           this.setGlobalVolume(0);
           this.changeSettings();
@@ -271,9 +272,9 @@ class Settings {
           volTogg = 1;
           soundsBtn.pos = vec2((1024 - 195) / 2, 375);
           this.soundTog = 1;
-          console.log("sounds: ", this.soundTog);
+          // console.log("sounds: ", this.soundTog);
           // turning sounds off
-          volTogg = 1;
+          // volTogg = 1;
           this.setGlobalVolume(1)
           // *add back voltogg 
           this.changeSettings();
@@ -467,13 +468,9 @@ class Settings {
   changeSettings = () => {
     // *SHOW IN MEETING
     let volTogg = this.getGlobalVolume()
-    // let volTogg = 100;
-    // console.log("here's voltogg:", volTogg)
-    // console.log("volTogg value:", volTogg, "type:", typeof volTogg);
-
-    
-    // console.log("here's val: ", val+100);
-    // let 
+    console.log("here is gotten volume", volTogg);
+    localStorage.setItem('soundTogg', volTogg);
+  
     let music = {
       volume: volTogg,
       loop: true,
