@@ -302,9 +302,9 @@ class Settings {
     add([sprite("coolBG"), scale(1.4)]);
 
     add([
-      rect(600, 400),
+      rect(600, 550),
       // z(1),
-      pos((1024 - 600) / 2, 200),
+      pos((1024 - 600) / 2, 175),
       color(255, 255, 255),
       opacity(0.5),
       outline(6, rgb(255, 255, 255)),
@@ -314,38 +314,57 @@ class Settings {
 
     add([
       text("Controls"),
-      pos((1024 - 160) / 2, 225),
+      pos((1024 - 170) / 2, 210),
       color(70, 70, 70),
       area(),
       z(2),
     ]);
 
     add([
+      text("Keyboard",{
+        size: 28
+      }),
+      pos((1024 - 140) / 2, 275),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
       text("Move ---------- WASD/Arrow Keys", {
         size: 24,
         width: 460,
       }),
-      pos((1024 - 450) / 2, 300),
+      pos((1024 - 450) / 2, 310),
       color(70, 70, 70),
       area(),
       z(2),
     ]);
     add([
-      text("Menu ------------------------ M", {
+      text("Select ------------------ Enter", {
         size: 24,
         width: 460,
       }),
-      pos((1024 - 450) / 2, 350),
+      pos((1024 - 450) / 2, 345),
       color(70, 70, 70),
       area(),
       z(2),
     ]);
     add([
-      text("Interact with Items ----- Enter", {
+      text("Back Pack ------------------- B", {
         size: 24,
         width: 460,
       }),
-      pos((1024 - 450) / 2, 400),
+      pos((1024 - 450) / 2, 380),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Drop ------------------------ Q", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 415),
       color(70, 70, 70),
       area(),
       z(2),
@@ -360,6 +379,68 @@ class Settings {
       area(),
       z(2),
     ]);
+
+
+    add([
+      text("Game Cabinet",{
+        size: 28
+      }),
+      pos((1024 - 160) / 2, 500),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Move ----------------- Joystick", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 535),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Select ---------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 570),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Back Pack ------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 605),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Drop ------------------------ B", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 640),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    add([
+      text("Menu --------------------- Menu", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 675),
+      color(70, 70, 70),
+      area(),
+      z(2),
+    ]);
+    
     // text("Move            WASD/Arrow Keys", {
     //   size: 18, // 48 pixels tall
     //   // width: 320, // it'll wrap to next line when width exceeds this value
