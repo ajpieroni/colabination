@@ -21,7 +21,7 @@ puts 'seeding'
     thread = Item.create(name: 'thread', description: 'A cloth string', item_type: 'material', rarity: 1)
     metal = Item.create(name: 'metal', description: 'A substance of shininess and conductivity', item_type: 'material', rarity: 1)
     plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1)
-    nothing = Item.create(name: ' ', description: ' ', item_type: 'nothing', rarity: 1)
+    nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1)
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1)
