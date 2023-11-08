@@ -615,11 +615,11 @@ class CharacterMovement {
             .then((response) => response.json())
             .then((item2data) => {
               console.log("Item 2:", item2data);
-              fetchCombination(toolId, item1data.id, item2data.id);
+              fetchCombination(toolId, item1data.id, item2data.id, handleCreation);
             })
             .catch((error) => console.error("Error fetching item 2:", error));
         } else {
-          fetchCombination(toolId, item1data.id, 6);
+          fetchCombination(toolId, item1data.id, 6, handleCreation);
         }
       })
       .catch((error) => console.error("Error fetching item 1:", error));
@@ -630,8 +630,9 @@ class CharacterMovement {
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
 
     }
+    let result = {};
 
-    function fetchCombination(toolId, item1Id, item2Id){
+    function fetchCombination(toolId, item1Id, item2Id, callback){
       fetch(`http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`)
       .then((response) => {
         if (!response.ok) {
@@ -641,7 +642,10 @@ class CharacterMovement {
       })
       .then((data) => {
         console.log('Combination result:', data);
-        
+        console.log(`${data.creation}`)
+        // dubious = true;
+      callback(data.creation);
+  
         
       })
       .catch((error) => {
@@ -649,6 +653,10 @@ class CharacterMovement {
       });
     }
 
+    function handleCreation(creation) {
+      result.itemKey = creation; 
+
+    }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
@@ -713,18 +721,9 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
-      let result = {};
+      // let result = {};
       let dubious = true;
 
-      if (tableItems.includes("hammer") && tableItems.includes("paper")) {
-        let madeItemKey = "wood";
-        result.itemKey = madeItemKey;
-        dubious = true;
-      } else {
-        let madeItemKey = "trash";
-        result.itemKey = madeItemKey;
-        dubious = false;
-      }
 
       // console.log("dub", dubious);
       let message = dubious
