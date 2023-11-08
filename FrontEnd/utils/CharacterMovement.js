@@ -598,6 +598,7 @@ class CharacterMovement {
       // !POSTING
       // *Hands are id=3, we will always use this for crafting table
       // let ingredients = tableItems;
+      let toolId  = 3;
       console.log(ingredients);
 
       let item1sprite = ingredients[0];
@@ -606,24 +607,46 @@ class CharacterMovement {
       console.log("item 2 sprite", item2sprite)
 
       fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
-        .then((response) => response.json())
-        .then((item1data) => {
-          console.log("Item 1:", item1data);
-          // If there is a second ingredient, make another fetch call for item2.
-          if (item2sprite) {
-            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
-              .then((response) => response.json())
-              .then((item2data) => {
-                console.log("Item 2:", item2data);
-              })
-              .catch((error) => console.error("Error fetching item 2:", error));
-          }
-        })
-        .catch((error) => console.error("Error fetching item 1:", error));
-
+      .then((response) => response.json())
+      .then((item1data) => {
+        console.log("Item 1:", item1data);
+        if (item2sprite !== "nothing") {
+          fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+            .then((response) => response.json())
+            .then((item2data) => {
+              console.log("Item 2:", item2data);
+              fetchCombination(toolId, item1data.id, item2data.id);
+            })
+            .catch((error) => console.error("Error fetching item 2:", error));
+        } else {
+          fetchCombination(toolId, item1data.id, 6);
+        }
+      })
+      .catch((error) => console.error("Error fetching item 1:", error));
+  
+      // fetchCombination(toolId, item1data, item2data)
       // http://localhost:8081/items/find_by_name/paper
       // http://localhost:8081/tools/find_by_name/scissors
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+
+    }
+
+    function fetchCombination(toolId, item1Id, item2Id){
+      fetch(`http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Combination result:', data);
+        
+        
+      })
+      .catch((error) => {
+        console.error('Error fetching combination:', error);
+      });
     }
 
     // !Crafting Function: Paper Trail
@@ -659,6 +682,7 @@ class CharacterMovement {
 
       console.log("here are ingredients");
       craftingTableBackend(ingredients);
+      
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
