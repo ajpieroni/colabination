@@ -594,11 +594,15 @@ class CharacterMovement {
       }
     }
 
-    function craftingTableBackend(ingredients) {
+    function craftingBackend(ingredients) {
       // !POSTING
       // *Hands are id=3, we will always use this for crafting table
+      let toolId;
       // let ingredients = tableItems;
-      let toolId  = 3;
+      if(atCraftingTable){
+        toolId  = 3;
+
+      }
       console.log(ingredients);
 
       let item1sprite = ingredients[0];
@@ -644,7 +648,7 @@ class CharacterMovement {
         console.log('Combination result:', data);
         console.log(`${data.creation}`)
         // dubious = true;
-      callback(data.creation);
+        callback(data.creation);
   
         
       })
@@ -654,7 +658,10 @@ class CharacterMovement {
     }
 
     function handleCreation(creation) {
-      result.itemKey = creation; 
+
+        result.itemKey = creation; 
+      
+   
 
     }
     // !Crafting Function: Paper Trail
@@ -689,7 +696,7 @@ class CharacterMovement {
       ]);
 
       console.log("here are ingredients");
-      craftingTableBackend(ingredients);
+      craftingBackend(ingredients);
       
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));

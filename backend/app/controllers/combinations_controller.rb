@@ -34,7 +34,7 @@ class CombinationsController < ApplicationController
       creationSwitch = Item.find(comboSwitch.creation.id)
       render json: {creation: creationSwitch.name, rarity: creationSwitch.rarity}
     else 
-      render json: {creation: "These items don't go together"}
+      render json: {creation: "trash"}
     end
   end
 
