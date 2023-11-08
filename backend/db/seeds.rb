@@ -27,6 +27,8 @@ puts 'seeding'
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1)
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
+    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
+    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
 
 
 # Creating tools
@@ -51,8 +53,13 @@ puts 'seeding'
     user1 = User.create(username:"cats", pin:1234)
 
 # Creating paper combos
+# !Paper combos: level 1
     Combination.create(tool: hammer, item1: paper, item2: paper, creation: wood)
+    Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
+    Combination.create(tool: hands, item1: paper, item2: thread, creation: kite)
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
+    # !Paper combos: level 2
+    Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
 
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)

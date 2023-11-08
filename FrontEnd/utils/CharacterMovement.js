@@ -342,9 +342,9 @@ class CharacterMovement {
         // onTable: false
       },
 
-      yarn: {
-        spriteName: "yarn",
-        alertSprite: "yarnAlert",
+      thread: {
+        spriteName: "thread",
+        alertSprite: "threadAlert",
 
         initialPos: { x: 330, y: 300 },
         hasFound: false,
@@ -1519,7 +1519,6 @@ class CharacterMovement {
       if (
         atCraftingTable &&
         // tableItems.includes("paper") &&
-        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
         tableItems.length >= 1
       ) {
         isCraftable = true;

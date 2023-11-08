@@ -21,8 +21,9 @@ export const load = {
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
         loadSprite("paper", "./assets/paper.png")
         loadSprite("trash", "./assets/trash.png")
+        // !TOBE MADE:
         loadSprite("card", "./assets/benchy.png")
-
+        loadSprite("kite", "./assets/benchy.png")
         
         loadSprite("woodAlert", "./assets/colablogo.png")
         loadSprite("wood", "./assets/woodsmall.png")
@@ -31,9 +32,9 @@ export const load = {
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
         loadSprite("hammer", "./assets/hammer.png")
-        loadSprite("yarn", "./assets/yarn.png")
+        loadSprite("thread", "./assets/yarn.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
-        loadSprite("yarnAlert", "./assets/yarn.png")
+        loadSprite("threadAlert", "./assets/yarn.png")
 
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
