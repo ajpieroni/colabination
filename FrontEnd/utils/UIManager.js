@@ -1,5 +1,16 @@
+import { text } from "body-parser";
+
 class UIManager{
 
+    displayLoginScreen(){
+        // add creates game object to be displayed on the screen
+        text("Login or Sign up to play the game!", {
+            size: 24,
+            color: (0,0,0),
+        })
+
+
+    }
     displayBlinkingUIMessage(content, position){
         // PARAMS:
     // content is the message we want to display
