@@ -32,5 +32,15 @@ class UserItemsController < ApplicationController
     end
 end
 
+def final_items
+  user = User.find_by(username: params[:username])
 
+  if user
+    final_items = user.items.where(isFinal: true)
+    final_item_names = final_items.pluck(:name)
+    render json: { final_items: final_item_names}
+  else
+    render json: { error: "User not found" }, status: :not_found
   end
+end
+end

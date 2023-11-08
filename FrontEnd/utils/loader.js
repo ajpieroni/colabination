@@ -22,6 +22,7 @@ export const load = {
         loadSprite("paper", "./assets/paper.png")
         loadSprite("trash", "./assets/trash.png")
         
+        loadSprite("trash", "./assets/dubious_trash.png")
         loadSprite("woodAlert", "./assets/colablogo.png")
         loadSprite("wood", "./assets/woodsmall.png")
         loadSprite("neededAlert", "./assets/neededAlert.png")
