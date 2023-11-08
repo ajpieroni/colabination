@@ -5,6 +5,7 @@ class CharacterMovement {
   constructor() {
     this.level = null;
     localStorage.setItem("soundTogg", 1);
+    
   }
   display() {
     //! Level Schema
@@ -116,6 +117,9 @@ class CharacterMovement {
 
   play() {
     // ! Game Objects
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
     const block_size = 64;
 
     const cricut = add([
@@ -641,7 +645,9 @@ class CharacterMovement {
           color(228, 228, 228),
           "crafting",
         ]);
-        play("bubble");
+        if (volumeSetting) {
+          play("bubble");
+        }
         const trailItem = add([
           // rect(item.width, item.height) ,
           pos(currentx, currenty),
@@ -741,8 +747,9 @@ class CharacterMovement {
             ]);
 
             await new Promise((resolve) => setTimeout(resolve, 500));
-            play("bubble");
-
+            if (volumeSetting) {
+              play("bubble");
+            }
             const trailCircle = add([
               circle(64),
               pos(440 + 40 + 25 + 25, 135 + 100),
@@ -789,7 +796,9 @@ class CharacterMovement {
 
             exitCraft();
 
-            play("bubble");
+            if (volumeSetting) {
+              play("bubble");
+            }
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             updatePocketVending(result, inPocket);
@@ -817,7 +826,9 @@ class CharacterMovement {
       playerCraftsScissorsPaper();
       console.log("plays sound?");
       // getSound("bubble");
-      play("bubble");
+      if (volumeSetting) {
+        play("bubble");
+      }
     });
 
     onKeyPress("enter", () => {
@@ -845,8 +856,9 @@ class CharacterMovement {
 
           // scale(.5)
         ]);
-        play("craftFX");
-
+        if (volumeSetting) {
+          play("craftFX");
+        }
         // setTimeout(clearTable, 3000);
 
         // console.log(`change scene here to ${tableItems}`);
@@ -1319,7 +1331,9 @@ class CharacterMovement {
     function updatePocketVending(material, inPocket) {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
-          play("bubble");
+          if (volumeSetting) {
+            play("bubble");
+          }
           // console.log(`Incoming material: ${material}, ${material.itemKey}`);
           const item1 = add([
             pos(880, 700),
@@ -1333,7 +1347,9 @@ class CharacterMovement {
           console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
           inPocket.push(item1);
         } else {
-          play("bubble");
+          if (volumeSetting) {
+            play("bubble");
+          }
           const item2 = add([
             pos(880, 775),
             z(11),
@@ -1386,13 +1402,13 @@ class CharacterMovement {
         vendingSelect = 0;
       }
     });
-    
+
     onKeyPress("m", () => {
       this.music.paused = true;
-      
+      handleSavingData();
+
       go("settings");
     });
-
 
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
@@ -1405,7 +1421,9 @@ class CharacterMovement {
         vendingContents.push(materialEntity);
         vendingKeys.push(materialEntity.itemKey);
       }
-      play("bubble");
+      if (volumeSetting) {
+        play("bubble");
+      }
 
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
@@ -1466,7 +1484,9 @@ class CharacterMovement {
           checkCraftable();
 
           if (itemsInPocket !== 0) {
-            play("bubble");
+            if (volumeSetting) {
+              play("bubble");
+            }
             itemsInPocket--;
             let item = inPocket.pop();
             console.log("here is popped", item);
@@ -1520,8 +1540,6 @@ class CharacterMovement {
       atCraftingTable = false;
       checkCraftable();
     });
-
-   
   }
 }
 export const characterMovement = new CharacterMovement();
