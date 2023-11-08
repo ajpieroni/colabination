@@ -596,11 +596,15 @@ class CharacterMovement {
 
     function craftingBackend(ingredients) {
       // !POSTING
+ 
       // *Hands are id=3, we will always use this for crafting table
       let toolId;
       // let ingredients = tableItems;
       if (atCraftingTable) {
         toolId = 3;
+      }else{
+     // !TODO: fetch tool id 
+      // http://localhost:8081/tools/find_by_name/scissors
       }
 
       console.log(ingredients);
@@ -736,9 +740,7 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
-      // let result = {};
 
-      // console.log("dub", dubious);
       let message;
       if (result.itemKey === "trash") {
         message = "That's definitely creative... let's see what happens!";
@@ -755,14 +757,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      // add([
-      //   text(`Would you like to proceed?`),
-      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
-      //   z(51),
-      //   color(0, 0, 0),
-      //   scale(0.5),
-      //   "crafting",
-      // ]);
+
       // *Craft Button
       const craftButton = add([
         rect(150, 50),
@@ -837,13 +832,7 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-            // console.log("here result", result.itemKey);
-            // updatePocketVending(madeItem, inPocket);
-            // console.log("here venidng", vendingContents);
-            // console.log(
-            //   "here venidng contains",
-            //   !vendingContents.includes(madeItem)
-            // );
+
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
