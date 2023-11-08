@@ -599,70 +599,70 @@ class CharacterMovement {
       // *Hands are id=3, we will always use this for crafting table
       let toolId;
       // let ingredients = tableItems;
-      if(atCraftingTable){
-        toolId  = 3;
-
+      if (atCraftingTable) {
+        toolId = 3;
       }
+
       console.log(ingredients);
 
       let item1sprite = ingredients[0];
-      console.log("item 1 sprite", item1sprite)
+      console.log("item 1 sprite", item1sprite);
       let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-      console.log("item 2 sprite", item2sprite)
+      console.log("item 2 sprite", item2sprite);
 
       fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
-      .then((response) => response.json())
-      .then((item1data) => {
-        console.log("Item 1:", item1data);
-        if (item2sprite !== "nothing") {
-          fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
-            .then((response) => response.json())
-            .then((item2data) => {
-              console.log("Item 2:", item2data);
-              fetchCombination(toolId, item1data.id, item2data.id, handleCreation);
-            })
-            .catch((error) => console.error("Error fetching item 2:", error));
-        } else {
-          fetchCombination(toolId, item1data.id, 6, handleCreation);
-        }
-      })
-      .catch((error) => console.error("Error fetching item 1:", error));
-  
+        .then((response) => response.json())
+        .then((item1data) => {
+          console.log("Item 1:", item1data);
+          if (item2sprite !== "nothing") {
+            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+              .then((response) => response.json())
+              .then((item2data) => {
+                console.log("Item 2:", item2data);
+                fetchCombination(
+                  toolId,
+                  item1data.id,
+                  item2data.id,
+                  handleCreation
+                );
+              })
+              .catch((error) => console.error("Error fetching item 2:", error));
+          } else {
+            fetchCombination(toolId, item1data.id, 6, handleCreation);
+          }
+        })
+        .catch((error) => console.error("Error fetching item 1:", error));
+
       // fetchCombination(toolId, item1data, item2data)
       // http://localhost:8081/items/find_by_name/paper
       // http://localhost:8081/tools/find_by_name/scissors
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
-
     }
     let result = {};
 
-    function fetchCombination(toolId, item1Id, item2Id, callback){
-      fetch(`http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Combination result:', data);
-        console.log(`${data.creation}`)
-        // dubious = true;
-        callback(data.creation);
-  
-        
-      })
-      .catch((error) => {
-        console.error('Error fetching combination:', error);
-      });
+    function fetchCombination(toolId, item1Id, item2Id, callback) {
+      fetch(
+        `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Combination result:", data);
+          console.log(`${data.creation}`);
+          // dubious = true;
+          callback(data.creation);
+        })
+        .catch((error) => {
+          console.error("Error fetching combination:", error);
+        });
     }
 
     function handleCreation(creation) {
-
-        result.itemKey = creation; 
-      
-   
-
+      result.itemKey = creation;
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -686,8 +686,16 @@ class CharacterMovement {
       if (ingredients.length == 3) {
         currentx = currentx - 125;
       }
+      if (ingredients.length == 1) {
+        currentx = currentx + 100;
+      }
+
+      let possessionText = `You possess ${ingredients.length} item${
+        ingredients.length > 1 ? "s" : ""
+      }:`;
+
       add([
-        text(`You possess ${ingredients.length} items:`),
+        text(possessionText),
         pos(415, 175),
         z(51),
         color(0, 0, 0),
@@ -697,7 +705,7 @@ class CharacterMovement {
 
       console.log("here are ingredients");
       craftingBackend(ingredients);
-      
+
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
@@ -729,13 +737,14 @@ class CharacterMovement {
         currentx += 200;
       }
       // let result = {};
-      let dubious = true;
-
 
       // console.log("dub", dubious);
-      let message = dubious
-        ? "Congratulations! You can make something with these items."
-        : "That's definitely creative... let's see what happens!";
+      let message;
+      if (result.itemKey === "trash") {
+        message = "That's definitely creative... let's see what happens!";
+      } else {
+        message = "Congratulations! You can make something with these items.";
+      }
 
       console.log("result item key", result.itemKey);
       add([
@@ -870,7 +879,6 @@ class CharacterMovement {
 
       // setTimeout(3000);
     }
-
 
     onKeyPress("enter", () => {
       // !Craft
