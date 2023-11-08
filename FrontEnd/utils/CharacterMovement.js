@@ -1232,7 +1232,6 @@ class CharacterMovement {
         // scale(0.75),
         "vending",
       ]);
-      console.log(width())
       const startX = popup.pos.x + 105;
       const startY = popup.pos.y + 125;
       let currentX = startX;
