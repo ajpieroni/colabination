@@ -1154,7 +1154,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1172,7 +1172,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1190,7 +1190,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1208,7 +1208,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 270 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1225,17 +1225,16 @@ class CharacterMovement {
 
     function showVendingContents(contents) {
       const popup = add([
-        rect(500, 600),
-        pos(475 - 150, 125 + 25),
+        sprite("backpack"),
+        pos(475 - 190, 125 + 25),
         z(11),
-        color(105, 105, 105),
         outline(4),
-        scale(0.75),
+        // scale(0.75),
         "vending",
       ]);
-
-      const startX = popup.pos.x + 42.5;
-      const startY = popup.pos.y + 30;
+      console.log(width())
+      const startX = popup.pos.x + 105;
+      const startY = popup.pos.y + 125;
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
@@ -1285,7 +1284,7 @@ class CharacterMovement {
         });
         // console.log(currRow);
         currRow++;
-        currentX += item.width + 50;
+        currentX += item.width + 35;
       }
 
       isPopupVisible = true;
