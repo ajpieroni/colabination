@@ -595,6 +595,17 @@ class CharacterMovement {
       }
     }
 
+    function craftingTableBackend(){
+      // !POSTING
+      
+      // http://localhost:8081/items/find_by_name/paper
+      // http://localhost:8081/tools/find_by_name/scissors
+      // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+
+
+
+    }
+
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
@@ -625,10 +636,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      // !POSTING
       
-      // http://localhost:8081/items/find_by_name/paper
-      // http://localhost:8081/tools/find_by_name/scissors
       console.log("here are ingredients")
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));

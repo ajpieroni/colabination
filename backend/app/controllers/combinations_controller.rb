@@ -21,6 +21,8 @@ class CombinationsController < ApplicationController
   #     render json: { message: "Unexpected error: #{e.message}", status: :internal_server_error }
   #   end
   # end
+
+
   def index
 
     combo = Combination.find_by(tool: params[:tool], item1: params[:item1], item2: params[:item2])
