@@ -1,30 +1,24 @@
-// import { settings } from "./settings.js"
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
   music = null;
   constructor() {
     this.level = null;
-    localStorage.setItem("soundTogg",1)
-
-    // initailize music
+    localStorage.setItem("soundTogg", 1);
   }
-
   display() {
+    //! Level Schema
+
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-      console.log("here's volume setting", volumeSetting)
+    console.log("here's volume setting", volumeSetting);
     //! Level Schema
     // stop("soundtrack");
     this.music = play("soundtrack", {
       volume: volumeSetting,
       loop: true,
-
-      // detune: soundSettings.detune,
     });
-    // console.log("here are sound settings: ", soundSettings);
-    // console.log("here is music settings: ", this.music.volume);
 
     const block_size = 32;
 
@@ -47,7 +41,7 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(0, 0), z(5), scale(0.5)]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([
       sprite("tables"),
       pos(0, 0),
@@ -121,9 +115,6 @@ class CharacterMovement {
   }
 
   play() {
-    let volumeSetting = localStorage.getItem("soundTogg")
-      ? parseFloat(localStorage.getItem("soundTogg"))
-      : 1;
     // ! Game Objects
     const block_size = 64;
 
@@ -650,10 +641,7 @@ class CharacterMovement {
           color(228, 228, 228),
           "crafting",
         ]);
-        if(volumeSetting){
-          play("bubble");
-
-        }
+        play("bubble");
         const trailItem = add([
           // rect(item.width, item.height) ,
           pos(currentx, currenty),
@@ -753,10 +741,7 @@ class CharacterMovement {
             ]);
 
             await new Promise((resolve) => setTimeout(resolve, 500));
-            if(volumeSetting){
-              play("bubble");
-
-            }
+            play("bubble");
 
             const trailCircle = add([
               circle(64),
@@ -803,10 +788,8 @@ class CharacterMovement {
             await new Promise((resolve) => setTimeout(resolve, 1000));
 
             exitCraft();
-            if(volumeSetting){
-              play("bubble");
 
-            }
+            play("bubble");
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             updatePocketVending(result, inPocket);
@@ -834,13 +817,46 @@ class CharacterMovement {
       playerCraftsScissorsPaper();
       console.log("plays sound?");
       // getSound("bubble");
-      if(volumeSetting){
-        play("bubble");
-
-      }
+      play("bubble");
     });
 
     onKeyPress("enter", () => {
+      // !Craft
+      if (
+        atCraftingTable &&
+        isCraftable &&
+        !isCraftingVisible &&
+        tableItems.length >= 2
+      ) {
+        destroyAll("craft");
+        add([
+          "craft",
+          text("Crafting...", {
+            // optional object
+            size: 36,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500, 500),
+          z(20),
+
+          // scale(.5)
+        ]);
+        play("craftFX");
+
+        // setTimeout(clearTable, 3000);
+
+        // console.log(`change scene here to ${tableItems}`);
+        showContainer(tableItems);
+        // console.log("here is tableItems", tableItems);
+
+        // clearTable();
+
+        // go(`${tableItems}trail`);
+      }
       //! DRAWER
       //* Cricut Drawer: Scissors, Paper, Wood, noItems
       //  interactWithCDrawer.call(this);
@@ -1071,42 +1087,43 @@ class CharacterMovement {
       }
     }
     // saving for now :D
-    // onKeyPress("z", () => {
-    //   handleSavingData();
-    // });
-    let menuOpen = false;
     onKeyPress("z", () => {
-      if (!menuOpen) {
-        menuOpen = true;
-        SPEED = 0;
-        const saveButton = add([
-          text("Press Enter to Save!"),
-          pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
-          z(53),
-          color(0, 0, 0), // color of the text,
-          scale(0.5),
-          "saving",
-        ]);
-        // Craft Button Flash
-        let isBright = true;
-        setInterval(() => {
-          if (isBright) {
-            saveButton.color = rgb(228, 228, 228); // less bright color
-          } else {
-            saveButton.color = rgb(80, 80, 80); // original color
-          }
-          isBright = !isBright;
-        }, 250);
-      }
+      handleSavingData();
     });
-    onKeyPress("enter", () => {
-      if (menuOpen) {
-        handleSavingData();
-        SPEED = 300;
-        menuOpen = false;
-        destroyAll("saving");
-      }
-    });
+    let menuOpen = false;
+    // onKeyPress("m", () => {
+
+    //   if (!menuOpen) {
+    //     menuOpen = true;
+    //     SPEED = 0;
+    //     const saveButton = add([
+    //       text("Press Enter to Save!"),
+    //       pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+    //       z(53),
+    //       color(0, 0, 0), // color of the text,
+    //       scale(0.5),
+    //       "saving",
+    //     ]);
+    //     // Craft Button Flash
+    //     let isBright = true;
+    //     setInterval(() => {
+    //       if (isBright) {
+    //         saveButton.color = rgb(228, 228, 228); // less bright color
+    //       } else {
+    //         saveButton.color = rgb(80, 80, 80); // original color
+    //       }
+    //       isBright = !isBright;
+    //     }, 250);
+    //   }
+    // });
+    // onKeyPress("enter", () => {
+    //   if (menuOpen) {
+    //     handleSavingData();
+    //     SPEED = 300;
+    //     menuOpen = false;
+    //     destroyAll("saving");
+    //   }
+    // });
 
     // !INVENTORY
 
@@ -1132,6 +1149,86 @@ class CharacterMovement {
     ]);
 
     // !VENDING
+
+    onKeyPress("left", () => {
+      if (isPopupVisible) {
+        if (vendingSelect > 0) {
+          // console.log(vendingSelect);
+          vendingSelect--;
+          destroyAll("selected");
+          let gridX = vendingSelect % 3;
+          let gridY = Math.floor(vendingSelect / 3);
+          const selected = add([
+            rect(70, 70),
+            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            z(11),
+            color(255, 255, 255),
+            "selected",
+          ]);
+        }
+      }
+    });
+    onKeyPress("right", () => {
+      if (isPopupVisible) {
+        if (vendingSelect < vendingContents.length - 1) {
+          vendingSelect++;
+          // console.log(vendingSelect);
+          destroyAll("selected");
+          let gridX = vendingSelect % 3;
+          let gridY = Math.floor(vendingSelect / 3);
+          const selected = add([
+            rect(70, 70),
+            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            z(11),
+            color(255, 255, 255),
+            "selected",
+          ]);
+        }
+      }
+    });
+    onKeyPress("down", () => {
+      if (isPopupVisible) {
+        if (vendingSelect + 3 < vendingContents.length) {
+          vendingSelect += 3;
+          // console.log(vendingSelect);
+          destroyAll("selected");
+          let gridX = vendingSelect % 3;
+          let gridY = Math.floor(vendingSelect / 3);
+          const selected = add([
+            rect(70, 70),
+            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            z(11),
+            color(255, 255, 255),
+            "selected",
+          ]);
+        }
+      }
+    });
+    onKeyPress("up", () => {
+      if (isPopupVisible) {
+        if (vendingSelect - 3 >= 0) {
+          vendingSelect -= 3;
+          // console.log(vendingSelect);
+          destroyAll("selected");
+          let gridX = vendingSelect % 3;
+          let gridY = Math.floor(vendingSelect / 3);
+          const selected = add([
+            rect(70, 70),
+            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            z(11),
+            color(255, 255, 255),
+            "selected",
+          ]);
+        }
+      }
+    });
+    onKeyPress("enter", () => {
+      if (isPopupVisible && vendingContents.length > 0) {
+        let item = vendingContents[vendingSelect];
+        updatePocketVending(item, inPocket);
+      }
+    });
+
     function showVendingContents(contents) {
       const popup = add([
         rect(500, 600),
@@ -1152,395 +1249,279 @@ class CharacterMovement {
         const selected = add([
           rect(70, 70),
           pos(startX, startY),
-          z(10),
+          z(11),
           color(255, 255, 255),
           "selected",
         ]);
       }
+      for (let i = 0; i < contents.length; i++) {
+        const item = contents[i];
+        const itemKey = item.itemKey;
+        // starts a new line
 
-      onKeyPress("left", () => {
-        if (isPopupVisible) {
-          if (vendingSelect > 0) {
-            // console.log(vendingSelect);
-            vendingSelect--;
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
-              z(11),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
+        if (currRow === 3) {
+          currentY += item.height + 50;
+          currentX = startX;
+          currRow = 0;
         }
-      });
-      onKeyPress("right", () => {
-        if (isPopupVisible) {
-          if (vendingSelect < vendingContents.length - 1) {
-            vendingSelect++;
-            // console.log(vendingSelect);
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
-              z(11),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("down", () => {
-        if (isPopupVisible) {
-          if (vendingSelect + 3 < vendingContents.length) {
-            vendingSelect += 3;
-            // console.log(vendingSelect);
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
-              z(11),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("up", () => {
-        if (isPopupVisible) {
-          if (vendingSelect - 3 >= 0) {
-            vendingSelect -= 3;
-            // console.log(vendingSelect);
-            destroyAll("selected");
-            let gridX = vendingSelect % 3;
-            let gridY = Math.floor(vendingSelect / 3);
-            const selected = add([
-              rect(70, 70),
-              pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
-              z(11),
-              color(255, 255, 255),
-              "selected",
-            ]);
-          }
-        }
-      });
-      onKeyPress("enter", () => {
-        if (isPopupVisible && vendingContents.length > 0) {
-          let item = vendingContents[vendingSelect];
-          updatePocketVending(item, inPocket);
-        }
-      });
 
-      function showVendingContents(contents) {
-        const popup = add([
-          rect(500, 600),
-          pos(475 - 150, 125 + 25),
+        const vendingItem = add([
+          // rect(item.width, item.height) ,
+          pos(currentX, currentY),
           z(11),
-          color(105, 105, 105),
-          outline(4),
-          scale(0.75),
+          // color(item.color.r, item.color.g, item.color.b),
           "vending",
+          // !TODO: Make sprite image dynamic
+          sprite(`${item.itemKey}`),
+          // rect(10,10),
+          // sprite(`${image}`),
+          scale(1.5),
+          z(12),
+          "material",
+          {
+            itemKey: itemKey,
+          },
         ]);
 
-        const startX = popup.pos.x + 42.5;
-        const startY = popup.pos.y + 30;
-        let currentX = startX;
-        let currentY = startY;
-        let currRow = 0;
-        if (vendingContents.length > 0) {
-          const selected = add([
-            rect(70, 70),
-            pos(startX, startY),
-            z(11),
-            color(255, 255, 255),
-            "selected",
-          ]);
-        }
-        for (let i = 0; i < contents.length; i++) {
-          const item = contents[i];
-          const itemKey = item.itemKey;
-          // starts a new line
-
-          if (currRow === 3) {
-            currentY += item.height + 50;
-            currentX = startX;
-            currRow = 0;
+        onClick(() => {
+          // Check if the mouse click occurred within the bounds of itemEntity
+          if (isClicked(vendingItem)) {
+            updatePocketVending(vendingItem, inPocket);
           }
-
-          const vendingItem = add([
-            // rect(item.width, item.height) ,
-            pos(currentX, currentY),
-            z(11),
-            // color(item.color.r, item.color.g, item.color.b),
-            "vending",
-            // !TODO: Make sprite image dynamic
-            sprite(`${item.itemKey}`),
-            // rect(10,10),
-            // sprite(`${image}`),
-            scale(1.5),
-            z(12),
-            "material",
-            {
-              itemKey: itemKey,
-            },
-          ]);
-
-          onClick(() => {
-            // Check if the mouse click occurred within the bounds of itemEntity
-            if (isClicked(vendingItem)) {
-              updatePocketVending(vendingItem, inPocket);
-            }
-          });
-          // console.log(currRow);
-          currRow++;
-          currentX += item.width + 50;
-        }
-
-        isPopupVisible = true;
+        });
+        // console.log(currRow);
+        currRow++;
+        currentX += item.width + 50;
       }
 
-      function getDistance(x1, y1, x2, y2) {
-        let x = x2 - x1;
-        let y = y2 - y1;
-
-        return Math.sqrt(x * x + y * y);
-      }
-      // Function to check if the mouse click occurred within the bounds of an entity
-      function isClicked(item) {
-        let distance = getDistance(
-          mousePos().x,
-          mousePos().y,
-          item.pos.x,
-          item.pos.y
-        );
-        return distance <= 55;
-      }
-
-      let itemsInPocket = 0;
-
-      function updatePocketVending(material, inPocket) {
-        if (itemsInPocket < 2) {
-          if (itemsInPocket === 0) {
-            if(volumeSetting){
-              play("bubble");
-
-            }
-            // console.log(`Incoming material: ${material}, ${material.itemKey}`);
-            const item1 = add([
-              pos(880, 700),
-              z(11),
-              sprite(`${material.itemKey}`),
-              scale(1),
-              "material",
-              { image: material.itemKey },
-              { itemKey: material.itemKey },
-            ]);
-            console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
-            inPocket.push(item1);
-          } else {
-            if(volumeSetting){
-              play("bubble");
-
-            }
-            const item2 = add([
-              pos(880, 775),
-              z(11),
-              z(11),
-              sprite(`${material.itemKey}`),
-              scale(1),
-              "material",
-              { image: material.itemKey },
-              { itemKey: material.itemKey },
-            ]);
-            inPocket.push(item2);
-          }
-          itemsInPocket++;
-        } else {
-          // shake(5);
-          alert("Remove items from pocket to select from vending machine");
-        }
-      }
-
-      function updatePocket(material, inPocket) {
-        if (itemsInPocket < 2) {
-          if (itemsInPocket === 0) {
-            // console.log("one");
-            // pos(855,700)
-            material.moveTo(880, 725);
-            material.scaleTo(1);
-          } else {
-            // console.log("two");
-            // moves to spot 2
-            material.moveTo(880, 775);
-          }
-          itemsInPocket++;
-          inPocket.push(material);
-        } else {
-          destroy(material);
-        }
-      }
-
-      // backpack functionality
-      onKeyPress("v", () => {
-        if (isPopupVisible) {
-          destroyAll("vending");
-          destroyAll("selected");
-          isPopupVisible = false;
-          SPEED = 300;
-        } else {
-          showVendingContents(vendingContents);
-          isPopupVisible = true;
-          SPEED = 0;
-          vendingSelect = 0;
-        }
-      });
-
-      player.onCollide("material", (materialEntity) => {
-        // console.log(`Here's the current vending keys: ${vendingKeys}`)
-        // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
-        if (
-          !vendingContents.includes(materialEntity) &&
-          !vendingKeys.includes(materialEntity.itemKey)
-        ) {
-          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
-          vendingContents.push(materialEntity);
-          vendingKeys.push(materialEntity.itemKey);
-        }
-        if(volumeSetting){
-          play("bubble");
-
-        }
-
-        updatePocket(materialEntity, inPocket);
-        materialEntity.use(body({ isStatic: true }));
-      });
-
-      let atCraftingTable = false;
-      let table_x = 700;
-      let table_y = 350;
-      let onItemsOnTable = 0;
-      let tableItems = [];
-      function clearTable() {
-        tableItems.length = 0;
-        destroyAll("onTable");
-        destroyAll("craft");
-        table_x = 700;
-        table_y = 300;
-        onItemsOnTable = 0;
-        tableItems = [];
-      }
-
-      // Crafting logic:
-      // !TODO: Remove hardcode after Ollie's code
-      let isCraftable = false;
-
-      // prompting trail
-
-      // Dropping item on table
-      onKeyPress("q", () => {
-        // !TODO: set max items on table
-        if (tableItems.length == 0) {
-          table_x = 700;
-          table_y = 350;
-        }
-
-        if (atCraftingTable && onItemsOnTable >= 3) {
-          alert("There are too many items on the table; try crafting!");
-          // checkCraftable();
-        } else {
-          console.log(
-            "check",
-            atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
-          );
-          if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
-            itemsInPocket--;
-
-            let item = inPocket.pop();
-            // console.log("here's item:", item);
-            // console.log("here item key", item.itemKey);
-            item.use("onTable");
-
-            item.moveTo(table_x, table_y);
-            tableItems[onItemsOnTable] = item.itemKey;
-            console.log(tableItems);
-            table_y += 50;
-            onItemsOnTable++;
-            checkCraftable(tableItems);
-          } else {
-            checkCraftable();
-
-            if (itemsInPocket !== 0) {
-              if(volumeSetting){
-                play("bubble");
-
-              }
-              itemsInPocket--;
-              let item = inPocket.pop();
-              console.log("here is popped", item);
-              console.log("key?", item.itemKey);
-
-              destroy(item);
-            }
-          }
-        }
-      });
-
-      function checkCraftable() {
-        if (
-          atCraftingTable &&
-          // tableItems.includes("paper") &&
-          // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
-          tableItems.length >= 2
-        ) {
-          isCraftable = true;
-          if (isCraftable) {
-            // console.log("hit");
-            add([
-              "craft",
-              text("Craft?", {
-                // optional object
-                size: 36,
-                outline: 4,
-                color: (0, 0, 0),
-                // can specify font here,
-              }),
-              area(),
-              anchor("center"),
-              pos(500, 500),
-              z(20),
-
-              // scale(.5)
-            ]);
-          }
-        }
-        if (!atCraftingTable) {
-          destroyAll("craft");
-        }
-      }
-
-      // Crafting Collisions
-      onCollide("player", "craftingTable", (s, w) => {
-        atCraftingTable = true;
-        checkCraftable();
-      });
-      onCollideEnd("player", "craftingTable", (s, w) => {
-        atCraftingTable = false;
-        checkCraftable();
-      });
+      isPopupVisible = true;
     }
+
+    function getDistance(x1, y1, x2, y2) {
+      let x = x2 - x1;
+      let y = y2 - y1;
+
+      return Math.sqrt(x * x + y * y);
+    }
+    // Function to check if the mouse click occurred within the bounds of an entity
+    function isClicked(item) {
+      let distance = getDistance(
+        mousePos().x,
+        mousePos().y,
+        item.pos.x,
+        item.pos.y
+      );
+      return distance <= 55;
+    }
+
+    let itemsInPocket = 0;
+
+    function updatePocketVending(material, inPocket) {
+      if (itemsInPocket < 2) {
+        if (itemsInPocket === 0) {
+          play("bubble");
+          // console.log(`Incoming material: ${material}, ${material.itemKey}`);
+          const item1 = add([
+            pos(880, 700),
+            z(11),
+            sprite(`${material.itemKey}`),
+            scale(1),
+            "material",
+            { image: material.itemKey },
+            { itemKey: material.itemKey },
+          ]);
+          console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
+          inPocket.push(item1);
+        } else {
+          play("bubble");
+          const item2 = add([
+            pos(880, 775),
+            z(11),
+            z(11),
+            sprite(`${material.itemKey}`),
+            scale(1),
+            "material",
+            { image: material.itemKey },
+            { itemKey: material.itemKey },
+          ]);
+          inPocket.push(item2);
+        }
+        itemsInPocket++;
+      } else {
+        // shake(5);
+        alert("Remove items from pocket to select from vending machine");
+      }
+    }
+
+    function updatePocket(material, inPocket) {
+      if (itemsInPocket < 2) {
+        if (itemsInPocket === 0) {
+          // console.log("one");
+          // pos(855,700)
+          material.moveTo(880, 725);
+          material.scaleTo(1);
+        } else {
+          // console.log("two");
+          // moves to spot 2
+          material.moveTo(880, 775);
+        }
+        itemsInPocket++;
+        inPocket.push(material);
+      } else {
+        destroy(material);
+      }
+    }
+
+    // backpack functionality
+    onKeyPress("v", () => {
+      if (isPopupVisible) {
+        destroyAll("vending");
+        destroyAll("selected");
+        isPopupVisible = false;
+        SPEED = 300;
+      } else {
+        showVendingContents(vendingContents);
+        isPopupVisible = true;
+        SPEED = 0;
+        vendingSelect = 0;
+      }
+    });
+    
     onKeyPress("m", () => {
       this.music.paused = true;
       
       go("settings");
     });
 
+
+    player.onCollide("material", (materialEntity) => {
+      // console.log(`Here's the current vending keys: ${vendingKeys}`)
+      // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
+      if (
+        !vendingContents.includes(materialEntity) &&
+        !vendingKeys.includes(materialEntity.itemKey)
+      ) {
+        console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+        vendingContents.push(materialEntity);
+        vendingKeys.push(materialEntity.itemKey);
+      }
+      play("bubble");
+
+      updatePocket(materialEntity, inPocket);
+      materialEntity.use(body({ isStatic: true }));
+    });
+
+    let atCraftingTable = false;
+    let table_x = 700;
+    let table_y = 350;
+    let onItemsOnTable = 0;
+    let tableItems = [];
+    function clearTable() {
+      tableItems.length = 0;
+      destroyAll("onTable");
+      destroyAll("craft");
+      table_x = 700;
+      table_y = 300;
+      onItemsOnTable = 0;
+      tableItems = [];
+    }
+
+    // Crafting logic:
+    // !TODO: Remove hardcode after Ollie's code
+    let isCraftable = false;
+
+    // prompting trail
+
+    // Dropping item on table
+    onKeyPress("q", () => {
+      // !TODO: set max items on table
+      if (tableItems.length == 0) {
+        table_x = 700;
+        table_y = 350;
+      }
+
+      if (atCraftingTable && onItemsOnTable >= 3) {
+        alert("There are too many items on the table; try crafting!");
+        // checkCraftable();
+      } else {
+        console.log(
+          "check",
+          atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
+        );
+        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
+          itemsInPocket--;
+
+          let item = inPocket.pop();
+          // console.log("here's item:", item);
+          // console.log("here item key", item.itemKey);
+          item.use("onTable");
+
+          item.moveTo(table_x, table_y);
+          tableItems[onItemsOnTable] = item.itemKey;
+          console.log(tableItems);
+          table_y += 50;
+          onItemsOnTable++;
+          checkCraftable(tableItems);
+        } else {
+          checkCraftable();
+
+          if (itemsInPocket !== 0) {
+            play("bubble");
+            itemsInPocket--;
+            let item = inPocket.pop();
+            console.log("here is popped", item);
+            console.log("key?", item.itemKey);
+
+            destroy(item);
+          }
+        }
+      }
+    });
+
+    function checkCraftable() {
+      if (
+        atCraftingTable &&
+        // tableItems.includes("paper") &&
+        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
+        tableItems.length >= 2
+      ) {
+        isCraftable = true;
+        if (isCraftable) {
+          // console.log("hit");
+          add([
+            "craft",
+            text("Craft?", {
+              // optional object
+              size: 36,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500, 500),
+            z(20),
+
+            // scale(.5)
+          ]);
+        }
+      }
+      if (!atCraftingTable) {
+        destroyAll("craft");
+      }
+    }
+
+    // Crafting Collisions
+    onCollide("player", "craftingTable", (s, w) => {
+      atCraftingTable = true;
+      checkCraftable();
+    });
+    onCollideEnd("player", "craftingTable", (s, w) => {
+      atCraftingTable = false;
+      checkCraftable();
+    });
+
+   
   }
-  
 }
 export const characterMovement = new CharacterMovement();
