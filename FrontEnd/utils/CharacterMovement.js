@@ -239,7 +239,7 @@ class CharacterMovement {
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
-      console.log(`Fetching for ${username}`)
+      console.log(`Fetching for ${username}`);
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_items?username=${username}`)
           .then((response) => {
@@ -250,12 +250,11 @@ class CharacterMovement {
           })
           .then((data) => {
             const itemNames = data.items; // Access the items property
-            
 
             itemNames.forEach((itemName) => {
               const savedItem = add([
                 // rect(item.width, item.height) ,
-                pos(0,0),
+                pos(0, 0),
                 z(0),
                 // color(item.color.r, item.color.g, item.color.b),
                 sprite(`${itemName}`),
@@ -595,15 +594,36 @@ class CharacterMovement {
       }
     }
 
-    function craftingTableBackend(){
+    function craftingTableBackend(ingredients) {
       // !POSTING
-      
+      // *Hands are id=3, we will always use this for crafting table
+      // let ingredients = tableItems;
+      console.log(ingredients);
+
+      let item1sprite = ingredients[0];
+      console.log("item 1 sprite", item1sprite)
+      let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
+      console.log("item 2 sprite", item2sprite)
+
+      fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
+        .then((response) => response.json())
+        .then((item1data) => {
+          console.log("Item 1:", item1data);
+          // If there is a second ingredient, make another fetch call for item2.
+          if (item2sprite) {
+            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+              .then((response) => response.json())
+              .then((item2data) => {
+                console.log("Item 2:", item2data);
+              })
+              .catch((error) => console.error("Error fetching item 2:", error));
+          }
+        })
+        .catch((error) => console.error("Error fetching item 1:", error));
+
       // http://localhost:8081/items/find_by_name/paper
       // http://localhost:8081/tools/find_by_name/scissors
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
-
-
-
     }
 
     // !Crafting Function: Paper Trail
@@ -636,8 +656,9 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      
-      console.log("here are ingredients")
+
+      console.log("here are ingredients");
+      craftingTableBackend(ingredients);
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
@@ -733,7 +754,7 @@ class CharacterMovement {
       // let result = "wood";
 
       onKeyPress("enter", () => {
-        if (tableItems.length >= 2) {
+        if (tableItems.length >= 1) {
           madeCraft(result);
 
           async function madeCraft() {
@@ -819,13 +840,7 @@ class CharacterMovement {
 
       // setTimeout(3000);
     }
-    //! IF PLAYER COLLIDING AGAINST PAPER SCISSORS THEN MAKE PAPER AIRPLANE???
-    onKeyPress("b", () => {
-      playerCraftsScissorsPaper();
-      console.log("plays sound?");
-      // getSound("bubble");
-      play("bubble");
-    });
+
 
     onKeyPress("enter", () => {
       // !Craft
@@ -833,7 +848,7 @@ class CharacterMovement {
         atCraftingTable &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 2
+        tableItems.length >= 1
       ) {
         destroyAll("craft");
         add([
@@ -1020,7 +1035,6 @@ class CharacterMovement {
       let currItems = [];
       let currTools = [];
 
-
       for (let i = 0; i < vendingKeys.length; i++) {
         if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
           currTools.push(vendingKeys[i]);
@@ -1124,13 +1138,12 @@ class CharacterMovement {
       }
     });
     onKeyPress("enter", () => {
-      if(menuOpen){
+      if (menuOpen) {
         handleSavingData();
         SPEED = 300;
         menuOpen = false;
-        destroyAll("saving")
+        destroyAll("saving");
       }
-
     });
 
     // !INVENTORY
@@ -1398,8 +1411,11 @@ class CharacterMovement {
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
       // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
-      if (!vendingContents.includes(materialEntity) && !vendingKeys.includes(materialEntity.itemKey)) {
-        console.log(`Pushing ${materialEntity.itemKey} to vending machine`)
+      if (
+        !vendingContents.includes(materialEntity) &&
+        !vendingKeys.includes(materialEntity.itemKey)
+      ) {
+        console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
         vendingContents.push(materialEntity);
         vendingKeys.push(materialEntity.itemKey);
       }
@@ -1481,7 +1497,7 @@ class CharacterMovement {
         atCraftingTable &&
         // tableItems.includes("paper") &&
         // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
-        tableItems.length >= 2
+        tableItems.length >= 1
       ) {
         isCraftable = true;
         if (isCraftable) {
