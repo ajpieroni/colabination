@@ -308,6 +308,7 @@ class CharacterMovement {
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
+      console.log(`Fetching for ${username}`);
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_items?username=${username}`)
           .then((response) => {
@@ -322,6 +323,7 @@ class CharacterMovement {
             itemNames.forEach((itemName) => {
               const savedItem = add([
                 // rect(item.width, item.height) ,
+                pos(0, 0),
                 pos(0, 0),
                 z(0),
                 // color(item.color.r, item.color.g, item.color.b),
@@ -663,6 +665,80 @@ class CharacterMovement {
       }
     }
 
+    function craftingBackend(ingredients) {
+      // !POSTING
+ 
+      let toolId;
+      // let ingredients = tableItems;
+      if (atCraftingTable) {
+      // *Hands are id=3, we will always use this for crafting table
+        toolId = 3;
+      }else{
+     // !TODO: fetch tool id 
+      // http://localhost:8081/tools/find_by_name/scissors
+      }
+
+      console.log(ingredients);
+
+      let item1sprite = ingredients[0];
+      console.log("item 1 sprite", item1sprite);
+      let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
+      console.log("item 2 sprite", item2sprite);
+
+      fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
+        .then((response) => response.json())
+        .then((item1data) => {
+          console.log("Item 1:", item1data);
+          if (item2sprite !== "nothing") {
+            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+              .then((response) => response.json())
+              .then((item2data) => {
+                console.log("Item 2:", item2data);
+                fetchCombination(
+                  toolId,
+                  item1data.id,
+                  item2data.id,
+                  handleCreation
+                );
+              })
+              .catch((error) => console.error("Error fetching item 2:", error));
+          } else {
+            fetchCombination(toolId, item1data.id, 6, handleCreation);
+          }
+        })
+        .catch((error) => console.error("Error fetching item 1:", error));
+
+      // fetchCombination(toolId, item1data, item2data)
+      // http://localhost:8081/items/find_by_name/paper
+      // http://localhost:8081/tools/find_by_name/scissors
+      // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+    }
+    let result = {};
+
+    function fetchCombination(toolId, item1Id, item2Id, callback) {
+      fetch(
+        `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Combination result:", data);
+          console.log(`${data.creation}`);
+          // dubious = true;
+          callback(data.creation);
+        })
+        .catch((error) => {
+          console.error("Error fetching combination:", error);
+        });
+    }
+
+    function handleCreation(creation) {
+      result.itemKey = creation;
+    }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
@@ -685,14 +761,26 @@ class CharacterMovement {
       if (ingredients.length == 3) {
         currentx = currentx - 125;
       }
+      if (ingredients.length == 1) {
+        currentx = currentx + 100;
+      }
+
+      let possessionText = `You possess ${ingredients.length} item${
+        ingredients.length > 1 ? "s" : ""
+      }:`;
+
       add([
-        text(`You possess ${ingredients.length} items:`),
+        text(possessionText),
         pos(415, 175),
         z(51),
         color(0, 0, 0),
         scale(0.5),
         "crafting",
       ]);
+
+      console.log("here are ingredients");
+      craftingBackend(ingredients);
+
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
@@ -725,23 +813,13 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
-      let result = {};
-      let dubious = true;
 
-      if (tableItems.includes("hammer") && tableItems.includes("paper")) {
-        let madeItemKey = "wood";
-        result.itemKey = madeItemKey;
-        dubious = true;
+      let message;
+      if (result.itemKey === "trash") {
+        message = "That's definitely creative... let's see what happens!";
       } else {
-        let madeItemKey = "trash";
-        result.itemKey = madeItemKey;
-        dubious = false;
+        message = "Congratulations! You can make something with these items.";
       }
-
-      // console.log("dub", dubious);
-      let message = dubious
-        ? "Congratulations! You can make something with these items."
-        : "That's definitely creative... let's see what happens!";
 
       console.log("result item key", result.itemKey);
       add([
@@ -752,14 +830,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      // add([
-      //   text(`Would you like to proceed?`),
-      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
-      //   z(51),
-      //   color(0, 0, 0),
-      //   scale(0.5),
-      //   "crafting",
-      // ]);
+
       // *Craft Button
       const craftButton = add([
         rect(150, 50),
@@ -790,7 +861,7 @@ class CharacterMovement {
       // let result = "wood";
 
       onKeyPress("enter", () => {
-        if (tableItems.length >= 2) {
+        if (tableItems.length >= 1) {
           madeCraft(result);
 
           async function madeCraft() {
@@ -835,13 +906,7 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-            // console.log("here result", result.itemKey);
-            // updatePocketVending(madeItem, inPocket);
-            // console.log("here venidng", vendingContents);
-            // console.log(
-            //   "here venidng contains",
-            //   !vendingContents.includes(madeItem)
-            // );
+
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
@@ -895,7 +960,7 @@ class CharacterMovement {
         atCraftingTable &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 2
+        tableItems.length >= 1
       ) {
         destroyAll("craft");
         add([
@@ -1619,8 +1684,7 @@ class CharacterMovement {
       if (
         atCraftingTable &&
         // tableItems.includes("paper") &&
-        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("thread") && tableItems.includes("hammer")
-        tableItems.length >= 2
+        tableItems.length >= 1
       ) {
         isCraftable = true;
         if (isCraftable) {
