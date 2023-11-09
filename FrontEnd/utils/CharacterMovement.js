@@ -597,10 +597,10 @@ class CharacterMovement {
     function craftingBackend(ingredients) {
       // !POSTING
  
-      // *Hands are id=3, we will always use this for crafting table
       let toolId;
       // let ingredients = tableItems;
       if (atCraftingTable) {
+      // *Hands are id=3, we will always use this for crafting table
         toolId = 3;
       }else{
      // !TODO: fetch tool id 
