@@ -1,5 +1,34 @@
 # Meeting Notes
 
+## November 3rd
+
+Progress Report:
+- Alex:
+  - figure out passing voume around scenes
+- Kelvin:
+  - discuss saving guest progress (not MVP)
+  - force new players to make account (new game or load game)
+  - documentation station, store final items
+    - discuss animation for final items
+    - some bugs to fix auto save to documentation
+- Dasol: 
+  - finish about us
+  - start on controls page
+- Olly:
+## Nov 3rd
+Agenda:
+- [] updates from the week
+- [] discuss Class vs function and how to pass data between files
+- [] redefine end MVP goals
+  - [] piece code together to have a full playable game
+  - [] use APIs for initializing game, check crafting, save progress
+  - [] working menu bar
+  - [] login and sign up
+- [] assign small issues out
+  - [] items in vending machine vs in documentation station
+  - [] remove trash or any other final items from pocket
+  - [] 
+
 ## October 27th
 
 Future Issues Notes:
