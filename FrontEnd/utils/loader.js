@@ -30,9 +30,9 @@ export const load = {
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
         loadSprite("hammer", "./assets/hammer.png")
-        loadSprite("yarn", "./assets/yarn.png")
+        loadSprite("thread", "./assets/thread.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
-        loadSprite("yarnAlert", "./assets/yarn.png")
+        loadSprite("threadAlert", "./assets/thread.png")
 
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")

@@ -410,9 +410,9 @@ class CharacterMovement {
         // onTable: false
       },
 
-      yarn: {
-        spriteName: "yarn",
-        alertSprite: "yarnAlert",
+      thread: {
+        spriteName: "thread",
+        alertSprite: "threadAlert",
 
         initialPos: { x: 330, y: 300 },
         hasFound: false,
@@ -1287,7 +1287,6 @@ class CharacterMovement {
     onKeyPress("m", () => {
       this.music.paused = true;
       handleSavingData();
-      
       go("settings");
         
       });
@@ -1620,7 +1619,7 @@ class CharacterMovement {
       if (
         atCraftingTable &&
         // tableItems.includes("paper") &&
-        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
+        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("thread") && tableItems.includes("hammer")
         tableItems.length >= 2
       ) {
         isCraftable = true;
