@@ -25,6 +25,7 @@ export const load = {
         loadSprite("card", "./assets/benchy.png")
         loadSprite("kite", "./assets/benchy.png")
         
+        loadSprite("trash", "./assets/dubious_trash.png")
         loadSprite("woodAlert", "./assets/colablogo.png")
         loadSprite("wood", "./assets/woodsmall.png")
         loadSprite("neededAlert", "./assets/neededAlert.png")
@@ -39,6 +40,7 @@ export const load = {
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
 
+        loadSprite("backpack", "./assets/backpack.png")
         // !Sounds
         loadSound("bubble", "./assets/bubble.m4a")
         loadSound("soundtrack", "./assets/soundtrack.mp3")

@@ -1,3 +1,4 @@
+
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -143,18 +144,29 @@ class CharacterMovement {
       { access: false },
       { alertSprite: "cricutAlert" },
     ]);
-
-    const drawer = add([
-      rect(block_size * 2, block_size),
+    const documentationStation = add([
+      rect(block_size, block_size*2),
       color(0, 100, 0),
       area(),
       body({ isStatic: true }),
-      pos(900 - 15 - 10, 250 - 10 - 10),
+      pos(900 - 15 - 10-50-50, 250 - 10 - 10+20-100-50),
       rotate(270),
       // z(10),
-      "drawer",
+      "documentationStation",
       { access: false },
     ]);
+
+    // const drawer = add([
+    //   rect(block_size * 2, block_size),
+    //   color(0, 100, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(900 - 15 - 10, 250 - 10 - 10),
+    //   rotate(270),
+    //   // z(10),
+    //   "drawer",
+    //   { access: false },
+    // ]);
 
     // let cricutAlertBox;
 
@@ -233,6 +245,51 @@ class CharacterMovement {
       "printer",
       { access: false },
     ]);
+ 
+    let curr_user = 'cats';
+
+    function fetchData(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    }
+    fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
+        .then((final) => {
+          console.log(final)
+          const itemNames = final.final_items; 
+            itemNames.forEach((itemName) => {
+              const savedItem = add([     
+                  pos(0,0),           
+                  sprite(`${itemName}`),
+
+                  scale(1.5),
+                  area(),
+                  z(0),
+                  "material",
+                  {
+                    itemKey: itemName,
+                  },
+                ]);
+            areFinal.push(itemName);
+          });
+          resolve(itemNames);
+          }
+        )
+        .catch(error => {
+            console.error('Error fetching final items:', error);
+        });
     //loading items
     let hasSavedItems = [];
 
@@ -413,7 +470,7 @@ class CharacterMovement {
     // -if collide into drawer then into printer, both alerts show
     //* Constructor
     // Drawer functionality
-    drawer.access = false;
+    // drawer.access = false;
     // Machine functionlaity
     cricut.access = false;
     let hasUnlockedCricut = false;
@@ -511,40 +568,41 @@ class CharacterMovement {
       }
     }
     // For the player's interaction with drawer: PLA, noItems
-    function interactWithDrawer() {
-      if (drawer.access) {
-        if (myDrawer.length > 0 && canPopItem) {
-          const itemName = myDrawer.pop();
-          const foundItem = myDrawerData[itemName];
-          canPopItem = false;
-          if (foundItem.alertBox === null && !foundItem.hasFound) {
-            PLAalertBox = add([
-              area(),
-              "alert",
-              pos(center().x - 100, center().y - 200),
-              color(230, 230, 250),
-              sprite("PLAalert"),
-              color(230, 230, 250),
-              z(10),
-              scale(0.45),
-            ]);
-            drawer.access = false;
-            foundItem.alertBox = true;
-            foundItem.hasFound = true;
-          }
-        } else {
-          noItemsAlert = add([
-            area(),
-            "alert",
-            pos(center().x - 100, center().y - 200),
-            color(230, 230, 250),
-            z(10),
-            sprite("noItems"),
-            scale(0.45),
-          ]);
-        }
-      }
-    }
+    // function interactWithDrawer() {
+    //   if (drawer.access) {
+    //     if (myDrawer.length > 0 && canPopItem) {
+    //       const itemName = myDrawer.pop();
+    //       const foundItem = myDrawerData[itemName];
+    //       canPopItem = false;
+    //       if (foundItem.alertBox === null && !foundItem.hasFound) {
+    //         PLAalertBox = add([
+    //           area(),
+    //           "alert",
+    //           pos(center().x - 100, center().y - 200),
+    //           color(230, 230, 250),
+    //           sprite("PLAalert"),
+
+    //           color(230, 230, 250),
+    //           z(10),
+    //           scale(0.45),
+    //         ]);
+    //         // drawer.access = false;
+    //         foundItem.alertBox = true;
+    //         foundItem.hasFound = true;
+    //       }
+    //     } else {
+    //       noItemsAlert = add([
+    //         area(),
+    //         "alert",
+    //         pos(center().x - 100, center().y - 200),
+    //         color(230, 230, 250),
+    //         z(10),
+    //         sprite("noItems"),
+    //         scale(0.45),
+    //       ]);
+    //     }
+    //   }
+    // }
     function discoverCricut() {
       if (cricut.access && !hasUnlockedCricut) {
         cricutAlertBox = add([
@@ -910,7 +968,7 @@ class CharacterMovement {
       //* Cricut Drawer: Scissors, Paper, Wood, noItems
       //  interactWithCDrawer.call(this);
       //* Printing Drawer: PLA Plastic, (Pliers)
-      interactWithDrawer.call(this);
+      // interactWithDrawer.call(this);
       // !Machines
       //* Cricut: discovery, needs
       discoverCricut.call(this);
@@ -1016,10 +1074,19 @@ class CharacterMovement {
       cricut.access = true;
     });
 
-    // Collide Logic: Player and Drawer
-    onCollide("player", "drawer", (s, w) => {
-      drawer.access = true;
-    });
+    // Collide Logic: Player and Drawer 
+    // onCollide("player", "drawer", (s, w) => {
+    //   drawer.access = true;
+    // });
+
+    // onCollide("player", "documentationStation", (s,w) => {
+    //   console.log("hit station"
+    //   )
+    // })
+    // onCollideEnd("player", "documentationStation", (s,w) => {
+    //   console.log("left station"
+    //   )
+    // })
 
     onCollide("player", "cdrawer", (s, w) => {
       cdrawer.access = true;
@@ -1052,8 +1119,8 @@ class CharacterMovement {
       }
       if (player.isColliding("scissors")) {
         scissorsCraft = true;
-      }
-    });
+    }
+})
 
     //handle saving data and uploading to DB
     function handleSavingData() {
@@ -1208,7 +1275,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1226,7 +1293,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1244,7 +1311,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 275 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1262,7 +1329,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(517.5 - 150 + gridX * 110, 155 + 25 + gridY * 96),
+            pos(385 + gridX * 95, 270 + gridY * 70),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1279,17 +1346,15 @@ class CharacterMovement {
 
     function showVendingContents(contents) {
       const popup = add([
-        rect(500, 600),
-        pos(475 - 150, 125 + 25),
+        sprite("backpack"),
+        pos(475 - 190, 125 + 25),
         z(11),
-        color(105, 105, 105),
         outline(4),
-        scale(0.75),
+        // scale(0.75),
         "vending",
       ]);
-
-      const startX = popup.pos.x + 42.5;
-      const startY = popup.pos.y + 30;
+      const startX = popup.pos.x + 105;
+      const startY = popup.pos.y + 125;
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
@@ -1330,36 +1395,12 @@ class CharacterMovement {
             itemKey: itemKey,
           },
         ]);
-
-        onClick(() => {
-          // Check if the mouse click occurred within the bounds of itemEntity
-          if (isClicked(vendingItem)) {
-            updatePocketVending(vendingItem, inPocket);
-          }
-        });
         // console.log(currRow);
         currRow++;
-        currentX += item.width + 50;
+        currentX += item.width + 35;
       }
 
       isPopupVisible = true;
-    }
-
-    function getDistance(x1, y1, x2, y2) {
-      let x = x2 - x1;
-      let y = y2 - y1;
-
-      return Math.sqrt(x * x + y * y);
-    }
-    // Function to check if the mouse click occurred within the bounds of an entity
-    function isClicked(item) {
-      let distance = getDistance(
-        mousePos().x,
-        mousePos().y,
-        item.pos.x,
-        item.pos.y
-      );
-      return distance <= 55;
     }
 
     let itemsInPocket = 0;
@@ -1434,7 +1475,79 @@ class CharacterMovement {
         vendingSelect = 0;
       }
     });
+    let isDocVisible = false
+    let areFinal = []
+    function showFinalItems() {
+      const docPop = add([
+        rect(500, 600),
+        pos(325, 150),
+        z(11),
+        color(204, 229, 255),
+        outline(4),
+        scale(0.75),
+        "final",
+      ]);
+      const startX = docPop.pos.x + 42.5;
+      const startY = docPop.pos.y + 30;
+      let currentX = startX;
+      let currentY = startY;
+      let currRow = 0;
+      for (let i = 0; i < areFinal.length; i++) {
+        const item = areFinal[i];
+        // const itemKey = item.itemKey;
+        // starts a new line
 
+        if (currRow === 3) {
+          currentY += item.height + 50;
+          currentX = startX;
+          currRow = 0;
+        }
+
+        const finalItem = add([
+          pos(currentX, currentY),
+          z(11),
+          sprite(`${item}`),
+          "final",
+          { itemKey: item},
+        ]);
+        currRow++;
+        currentX += 100;
+      }
+
+      isDocVisible = true;
+    }
+
+    let canAccessDocumentation = false;
+    let eventListenerAttached = false;
+
+    player.onCollide("documentationStation", () => {
+      canAccessDocumentation = true;
+
+    if (!eventListenerAttached) {
+      eventListenerAttached = true;
+
+      onKeyPress("enter", () => {
+        // If documentation cannot be accessed, simply return
+        if (!canAccessDocumentation) return;
+
+        if (isDocVisible) {
+          destroyAll("final");
+          isDocVisible = false;
+          SPEED = 500;
+        } else {
+          showFinalItems();
+          isDocVisible = true;
+          SPEED = 0;
+        }
+      });
+    }
+});
+
+      player.onCollideEnd("documentationStation", () => {
+        canAccessDocumentation = false;
+      });
+
+    
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
       // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
@@ -1550,7 +1663,6 @@ class CharacterMovement {
         destroyAll("craft");
       }
     }
-
     // Crafting Collisions
     onCollide("player", "craftingTable", (s, w) => {
       atCraftingTable = true;
@@ -1561,5 +1673,9 @@ class CharacterMovement {
       checkCraftable();
     });
   }
+
 }
+
+
 export const characterMovement = new CharacterMovement();
+

@@ -69,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_162928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "hasFound"
+    t.boolean "isFinal"
   end
 
   create_table "tools", charset: "utf8mb3", force: :cascade do |t|
