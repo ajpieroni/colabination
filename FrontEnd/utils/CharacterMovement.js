@@ -1085,6 +1085,7 @@ class CharacterMovement {
     }
 })
 
+
     //handle saving data and uploading to DB
     function handleSavingData() {
       //hard coded items and tools, should be dynamic at some point
@@ -1283,6 +1284,14 @@ class CharacterMovement {
         }
       }
     });
+    onKeyPress("m", () => {
+      this.music.paused = true;
+      handleSavingData();
+      
+      go("settings");
+        
+      });
+      
     onKeyPress("up", () => {
       if (isPopupVisible) {
         if (vendingSelect - 3 >= 0) {
@@ -1603,6 +1612,9 @@ class CharacterMovement {
         }
       }
     });
+
+
+    
 
     function checkCraftable() {
       if (
