@@ -34,6 +34,11 @@ class ItemsController < ApplicationController
     end
   end
 
+  def final
+    @final_items = Item.where(isFinal: true)
+    render json: @final_items
+  end
+
   # DELETE /items/1 or /items/1.json
   def destroy
     @item.destroy

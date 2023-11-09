@@ -42,13 +42,15 @@ puts 'seeding'
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
 
+
+
+    user1 = User.create(username: "pandaMan", pin: 1234)
+    user2 = User.create(username: "bruin36", pin: 2468)
+    user3 = User.create(username: "cats", pin: 1234)
 # Creating item-tools relationships
     ItemTool.create(item: paper, tool: hammer)
     ItemTool.create(item: paper, tool: scissors)
     ItemTool.create(item: paper, tool: hammer)
-
-# Creating fake userbase
-    user1 = User.create(username:"cats", pin:1234)
 
 # Creating paper combos
     Combination.create(tool: hammer, item1: paper, item2: paper, creation: wood)
