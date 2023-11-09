@@ -1,4 +1,5 @@
 class UIManager{
+    
 
     displayBlinkingUIMessage(content, position){
         // PARAMS:

@@ -46,6 +46,28 @@ export const load = {
         loadSound("soundtrack", "./assets/soundtrack.mp3")
         loadSound("craftFX", "./assets/crafting.m4a")
 
+        // !Save Menu
+        loadSprite("trees", "./assets/background.jpg")
+
+        loadSprite("mountains", "./assets/pixelbg2.jpeg")
+
+
+        //Developer sprites
+        loadSprite("Alex", "./assets/1Alex.png")
+        loadSprite("Dasol", "./assets/1Dasol.png")
+        loadSprite("Kelvin", "./assets/1Kelvin.png")
+        loadSprite("Olly", "./assets/1Olly.png")
+        loadSprite("Sophia", "./assets/1Sophia.png")
+        // 
+        loadSprite("AlexGlow", "./assets/AlexGlow.png")
+        loadSprite("OllyGlow", "./assets/OllyGlow.png")
+        loadSprite("KelvinGlow", "./assets/KelvinGlow.png")
+        loadSprite("DasolGlow", "./assets/DasolGlow.png")
+        loadSprite("SophiaGlow", "./assets/SophiaGlow.png")
+
+        //controls
+        loadSprite("coolBG", "./assets/coolClouds.png")
+
 
 
 
