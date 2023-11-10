@@ -13,9 +13,14 @@ kaboom({
 load.assets()
 
 const scenes = {
+    login: () => {
+        // go to login screen
+        uiManager.displayLoginScreen()
+            
+    },
     menu: () =>{
 
-        go("menu");        
+        // go("menu");        
         // add takes in an array of components
         // add([text("test"), pos(500, 500), color(0,0,0)])
         uiManager.displayMainMenu()
@@ -52,4 +57,4 @@ for (const key in scenes){
     scene(key, scenes[key])
 }
 
-go("menu")
+go("login")
