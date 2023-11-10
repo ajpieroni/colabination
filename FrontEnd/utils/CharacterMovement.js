@@ -728,6 +728,20 @@ class CharacterMovement {
         .then((data) => {
           console.log("Combination result:", data);
           console.log(`${data.creation}`);
+
+          // fetch(`http://localhost:8081/find_by_name/${data.creation}`)
+          // .then((response) => {
+          //   if(!response.ok){
+          //     throw new Error(`HTTP error! status: ${response.status}`);
+          //   }
+          //   return response.json;
+          // }).then((additionalData) =>{
+          //   console.log("new item result:", additionalData);
+          // })
+
+
+          // now check for user_items final_items
+
           // dubious = true;
           callback(data.creation);
         })
