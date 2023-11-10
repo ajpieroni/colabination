@@ -1,5 +1,23 @@
 # Meeting Notes
 
+## Nov 10th
+Agenda:
+- [] Take a look at our MVP checklist
+  - [] sign up as a user
+  - [] login as a user
+  - [] craft the paper trail 1, 2, 
+  - [] craft glass trail 1
+  - [] craft metal trail 1
+  - [] craft trash
+  - [] save game progress
+- [] To Do:
+  - []
+- [] Additional features:
+  - [] tutorial
+  - [] danai special(aka ending)
+  - [] about us page
+  - [] files re-org
+
 ## November 3rd
 
 Progress Report:
