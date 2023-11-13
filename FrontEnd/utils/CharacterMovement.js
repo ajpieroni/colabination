@@ -746,9 +746,7 @@ class CharacterMovement {
               console.error("Error fetching data:", error);
             });
 
-          // now check for user_items final_items
 
-          // dubious = true;
         })
         .catch((error) => {
           console.error("Error fetching combination:", error);
@@ -925,15 +923,23 @@ class CharacterMovement {
               "madeItem",
               {
                 itemKey: result.itemKey,
+                isFinal: result.isFinal
               },
+
             ]);
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
-              !vendingKeys.includes(madeItem.itemKey)
+              !vendingKeys.includes(madeItem.itemKey) && !madeItem.isFinal
             ) {
+              console.log("passed", !madeItem.isFinal)
               vendingContents.push(madeItem);
               vendingKeys.push(madeItem.itemKey);
+            }
+
+            if(madeItem.isFinal){
+              areFinal.push(madeItem);
+
             }
             await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -944,8 +950,10 @@ class CharacterMovement {
             }
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
-            updatePocketVending(result, inPocket);
+            if(!madeItem.isFinal){
+              updatePocketVending(result, inPocket);
 
+            }
             // updatePocket(madeItem, inPocket);
             madeItem.use(body({ isStatic: true }));
             // atCraftingTable = false;
