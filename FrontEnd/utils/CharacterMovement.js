@@ -294,7 +294,11 @@ class CharacterMovement {
               itemKey: itemName,
             },
           ]);
-          areFinal.push(itemName);
+          console.log(`${itemName} pushed to are final`)
+          if(!areFinal.includes(itemName)){
+            areFinal.push(itemName);
+
+          }
         });
       })
       .catch((error) => {
@@ -303,7 +307,6 @@ class CharacterMovement {
     //loading items
     let hasSavedItems = [];
     let hasSavedFinal = [];
-
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
@@ -346,7 +349,11 @@ class CharacterMovement {
                 vendingKeys.push(savedItem.itemKey);
                 vendingContents.push(savedItem);
               }else{
-                areFinal.push(savedItem.itemKey);
+                console.log(`${savedItem.itemKey} pushed to are final`)
+                if(!areFinal.includes(itemName)){
+                  areFinal.push(itemName);
+      
+                }
               }
               
               // console.log(`pushed`);
@@ -964,6 +971,7 @@ class CharacterMovement {
             }
 
             if(madeItem.isFinal){
+              console.log(`${madeItem.itemKey} pushed to are final`)
               areFinal.push(madeItem.itemKey);
 
             }
@@ -1284,6 +1292,7 @@ class CharacterMovement {
       }
       for (let i = 0; i < areFinal.length; i++) {
         console.log(areFinal)
+  
         currFinals.push(areFinal[i]);
       }
 
