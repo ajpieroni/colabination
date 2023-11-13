@@ -22,7 +22,7 @@ puts 'seeding'
     metal = Item.create(name: 'metal', description: 'A substance of shininess and conductivity', item_type: 'material', rarity: 1, isFinal: false)
     plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1, isFinal: false)
     nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1, isFinal: false)
-    trash =  Item.create(name: 'trash', description: 'A whole lot of junk', item_type: 'nothing', rarity: 1)
+    trash =  Item.create(name: 'trash', description: 'A whole lot of junk', item_type: 'nothing', rarity: 1, isFinal: true)
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
