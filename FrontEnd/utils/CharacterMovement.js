@@ -536,10 +536,18 @@ class CharacterMovement {
       currToolY = w.pos.y
       currentTool = w;
       toolAccess = true;
+      add([
+        text(w.toolKey, {size: 16}),
+        pos(w.pos.x, currToolY - 18),
+        color(242, 140, 40),
+        z(100),
+        "interactable"
+      ])
     })
     onCollideEnd("player", "tool", () =>{
       toolAccess = false;
       currentTool = "";
+      destroyAll("interactable")
     })
 
     let canPopItem = true;
