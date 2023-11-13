@@ -883,13 +883,26 @@ class CharacterMovement {
         if (tableItems.length >= 1) {
           madeCraft(result);
 
+          // let craftText = `You made ${result.itemKey}! ${
+          //   result.isFinal ? "You can find this final item in your documentation station" : ""
+          // }`;
+          
+
+
+
           async function madeCraft() {
+            let craftText = `You made ${result.itemKey}! ${
+              result.isFinal ? `You can find ${result.itemKey} in the documentation station.` : ""
+            }`;
+
+            let textSizeX = result.isFinal ? (350-100-50-10-5-5-5-5) : (440 + 40 + 25 - 50);
+
             destroyAll("crafting");
             add([
-              text(`You made ${result.itemKey}!`),
-              pos(440 + 40 + 25 - 50, 615), // adjust as necessary to position the text on the button
+              text(craftText),
+              pos(textSizeX, 615), 
               z(53),
-              color(0, 0, 0), // color of the text,
+              color(0, 0, 0),
               scale(0.5),
               "crafting",
             ]);
