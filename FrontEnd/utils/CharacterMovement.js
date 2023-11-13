@@ -2,15 +2,24 @@
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
+  music = null;
   constructor() {
     this.level = null;
+    localStorage.setItem("soundTogg", 1);
+    
   }
   display() {
     //! Level Schema
 
-    const audioPlay = play("soundtrack", {
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
+    console.log("here's volume setting", volumeSetting);
+    //! Level Schema
+    // stop("soundtrack");
+    this.music = play("soundtrack", {
+      volume: volumeSetting,
       loop: true,
-      volume: 0.15,
     });
 
     const block_size = 32;
@@ -109,6 +118,9 @@ class CharacterMovement {
 
   play() {
     // ! Game Objects
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
     const block_size = 64;
 
     const cricut = add([
@@ -296,6 +308,7 @@ class CharacterMovement {
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
+      console.log(`Fetching for ${username}`);
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_items?username=${username}`)
           .then((response) => {
@@ -306,12 +319,12 @@ class CharacterMovement {
           })
           .then((data) => {
             const itemNames = data.items; // Access the items property
-            
 
             itemNames.forEach((itemName) => {
               const savedItem = add([
                 // rect(item.width, item.height) ,
-                pos(0,0),
+                pos(0, 0),
+                pos(0, 0),
                 z(0),
                 // color(item.color.r, item.color.g, item.color.b),
                 sprite(`${itemName}`),
@@ -399,9 +412,9 @@ class CharacterMovement {
         // onTable: false
       },
 
-      yarn: {
-        spriteName: "yarn",
-        alertSprite: "yarnAlert",
+      thread: {
+        spriteName: "thread",
+        alertSprite: "threadAlert",
 
         initialPos: { x: 330, y: 300 },
         hasFound: false,
@@ -652,6 +665,80 @@ class CharacterMovement {
       }
     }
 
+    function craftingBackend(ingredients) {
+      // !POSTING
+ 
+      let toolId;
+      // let ingredients = tableItems;
+      if (atCraftingTable) {
+      // *Hands are id=3, we will always use this for crafting table
+        toolId = 3;
+      }else{
+     // !TODO: fetch tool id 
+      // http://localhost:8081/tools/find_by_name/scissors
+      }
+
+      console.log(ingredients);
+
+      let item1sprite = ingredients[0];
+      console.log("item 1 sprite", item1sprite);
+      let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
+      console.log("item 2 sprite", item2sprite);
+
+      fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
+        .then((response) => response.json())
+        .then((item1data) => {
+          console.log("Item 1:", item1data);
+          if (item2sprite !== "nothing") {
+            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+              .then((response) => response.json())
+              .then((item2data) => {
+                console.log("Item 2:", item2data);
+                fetchCombination(
+                  toolId,
+                  item1data.id,
+                  item2data.id,
+                  handleCreation
+                );
+              })
+              .catch((error) => console.error("Error fetching item 2:", error));
+          } else {
+            fetchCombination(toolId, item1data.id, 6, handleCreation);
+          }
+        })
+        .catch((error) => console.error("Error fetching item 1:", error));
+
+      // fetchCombination(toolId, item1data, item2data)
+      // http://localhost:8081/items/find_by_name/paper
+      // http://localhost:8081/tools/find_by_name/scissors
+      // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+    }
+    let result = {};
+
+    function fetchCombination(toolId, item1Id, item2Id, callback) {
+      fetch(
+        `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Combination result:", data);
+          console.log(`${data.creation}`);
+          // dubious = true;
+          callback(data.creation);
+        })
+        .catch((error) => {
+          console.error("Error fetching combination:", error);
+        });
+    }
+
+    function handleCreation(creation) {
+      result.itemKey = creation;
+    }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
     async function showContainer(tableItems) {
@@ -674,14 +761,26 @@ class CharacterMovement {
       if (ingredients.length == 3) {
         currentx = currentx - 125;
       }
+      if (ingredients.length == 1) {
+        currentx = currentx + 100;
+      }
+
+      let possessionText = `You possess ${ingredients.length} item${
+        ingredients.length > 1 ? "s" : ""
+      }:`;
+
       add([
-        text(`You possess ${ingredients.length} items:`),
+        text(possessionText),
         pos(415, 175),
         z(51),
         color(0, 0, 0),
         scale(0.5),
         "crafting",
       ]);
+
+      console.log("here are ingredients");
+      craftingBackend(ingredients);
+
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
 
@@ -692,7 +791,9 @@ class CharacterMovement {
           color(228, 228, 228),
           "crafting",
         ]);
-        play("bubble");
+        if (volumeSetting) {
+          play("bubble");
+        }
         const trailItem = add([
           // rect(item.width, item.height) ,
           pos(currentx, currenty),
@@ -712,23 +813,13 @@ class CharacterMovement {
         ]);
         currentx += 200;
       }
-      let result = {};
-      let dubious = true;
 
-      if (tableItems.includes("hammer") && tableItems.includes("paper")) {
-        let madeItemKey = "wood";
-        result.itemKey = madeItemKey;
-        dubious = true;
+      let message;
+      if (result.itemKey === "trash") {
+        message = "That's definitely creative... let's see what happens!";
       } else {
-        let madeItemKey = "trash";
-        result.itemKey = madeItemKey;
-        dubious = false;
+        message = "Congratulations! You can make something with these items.";
       }
-
-      // console.log("dub", dubious);
-      let message = dubious
-        ? "Congratulations! You can make something with these items."
-        : "That's definitely creative... let's see what happens!";
 
       console.log("result item key", result.itemKey);
       add([
@@ -739,14 +830,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      // add([
-      //   text(`Would you like to proceed?`),
-      //   pos(215 + 150 + 50 - 25, 525 + 50 - 100),
-      //   z(51),
-      //   color(0, 0, 0),
-      //   scale(0.5),
-      //   "crafting",
-      // ]);
+
       // *Craft Button
       const craftButton = add([
         rect(150, 50),
@@ -777,7 +861,7 @@ class CharacterMovement {
       // let result = "wood";
 
       onKeyPress("enter", () => {
-        if (tableItems.length >= 2 && !isPopupVisible) {
+        if (tableItems.length >= 1 && !isPopupVisible) {
           console.log("here is popup", isPopupVisible)
           madeCraft(result);
 
@@ -793,8 +877,9 @@ class CharacterMovement {
             ]);
 
             await new Promise((resolve) => setTimeout(resolve, 500));
-            play("bubble");
-
+            if (volumeSetting) {
+              play("bubble");
+            }
             const trailCircle = add([
               circle(64),
               pos(440 + 40 + 25 + 25, 135 + 100),
@@ -822,13 +907,7 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-            // console.log("here result", result.itemKey);
-            // updatePocketVending(madeItem, inPocket);
-            // console.log("here venidng", vendingContents);
-            // console.log(
-            //   "here venidng contains",
-            //   !vendingContents.includes(madeItem)
-            // );
+
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
@@ -841,7 +920,9 @@ class CharacterMovement {
 
             exitCraft();
 
-            play("bubble");
+            if (volumeSetting) {
+              play("bubble");
+            }
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             updatePocketVending(result, inPocket);
@@ -869,7 +950,9 @@ class CharacterMovement {
       playerCraftsScissorsPaper();
       console.log("plays sound?");
       // getSound("bubble");
-      play("bubble");
+      if (volumeSetting) {
+        play("bubble");
+      }
     });
 
     onKeyPress("enter", () => {
@@ -878,7 +961,7 @@ class CharacterMovement {
         atCraftingTable &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 2 && !isPopupVisible
+        tableItems.length >= 1 && !isPopupVisible
       ) {
         destroyAll("craft");
         add([
@@ -897,8 +980,9 @@ class CharacterMovement {
 
           // scale(.5)
         ]);
-        play("craftFX");
-
+        if (volumeSetting) {
+          play("craftFX");
+        }
         // setTimeout(clearTable, 3000);
 
         // console.log(`change scene here to ${tableItems}`);
@@ -1067,13 +1151,13 @@ class CharacterMovement {
     }
 })
 
+
     //handle saving data and uploading to DB
     function handleSavingData() {
       //hard coded items and tools, should be dynamic at some point
       console.log("vending keys", vendingKeys);
       let currItems = [];
       let currTools = [];
-
 
       for (let i = 0; i < vendingKeys.length; i++) {
         if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
@@ -1153,39 +1237,39 @@ class CharacterMovement {
       handleSavingData();
     });
     let menuOpen = false;
-    onKeyPress("m", () => {
-      if (!menuOpen) {
-        menuOpen = true;
-        SPEED = 0;
-        const saveButton = add([
-          text("Press Enter to Save!"),
-          pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
-          z(53),
-          color(0, 0, 0), // color of the text,
-          scale(0.5),
-          "saving",
-        ]);
-        // Craft Button Flash
-        let isBright = true;
-        setInterval(() => {
-          if (isBright) {
-            saveButton.color = rgb(228, 228, 228); // less bright color
-          } else {
-            saveButton.color = rgb(80, 80, 80); // original color
-          }
-          isBright = !isBright;
-        }, 250);
-      }
-    });
-    onKeyPress("enter", () => {
-      if(menuOpen){
-        handleSavingData();
-        SPEED = 300;
-        menuOpen = false;
-        destroyAll("saving")
-      }
+    // onKeyPress("m", () => {
 
-    });
+    //   if (!menuOpen) {
+    //     menuOpen = true;
+    //     SPEED = 0;
+    //     const saveButton = add([
+    //       text("Press Enter to Save!"),
+    //       pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+    //       z(53),
+    //       color(0, 0, 0), // color of the text,
+    //       scale(0.5),
+    //       "saving",
+    //     ]);
+    //     // Craft Button Flash
+    //     let isBright = true;
+    //     setInterval(() => {
+    //       if (isBright) {
+    //         saveButton.color = rgb(228, 228, 228); // less bright color
+    //       } else {
+    //         saveButton.color = rgb(80, 80, 80); // original color
+    //       }
+    //       isBright = !isBright;
+    //     }, 250);
+    //   }
+    // });
+    // onKeyPress("enter", () => {
+    //   if (menuOpen) {
+    //     handleSavingData();
+    //     SPEED = 300;
+    //     menuOpen = false;
+    //     destroyAll("saving");
+    //   }
+    // });
 
     // !INVENTORY
 
@@ -1266,6 +1350,13 @@ class CharacterMovement {
         }
       }
     });
+    onKeyPress("m", () => {
+      this.music.paused = true;
+      handleSavingData();
+      go("settings");
+        
+      });
+      
     onKeyPress("up", () => {
       if (isPopupVisible) {
         if (vendingSelect - 3 >= 0) {
@@ -1356,7 +1447,9 @@ class CharacterMovement {
     function updatePocketVending(material, inPocket) {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
-          play("bubble");
+          if (volumeSetting) {
+            play("bubble");
+          }
           // console.log(`Incoming material: ${material}, ${material.itemKey}`);
           const item1 = add([
             pos(880, 700),
@@ -1370,7 +1463,9 @@ class CharacterMovement {
           console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
           inPocket.push(item1);
         } else {
-          play("bubble");
+          if (volumeSetting) {
+            play("bubble");
+          }
           const item2 = add([
             pos(880, 775),
             z(11),
@@ -1500,12 +1595,17 @@ class CharacterMovement {
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
       // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
-      if (!vendingContents.includes(materialEntity) && !vendingKeys.includes(materialEntity.itemKey)) {
-        console.log(`Pushing ${materialEntity.itemKey} to vending machine`)
+      if (
+        !vendingContents.includes(materialEntity) &&
+        !vendingKeys.includes(materialEntity.itemKey)
+      ) {
+        console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
         vendingContents.push(materialEntity);
         vendingKeys.push(materialEntity.itemKey);
       }
-      play("bubble");
+      if (volumeSetting) {
+        play("bubble");
+      }
 
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
@@ -1566,7 +1666,9 @@ class CharacterMovement {
           checkCraftable();
 
           if (itemsInPocket !== 0) {
-            play("bubble");
+            if (volumeSetting) {
+              play("bubble");
+            }
             itemsInPocket--;
             let item = inPocket.pop();
             console.log("here is popped", item);
@@ -1578,12 +1680,14 @@ class CharacterMovement {
       }
     });
 
+
+    
+
     function checkCraftable() {
       if (
         atCraftingTable &&
         // tableItems.includes("paper") &&
-        // tableItems.includes("hammer") || atCraftingTable && tableItems.includes("yarn") && tableItems.includes("hammer")
-        tableItems.length >= 2 && !isPopupVisible
+        tableItems.length >= 1 && !isPopupVisible
       ) {
         isCraftable = true;
         if (isCraftable) {

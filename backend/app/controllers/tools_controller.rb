@@ -62,6 +62,16 @@ class ToolsController < ApplicationController
     end
   end
 
+  def find_by_name
+@tool = Tool.find_by(name: params[:name])
+    
+    if @tool
+      render json: { id: @tool.id }
+    else
+      render json: { error: "Tool not found" }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tool
