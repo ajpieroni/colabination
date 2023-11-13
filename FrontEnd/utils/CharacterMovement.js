@@ -938,7 +938,7 @@ class CharacterMovement {
             }
 
             if(madeItem.isFinal){
-              areFinal.push(madeItem);
+              areFinal.push(madeItem.itemKey);
 
             }
             await new Promise((resolve) => setTimeout(resolve, 1000));
