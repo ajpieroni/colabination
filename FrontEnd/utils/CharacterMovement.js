@@ -317,9 +317,11 @@ class CharacterMovement {
             return response.json();
           })
           .then((data) => {
-            const itemNames = data.items; // Access the items property
-            itemNames.forEach((itemName) => {
-              console.log(itemName)
+            const items = data.items; // Access the items property
+            items.forEach((item) => {
+              const itemName = item[0]; 
+              const isFinal = item[1];
+          console.log(itemName, isFinal);
               const savedItem = add([
                 // rect(item.width, item.height) ,
                 pos(0, 0),
@@ -335,15 +337,21 @@ class CharacterMovement {
                 "material",
                 {
                   itemKey: itemName,
+                  isFinal: isFinal
                 },
               ]);
               // console.log(`itemNames values: ${itemName}`);
-              hasSavedItems.push(itemName);
-              vendingKeys.push(savedItem.itemKey);
-              vendingContents.push(savedItem);
+              if (!savedItem.isFinal){
+                hasSavedItems.push(itemName);
+                vendingKeys.push(savedItem.itemKey);
+                vendingContents.push(savedItem);
+              }else{
+                areFinal.push(savedItem.itemKey);
+              }
+              
               // console.log(`pushed`);
             });
-            resolve(itemNames);
+            // resolve(itemNames);
           })
           .catch((error) => {
             reject(error);
@@ -1595,6 +1603,7 @@ class CharacterMovement {
     });
     let isDocVisible = false;
     let areFinal = [];
+
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -1612,6 +1621,8 @@ class CharacterMovement {
       let currRow = 0;
       for (let i = 0; i < areFinal.length; i++) {
         const item = areFinal[i];
+        console.log(item)
+
         // const itemKey = item.itemKey;
         // starts a new line
 

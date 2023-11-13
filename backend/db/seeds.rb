@@ -26,10 +26,10 @@ puts 'seeding'
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
-    cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
-    card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
-    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
-    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
+    cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1, isFinal: false)
+    card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1, isFinal: false)
+    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1, isFinal: true)
+    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1, isFinal: true)
 
 
 # Creating tools
