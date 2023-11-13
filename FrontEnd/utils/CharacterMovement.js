@@ -769,7 +769,6 @@ class CharacterMovement {
       result.itemKey = creation;
       result.isFinal = final;
       console.log("here is crafted result: ", result)
-      handleSavingData();
       
     }
     // !Crafting Function: Paper Trail
