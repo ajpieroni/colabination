@@ -396,13 +396,13 @@ class CharacterMovement {
     let nearCraftingTable = false;
     let currentIndex = 0;
     const items = {
-      scissors: {
-        spriteName: "scissors",
-        alertSprite: "scissorsAlert",
-        initialPos: { x: 300, y: 300 },
-        hasFound: false,
-        alertBox: null,
-      },
+      // scissors: {
+      //   spriteName: "scissors",
+      //   alertSprite: "scissorsAlert",
+      //   initialPos: { x: 300, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      // },
       paper: {
         spriteName: "paper",
         alertSprite: "paperAlert",
@@ -420,14 +420,14 @@ class CharacterMovement {
         hasFound: false,
         alertBox: null,
       },
-      hammer: {
-        spriteName: "hammer",
-        alertSprite: "hammerAlert",
-        initialPos: { x: 310, y: 300 },
-        hasFound: false,
-        alertBox: null,
-        // onTable: false
-      },
+      // hammer: {
+      //   spriteName: "hammer",
+      //   alertSprite: "hammerAlert",
+      //   initialPos: { x: 310, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      //   // onTable: false
+      // },
     };
 
     // !Init Functions
@@ -729,15 +729,15 @@ class CharacterMovement {
           console.log("Combination result:", data);
           console.log(`${data.creation}`);
 
-          // fetch(`http://localhost:8081/find_by_name/${data.creation}`)
-          // .then((response) => {
-          //   if(!response.ok){
-          //     throw new Error(`HTTP error! status: ${response.status}`);
-          //   }
-          //   return response.json;
-          // }).then((additionalData) =>{
-          //   console.log("new item result:", additionalData);
-          // })
+          fetch(`http://localhost:8081/items/find_by_name/${data.creation}`)
+          .then((response) => {
+            if(!response.ok){
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json;
+          }).then((additionalData) =>{
+            console.log("new item result:", additionalData);
+          })
 
 
           // now check for user_items final_items
