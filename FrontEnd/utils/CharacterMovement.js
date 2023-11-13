@@ -296,7 +296,6 @@ class CharacterMovement {
           ]);
           areFinal.push(itemName);
         });
-        resolve(itemNames);
       })
       .catch((error) => {
         console.error("Error fetching final items:", error);
