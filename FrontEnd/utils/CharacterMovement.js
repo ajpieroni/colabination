@@ -302,6 +302,7 @@ class CharacterMovement {
       });
     //loading items
     let hasSavedItems = [];
+    let hasSavedFinal = [];
 
     let hasSavedTools = [];
 
@@ -317,8 +318,8 @@ class CharacterMovement {
           })
           .then((data) => {
             const itemNames = data.items; // Access the items property
-
             itemNames.forEach((itemName) => {
+              console.log(itemName)
               const savedItem = add([
                 // rect(item.width, item.height) ,
                 pos(0, 0),
@@ -357,6 +358,7 @@ class CharacterMovement {
       .catch((error) => {
         console.error("Error fetching user items:", error);
       });
+
     // load in tools
     function fetchUserTools(username) {
       return new Promise((resolve, reject) => {
@@ -379,9 +381,6 @@ class CharacterMovement {
               });
               resolve(toolNames);
             }
-
-
-
           })
           .catch((error) => {
             reject(error);
@@ -1203,14 +1202,13 @@ class CharacterMovement {
       console.log("vending keys", vendingKeys);
       let currItems = [];
       let currTools = [];
+      let currFinals = [];
 
       for (let i = 0; i < vendingKeys.length; i++) {
-        if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
-          currTools.push(vendingKeys[i]);
-        } else {
           currItems.push(vendingKeys[i]);
-        }
       }
+
+     
       // let currItems = vendingKeys;
       // * will be renamed as machines
       // let currTools = ["hammer"]
@@ -1276,6 +1274,40 @@ class CharacterMovement {
           console.log(`You've already saved ${currTool}`);
         }
       }
+      for (let i = 0; i < areFinal.length; i++) {
+        console.log(areFinal)
+        currFinals.push(areFinal[i]);
+      }
+
+      for (let i = 0; i < currFinals.length; i++) {
+        const currFinal = currFinals[i];
+        // console.log(`hasSaved: ${hasSavedItems}`);
+        if (!hasSavedFinal.includes(currFinals[i])) {
+          {
+            console.log(`Attempting to save ${currFinal}`);
+
+            fetch("http://localhost:8081/user_items", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: currFinal, username: username }),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  return Promise.reject("Failed to save final item");
+                }
+                console.log(`Item ${currFinal} saved!`, response);
+              })
+              .catch((error) => {
+                console.error("Error saving items:", error);
+              });
+            hasSavedFinal.push(currFinal);
+          }
+        } else {
+          console.log(`You've already saved ${currFinal}`);
+        }
+      } 
     }
     // saving for now :D
     onKeyPress("z", () => {
