@@ -861,7 +861,8 @@ class CharacterMovement {
       // let result = "wood";
 
       onKeyPress("enter", () => {
-        if (tableItems.length >= 1) {
+        if (tableItems.length >= 1 && !isPopupVisible) {
+          console.log("here is popup", isPopupVisible)
           madeCraft(result);
 
           async function madeCraft() {
@@ -960,7 +961,7 @@ class CharacterMovement {
         atCraftingTable &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 1
+        tableItems.length >= 1 && !isPopupVisible
       ) {
         destroyAll("craft");
         add([
@@ -1382,6 +1383,7 @@ class CharacterMovement {
     });
 
     function showVendingContents(contents) {
+      console.log("vending contents shown")
       const popup = add([
         sprite("backpack"),
         pos(475 - 190, 125 + 25),
@@ -1511,6 +1513,7 @@ class CharacterMovement {
         SPEED = 300;
       } else {
         showVendingContents(vendingContents);
+        destroyAll("craft");
         isPopupVisible = true;
         SPEED = 0;
         vendingSelect = 0;
@@ -1637,7 +1640,7 @@ class CharacterMovement {
         table_y = 350;
       }
 
-      if (atCraftingTable && onItemsOnTable >= 3) {
+      if (atCraftingTable && onItemsOnTable >= 3 && !isPopupVisible) {
         alert("There are too many items on the table; try crafting!");
         // checkCraftable();
       } else {
@@ -1645,7 +1648,7 @@ class CharacterMovement {
           "check",
           atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
         );
-        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6) {
+        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
           itemsInPocket--;
 
           let item = inPocket.pop();
@@ -1684,7 +1687,7 @@ class CharacterMovement {
       if (
         atCraftingTable &&
         // tableItems.includes("paper") &&
-        tableItems.length >= 1
+        tableItems.length >= 1 && !isPopupVisible
       ) {
         isCraftable = true;
         if (isCraftable) {
@@ -1707,7 +1710,7 @@ class CharacterMovement {
           ]);
         }
       }
-      if (!atCraftingTable) {
+      if (!atCraftingTable || isPopupVisible) {
         destroyAll("craft");
       }
     }
