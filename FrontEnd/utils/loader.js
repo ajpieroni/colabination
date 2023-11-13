@@ -21,6 +21,10 @@ export const load = {
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
         loadSprite("paper", "./assets/paper.png")
         loadSprite("trash", "./assets/trash.png")
+        loadSprite("glass", "./assets/glass.png")
+        loadSprite("stainedglass", "./assets/stainedglass.png")
+        loadSprite("window", "./assets/window.png")
+
         // !TOBE MADE:
         loadSprite("card", "./assets/benchy.png")
         loadSprite("kite", "./assets/benchy.png")

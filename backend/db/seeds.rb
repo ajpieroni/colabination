@@ -30,6 +30,9 @@ puts 'seeding'
     kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
     origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
 
+# Creating glass trail
+    stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
+    window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
 
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
@@ -63,6 +66,9 @@ puts 'seeding'
     # !Paper combos: level 2
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
 
+# Glass combos:
+    Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
+    Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 # hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
