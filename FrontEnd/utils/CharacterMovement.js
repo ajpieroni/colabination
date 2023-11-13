@@ -343,20 +343,16 @@ class CharacterMovement {
                   isFinal: isFinal
                 },
               ]);
-              // console.log(`itemNames values: ${itemName}`);
               if (!savedItem.isFinal){
                 hasSavedItems.push(itemName);
                 vendingKeys.push(savedItem.itemKey);
                 vendingContents.push(savedItem);
               }else{
-                console.log(`${savedItem.itemKey} pushed to are final`)
                 if(!areFinal.includes(itemName)){
                   areFinal.push(itemName);
       
                 }
               }
-              
-              // console.log(`pushed`);
             });
             // resolve(itemNames);
           })
@@ -386,13 +382,10 @@ class CharacterMovement {
           })
           .then((data) => {
             const toolNames = data.items; // Access the items property
-            // console.log(toolNames)
           
               if(toolNames){
                 toolNames.forEach((toolName) => {
-                // console.log(`toolNames values: ${toolName}`);
                 hasSavedTools.push(toolName);
-                // console.log(`pushed`);
               });
               resolve(toolNames);
             }
@@ -776,6 +769,7 @@ class CharacterMovement {
       result.itemKey = creation;
       result.isFinal = final;
       console.log("here is crafted result: ", result)
+      handleSavingData();
       
     }
     // !Crafting Function: Paper Trail
@@ -970,7 +964,8 @@ class CharacterMovement {
               vendingKeys.push(madeItem.itemKey);
             }
 
-            if(madeItem.isFinal){
+            
+            if(madeItem.isFinal && !areFinal.includes(madeItem.itemKey)){
               console.log(`${madeItem.itemKey} pushed to are final`)
               areFinal.push(madeItem.itemKey);
 
