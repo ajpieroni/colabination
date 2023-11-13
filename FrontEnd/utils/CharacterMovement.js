@@ -246,7 +246,7 @@ class CharacterMovement {
       { access: false },
     ]);
  
-    let curr_user = 'cats';
+    let curr_user = localStorage.getItem("username");
 
     function fetchData(url) {
         return new Promise((resolve, reject) => {
