@@ -279,7 +279,7 @@ class CharacterMovement {
       `http://localhost:8081/user_items/final_items?username=${curr_user}`
     )
       .then((final) => {
-        console.log(final);
+        console.log("final:",final);
         const itemNames = final.final_items;
         itemNames.forEach((itemName) => {
           const savedItem = add([
@@ -370,13 +370,19 @@ class CharacterMovement {
           })
           .then((data) => {
             const toolNames = data.items; // Access the items property
+            // console.log(toolNames)
+          
+              if(toolNames){
+                toolNames.forEach((toolName) => {
+                // console.log(`toolNames values: ${toolName}`);
+                hasSavedTools.push(toolName);
+                // console.log(`pushed`);
+              });
+              resolve(toolNames);
+            }
 
-            toolNames.forEach((toolName) => {
-              // console.log(`toolNames values: ${toolName}`);
-              hasSavedTools.push(toolName);
-              // console.log(`pushed`);
-            });
-            resolve(toolNames);
+
+
           })
           .catch((error) => {
             reject(error);
@@ -739,7 +745,7 @@ class CharacterMovement {
             })
             .then((additionalData) => {
               console.log("new item result:", additionalData); 
-              callback(data.creation, additionalData.data.isFinal);
+              callback(data.creation, additionalData.data.isFinal, data);
 
             })
             .catch((error) => {
@@ -753,10 +759,11 @@ class CharacterMovement {
         });
     }
 
-    function handleCreation(creation, final) {
+    function handleCreation(creation, final, item) {
       result.itemKey = creation;
       result.isFinal = final;
       console.log("here is crafted result: ", result)
+      
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;

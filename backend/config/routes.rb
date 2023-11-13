@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :user_items, only: [:create, :index] do
     collection do
       get 'final_items'
+      post 'final_items'
     end
   end
   # resources :user_items, only: [:create, :index]  

@@ -45,6 +45,7 @@ puts 'seeding'
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
 
+    
 
 
     user1 = User.create(username: "pandaMan", pin: 1234)
