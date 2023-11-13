@@ -467,7 +467,7 @@ class CharacterMovement {
       }
     }
 
-    // keep merge end?
+    // keep merge
 
     // !Player
 

@@ -24,15 +24,15 @@ export default function InitialItems(){
         { itemKey: "paper" },
       ])
       add([
-        sprite("yarn"),
+        sprite("thread"),
         area(),
         body(),
         pos(center().x + 100, center().y),
         z(10),
         scale(1.5),
         "material",
-        { image: "yarn" },
-        { itemKey: "yarn" },
+        { image: "thread" },
+        { itemKey: "thread" },
       ])
       add([
         sprite("hammer"),
