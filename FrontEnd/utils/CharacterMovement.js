@@ -1,4 +1,3 @@
-
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -6,7 +5,6 @@ class CharacterMovement {
   constructor() {
     this.level = null;
     localStorage.setItem("soundTogg", 1);
-    
   }
   display() {
     //! Level Schema
@@ -157,11 +155,11 @@ class CharacterMovement {
       { alertSprite: "cricutAlert" },
     ]);
     const documentationStation = add([
-      rect(block_size, block_size*2),
+      rect(block_size, block_size * 2),
       color(0, 100, 0),
       area(),
       body({ isStatic: true }),
-      pos(900 - 15 - 10-50-50, 250 - 10 - 10+20-100-50),
+      pos(900 - 15 - 10 - 50 - 50, 250 - 10 - 10 + 20 - 100 - 50),
       rotate(270),
       // z(10),
       "documentationStation",
@@ -257,51 +255,52 @@ class CharacterMovement {
       "printer",
       { access: false },
     ]);
- 
-    let curr_user = 'cats';
+
+    let curr_user = "cats";
 
     function fetchData(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
-    }
-    fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
-        .then((final) => {
-          console.log(final)
-          const itemNames = final.final_items; 
-            itemNames.forEach((itemName) => {
-              const savedItem = add([     
-                  pos(0,0),           
-                  sprite(`${itemName}`),
-
-                  scale(1.5),
-                  area(),
-                  z(0),
-                  "material",
-                  {
-                    itemKey: itemName,
-                  },
-                ]);
-            areFinal.push(itemName);
+      return new Promise((resolve, reject) => {
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
           });
-          resolve(itemNames);
-          }
-        )
-        .catch(error => {
-            console.error('Error fetching final items:', error);
+      });
+    }
+    fetchData(
+      `http://localhost:8081/user_items/final_items?username=${curr_user}`
+    )
+      .then((final) => {
+        console.log(final);
+        const itemNames = final.final_items;
+        itemNames.forEach((itemName) => {
+          const savedItem = add([
+            pos(0, 0),
+            sprite(`${itemName}`),
+
+            scale(1.5),
+            area(),
+            z(0),
+            "material",
+            {
+              itemKey: itemName,
+            },
+          ]);
+          areFinal.push(itemName);
         });
+        resolve(itemNames);
+      })
+      .catch((error) => {
+        console.error("Error fetching final items:", error);
+      });
     //loading items
     let hasSavedItems = [];
 
@@ -667,15 +666,15 @@ class CharacterMovement {
 
     function craftingBackend(ingredients) {
       // !POSTING
- 
+
       let toolId;
       // let ingredients = tableItems;
       if (atCraftingTable) {
-      // *Hands are id=3, we will always use this for crafting table
+        // *Hands are id=3, we will always use this for crafting table
         toolId = 3;
-      }else{
-     // !TODO: fetch tool id 
-      // http://localhost:8081/tools/find_by_name/scissors
+      } else {
+        // !TODO: fetch tool id
+        // http://localhost:8081/tools/find_by_name/scissors
       }
 
       console.log(ingredients);
@@ -729,29 +728,37 @@ class CharacterMovement {
           console.log("Combination result:", data);
           console.log(`${data.creation}`);
 
-          fetch(`http://localhost:8081/items/find_by_name/${data.creation}`)
-          .then((response) => {
-            if(!response.ok){
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json;
-          }).then((additionalData) =>{
-            console.log("new item result:", additionalData);
-          })
+          fetch(
+            `http://localhost:8081/items/find_by_name_craft/${data.creation}`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((additionalData) => {
+              console.log("new item result:", additionalData); 
+              callback(data.creation, additionalData.data.isFinal);
 
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
 
           // now check for user_items final_items
 
           // dubious = true;
-          callback(data.creation);
         })
         .catch((error) => {
           console.error("Error fetching combination:", error);
         });
     }
 
-    function handleCreation(creation) {
+    function handleCreation(creation, final) {
       result.itemKey = creation;
+      result.isFinal = final;
+      console.log("here is crafted result: ", result)
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -920,7 +927,6 @@ class CharacterMovement {
                 itemKey: result.itemKey,
               },
             ]);
-
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
@@ -1116,7 +1122,7 @@ class CharacterMovement {
       cricut.access = true;
     });
 
-    // Collide Logic: Player and Drawer 
+    // Collide Logic: Player and Drawer
     // onCollide("player", "drawer", (s, w) => {
     //   drawer.access = true;
     // });
@@ -1161,9 +1167,8 @@ class CharacterMovement {
       }
       if (player.isColliding("scissors")) {
         scissorsCraft = true;
-    }
-})
-
+      }
+    });
 
     //handle saving data and uploading to DB
     function handleSavingData() {
@@ -1367,9 +1372,8 @@ class CharacterMovement {
       this.music.paused = true;
       handleSavingData();
       go("settings");
-        
-      });
-      
+    });
+
     onKeyPress("up", () => {
       if (isPopupVisible) {
         if (vendingSelect - 3 >= 0) {
@@ -1530,8 +1534,8 @@ class CharacterMovement {
         vendingSelect = 0;
       }
     });
-    let isDocVisible = false
-    let areFinal = []
+    let isDocVisible = false;
+    let areFinal = [];
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -1563,7 +1567,7 @@ class CharacterMovement {
           z(11),
           sprite(`${item}`),
           "final",
-          { itemKey: item},
+          { itemKey: item },
         ]);
         currRow++;
         currentX += 100;
@@ -1578,31 +1582,30 @@ class CharacterMovement {
     player.onCollide("documentationStation", () => {
       canAccessDocumentation = true;
 
-    if (!eventListenerAttached) {
-      eventListenerAttached = true;
+      if (!eventListenerAttached) {
+        eventListenerAttached = true;
 
-      onKeyPress("enter", () => {
-        // If documentation cannot be accessed, simply return
-        if (!canAccessDocumentation) return;
+        onKeyPress("enter", () => {
+          // If documentation cannot be accessed, simply return
+          if (!canAccessDocumentation) return;
 
-        if (isDocVisible) {
-          destroyAll("final");
-          isDocVisible = false;
-          SPEED = 500;
-        } else {
-          showFinalItems();
-          isDocVisible = true;
-          SPEED = 0;
-        }
-      });
-    }
-});
+          if (isDocVisible) {
+            destroyAll("final");
+            isDocVisible = false;
+            SPEED = 500;
+          } else {
+            showFinalItems();
+            isDocVisible = true;
+            SPEED = 0;
+          }
+        });
+      }
+    });
 
-      player.onCollideEnd("documentationStation", () => {
-        canAccessDocumentation = false;
-      });
+    player.onCollideEnd("documentationStation", () => {
+      canAccessDocumentation = false;
+    });
 
-    
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
       // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
@@ -1691,9 +1694,6 @@ class CharacterMovement {
       }
     });
 
-
-    
-
     function checkCraftable() {
       if (
         atCraftingTable &&
@@ -1735,9 +1735,6 @@ class CharacterMovement {
       checkCraftable();
     });
   }
-
 }
 
-
 export const characterMovement = new CharacterMovement();
-

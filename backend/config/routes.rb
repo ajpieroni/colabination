@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :items do
     collection do
       get 'find_by_name/:name', to: 'items#find_by_name', as: 'find_by_name'
+      get 'find_by_name_craft/:name', to: 'items#find_by_name_craft', as: 'find_by_name_craft'
     end
   end
 
