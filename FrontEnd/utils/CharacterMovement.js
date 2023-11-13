@@ -201,6 +201,7 @@ class CharacterMovement {
       pos(470, 260),
       z(0),
       "leatherTable",
+      "tool",
       { access: false },
     ]);
 
@@ -212,6 +213,7 @@ class CharacterMovement {
       pos(670, 260),
       z(0),
       "craftingTable",
+      "tool",
       { access: false },
     ]);
 
@@ -224,6 +226,7 @@ class CharacterMovement {
       pos(65, 200),
       // z(10),
       "printer",
+      "tool",
       { access: false },
     ]);
     const printer2 = add([
@@ -234,6 +237,7 @@ class CharacterMovement {
       pos(65, 365),
       // z(10),
       "printer",
+      "tool",
       { access: false },
     ]);
     const sewingMachine = add([
@@ -244,6 +248,7 @@ class CharacterMovement {
       pos(500, 710),
       z(0),
       "printer",
+      "tool",
       { access: false },
     ]);
     const solderingStation = add([
@@ -255,6 +260,7 @@ class CharacterMovement {
       // z(10),
 
       "printer",
+      "tool",
       { access: false },
     ]);
  
@@ -508,6 +514,20 @@ class CharacterMovement {
     // Paper Logic
     this.isAlertedPaper = false;
     this.hasFoundPaper = false;
+
+    // Tool Logic
+    let currentTool = "";
+    let toolAccess = false;
+    onCollide("player", "tool", (s, w) =>{
+      console.log("collided w tool")
+      console.log(w.toolKey);
+      currentTool = w.toolKey;
+      toolAccess = true;
+    })
+    onCollideEnd("player", "tool", () =>{
+      toolAccess = false;
+      currentTool = "";
+    })
 
     let canPopItem = true;
     // cricut drawer
