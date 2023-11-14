@@ -352,7 +352,7 @@ class CharacterMovement {
       });
     }
 
-    fetchUserItems("cats")
+    fetchUserItems(curr_user)
       .then((itemNames) => {
         console.log(itemNames);
       })
@@ -384,7 +384,7 @@ class CharacterMovement {
           });
       });
     }
-    fetchUserTools("cats")
+    fetchUserTools(curr_user)
       .then((itemTools) => {
         console.log(itemTools);
       })
@@ -1172,7 +1172,6 @@ class CharacterMovement {
       console.log(currItems, "currItems");
       console.log(currTools, "currTools");
 
-      const username = "cats";
 
       for (let i = 0; i < currItems.length; i++) {
         const currItem = currItems[i];
@@ -1186,7 +1185,7 @@ class CharacterMovement {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name: currItem, username: username }),
+              body: JSON.stringify({ name: currItem, username: curr_user}),
             })
               .then((response) => {
                 if (!response.ok) {
@@ -1215,7 +1214,7 @@ class CharacterMovement {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name: currTool, username: username }),
+            body: JSON.stringify({ name: currTool, username: curr_user }),
           })
             .then((response) => {
               if (!response.ok) {
