@@ -191,7 +191,10 @@ class CharacterMovement {
       pos(260, 260),
       z(0),
       "handTools",
+      "tool",
+      {toolKey: "hammer"},
       { access: false },
+      {toolId: 1}
     ]);
     const leatherTools = add([
       rect(block_size * 1.65, block_size * 4),
@@ -201,7 +204,10 @@ class CharacterMovement {
       pos(470, 260),
       z(0),
       "leatherTable",
+      "tool",
+      {toolKey: "screwdriver"},
       { access: false },
+      {toolId: 10}
     ]);
 
     const craftingTable = add([
@@ -212,7 +218,10 @@ class CharacterMovement {
       pos(670, 260),
       z(0),
       "craftingTable",
+      "tool",
+      {toolKey: "craftingTable"},
       { access: false },
+      {toolId: 3}
     ]);
 
     // !Machines
@@ -224,6 +233,7 @@ class CharacterMovement {
       pos(65, 200),
       // z(10),
       "printer",
+      {toolKey: "printer1"},
       { access: false },
     ]);
     const printer2 = add([
@@ -234,6 +244,7 @@ class CharacterMovement {
       pos(65, 365),
       // z(10),
       "printer",
+      {toolKey: "printer2"},
       { access: false },
     ]);
     const sewingMachine = add([
@@ -244,7 +255,10 @@ class CharacterMovement {
       pos(500, 710),
       z(0),
       "printer",
+      "tool",
+      {toolKey: "sewingMachine"},
       { access: false },
+      {toolId: 11}
     ]);
     const solderingStation = add([
       rect(block_size * 2.25, block_size),
@@ -255,7 +269,10 @@ class CharacterMovement {
       // z(10),
 
       "printer",
+      "tool",
+      {toolKey: "solderingStation"},
       { access: false },
+      {toolId: 7}
     ]);
  
     let curr_user = localStorage.getItem("username");
@@ -509,6 +526,22 @@ class CharacterMovement {
     this.isAlertedPaper = false;
     this.hasFoundPaper = false;
 
+    // Tool Logic
+    let currToolY = 0;
+    let currentTool = "";
+    let toolAccess = false;
+    onCollide("player", "tool", (s, w) =>{
+      console.log("collided w tool")
+      console.log(w.toolKey);
+      currToolY = w.pos.y
+      currentTool = w;
+      toolAccess = true;
+    })
+    onCollideEnd("player", "tool", () =>{
+      toolAccess = false;
+      currentTool = "";
+    })
+
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
@@ -670,9 +703,10 @@ class CharacterMovement {
  
       let toolId;
       // let ingredients = tableItems;
-      if (atCraftingTable) {
+      if (toolAccess) {
       // *Hands are id=3, we will always use this for crafting table
-        toolId = 3;
+        toolId = currentTool.toolId;
+        console.log(toolId)
       }else{
      // !TODO: fetch tool id 
       // http://localhost:8081/tools/find_by_name/scissors
@@ -958,7 +992,7 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       // !Craft
       if (
-        atCraftingTable &&
+        toolAccess &&
         isCraftable &&
         !isCraftingVisible &&
         tableItems.length >= 1 && !isPopupVisible
@@ -1634,20 +1668,20 @@ class CharacterMovement {
     // Dropping item on table
     onKeyPress("q", () => {
       // !TODO: set max items on table
-      if (tableItems.length == 0) {
-        table_x = 700;
-        table_y = 350;
+      if (tableItems.length == 0 && currentTool) {
+        table_x = currentTool.pos.x;
+        table_y = currToolY;
       }
 
-      if (atCraftingTable && onItemsOnTable >= 3 && !isPopupVisible) {
+      if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
         alert("There are too many items on the table; try crafting!");
         // checkCraftable();
       } else {
         console.log(
           "check",
-          atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
+          toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
         );
-        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
+        if (toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
           itemsInPocket--;
 
           let item = inPocket.pop();
@@ -1684,7 +1718,7 @@ class CharacterMovement {
 
     function checkCraftable() {
       if (
-        atCraftingTable &&
+        toolAccess &&
         // tableItems.includes("paper") &&
         tableItems.length >= 1 && !isPopupVisible
       ) {
@@ -1709,7 +1743,7 @@ class CharacterMovement {
           ]);
         }
       }
-      if (!atCraftingTable || isPopupVisible) {
+      if (!toolAccess || isPopupVisible) {
         destroyAll("craft");
       }
     }
