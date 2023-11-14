@@ -29,7 +29,8 @@ puts 'seeding'
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
     kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
     origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
-
+    confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1)
+    party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1)
 
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
@@ -62,7 +63,8 @@ puts 'seeding'
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
     # !Paper combos: level 2
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
-
+    Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
+    Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 # hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
