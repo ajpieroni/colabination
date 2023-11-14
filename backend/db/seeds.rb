@@ -29,6 +29,8 @@ puts 'seeding'
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
     kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
     origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
+    confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1)
+    party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1)
 
 # Creating glass trail
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
@@ -47,11 +49,11 @@ puts 'seeding'
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
 
-
-
+# seed some users
     user1 = User.create(username: "pandaMan", pin: 1234)
     user2 = User.create(username: "bruin36", pin: 2468)
     user3 = User.create(username: "cats", pin: 1234)
+    
 # Creating item-tools relationships
     ItemTool.create(item: paper, tool: hammer)
     ItemTool.create(item: paper, tool: scissors)
@@ -65,6 +67,8 @@ puts 'seeding'
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
     # !Paper combos: level 2
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
+    Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
+    Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
 
 # Glass combos:
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
