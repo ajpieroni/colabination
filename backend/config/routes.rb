@@ -6,12 +6,18 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create', defaults: { format: :json }
   
   resources :tools do
+    collection do
+      get 'find_by_name/:name', to: 'tools#find_by_name', as: 'find_by_name'
+    end
     resources :items, only: [:create, :update]
   end
   
-  resources :items
-  resources :user_tools, only: [:create, :index]  
-  
+  resources :items do
+    collection do
+      get 'find_by_name/:name', to: 'items#find_by_name', as: 'find_by_name'
+    end
+  end
+
   post 'user_items', to: 'user_items#create'
   post 'user_tools', to: 'user_tools#create'
 

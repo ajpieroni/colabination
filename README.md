@@ -1,5 +1,66 @@
 # Meeting Notes
 
+## Nov 10th
+Agenda:
+- [] Take a look at our MVP checklist
+  - [] sign up as a user
+  - [] login as a user
+  - [] craft the paper trail 1, 2, 
+  - [] craft glass trail 1
+  - [] craft metal trail 1
+  - [] craft trash
+  - [] save game progress
+- [] To Do:
+  - []
+- [] Additional features:
+  - [] tutorial
+  - [] danai special(aka ending)
+  - [] about us page
+  - [] files re-org
+Progress:
+- Kelvin:
+  -working on showing login/sign up features on the front end
+- Dasol:
+  - Map out of tutorial 
+  - walkthrough of crafting first item
+- Alex: 
+  - worked on dynamic crafying
+  - return whole object of creation
+    - item will either go to backpack or documentation station
+  
+- Olly:
+  - fixed backpack
+  - worked on danai special :D 
+  - adding tool logic this next week
+## November 3rd
+
+Progress Report:
+- Alex:
+  - figure out passing voume around scenes
+- Kelvin:
+  - discuss saving guest progress (not MVP)
+  - force new players to make account (new game or load game)
+  - documentation station, store final items
+    - discuss animation for final items
+    - some bugs to fix auto save to documentation
+- Dasol: 
+  - finish about us
+  - start on controls page
+- Olly:
+## Nov 3rd
+Agenda:
+- [] updates from the week
+- [] discuss Class vs function and how to pass data between files
+- [] redefine end MVP goals
+  - [] piece code together to have a full playable game
+  - [] use APIs for initializing game, check crafting, save progress
+  - [] working menu bar
+  - [] login and sign up
+- [] assign small issues out
+  - [] items in vending machine vs in documentation station
+  - [] remove trash or any other final items from pocket
+  - [] 
+
 ## October 27th
 
 Future Issues Notes:

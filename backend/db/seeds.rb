@@ -21,12 +21,14 @@ puts 'seeding'
     thread = Item.create(name: 'thread', description: 'A cloth string', item_type: 'material', rarity: 1)
     metal = Item.create(name: 'metal', description: 'A substance of shininess and conductivity', item_type: 'material', rarity: 1)
     plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1)
-    nothing = Item.create(name: ' ', description: ' ', item_type: 'nothing', rarity: 1)
+    nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1)
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1)
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
+    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
+    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
 
     trash = Item.create(name: 'trash', description: 'A piece of trash', item_type: 'material', rarity: 1, isFinal: true)
 
@@ -54,8 +56,13 @@ puts 'seeding'
     ItemTool.create(item: paper, tool: hammer)
 
 # Creating paper combos
+# !Paper combos: level 1
     Combination.create(tool: hammer, item1: paper, item2: paper, creation: wood)
+    Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
+    Combination.create(tool: hands, item1: paper, item2: thread, creation: kite)
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
+    # !Paper combos: level 2
+    Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
 
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)

@@ -21,6 +21,8 @@ class CombinationsController < ApplicationController
   #     render json: { message: "Unexpected error: #{e.message}", status: :internal_server_error }
   #   end
   # end
+
+
   def index
 
     combo = Combination.find_by(tool: params[:tool], item1: params[:item1], item2: params[:item2])
@@ -32,7 +34,7 @@ class CombinationsController < ApplicationController
       creationSwitch = Item.find(comboSwitch.creation.id)
       render json: {creation: creationSwitch.name, rarity: creationSwitch.rarity}
     else 
-      render json: {creation: "These items don't go together"}
+      render json: {creation: "trash"}
     end
   end
 
