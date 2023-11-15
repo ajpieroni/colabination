@@ -42,6 +42,8 @@ export const load = {
 
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
+        
+        loadSprite("loginPage", "./assets/loginPage.png")
 
         loadSprite("backpack", "./assets/backpack.png")
         // !Sounds

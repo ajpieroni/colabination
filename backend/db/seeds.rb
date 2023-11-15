@@ -29,6 +29,8 @@ puts 'seeding'
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
     kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
     origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
+
+    trash = Item.create(name: 'trash', description: 'A piece of trash', item_type: 'material', rarity: 1, isFinal: true)
     confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1)
     party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1)
 
