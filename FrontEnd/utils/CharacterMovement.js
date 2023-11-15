@@ -1,3 +1,5 @@
+import InitialItems from "./InitialItems.js";
+
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -337,6 +339,11 @@ class CharacterMovement {
           })
           .then((data) => {
             const items = data.items; // Access the items property
+            console.log("items", items)
+            // console.log(items.length())
+            if (items.length == 0 ){
+              InitialItems()
+            }
             items.forEach((item) => {
               const itemName = item[0];
               const isFinal = item[1];
@@ -380,12 +387,16 @@ class CharacterMovement {
     fetchUserItems(curr_user)
       .then((itemNames) => {
         console.log(itemNames);
-      })
-      .catch((error) => {
-        console.error("Error fetching user items:", error);
-      });
 
+        
+    }).catch(error => {
+        console.error('Error fetching user items:', error);
+        InitialItems();
+    });
     // load in tools
+
+    // InitialItems();
+
     function fetchUserTools(username) {
       return new Promise((resolve, reject) => {
         fetch(`http://localhost:8081/user_tools?username=${username}`)
@@ -421,6 +432,8 @@ class CharacterMovement {
     // !Materials
     let nearCraftingTable = false;
     let currentIndex = 0;
+    
+    // keep merge?
     const items = {
       // scissors: {
       //   spriteName: "scissors",
@@ -484,6 +497,8 @@ class CharacterMovement {
         ]);
       }
     }
+
+    // keep merge
 
     // !Player
 
@@ -622,42 +637,7 @@ class CharacterMovement {
         }
       }
     }
-    // For the player's interaction with drawer: PLA, noItems
-    // function interactWithDrawer() {
-    //   if (drawer.access) {
-    //     if (myDrawer.length > 0 && canPopItem) {
-    //       const itemName = myDrawer.pop();
-    //       const foundItem = myDrawerData[itemName];
-    //       canPopItem = false;
-    //       if (foundItem.alertBox === null && !foundItem.hasFound) {
-    //         PLAalertBox = add([
-    //           area(),
-    //           "alert",
-    //           pos(center().x - 100, center().y - 200),
-    //           color(230, 230, 250),
-    //           sprite("PLAalert"),
-
-    //           color(230, 230, 250),
-    //           z(10),
-    //           scale(0.45),
-    //         ]);
-    //         // drawer.access = false;
-    //         foundItem.alertBox = true;
-    //         foundItem.hasFound = true;
-    //       }
-    //     } else {
-    //       noItemsAlert = add([
-    //         area(),
-    //         "alert",
-    //         pos(center().x - 100, center().y - 200),
-    //         color(230, 230, 250),
-    //         z(10),
-    //         sprite("noItems"),
-    //         scale(0.45),
-    //       ]);
-    //     }
-    //   }
-    // }
+    
     function discoverCricut() {
       if (cricut.access && !hasUnlockedCricut) {
         cricutAlertBox = add([
@@ -1093,55 +1073,12 @@ class CharacterMovement {
 
     // !TODO: make the enter function dynamic for sprite
     // dismiss alerts
-    function handleEnterPress() {
-      // discoverCricut.call(this);
-      //     //* Cricut: craft
-      // cricutCraft.call(this);
-      const itemKeys = Object.keys(items);
 
-      if (currentIndex < itemKeys.length) {
-        const currentKey = itemKeys[currentIndex];
-        const currentValue = items[currentKey];
-        // *Add back to check items in array when searching in drawer
-        // console.log("Current item key:", currentKey);
-        // console.log("Current item details:", currentValue);
-
-        interactWithItem(currentKey);
-
-        // Move to the next item
-        currentIndex++;
-      } else {
-        alert("There are no more items in this drawer.");
-      }
-    }
     onKeyPress("enter", () => {
-      // Destroys all alerts
-      canPopItem = true;
-      // *Add items after alert onto floor, then when we combine it will work perfectly wiht no problems
-      //* Scissors
-      if (cdrawer.access) {
-        handleEnterPress();
-      }
+
       setTimeout(() => {
         destroyAll("alert");
       }, 2000);
-
-      // !TODO: Remove benchy, since final item
-      let xDisplace = 10;
-      if (benchyFound && !benchyAdded) {
-        add(
-          [
-            sprite("3DBenchy"),
-            pos(center().x + xDisplace, center().y),
-            body({ isStatic: true }),
-            area(),
-            scale(1.5),
-            z(5),
-          ],
-          "material"
-        );
-        benchyAdded = true;
-      }
     });
 
     //! Player Movement
