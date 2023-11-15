@@ -1330,7 +1330,7 @@ class CharacterMovement {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name: currFinal, username: username }),
+              body: JSON.stringify({ name: currFinal, username: curr_user}),
             })
               .then((response) => {
                 if (!response.ok) {
