@@ -189,11 +189,37 @@ class CharacterMovement {
       pos(260, 260),
       z(0),
       "handTools",
-      "tool",
+      // "tool",
       { toolKey: "hammer" },
       { access: false },
       { toolId: 1 },
     ]);
+    const hammer = add([
+      rect(block_size * 1.65, block_size * 1.3),
+      color(256, 0, 0),
+      area(),
+      body({ isStatic: true }),
+      pos(260, 370),
+      z(0),
+      "handTools",
+      "tool",
+      { toolKey: "hammer" },
+      { access: false },
+      { toolId: 1 },
+    ])
+    const scissors = add([
+      rect(block_size * 1.65, block_size*1.15),
+      color(256, 0, 0),
+      area(),
+      body({ isStatic: true }),
+      pos(260, 260),
+      z(0),
+      "handTools",
+      "tool",
+      { toolKey: "scissors" },
+      { access: false },
+      { toolId: 2 },
+    ])
     const leatherTools = add([
       rect(block_size * 1.65, block_size * 4),
       color(256, 0, 0),
@@ -549,7 +575,7 @@ class CharacterMovement {
         text(w.toolKey, {size: 16}),
         pos(w.pos.x, currToolY - 18),
         color(242, 140, 40),
-        z(100),
+        z(49),
         "interactable"
       ])
     })
@@ -558,7 +584,7 @@ class CharacterMovement {
       currentTool = "";
       destroyAll("interactable")
     })
-
+    debug.inspect = true;
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
@@ -1790,7 +1816,14 @@ class CharacterMovement {
 
     player.onCollide("documentationStation", () => {
       canAccessDocumentation = true;
-
+      
+      add([
+        text("documentation station", {size: 16}),
+        pos(700, 100 - 18),
+        color(242, 140, 40),
+        z(49),
+        "interactable"
+      ])
       if (!eventListenerAttached) {
         eventListenerAttached = true;
 
@@ -1813,6 +1846,7 @@ class CharacterMovement {
 
     player.onCollideEnd("documentationStation", () => {
       canAccessDocumentation = false;
+      destroyAll("interactable")
     });
 
     player.onCollide("material", (materialEntity) => {
