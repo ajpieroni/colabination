@@ -1,6 +1,6 @@
 
 
-export default function InitialItems(items){
+export default function InitialItems(){
     add([
         sprite("glass"),
         area(),
