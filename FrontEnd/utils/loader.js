@@ -24,7 +24,7 @@ export const load = {
         loadSprite("stainedglass", "./assets/stainedglass.png")
         loadSprite("window", "./assets/window.png")
         loadSprite("trash", "./assets/trash.png")   
-        loadSprite("cutpaper", "./assets/cutpaper3.png")
+        loadSprite("cut paper", "./assets/cutpaper3.png")
         loadSprite("confetti", "./assets/confetti.png")
         loadSprite("party", "./assets/party.png")
         // !TOBE MADE:
