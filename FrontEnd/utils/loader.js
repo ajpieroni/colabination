@@ -27,6 +27,7 @@ export const load = {
         // !TOBE MADE:
         loadSprite("card", "./assets/benchy.png")
         loadSprite("kite", "./assets/benchy.png")
+        loadSprite("origami", "./assets/benchy.png")
         
         // loadSprite("trash", "./assets/dubious_trash.png")
         loadSprite("woodAlert", "./assets/colablogo.png")
