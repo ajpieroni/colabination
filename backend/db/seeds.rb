@@ -16,21 +16,22 @@ puts 'seeding'
 # UserItem.destroy_all
 
 # Creating base items
-    paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1)
-    glass = Item.create(name: 'glass', description: 'A clear sheet of melted glass', item_type: 'material', rarity: 1)
-    thread = Item.create(name: 'thread', description: 'A cloth string', item_type: 'material', rarity: 1)
-    metal = Item.create(name: 'metal', description: 'A substance of shininess and conductivity', item_type: 'material', rarity: 1)
-    plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1)
-    nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1)
+    paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
+    glass = Item.create(name: 'glass', description: 'A clear sheet of melted glass', item_type: 'material', rarity: 1, isFinal: false)
+    thread = Item.create(name: 'thread', description: 'A cloth string', item_type: 'material', rarity: 1, isFinal: false)
+    metal = Item.create(name: 'metal', description: 'A substance of shininess and conductivity', item_type: 'material', rarity: 1, isFinal: false)
+    plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1, isFinal: false)
+    nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1, isFinal: false)
+    trash =  Item.create(name: 'trash', description: 'A whole lot of junk', item_type: 'nothing', rarity: 1, isFinal: true)
 
 #Creating paper trail
-    wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1)
-    cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1)
-    card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1)
-    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1)
-    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1)
-    confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1)
-    party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1)
+    wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
+    cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1, isFinal: false)
+    card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1, isFinal: false)
+    kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1, isFinal: true)
+    origami = Item.create(name: 'origami', description: 'Folds on folds on folds', item_type: 'material', rarity:1, isFinal: true)
+    confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1, isFinal: false)
+    party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1, isFinal: true)
 
 # Creating glass trail
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)

@@ -1,4 +1,3 @@
-
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -6,7 +5,6 @@ class CharacterMovement {
   constructor() {
     this.level = null;
     localStorage.setItem("soundTogg", 1);
-    
   }
   display() {
     //! Level Schema
@@ -157,11 +155,11 @@ class CharacterMovement {
       { alertSprite: "cricutAlert" },
     ]);
     const documentationStation = add([
-      rect(block_size, block_size*2),
+      rect(block_size, block_size * 2),
       color(0, 100, 0),
       area(),
       body({ isStatic: true }),
-      pos(900 - 15 - 10-50-50, 250 - 10 - 10+20-100-50),
+      pos(900 - 15 - 10 - 50 - 50, 250 - 10 - 10 + 20 - 100 - 50),
       rotate(270),
       // z(10),
       "documentationStation",
@@ -191,7 +189,10 @@ class CharacterMovement {
       pos(260, 260),
       z(0),
       "handTools",
+      "tool",
+      { toolKey: "hammer" },
       { access: false },
+      { toolId: 1 },
     ]);
     const leatherTools = add([
       rect(block_size * 1.65, block_size * 4),
@@ -201,7 +202,10 @@ class CharacterMovement {
       pos(470, 260),
       z(0),
       "leatherTable",
+      "tool",
+      { toolKey: "screwdriver" },
       { access: false },
+      { toolId: 10 },
     ]);
 
     const craftingTable = add([
@@ -212,7 +216,10 @@ class CharacterMovement {
       pos(670, 260),
       z(0),
       "craftingTable",
+      "tool",
+      { toolKey: "craftingTable" },
       { access: false },
+      { toolId: 3 },
     ]);
 
     // !Machines
@@ -224,6 +231,7 @@ class CharacterMovement {
       pos(65, 200),
       // z(10),
       "printer",
+      { toolKey: "printer1" },
       { access: false },
     ]);
     const printer2 = add([
@@ -234,6 +242,7 @@ class CharacterMovement {
       pos(65, 365),
       // z(10),
       "printer",
+      { toolKey: "printer2" },
       { access: false },
     ]);
     const sewingMachine = add([
@@ -244,7 +253,10 @@ class CharacterMovement {
       pos(500, 710),
       z(0),
       "printer",
+      "tool",
+      { toolKey: "sewingMachine" },
       { access: false },
+      { toolId: 11 },
     ]);
     const solderingStation = add([
       rect(block_size * 2.25, block_size),
@@ -255,56 +267,62 @@ class CharacterMovement {
       // z(10),
 
       "printer",
+      "tool",
+      { toolKey: "solderingStation" },
       { access: false },
+      { toolId: 7 },
     ]);
- 
-    let curr_user = 'cats';
+
+    let curr_user = localStorage.getItem("username");
 
     function fetchData(url) {
-        return new Promise((resolve, reject) => {
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    resolve(data);
-                })
-                .catch(error => {
-                    reject(error);
-                });
-        });
-    }
-    fetchData(`http://localhost:8081/user_items/final_items?username=${curr_user}`)
-        .then((final) => {
-          console.log(final)
-          const itemNames = final.final_items; 
-            itemNames.forEach((itemName) => {
-              const savedItem = add([     
-                  pos(0,0),           
-                  sprite(`${itemName}`),
-
-                  scale(1.5),
-                  area(),
-                  z(0),
-                  "material",
-                  {
-                    itemKey: itemName,
-                  },
-                ]);
-            areFinal.push(itemName);
+      return new Promise((resolve, reject) => {
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
           });
-          resolve(itemNames);
+      });
+    }
+    fetchData(
+      `http://localhost:8081/user_items/final_items?username=${curr_user}`
+    )
+      .then((final) => {
+        console.log("final:", final);
+        const itemNames = final.final_items;
+        itemNames.forEach((itemName) => {
+          const savedItem = add([
+            pos(0, 0),
+            sprite(`${itemName}`),
+
+            scale(1.5),
+            area(),
+            z(0),
+            "material",
+            {
+              itemKey: itemName,
+            },
+          ]);
+          console.log(`${itemName} pushed to are final`);
+          if (!areFinal.includes(itemName)) {
+            areFinal.push(itemName);
           }
-        )
-        .catch(error => {
-            console.error('Error fetching final items:', error);
         });
+      })
+      .catch((error) => {
+        console.error("Error fetching final items:", error);
+      });
     //loading items
     let hasSavedItems = [];
-
+    let hasSavedFinal = [];
     let hasSavedTools = [];
 
     function fetchUserItems(username) {
@@ -318,9 +336,11 @@ class CharacterMovement {
             return response.json();
           })
           .then((data) => {
-            const itemNames = data.items; // Access the items property
-
-            itemNames.forEach((itemName) => {
+            const items = data.items; // Access the items property
+            items.forEach((item) => {
+              const itemName = item[0];
+              const isFinal = item[1];
+              console.log(itemName, isFinal);
               const savedItem = add([
                 // rect(item.width, item.height) ,
                 pos(0, 0),
@@ -336,15 +356,20 @@ class CharacterMovement {
                 "material",
                 {
                   itemKey: itemName,
+                  isFinal: isFinal,
                 },
               ]);
-              // console.log(`itemNames values: ${itemName}`);
-              hasSavedItems.push(itemName);
-              vendingKeys.push(savedItem.itemKey);
-              vendingContents.push(savedItem);
-              // console.log(`pushed`);
+              if (!savedItem.isFinal) {
+                hasSavedItems.push(itemName);
+                vendingKeys.push(savedItem.itemKey);
+                vendingContents.push(savedItem);
+              } else {
+                if (!areFinal.includes(itemName)) {
+                  areFinal.push(itemName);
+                }
+              }
             });
-            resolve(itemNames);
+            // resolve(itemNames);
           })
           .catch((error) => {
             reject(error);
@@ -352,13 +377,14 @@ class CharacterMovement {
       });
     }
 
-    fetchUserItems("cats")
+    fetchUserItems(curr_user)
       .then((itemNames) => {
         console.log(itemNames);
       })
       .catch((error) => {
         console.error("Error fetching user items:", error);
       });
+
     // load in tools
     function fetchUserTools(username) {
       return new Promise((resolve, reject) => {
@@ -372,19 +398,19 @@ class CharacterMovement {
           .then((data) => {
             const toolNames = data.items; // Access the items property
 
-            toolNames.forEach((toolName) => {
-              // console.log(`toolNames values: ${toolName}`);
-              hasSavedTools.push(toolName);
-              // console.log(`pushed`);
-            });
-            resolve(toolNames);
+            if (toolNames) {
+              toolNames.forEach((toolName) => {
+                hasSavedTools.push(toolName);
+              });
+              resolve(toolNames);
+            }
           })
           .catch((error) => {
             reject(error);
           });
       });
     }
-    fetchUserTools("cats")
+    fetchUserTools(curr_user)
       .then((itemTools) => {
         console.log(itemTools);
       })
@@ -396,13 +422,13 @@ class CharacterMovement {
     let nearCraftingTable = false;
     let currentIndex = 0;
     const items = {
-      scissors: {
-        spriteName: "scissors",
-        alertSprite: "scissorsAlert",
-        initialPos: { x: 300, y: 300 },
-        hasFound: false,
-        alertBox: null,
-      },
+      // scissors: {
+      //   spriteName: "scissors",
+      //   alertSprite: "scissorsAlert",
+      //   initialPos: { x: 300, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      // },
       paper: {
         spriteName: "paper",
         alertSprite: "paperAlert",
@@ -420,14 +446,14 @@ class CharacterMovement {
         hasFound: false,
         alertBox: null,
       },
-      hammer: {
-        spriteName: "hammer",
-        alertSprite: "hammerAlert",
-        initialPos: { x: 310, y: 300 },
-        hasFound: false,
-        alertBox: null,
-        // onTable: false
-      },
+      // hammer: {
+      //   spriteName: "hammer",
+      //   alertSprite: "hammerAlert",
+      //   initialPos: { x: 310, y: 300 },
+      //   hasFound: false,
+      //   alertBox: null,
+      //   // onTable: false
+      // },
     };
 
     // !Init Functions
@@ -464,7 +490,7 @@ class CharacterMovement {
     // add creates game object to be displayed on the screen
     // add function returns game objects, can store in const or var
 
-    let SPEED = 500;
+    let SPEED = 300;
 
     const player = add([
       sprite("characterSprite"),
@@ -508,6 +534,22 @@ class CharacterMovement {
     // Paper Logic
     this.isAlertedPaper = false;
     this.hasFoundPaper = false;
+
+    // Tool Logic
+    let currToolY = 0;
+    let currentTool = "";
+    let toolAccess = false;
+    onCollide("player", "tool", (s, w) => {
+      console.log("collided w tool");
+      console.log(w.toolKey);
+      currToolY = w.pos.y;
+      currentTool = w;
+      toolAccess = true;
+    });
+    onCollideEnd("player", "tool", () => {
+      toolAccess = false;
+      currentTool = "";
+    });
 
     let canPopItem = true;
     // cricut drawer
@@ -667,15 +709,19 @@ class CharacterMovement {
 
     function craftingBackend(ingredients) {
       // !POSTING
- 
+
       let toolId;
       // let ingredients = tableItems;
-      if (atCraftingTable) {
-      // *Hands are id=3, we will always use this for crafting table
+      if (toolAccess) {
+        // *Hands are id=3, we will always use this for crafting table
+        toolId = currentTool.toolId;
+        console.log(toolId);
+      } else {
+        // !TODO: check this doesn't break
         toolId = 3;
-      }else{
-     // !TODO: fetch tool id 
-      // http://localhost:8081/tools/find_by_name/scissors
+
+        // !TODO: fetch tool id
+        // http://localhost:8081/tools/find_by_name/scissors
       }
 
       console.log(ingredients);
@@ -728,16 +774,33 @@ class CharacterMovement {
         .then((data) => {
           console.log("Combination result:", data);
           console.log(`${data.creation}`);
-          // dubious = true;
-          callback(data.creation);
+
+          fetch(
+            `http://localhost:8081/items/find_by_name_craft/${data.creation}`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((additionalData) => {
+              console.log("new item result:", additionalData);
+              callback(data.creation, additionalData.data.isFinal, data);
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
         })
         .catch((error) => {
           console.error("Error fetching combination:", error);
         });
     }
 
-    function handleCreation(creation) {
+    function handleCreation(creation, final, item) {
       result.itemKey = creation;
+      result.isFinal = final;
+      console.log("here is crafted result: ", result);
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -862,16 +925,30 @@ class CharacterMovement {
 
       onKeyPress("enter", () => {
         if (tableItems.length >= 1 && !isPopupVisible) {
-          console.log("here is popup", isPopupVisible)
+          console.log("here is popup", isPopupVisible);
           madeCraft(result);
 
+          // let craftText = `You made ${result.itemKey}! ${
+          //   result.isFinal ? "You can find this final item in your documentation station" : ""
+          // }`;
+
           async function madeCraft() {
+            let craftText = `You made ${result.itemKey}! ${
+              result.isFinal
+                ? `You can find ${result.itemKey} in the documentation station.`
+                : ""
+            }`;
+
+            let textSizeX = result.isFinal
+              ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
+              : 440 + 40 + 25 - 50;
+
             destroyAll("crafting");
             add([
-              text(`You made ${result.itemKey}!`),
-              pos(440 + 40 + 25 - 50, 615), // adjust as necessary to position the text on the button
+              text(craftText),
+              pos(textSizeX, 615),
               z(53),
-              color(0, 0, 0), // color of the text,
+              color(0, 0, 0),
               scale(0.5),
               "crafting",
             ]);
@@ -905,16 +982,23 @@ class CharacterMovement {
               "madeItem",
               {
                 itemKey: result.itemKey,
+                isFinal: result.isFinal,
               },
             ]);
 
-
             if (
               !vendingContents.includes(madeItem.itemKey) &&
-              !vendingKeys.includes(madeItem.itemKey)
+              !vendingKeys.includes(madeItem.itemKey) &&
+              !madeItem.isFinal
             ) {
+              console.log("passed", !madeItem.isFinal);
               vendingContents.push(madeItem);
               vendingKeys.push(madeItem.itemKey);
+            }
+
+            if (madeItem.isFinal && !areFinal.includes(madeItem.itemKey)) {
+              console.log(`${madeItem.itemKey} pushed to are final`);
+              areFinal.push(madeItem.itemKey);
             }
             await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -925,8 +1009,9 @@ class CharacterMovement {
             }
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
-            updatePocketVending(result, inPocket);
-
+            if (!madeItem.isFinal) {
+              updatePocketVending(result, inPocket);
+            }
             // updatePocket(madeItem, inPocket);
             madeItem.use(body({ isStatic: true }));
             // atCraftingTable = false;
@@ -958,10 +1043,11 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       // !Craft
       if (
-        atCraftingTable &&
+        toolAccess &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 1 && !isPopupVisible
+        tableItems.length >= 1 &&
+        !isPopupVisible
       ) {
         destroyAll("craft");
         add([
@@ -1103,7 +1189,7 @@ class CharacterMovement {
       cricut.access = true;
     });
 
-    // Collide Logic: Player and Drawer 
+    // Collide Logic: Player and Drawer
     // onCollide("player", "drawer", (s, w) => {
     //   drawer.access = true;
     // });
@@ -1148,9 +1234,8 @@ class CharacterMovement {
       }
       if (player.isColliding("scissors")) {
         scissorsCraft = true;
-    }
-})
-
+      }
+    });
 
     //handle saving data and uploading to DB
     function handleSavingData() {
@@ -1158,21 +1243,17 @@ class CharacterMovement {
       console.log("vending keys", vendingKeys);
       let currItems = [];
       let currTools = [];
+      let currFinals = [];
 
       for (let i = 0; i < vendingKeys.length; i++) {
-        if (vendingKeys[i] === "hammer" || vendingKeys[i] === "scissors") {
-          currTools.push(vendingKeys[i]);
-        } else {
-          currItems.push(vendingKeys[i]);
-        }
+        currItems.push(vendingKeys[i]);
       }
+
       // let currItems = vendingKeys;
       // * will be renamed as machines
       // let currTools = ["hammer"]
       console.log(currItems, "currItems");
       console.log(currTools, "currTools");
-
-      const username = "cats";
 
       for (let i = 0; i < currItems.length; i++) {
         const currItem = currItems[i];
@@ -1186,7 +1267,7 @@ class CharacterMovement {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name: currItem, username: username }),
+              body: JSON.stringify({ name: currItem, username: curr_user }),
             })
               .then((response) => {
                 if (!response.ok) {
@@ -1215,7 +1296,7 @@ class CharacterMovement {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ name: currTool, username: username }),
+            body: JSON.stringify({ name: currTool, username: curr_user }),
           })
             .then((response) => {
               if (!response.ok) {
@@ -1229,6 +1310,41 @@ class CharacterMovement {
           hasSavedTools.push(currTool);
         } else {
           console.log(`You've already saved ${currTool}`);
+        }
+      }
+      for (let i = 0; i < areFinal.length; i++) {
+        console.log(areFinal);
+
+        currFinals.push(areFinal[i]);
+      }
+
+      for (let i = 0; i < currFinals.length; i++) {
+        const currFinal = currFinals[i];
+        // console.log(`hasSaved: ${hasSavedItems}`);
+        if (!hasSavedFinal.includes(currFinals[i])) {
+          {
+            console.log(`Attempting to save ${currFinal}`);
+
+            fetch("http://localhost:8081/user_items", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: currFinal, username: curr_user}),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  return Promise.reject("Failed to save final item");
+                }
+                console.log(`Item ${currFinal} saved!`, response);
+              })
+              .catch((error) => {
+                console.error("Error saving items:", error);
+              });
+            hasSavedFinal.push(currFinal);
+          }
+        } else {
+          console.log(`You've already saved ${currFinal}`);
         }
       }
     }
@@ -1295,6 +1411,7 @@ class CharacterMovement {
     ]);
 
     // !VENDING
+    let itemText = "";
 
     onKeyPress("left", () => {
       if (isPopupVisible) {
@@ -1310,6 +1427,25 @@ class CharacterMovement {
             z(11),
             color(255, 255, 255),
             "selected",
+          ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
           ]);
         }
       }
@@ -1329,6 +1465,25 @@ class CharacterMovement {
             color(255, 255, 255),
             "selected",
           ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
+          ]);
         }
       }
     });
@@ -1347,6 +1502,25 @@ class CharacterMovement {
             color(255, 255, 255),
             "selected",
           ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
+          ]);
         }
       }
     });
@@ -1354,9 +1528,8 @@ class CharacterMovement {
       this.music.paused = true;
       handleSavingData();
       go("settings");
-        
-      });
-      
+    });
+
     onKeyPress("up", () => {
       if (isPopupVisible) {
         if (vendingSelect - 3 >= 0) {
@@ -1372,6 +1545,25 @@ class CharacterMovement {
             color(255, 255, 255),
             "selected",
           ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
+          ]);
         }
       }
     });
@@ -1383,7 +1575,8 @@ class CharacterMovement {
     });
 
     function showVendingContents(contents) {
-      console.log("vending contents shown")
+     
+      console.log("vending contents shown");
       const popup = add([
         sprite("backpack"),
         pos(475 - 190, 125 + 25),
@@ -1398,6 +1591,27 @@ class CharacterMovement {
       let currentY = startY;
       let currRow = 0;
       if (vendingContents.length > 0) {
+        // itemText = (vendingContents[vendingSelect].itemKey);
+        let itemText = vendingContents[0].itemKey;
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500 + 25, 500 + 100 + 25),
+          z(20),
+
+          // scale(.5)
+        ]);
+
         const selected = add([
           rect(70, 70),
           pos(startX, startY),
@@ -1423,7 +1637,6 @@ class CharacterMovement {
           z(11),
           // color(item.color.r, item.color.g, item.color.b),
           "vending",
-          // !TODO: Make sprite image dynamic
           sprite(`${item.itemKey}`),
           // rect(10,10),
           // sprite(`${image}`),
@@ -1434,6 +1647,7 @@ class CharacterMovement {
             itemKey: itemKey,
           },
         ]);
+
         // console.log(currRow);
         currRow++;
         currentX += item.width + 35;
@@ -1446,55 +1660,39 @@ class CharacterMovement {
 
     function updatePocketVending(material, inPocket) {
       if (itemsInPocket < 2) {
-        if (itemsInPocket === 0) {
-          if (volumeSetting) {
-            play("bubble");
-          }
-          // console.log(`Incoming material: ${material}, ${material.itemKey}`);
-          const item1 = add([
-            pos(880, 700),
-            z(11),
-            sprite(`${material.itemKey}`),
-            scale(1),
-            "material",
-            { image: material.itemKey },
-            { itemKey: material.itemKey },
-          ]);
-          console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
-          inPocket.push(item1);
-        } else {
-          if (volumeSetting) {
-            play("bubble");
-          }
-          const item2 = add([
-            pos(880, 775),
-            z(11),
-            z(11),
-            sprite(`${material.itemKey}`),
-            scale(1),
-            "material",
-            { image: material.itemKey },
-            { itemKey: material.itemKey },
-          ]);
-          inPocket.push(item2);
+        if (volumeSetting) {
+          play("bubble");
         }
+        const newItem = add([
+          pos(880, itemsInPocket === 0 ? 725 : 775),
+          z(11),
+          sprite(`${material.itemKey}`),
+          scale(1),
+          "material",
+          { image: material.itemKey },
+          { itemKey: material.itemKey },
+        ]);
+        console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
+        inPocket.push(newItem);
         itemsInPocket++;
       } else {
         // shake(5);
         alert("Remove items from pocket to select from vending machine");
       }
     }
-
+    
+    
+    let firstItem = false
     function updatePocket(material, inPocket) {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
-          // console.log("one");
-          // pos(855,700)
           material.moveTo(880, 725);
+          firstItem = true;
           material.scaleTo(1);
+        } else if (itemsInPocket === 1 && !firstItem) {
+          material.moveTo(880, 725);
+          firstItem = true;
         } else {
-          // console.log("two");
-          // moves to spot 2
           material.moveTo(880, 775);
         }
         itemsInPocket++;
@@ -1503,11 +1701,12 @@ class CharacterMovement {
         destroy(material);
       }
     }
-
+    
     // backpack functionality
     onKeyPress("v", () => {
       if (isPopupVisible) {
         destroyAll("vending");
+        destroyAll("itemText");
         destroyAll("selected");
         isPopupVisible = false;
         SPEED = 300;
@@ -1519,8 +1718,9 @@ class CharacterMovement {
         vendingSelect = 0;
       }
     });
-    let isDocVisible = false
-    let areFinal = []
+    let isDocVisible = false;
+    let areFinal = [];
+
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -1538,6 +1738,9 @@ class CharacterMovement {
       let currRow = 0;
       for (let i = 0; i < areFinal.length; i++) {
         const item = areFinal[i];
+        itemText = item.charAt(0).toUpperCase() + item.slice(1);
+        console.log(item);
+
         // const itemKey = item.itemKey;
         // starts a new line
 
@@ -1552,7 +1755,20 @@ class CharacterMovement {
           z(11),
           sprite(`${item}`),
           "final",
-          { itemKey: item},
+          { itemKey: item },
+        ]);
+
+        const finalItemText = add([
+          pos(currentX, currentY+50),
+          text(itemText, {
+            // optional object
+            size: 16,
+            color: (255, 255, 255),
+            // can specify font here,
+          }),
+          z(11),
+          "final",
+          // { itemKey: item },
         ]);
         currRow++;
         currentX += 100;
@@ -1567,31 +1783,30 @@ class CharacterMovement {
     player.onCollide("documentationStation", () => {
       canAccessDocumentation = true;
 
-    if (!eventListenerAttached) {
-      eventListenerAttached = true;
+      if (!eventListenerAttached) {
+        eventListenerAttached = true;
 
-      onKeyPress("enter", () => {
-        // If documentation cannot be accessed, simply return
-        if (!canAccessDocumentation) return;
+        onKeyPress("enter", () => {
+          // If documentation cannot be accessed, simply return
+          if (!canAccessDocumentation) return;
 
-        if (isDocVisible) {
-          destroyAll("final");
-          isDocVisible = false;
-          SPEED = 500;
-        } else {
-          showFinalItems();
-          isDocVisible = true;
-          SPEED = 0;
-        }
-      });
-    }
-});
+          if (isDocVisible) {
+            destroyAll("final");
+            isDocVisible = false;
+            SPEED = 300;
+          } else {
+            showFinalItems();
+            isDocVisible = true;
+            SPEED = 0;
+          }
+        });
+      }
+    });
 
-      player.onCollideEnd("documentationStation", () => {
-        canAccessDocumentation = false;
-      });
+    player.onCollideEnd("documentationStation", () => {
+      canAccessDocumentation = false;
+    });
 
-    
     player.onCollide("material", (materialEntity) => {
       // console.log(`Here's the current vending keys: ${vendingKeys}`)
       // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
@@ -1606,7 +1821,7 @@ class CharacterMovement {
       if (volumeSetting) {
         play("bubble");
       }
-
+      console.log("material", materialEntity);
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
@@ -1635,59 +1850,74 @@ class CharacterMovement {
     // Dropping item on table
     onKeyPress("q", () => {
       // !TODO: set max items on table
-      if (tableItems.length == 0) {
-        table_x = 700;
-        table_y = 350;
+      if (tableItems.length == 0 && currentTool) {
+        table_x = currentTool.pos.x;
+        table_y = currToolY;
       }
 
-      if (atCraftingTable && onItemsOnTable >= 3 && !isPopupVisible) {
+      if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
         alert("There are too many items on the table; try crafting!");
         // checkCraftable();
       } else {
         console.log(
           "check",
-          atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6
+          toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
         );
-        if (atCraftingTable && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
+        if (
+          toolAccess &&
+          itemsInPocket !== 0 &&
+          onItemsOnTable < 6 &&
+          !isPopupVisible
+        ) {
           itemsInPocket--;
 
-          let item = inPocket.pop();
+          let item = inPocket.shift();
           // console.log("here's item:", item);
           // console.log("here item key", item.itemKey);
           item.use("onTable");
 
           item.moveTo(table_x, table_y);
+          if (inPocket.length > 0 ){
+            inPocket[0].moveTo(880, 725);
+          }
           tableItems[onItemsOnTable] = item.itemKey;
-          console.log(tableItems);
+
           table_y += 50;
           onItemsOnTable++;
           checkCraftable(tableItems);
+
         } else {
           checkCraftable();
-
-          if (itemsInPocket !== 0) {
-            if (volumeSetting) {
-              play("bubble");
-            }
-            itemsInPocket--;
-            let item = inPocket.pop();
-            console.log("here is popped", item);
-            console.log("key?", item.itemKey);
-
-            destroy(item);
+          rearrangePocket();
+          
+        }
+        
+      }
+    });
+    function rearrangePocket(){
+      if (inPocket.length > 0) {
+        if (volumeSetting) {
+          play("bubble");
+        }
+        let item = inPocket.shift(); // Remove the first item from the pocket
+        itemsInPocket--;
+        destroy(item)
+        // Shift remaining items to the first slot if any
+        if (inPocket.length > 0) {
+          inPocket[0].moveTo(880, 725);
+          if (volumeSetting) {
+            play("bubble");
           }
         }
       }
-    });
-
-
-    
+    }
 
     function checkCraftable() {
       if (
-        atCraftingTable &&
+        toolAccess &&
         // tableItems.includes("paper") &&
-        tableItems.length >= 1 && !isPopupVisible
+        tableItems.length >= 1 &&
+        !isPopupVisible
       ) {
         isCraftable = true;
         if (isCraftable) {
@@ -1705,12 +1935,11 @@ class CharacterMovement {
             anchor("center"),
             pos(500, 500),
             z(20),
-
             // scale(.5)
           ]);
         }
       }
-      if (!atCraftingTable || isPopupVisible) {
+      if (!toolAccess || isPopupVisible) {
         destroyAll("craft");
       }
     }
@@ -1724,9 +1953,6 @@ class CharacterMovement {
       checkCraftable();
     });
   }
-
 }
 
-
 export const characterMovement = new CharacterMovement();
-
