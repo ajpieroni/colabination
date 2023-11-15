@@ -56,6 +56,16 @@ class ItemsController < ApplicationController
     end
   end
 
+  def find_by_name_craft
+    @item = Item.find_by(name: params[:name])
+    
+    if @item
+      render json: { data: @item }
+    else
+      render json: { error: "Item not found" }, status: :not_found
+    end
+  end
+
   private
     def set_item
       @item = Item.find(params[:id])

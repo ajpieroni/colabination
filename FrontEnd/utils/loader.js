@@ -20,6 +20,9 @@ export const load = {
         loadSprite("scissorsAlert", "./assets/scissorsAlert.png")
         loadSprite("paperAlert", "./assets/paperAlertBox.png")
         loadSprite("paper", "./assets/paper.png")
+        loadSprite("glass", "./assets/glass.png")
+        loadSprite("stainedglass", "./assets/stainedglass.png")
+        loadSprite("window", "./assets/window.png")
         loadSprite("trash", "./assets/trash.png")   
         loadSprite("cutpaper", "./assets/cutpaper3.png")
         loadSprite("confetti", "./assets/confetti.png")
@@ -27,6 +30,7 @@ export const load = {
         // !TOBE MADE:
         loadSprite("card", "./assets/benchy.png")
         loadSprite("kite", "./assets/benchy.png")
+        loadSprite("origami", "./assets/benchy.png")
         
         // loadSprite("trash", "./assets/dubious_trash.PNG")
         loadSprite("woodAlert", "./assets/colablogo.png")
@@ -42,6 +46,8 @@ export const load = {
 
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
+        
+        loadSprite("loginPage", "./assets/loginPage.png")
 
         loadSprite("backpack", "./assets/backpack.png")
         // !Sounds
