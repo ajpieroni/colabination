@@ -190,9 +190,9 @@ class CharacterMovement {
       z(0),
       "handTools",
       "tool",
-      {toolKey: "hammer"},
+      { toolKey: "hammer" },
       { access: false },
-      {toolId: 1}
+      { toolId: 1 },
     ]);
     const leatherTools = add([
       rect(block_size * 1.65, block_size * 4),
@@ -203,9 +203,9 @@ class CharacterMovement {
       z(0),
       "leatherTable",
       "tool",
-      {toolKey: "screwdriver"},
+      { toolKey: "screwdriver" },
       { access: false },
-      {toolId: 10}
+      { toolId: 10 },
     ]);
 
     const craftingTable = add([
@@ -217,9 +217,9 @@ class CharacterMovement {
       z(0),
       "craftingTable",
       "tool",
-      {toolKey: "craftingTable"},
+      { toolKey: "craftingTable" },
       { access: false },
-      {toolId: 3}
+      { toolId: 3 },
     ]);
 
     // !Machines
@@ -231,7 +231,7 @@ class CharacterMovement {
       pos(65, 200),
       // z(10),
       "printer",
-      {toolKey: "printer1"},
+      { toolKey: "printer1" },
       { access: false },
     ]);
     const printer2 = add([
@@ -242,7 +242,7 @@ class CharacterMovement {
       pos(65, 365),
       // z(10),
       "printer",
-      {toolKey: "printer2"},
+      { toolKey: "printer2" },
       { access: false },
     ]);
     const sewingMachine = add([
@@ -254,9 +254,9 @@ class CharacterMovement {
       z(0),
       "printer",
       "tool",
-      {toolKey: "sewingMachine"},
+      { toolKey: "sewingMachine" },
       { access: false },
-      {toolId: 11}
+      { toolId: 11 },
     ]);
     const solderingStation = add([
       rect(block_size * 2.25, block_size),
@@ -268,11 +268,11 @@ class CharacterMovement {
 
       "printer",
       "tool",
-      {toolKey: "solderingStation"},
+      { toolKey: "solderingStation" },
       { access: false },
-      {toolId: 7}
+      { toolId: 7 },
     ]);
- 
+
     let curr_user = localStorage.getItem("username");
 
     function fetchData(url) {
@@ -296,7 +296,7 @@ class CharacterMovement {
       `http://localhost:8081/user_items/final_items?username=${curr_user}`
     )
       .then((final) => {
-        console.log("final:",final);
+        console.log("final:", final);
         const itemNames = final.final_items;
         itemNames.forEach((itemName) => {
           const savedItem = add([
@@ -311,10 +311,9 @@ class CharacterMovement {
               itemKey: itemName,
             },
           ]);
-          console.log(`${itemName} pushed to are final`)
-          if(!areFinal.includes(itemName)){
+          console.log(`${itemName} pushed to are final`);
+          if (!areFinal.includes(itemName)) {
             areFinal.push(itemName);
-
           }
         });
       })
@@ -339,9 +338,9 @@ class CharacterMovement {
           .then((data) => {
             const items = data.items; // Access the items property
             items.forEach((item) => {
-              const itemName = item[0]; 
+              const itemName = item[0];
               const isFinal = item[1];
-          console.log(itemName, isFinal);
+              console.log(itemName, isFinal);
               const savedItem = add([
                 // rect(item.width, item.height) ,
                 pos(0, 0),
@@ -357,17 +356,16 @@ class CharacterMovement {
                 "material",
                 {
                   itemKey: itemName,
-                  isFinal: isFinal
+                  isFinal: isFinal,
                 },
               ]);
-              if (!savedItem.isFinal){
+              if (!savedItem.isFinal) {
                 hasSavedItems.push(itemName);
                 vendingKeys.push(savedItem.itemKey);
                 vendingContents.push(savedItem);
-              }else{
-                if(!areFinal.includes(itemName)){
+              } else {
+                if (!areFinal.includes(itemName)) {
                   areFinal.push(itemName);
-      
                 }
               }
             });
@@ -399,9 +397,9 @@ class CharacterMovement {
           })
           .then((data) => {
             const toolNames = data.items; // Access the items property
-          
-              if(toolNames){
-                toolNames.forEach((toolName) => {
+
+            if (toolNames) {
+              toolNames.forEach((toolName) => {
                 hasSavedTools.push(toolName);
               });
               resolve(toolNames);
@@ -541,17 +539,17 @@ class CharacterMovement {
     let currToolY = 0;
     let currentTool = "";
     let toolAccess = false;
-    onCollide("player", "tool", (s, w) =>{
-      console.log("collided w tool")
+    onCollide("player", "tool", (s, w) => {
+      console.log("collided w tool");
       console.log(w.toolKey);
-      currToolY = w.pos.y
+      currToolY = w.pos.y;
       currentTool = w;
       toolAccess = true;
-    })
-    onCollideEnd("player", "tool", () =>{
+    });
+    onCollideEnd("player", "tool", () => {
       toolAccess = false;
       currentTool = "";
-    })
+    });
 
     let canPopItem = true;
     // cricut drawer
@@ -715,15 +713,15 @@ class CharacterMovement {
       let toolId;
       // let ingredients = tableItems;
       if (toolAccess) {
-      // *Hands are id=3, we will always use this for crafting table
+        // *Hands are id=3, we will always use this for crafting table
         toolId = currentTool.toolId;
-        console.log(toolId)
-      }else{
+        console.log(toolId);
+      } else {
         // !TODO: check this doesn't break
         toolId = 3;
 
-     // !TODO: fetch tool id 
-      // http://localhost:8081/tools/find_by_name/scissors
+        // !TODO: fetch tool id
+        // http://localhost:8081/tools/find_by_name/scissors
       }
 
       console.log(ingredients);
@@ -787,15 +785,12 @@ class CharacterMovement {
               return response.json();
             })
             .then((additionalData) => {
-              console.log("new item result:", additionalData); 
+              console.log("new item result:", additionalData);
               callback(data.creation, additionalData.data.isFinal, data);
-
             })
             .catch((error) => {
               console.error("Error fetching data:", error);
             });
-
-
         })
         .catch((error) => {
           console.error("Error fetching combination:", error);
@@ -805,8 +800,7 @@ class CharacterMovement {
     function handleCreation(creation, final, item) {
       result.itemKey = creation;
       result.isFinal = final;
-      console.log("here is crafted result: ", result)
-      
+      console.log("here is crafted result: ", result);
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -931,27 +925,28 @@ class CharacterMovement {
 
       onKeyPress("enter", () => {
         if (tableItems.length >= 1 && !isPopupVisible) {
-          console.log("here is popup", isPopupVisible)
+          console.log("here is popup", isPopupVisible);
           madeCraft(result);
 
           // let craftText = `You made ${result.itemKey}! ${
           //   result.isFinal ? "You can find this final item in your documentation station" : ""
           // }`;
-          
-
-
 
           async function madeCraft() {
             let craftText = `You made ${result.itemKey}! ${
-              result.isFinal ? `You can find ${result.itemKey} in the documentation station.` : ""
+              result.isFinal
+                ? `You can find ${result.itemKey} in the documentation station.`
+                : ""
             }`;
 
-            let textSizeX = result.isFinal ? (350-100-50-10-5-5-5-5) : (440 + 40 + 25 - 50);
+            let textSizeX = result.isFinal
+              ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
+              : 440 + 40 + 25 - 50;
 
             destroyAll("crafting");
             add([
               text(craftText),
-              pos(textSizeX, 615), 
+              pos(textSizeX, 615),
               z(53),
               color(0, 0, 0),
               scale(0.5),
@@ -987,25 +982,23 @@ class CharacterMovement {
               "madeItem",
               {
                 itemKey: result.itemKey,
-                isFinal: result.isFinal
+                isFinal: result.isFinal,
               },
-
             ]);
 
             if (
               !vendingContents.includes(madeItem.itemKey) &&
-              !vendingKeys.includes(madeItem.itemKey) && !madeItem.isFinal
+              !vendingKeys.includes(madeItem.itemKey) &&
+              !madeItem.isFinal
             ) {
-              console.log("passed", !madeItem.isFinal)
+              console.log("passed", !madeItem.isFinal);
               vendingContents.push(madeItem);
               vendingKeys.push(madeItem.itemKey);
             }
 
-            
-            if(madeItem.isFinal && !areFinal.includes(madeItem.itemKey)){
-              console.log(`${madeItem.itemKey} pushed to are final`)
+            if (madeItem.isFinal && !areFinal.includes(madeItem.itemKey)) {
+              console.log(`${madeItem.itemKey} pushed to are final`);
               areFinal.push(madeItem.itemKey);
-
             }
             await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -1016,9 +1009,8 @@ class CharacterMovement {
             }
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
-            if(!madeItem.isFinal){
+            if (!madeItem.isFinal) {
               updatePocketVending(result, inPocket);
-
             }
             // updatePocket(madeItem, inPocket);
             madeItem.use(body({ isStatic: true }));
@@ -1054,7 +1046,8 @@ class CharacterMovement {
         toolAccess &&
         isCraftable &&
         !isCraftingVisible &&
-        tableItems.length >= 1 && !isPopupVisible
+        tableItems.length >= 1 &&
+        !isPopupVisible
       ) {
         destroyAll("craft");
         add([
@@ -1253,16 +1246,14 @@ class CharacterMovement {
       let currFinals = [];
 
       for (let i = 0; i < vendingKeys.length; i++) {
-          currItems.push(vendingKeys[i]);
+        currItems.push(vendingKeys[i]);
       }
 
-     
       // let currItems = vendingKeys;
       // * will be renamed as machines
       // let currTools = ["hammer"]
       console.log(currItems, "currItems");
       console.log(currTools, "currTools");
-
 
       for (let i = 0; i < currItems.length; i++) {
         const currItem = currItems[i];
@@ -1276,7 +1267,7 @@ class CharacterMovement {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name: currItem, username: curr_user}),
+              body: JSON.stringify({ name: currItem, username: curr_user }),
             })
               .then((response) => {
                 if (!response.ok) {
@@ -1322,8 +1313,8 @@ class CharacterMovement {
         }
       }
       for (let i = 0; i < areFinal.length; i++) {
-        console.log(areFinal)
-  
+        console.log(areFinal);
+
         currFinals.push(areFinal[i]);
       }
 
@@ -1355,7 +1346,7 @@ class CharacterMovement {
         } else {
           console.log(`You've already saved ${currFinal}`);
         }
-      } 
+      }
     }
     // saving for now :D
     onKeyPress("z", () => {
@@ -1420,6 +1411,7 @@ class CharacterMovement {
     ]);
 
     // !VENDING
+    let itemText = "";
 
     onKeyPress("left", () => {
       if (isPopupVisible) {
@@ -1435,6 +1427,25 @@ class CharacterMovement {
             z(11),
             color(255, 255, 255),
             "selected",
+          ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
           ]);
         }
       }
@@ -1454,6 +1465,25 @@ class CharacterMovement {
             color(255, 255, 255),
             "selected",
           ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
+          ]);
         }
       }
     });
@@ -1471,6 +1501,25 @@ class CharacterMovement {
             z(11),
             color(255, 255, 255),
             "selected",
+          ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
           ]);
         }
       }
@@ -1496,6 +1545,25 @@ class CharacterMovement {
             color(255, 255, 255),
             "selected",
           ]);
+          destroyAll("itemText");
+          let itemText = vendingContents[vendingSelect].itemKey;
+          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+          const selectedText = add([
+            "itemText",
+            text(itemText, {
+              // optional object
+              size: 24,
+              outline: 4,
+              color: (0, 0, 0),
+              // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(500 + 25, 500 + 100 + 25),
+            z(20),
+
+            // scale(.5)
+          ]);
         }
       }
     });
@@ -1507,7 +1575,24 @@ class CharacterMovement {
     });
 
     function showVendingContents(contents) {
-      console.log("vending contents shown")
+      // const testText = add([
+      //   "itemText",
+      //   text("TEST", {
+      //     // optional object
+      //     size: 24,
+      //     outline: 4,
+      //     color: (0, 0, 0),
+      //     // can specify font here,
+      //   }),
+      //   area(),
+      //   anchor("center"),
+      //   pos(500+25, 500+100+25),
+      //   z(20),
+
+      //   // scale(.5)
+      // ]);
+      // console.log(vendingContents[vendingSelect].itemKey);
+      console.log("vending contents shown");
       const popup = add([
         sprite("backpack"),
         pos(475 - 190, 125 + 25),
@@ -1522,6 +1607,27 @@ class CharacterMovement {
       let currentY = startY;
       let currRow = 0;
       if (vendingContents.length > 0) {
+        // itemText = (vendingContents[vendingSelect].itemKey);
+        let itemText = vendingContents[vendingSelect].itemKey;
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500 + 25, 500 + 100 + 25),
+          z(20),
+
+          // scale(.5)
+        ]);
+
         const selected = add([
           rect(70, 70),
           pos(startX, startY),
@@ -1547,7 +1653,6 @@ class CharacterMovement {
           z(11),
           // color(item.color.r, item.color.g, item.color.b),
           "vending",
-          // !TODO: Make sprite image dynamic
           sprite(`${item.itemKey}`),
           // rect(10,10),
           // sprite(`${image}`),
@@ -1558,6 +1663,7 @@ class CharacterMovement {
             itemKey: itemKey,
           },
         ]);
+
         // console.log(currRow);
         currRow++;
         currentX += item.width + 35;
@@ -1632,6 +1738,7 @@ class CharacterMovement {
     onKeyPress("v", () => {
       if (isPopupVisible) {
         destroyAll("vending");
+        destroyAll("itemText");
         destroyAll("selected");
         isPopupVisible = false;
         SPEED = 300;
@@ -1663,7 +1770,7 @@ class CharacterMovement {
       let currRow = 0;
       for (let i = 0; i < areFinal.length; i++) {
         const item = areFinal[i];
-        console.log(item)
+        console.log(item);
 
         // const itemKey = item.itemKey;
         // starts a new line
@@ -1774,7 +1881,12 @@ class CharacterMovement {
           "check",
           toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
         );
-        if (toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
+        if (
+          toolAccess &&
+          itemsInPocket !== 0 &&
+          onItemsOnTable < 6 &&
+          !isPopupVisible
+        ) {
           itemsInPocket--;
 
           let item = inPocket.pop();
@@ -1810,7 +1922,8 @@ class CharacterMovement {
       if (
         toolAccess &&
         // tableItems.includes("paper") &&
-        tableItems.length >= 1 && !isPopupVisible
+        tableItems.length >= 1 &&
+        !isPopupVisible
       ) {
         isCraftable = true;
         if (isCraftable) {
