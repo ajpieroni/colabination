@@ -490,7 +490,7 @@ class CharacterMovement {
     // add creates game object to be displayed on the screen
     // add function returns game objects, can store in const or var
 
-    let SPEED = 500;
+    let SPEED = 300;
 
     const player = add([
       sprite("characterSprite"),
@@ -1826,7 +1826,7 @@ class CharacterMovement {
           if (isDocVisible) {
             destroyAll("final");
             isDocVisible = false;
-            SPEED = 500;
+            SPEED = 300;
           } else {
             showFinalItems();
             isDocVisible = true;
