@@ -339,6 +339,11 @@ class CharacterMovement {
           })
           .then((data) => {
             const items = data.items; // Access the items property
+            console.log("items", items)
+            // console.log(items.length())
+            if (items.length == 0 ){
+              InitialItems()
+            }
             items.forEach((item) => {
               const itemName = item[0];
               const isFinal = item[1];

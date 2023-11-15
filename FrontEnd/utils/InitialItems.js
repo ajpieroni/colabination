@@ -1,16 +1,16 @@
 
 
-export default function InitialItems(){
+export default function InitialItems(items){
     add([
-        sprite("scissors"),
+        sprite("glass"),
         area(),
         body(),
         pos(center().x - 300, center().y),
         z(10),
         scale(1.5),
         "material",
-        { image: "scissors" },
-        { itemKey: "scissors" },
+        { image: "glass" },
+        { itemKey: "glass" },
       ])
       add([
         sprite("paper"),
