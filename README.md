@@ -1,5 +1,37 @@
 # Meeting Notes
 
+## Nov 10th
+Agenda:
+- [] Take a look at our MVP checklist
+  - [] sign up as a user
+  - [] login as a user
+  - [] craft the paper trail 1, 2, 
+  - [] craft glass trail 1
+  - [] craft metal trail 1
+  - [] craft trash
+  - [] save game progress
+- [] To Do:
+  - []
+- [] Additional features:
+  - [] tutorial
+  - [] danai special(aka ending)
+  - [] about us page
+  - [] files re-org
+Progress:
+- Kelvin:
+  -working on showing login/sign up features on the front end
+- Dasol:
+  - Map out of tutorial 
+  - walkthrough of crafting first item
+- Alex: 
+  - worked on dynamic crafying
+  - return whole object of creation
+    - item will either go to backpack or documentation station
+  
+- Olly:
+  - fixed backpack
+  - worked on danai special :D 
+  - adding tool logic this next week
 ## November 3rd
 
 Progress Report:
