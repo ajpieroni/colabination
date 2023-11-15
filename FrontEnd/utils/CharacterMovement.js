@@ -1770,6 +1770,7 @@ class CharacterMovement {
       let currRow = 0;
       for (let i = 0; i < areFinal.length; i++) {
         const item = areFinal[i];
+        itemText = item.charAt(0).toUpperCase() + item.slice(1);
         console.log(item);
 
         // const itemKey = item.itemKey;
@@ -1787,6 +1788,20 @@ class CharacterMovement {
           sprite(`${item}`),
           "final",
           { itemKey: item },
+        ]);
+
+        const finalItemText = add([
+          pos(currentX, currentY+50),
+          text(itemText, {
+            // optional object
+            size: 16,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          z(11),
+          "final",
+          // { itemKey: item },
         ]);
         currRow++;
         currentX += 100;
