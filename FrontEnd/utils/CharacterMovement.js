@@ -1575,23 +1575,7 @@ class CharacterMovement {
     });
 
     function showVendingContents(contents) {
-      // const testText = add([
-      //   "itemText",
-      //   text("TEST", {
-      //     // optional object
-      //     size: 24,
-      //     outline: 4,
-      //     color: (0, 0, 0),
-      //     // can specify font here,
-      //   }),
-      //   area(),
-      //   anchor("center"),
-      //   pos(500+25, 500+100+25),
-      //   z(20),
-
-      //   // scale(.5)
-      // ]);
-      // console.log(vendingContents[vendingSelect].itemKey);
+     
       console.log("vending contents shown");
       const popup = add([
         sprite("backpack"),
@@ -1608,7 +1592,7 @@ class CharacterMovement {
       let currRow = 0;
       if (vendingContents.length > 0) {
         // itemText = (vendingContents[vendingSelect].itemKey);
-        let itemText = vendingContents[vendingSelect].itemKey;
+        let itemText = vendingContents[0].itemKey;
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
         const selectedText = add([
@@ -1795,8 +1779,7 @@ class CharacterMovement {
           text(itemText, {
             // optional object
             size: 16,
-            outline: 4,
-            color: (0, 0, 0),
+            color: (255, 255, 255),
             // can specify font here,
           }),
           z(11),
