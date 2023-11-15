@@ -1570,55 +1570,39 @@ class CharacterMovement {
 
     function updatePocketVending(material, inPocket) {
       if (itemsInPocket < 2) {
-        if (itemsInPocket === 0) {
-          if (volumeSetting) {
-            play("bubble");
-          }
-          // console.log(`Incoming material: ${material}, ${material.itemKey}`);
-          const item1 = add([
-            pos(880, 700),
-            z(11),
-            sprite(`${material.itemKey}`),
-            scale(1),
-            "material",
-            { image: material.itemKey },
-            { itemKey: material.itemKey },
-          ]);
-          console.log(`Pushed item1, ${item1}, ${item1.itemKey}`);
-          inPocket.push(item1);
-        } else {
-          if (volumeSetting) {
-            play("bubble");
-          }
-          const item2 = add([
-            pos(880, 775),
-            z(11),
-            z(11),
-            sprite(`${material.itemKey}`),
-            scale(1),
-            "material",
-            { image: material.itemKey },
-            { itemKey: material.itemKey },
-          ]);
-          inPocket.push(item2);
+        if (volumeSetting) {
+          play("bubble");
         }
+        const newItem = add([
+          pos(880, itemsInPocket === 0 ? 725 : 775),
+          z(11),
+          sprite(`${material.itemKey}`),
+          scale(1),
+          "material",
+          { image: material.itemKey },
+          { itemKey: material.itemKey },
+        ]);
+        console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
+        inPocket.push(newItem);
         itemsInPocket++;
       } else {
         // shake(5);
         alert("Remove items from pocket to select from vending machine");
       }
     }
-
+    
+    
+    let firstItem = false
     function updatePocket(material, inPocket) {
       if (itemsInPocket < 2) {
         if (itemsInPocket === 0) {
-          // console.log("one");
-          // pos(855,700)
           material.moveTo(880, 725);
+          firstItem = true;
           material.scaleTo(1);
+        } else if (itemsInPocket === 1 && !firstItem) {
+          material.moveTo(880, 725);
+          firstItem = true;
         } else {
-          // console.log("two");
-          // moves to spot 2
           material.moveTo(880, 775);
         }
         itemsInPocket++;
@@ -1627,7 +1611,7 @@ class CharacterMovement {
         destroy(material);
       }
     }
-
+    
     // backpack functionality
     onKeyPress("v", () => {
       if (isPopupVisible) {
@@ -1732,7 +1716,7 @@ class CharacterMovement {
       if (volumeSetting) {
         play("bubble");
       }
-
+      console.log("material", materialEntity);
       updatePocket(materialEntity, inPocket);
       materialEntity.use(body({ isStatic: true }));
     });
@@ -1777,34 +1761,46 @@ class CharacterMovement {
         if (toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6 && !isPopupVisible) {
           itemsInPocket--;
 
-          let item = inPocket.pop();
+          let item = inPocket.shift();
           // console.log("here's item:", item);
           // console.log("here item key", item.itemKey);
           item.use("onTable");
 
           item.moveTo(table_x, table_y);
+          if (inPocket.length > 0 ){
+            inPocket[0].moveTo(880, 725);
+          }
           tableItems[onItemsOnTable] = item.itemKey;
-          console.log(tableItems);
+
           table_y += 50;
           onItemsOnTable++;
           checkCraftable(tableItems);
+
         } else {
           checkCraftable();
-
-          if (itemsInPocket !== 0) {
-            if (volumeSetting) {
-              play("bubble");
-            }
-            itemsInPocket--;
-            let item = inPocket.pop();
-            console.log("here is popped", item);
-            console.log("key?", item.itemKey);
-
-            destroy(item);
+          rearrangePocket();
+          
+        }
+        
+      }
+    });
+    function rearrangePocket(){
+      if (inPocket.length > 0) {
+        if (volumeSetting) {
+          play("bubble");
+        }
+        let item = inPocket.shift(); // Remove the first item from the pocket
+        itemsInPocket--;
+        destroy(item)
+        // Shift remaining items to the first slot if any
+        if (inPocket.length > 0) {
+          inPocket[0].moveTo(880, 725);
+          if (volumeSetting) {
+            play("bubble");
           }
         }
       }
-    });
+    }
 
     function checkCraftable() {
       if (
@@ -1828,7 +1824,6 @@ class CharacterMovement {
             anchor("center"),
             pos(500, 500),
             z(20),
-
             // scale(.5)
           ]);
         }
