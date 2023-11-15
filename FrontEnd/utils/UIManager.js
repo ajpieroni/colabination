@@ -6,7 +6,7 @@ class UIManager{
             sprite("loginPage"),
             scale(.85),
         ]);
-        this.displayBlinkingUIMessage(
+        this.displayBlinkingUIMessageLogin(
             "Login or Sign up to play the game!",
             vec2(center().x, center().y - 180)
         );
@@ -107,10 +107,8 @@ class UIManager{
                 })
             });
         
-            // Parse the response
             const data = await response.json();
         
-            // Check if the validation was successful
             if (data.status === 'success') {
                 // Remove the login form from the body
                 if (document.body.contains(loginForm)) {
@@ -162,8 +160,8 @@ class UIManager{
                     passwordInput.value = '';
                     confirmPasswordInput.value = '';
         
-                    // Redirect to the login page
-                    toggleForms(loginForm, signUpForm); // Assuming you have a function to switch forms
+                    
+                    toggleForms(loginForm, signUpForm); 
                 } else {
                     // Handling different error cases
                     if (data.username) {
@@ -179,7 +177,60 @@ class UIManager{
                 alert("Failed to sign up. Please try again later.");
             }
         }
-    }        
+    }
+    displayBlinkingUIMessageLogin(content, position){
+        // PARAMS:
+        // content is the message we want to display
+        // position is position of msg
+        const message = add([
+            text(content, {
+                // optional object
+                size: 24,
+                color: (0,0,0),
+                // can specify font here,
+            }),
+            area(),
+            anchor("center"),
+            pos(position),
+            opacity(),
+            // first param of state is default
+            state("flash-up", ["flash-up", "flash-down"])
+
+        ])
+
+        message.onStateEnter("flash-up", async () =>{
+            // tweening: a component that allows you to gradually change the value from x to y
+            // ex. fde, animation, etc.
+
+            // use await since we want to the tween to ahppen before we move on from anythign else
+            // aka wait for tween to finish
+
+            // function, final, time
+
+            await tween(message.opacity, 
+                0, 
+                0.5, 
+                (nextOpacityValue) => message.opacity = (nextOpacityValue),
+                easings.linear)
+                message.enterState("flash-down")
+
+
+        })
+        // same but in reverse
+        message.onStateEnter("flash-down", async () =>{
+           
+            await tween(message.opacity, 
+                1, 
+                0.5, 
+                (nextOpacityValue) => message.opacity = (nextOpacityValue),
+                easings.linear)
+                message.enterState("flash-up")
+
+
+        })
+
+
+    }
     displayBlinkingUIMessage(content, position){
         // PARAMS:
         // content is the message we want to display
