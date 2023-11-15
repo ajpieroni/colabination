@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   resources :users
   
+  post '/signup', to: 'users#create', defaults: { format: :json }
+  post '/login', to: 'sessions#create', defaults: { format: :json }
+  
   resources :tools do
     collection do
       get 'find_by_name/:name', to: 'tools#find_by_name', as: 'find_by_name'

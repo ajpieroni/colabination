@@ -10,6 +10,7 @@ Rails.application.configure do
 
   config.web_console.whitelisted_ips = '192.168.65.1'
   config.web_console.permissions = '192.168.65.1'
+  
 
   # Do not eager load code on boot.
   config.eager_load = false
