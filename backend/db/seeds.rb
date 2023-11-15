@@ -33,6 +33,10 @@ puts 'seeding'
     confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1, isFinal: false)
     party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1, isFinal: true)
 
+# Creating glass trail
+    stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
+    window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
+
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
@@ -46,10 +50,11 @@ puts 'seeding'
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
 
-
+# seed some users
     user1 = User.create(username: "pandaMan", pin: 1234)
     user2 = User.create(username: "bruin36", pin: 2468)
     user3 = User.create(username: "cats", pin: 1234)
+    
 # Creating item-tools relationships
     ItemTool.create(item: paper, tool: hammer)
     ItemTool.create(item: paper, tool: scissors)
@@ -65,6 +70,10 @@ puts 'seeding'
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
     Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
+
+# Glass combos:
+    Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
+    Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 # hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
