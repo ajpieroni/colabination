@@ -191,7 +191,7 @@ class CharacterMovement {
       pos(260, 260),
       z(0),
       "handTools",
-      // "tool",
+      "tool",
       { toolKey: "hammer" },
       { access: false },
       { toolId: 1 },
@@ -561,15 +561,26 @@ class CharacterMovement {
     let currToolY = 0;
     let currentTool = "";
     let toolAccess = false;
+    
     onCollide("player", "tool", (s, w) => {
+      
       console.log("collided w tool");
       console.log(w.toolKey);
       currToolY = w.pos.y;
       currentTool = w;
       toolAccess = true;
+
+      let toolDisplay = currentTool.toolKey
+        // space
+        .replace(/([A-Z])/g, ' $1')
+        //trim
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+
       checkCraftable()
       add([
-        text(w.toolKey, {size: 16}),
+        text(toolDisplay, {size: 16}),
         pos(w.pos.x, currToolY - 18),
         color(242, 140, 40),
         z(49),
