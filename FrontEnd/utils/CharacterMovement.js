@@ -1673,11 +1673,14 @@ class CharacterMovement {
         isPopupVisible = false;
         SPEED = 300;
       } else {
-        showVendingContents(vendingContents);
-        destroyAll("craft");
-        isPopupVisible = true;
-        SPEED = 0;
-        vendingSelect = 0;
+        if(!isDocVisible){
+          showVendingContents(vendingContents);
+          destroyAll("craft");
+          isPopupVisible = true;
+          SPEED = 0;
+          vendingSelect = 0;
+        }
+       
       }
     });
     let isDocVisible = false;
