@@ -936,15 +936,19 @@ class CharacterMovement {
       }, 250); // the button color will toggle every 500ms
       // !TODO: dynamic
       // let result = "wood";
-
+      let craftCheck = false;
       onKeyPress("enter", () => {
-        if (tableItems.length >= 1 && !isPopupVisible) {
+        if (tableItems.length >= 1 && !isPopupVisible && !craftCheck) {
+          craftCheck = true;
+
+
           console.log("here is popup", isPopupVisible);
           madeCraft(result);
 
           // let craftText = `You made ${result.itemKey}! ${
           //   result.isFinal ? "You can find this final item in your documentation station" : ""
           // }`;
+          console.log("pressed")
 
           async function madeCraft() {
             let craftText = `You made ${result.itemKey}! ${
@@ -1036,6 +1040,8 @@ class CharacterMovement {
             destroyAll("madeItem");
             destroyAll("craftPop");
             isCraftingVisible = false;
+            craftCheck = false;
+
           }
         }
       });
