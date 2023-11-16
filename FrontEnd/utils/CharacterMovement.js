@@ -567,6 +567,7 @@ class CharacterMovement {
       currToolY = w.pos.y;
       currentTool = w;
       toolAccess = true;
+      checkCraftable()
       add([
         text(w.toolKey, {size: 16}),
         pos(w.pos.x, currToolY - 18),
@@ -579,6 +580,8 @@ class CharacterMovement {
       toolAccess = false;
       currentTool = "";
       destroyAll("interactable")
+      checkCraftable()
+
     })
     // debug.inspect = true;
     let canPopItem = true;
@@ -1016,6 +1019,7 @@ class CharacterMovement {
             // atCraftingTable = false;
           }
           async function exitCraft() {
+            SPEED = 300;
             clearTable();
             destroyAll("crafting");
             destroyAll("madeItem");
@@ -1050,6 +1054,7 @@ class CharacterMovement {
         tableItems.length >= 1 &&
         !isPopupVisible
       ) {
+        SPEED = 0;
         destroyAll("craft");
         add([
           "craft",
