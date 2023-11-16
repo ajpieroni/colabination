@@ -829,7 +829,17 @@ class CharacterMovement {
       let possessionText = `You possess ${ingredients.length} item${
         ingredients.length > 1 ? "s" : ""
       }:`;
+      let toolname = currentTool.toolKey
+        // space
+        .replace(/([A-Z])/g, ' $1')
+        //trim
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
 
+
+      let toolText = `Let's try crafting with the ${toolname}.`;
+      
       add([
         text(possessionText),
         pos(415, 175),
@@ -839,6 +849,15 @@ class CharacterMovement {
         "crafting",
       ]);
 
+
+      add([
+        text(toolText),
+        pos(415-200+100, 175+50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
       console.log("here are ingredients");
       craftingBackend(ingredients);
 
@@ -1894,7 +1913,9 @@ class CharacterMovement {
       ) {
         isCraftable = true;
         if (isCraftable) {
+          // !TODO: allow users to move around, for now, only allow them to stay at the station until the craft is complete
           // console.log("hit");
+          SPEED = 0;
           add([
             "craft",
             text("Craft?", {
