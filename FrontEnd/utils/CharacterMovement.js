@@ -354,9 +354,30 @@ class CharacterMovement {
           .then((data) => {
             const items = data.items; // Access the items property
             console.log("items", items)
+            let containsPaper = items.some(subArray => subArray.includes('paper'));
             // console.log(items.length())
             if (items.length == 0 ){
-              InitialItems()
+
+              InitialItems(["glass", "thread", "paper"])
+            }
+            if(items.length != 3){
+              if(!items.some(subArray => subArray.includes('glass'))){
+                console.log("doesn't have glass")
+                InitialItems(["glass"])
+
+              }
+              if(!items.some(subArray => subArray.includes('thread'))){
+                console.log("doesn't have thread")
+
+                InitialItems(["thread"])
+
+              }
+              if(!items.some(subArray => subArray.includes('paper'))){
+                console.log("doesn't have paper")
+
+                InitialItems(["paper"])
+
+              }
             }
             items.forEach((item) => {
               const itemName = item[0];
@@ -1715,6 +1736,7 @@ class CharacterMovement {
         destroyAll("vending");
         destroyAll("itemText");
         destroyAll("selected");
+        handleSavingData();
         isPopupVisible = false;
         SPEED = 300;
       } else {
