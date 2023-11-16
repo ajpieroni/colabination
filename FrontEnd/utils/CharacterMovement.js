@@ -1594,6 +1594,7 @@ class CharacterMovement {
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
+      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
       if (vendingContents.length > 0) {
         // itemText = (vendingContents[vendingSelect].itemKey);
         let itemText = vendingContents[0].itemKey;
@@ -1624,6 +1625,8 @@ class CharacterMovement {
           "selected",
         ]);
       }
+      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
+
       for (let i = 0; i < contents.length; i++) {
         const item = contents[i];
         const itemKey = item.itemKey;
