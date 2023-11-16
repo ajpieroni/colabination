@@ -1046,6 +1046,17 @@ class CharacterMovement {
             destroyAll("craftPop");
             isCraftingVisible = false;
             craftCheck = false;
+            add([
+              text("Saving..."),
+              pos(615-100-50, 615),
+              z(53),
+              color(0, 0, 0),
+              scale(0.5),
+              "crafting",
+            ]);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            destroyAll("crafting");
+
 
           }
         }
