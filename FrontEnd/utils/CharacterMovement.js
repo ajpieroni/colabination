@@ -196,19 +196,7 @@ class CharacterMovement {
       { access: false },
       { toolId: 1 },
     ]);
-    const hammer = add([
-      rect(block_size * 1.65, block_size * 1.3),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(260, 370),
-      z(0),
-      "handTools",
-      "tool",
-      { toolKey: "hammer" },
-      { access: false },
-      { toolId: 1 },
-    ])
+
     const scissors = add([
       rect(block_size * 1.65, block_size*1.15),
       color(256, 0, 0),
@@ -485,14 +473,7 @@ class CharacterMovement {
         hasFound: false,
         alertBox: null,
       },
-      // hammer: {
-      //   spriteName: "hammer",
-      //   alertSprite: "hammerAlert",
-      //   initialPos: { x: 310, y: 300 },
-      //   hasFound: false,
-      //   alertBox: null,
-      //   // onTable: false
-      // },
+
     };
 
     // !Init Functions
@@ -1228,7 +1209,6 @@ class CharacterMovement {
 
       // let currItems = vendingKeys;
       // * will be renamed as machines
-      // let currTools = ["hammer"]
       console.log(currItems, "currItems");
       console.log(currTools, "currTools");
 

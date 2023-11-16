@@ -34,15 +34,5 @@ export default function InitialItems(){
         { image: "thread" },
         { itemKey: "thread" },
       ])
-      add([
-        sprite("hammer"),
-        area(),
-        body(),
-        pos(center().x + 200, center().y),
-        z(10),
-        scale(1.5),
-        "material",
-        { image: "hammer" },
-        { itemKey: "hammer" },
-      ])
+     
 }
