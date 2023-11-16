@@ -954,6 +954,7 @@ class CharacterMovement {
           console.log("pressed")
 
           async function madeCraft() {
+            handleSavingData();
             let craftText = `You made ${result.itemKey}! ${
               result.isFinal
                 ? `You can find ${result.itemKey} in the documentation station.`
