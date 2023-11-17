@@ -1,22 +1,26 @@
 # Meeting Notes
 
+## Nov 17th 
+Agenda:
+- [ ] update on weekly progress
+- [ ] bugs on main
+- [ ] assign issues for the upcoming week
+
 ## Nov 10th
 Agenda:
-- [] Take a look at our MVP checklist
-  - [] sign up as a user
-  - [] login as a user
-  - [] craft the paper trail 1, 2, 
-  - [] craft glass trail 1
-  - [] craft metal trail 1
-  - [] craft trash
-  - [] save game progress
-- [] To Do:
-  - []
-- [] Additional features:
-  - [] tutorial
-  - [] danai special(aka ending)
-  - [] about us page
-  - [] files re-org
+- [x] Take a look at our MVP checklist
+  - [x] sign up as a user
+  - [x] login as a user
+  - [x] craft the paper trail 1, 2, 
+  - [x] craft glass trail 1
+  - [x] craft metal trail 1
+  - [x] craft trash
+  - [x] save game progress
+- [x] Additional features:
+  - [x] tutorial
+  - [x] danai special(aka ending)
+  - [x] about us page
+  - [x] files re-org
 Progress:
 - Kelvin:
   -working on showing login/sign up features on the front end
@@ -49,17 +53,16 @@ Progress Report:
 - Olly:
 ## Nov 3rd
 Agenda:
-- [] updates from the week
-- [] discuss Class vs function and how to pass data between files
-- [] redefine end MVP goals
-  - [] piece code together to have a full playable game
-  - [] use APIs for initializing game, check crafting, save progress
-  - [] working menu bar
-  - [] login and sign up
-- [] assign small issues out
-  - [] items in vending machine vs in documentation station
-  - [] remove trash or any other final items from pocket
-  - [] 
+- [x] updates from the week
+- [x] discuss Class vs function and how to pass data between files
+- [x] redefine end MVP goals
+  - [x] piece code together to have a full playable game
+  - [x] use APIs for initializing game, check crafting, save progress
+  - [x] working menu bar
+  - [x] login and sign up
+- [x] assign small issues out
+  - [x] items in vending machine vs in documentation station
+  - [x] remove trash or any other final items from pocket
 
 ## October 27th
 
@@ -148,8 +151,8 @@ Contraband
 Stained glass window 
 Robot cat
 ## October 13th
-- [] Explain web server
-- [] Prepare for demo next wednesday
+- [x] Explain web server
+- [x] Prepare for demo next wednesday
 Danai, Zhichen, Sandra, Alexis
   - Make a demo branch that we can keep stable
   - Where we're at with our project & how far can we get
@@ -162,15 +165,15 @@ Danai, Zhichen, Sandra, Alexis
     - Dasol: ERD
     - Kelvin: Docker (sorry)
     
-- [] update on progress
-- [] assign issues
-- [] combining art with the frontend code
-- [] make sure no work is being overwritten
-- [] making rectangles squares  in pocket
-- [] perspective of printers and tables
-- [] sprite for character?
-- [] ensuring that each asset is exactly 50x50px to fit properly in vending and pocket
-- [] let's talk crafting? once two items are on the crafting table, should they press a button? etc.
+- [x] update on progress
+- [x] assign issues
+- [x] combining art with the frontend code
+- [x] make sure no work is being overwritten
+- [x] making rectangles squares  in pocket
+- [x] perspective of printers and tables
+- [x] sprite for character?
+- [x] ensuring that each asset is exactly 50x50px to fit properly in vending and pocket
+- [x] let's talk crafting? once two items are on the crafting table, should they press a button? etc.
 
 ## October 6th
 - ↓ select, only works for items in vending machine
