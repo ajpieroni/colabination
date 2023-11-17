@@ -1816,7 +1816,7 @@ class CharacterMovement {
       canAccessDocumentation = true;
       
       add([
-        text("documentation station", {size: 16}),
+        text("Documentation Station", {size: 16}),
         pos(700, 100 - 18),
         color(242, 140, 40),
         z(49),
