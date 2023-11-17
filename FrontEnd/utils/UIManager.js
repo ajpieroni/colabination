@@ -43,6 +43,7 @@ class UIManager{
         signUpForm.append(signUpUsernameInput, signUpPasswordInput, confirmPasswordInput);
     
         const registerButton = createButton("registerButton", "Register");
+        destroyAll("alert")
         signUpForm.appendChild(registerButton);
     
         // Initially hide the sign-up form
@@ -86,12 +87,15 @@ class UIManager{
             if (loginForm.style.display === "none") {
                 loginForm.style.display = "flex";
                 signUpForm.style.display = "none";
+                destroyAll("alert")
             } else {
                 loginForm.style.display = "none";
                 signUpForm.style.display = "flex";
+                destroyAll("alert")
             }
         }
         async function login(usernameInput, passwordInput){
+            destroyAll("alert")
             const enteredUsername = usernameInput.value;
             const enteredPassword = passwordInput.value;
         
@@ -110,6 +114,7 @@ class UIManager{
             const data = await response.json();
         
             if (data.status === 'success') {
+                destroyAll("alert");
                 // Remove the login form from the body
                 if (document.body.contains(loginForm)) {
                     document.body.removeChild(loginForm);
@@ -117,23 +122,47 @@ class UIManager{
         
                 // Store the username in local storage
                 localStorage.setItem("username", enteredUsername);
+                
         
                 // Go to the menu scene
                 go("menu");
             } else {
                 // Show an error message
-                alert("Invalid username or password");
+                let alertMessage = "Invalid username or password";
+                add([
+                    text(alertMessage),
+                    pos(415-100+50, 175+100+25),
+                    z(51),
+                    color(0, 0, 0),
+                    scale(0.5),
+                    "alert",
+                  ]);
+
+   
+
+                
             }
         }
         
         async function signUp(usernameInput, passwordInput, confirmPasswordInput){
+            destroyAll("alert")
+
             const enteredUsername = usernameInput.value;
             const enteredPassword = passwordInput.value;
             const enteredConfirmPassword = confirmPasswordInput.value;
         
             // Validation for matching passwords
             if (enteredPassword !== enteredConfirmPassword) {
-                alert("Passwords do not match.");
+
+                let alertMessage = "Passwords do not match.";
+                add([
+                    text(alertMessage),
+                    pos(415-100+50, 175+100+25),
+                    z(51),
+                    color(0, 0, 0),
+                    scale(0.5),
+                    "alert",
+                  ]);
                 return;
             }
         
@@ -150,10 +179,20 @@ class UIManager{
                 });
         
                 const data = await response.json();
+                console.log("data," + data);
         
                 // Check response status
                 if (data.status === 'success') {
-                    alert("Registration successful. User ID: " + data.user_id);
+                    let alertMessage = `Registration successful. Sign in as ${data.username}`;
+                add([
+                    text(alertMessage),
+                    pos(415-100+50, 175+100+25),
+                    z(51),
+                    color(0, 0, 0),
+                    scale(0.5),
+                    "alert",
+                  ]);
+                    // alert("Registration successful. User ID: " + data.user_id);
         
                     // Clear the form
                     usernameInput.value = '';
@@ -162,19 +201,54 @@ class UIManager{
         
                     
                     toggleForms(loginForm, signUpForm); 
+                    destroyAll("alert")
                 } else {
                     // Handling different error cases
                     if (data.username) {
-                        alert("Error: Username " + data.username.join(', '));
+                        let alertMessage = `Error: Username ${data.username.join(', ')}`;
+                        add([
+                            text(alertMessage),
+                            pos(415-100+50, 175+100+25),
+                            z(51),
+                            color(0, 0, 0),
+                            scale(0.5),
+                            "alert",
+                          ]);
                     } else if (data.pin) {
-                        alert("Error: Pin " + data.pin.join(', '));
+
+                        let alertMessage = `Error: Pin ${data.pin.join(', ')}`;
+                        add([
+                            text(alertMessage),
+                            pos(415-100+50-25-25, 175+100+25),
+                            z(51),
+                            color(0, 0, 0),
+                            scale(0.35),
+                            "alert",
+                          ]);
                     } else {
-                        alert("An unknown error occurred.");
+
+                        let alertMessage = `"An unknown error occurred."`;
+                        add([
+                            text(alertMessage),
+                            pos(415-100+50, 175+100+25),
+                            z(51),
+                            color(0, 0, 0),
+                            scale(0.5),
+                            "alert",
+                          ]);
                     }
                 }
             } catch (error) {
                 console.error('Error during sign-up:', error);
-                alert("Failed to sign up. Please try again later.");
+                let alertMessage = "Failed to sign up. Please try again later.";
+                        add([
+                            text(alertMessage),
+                            pos(415-100+50, 175+100+25),
+                            z(51),
+                            color(0, 0, 0),
+                            scale(0.5),
+                            "alert",
+                          ]);
             }
         }
     }

@@ -191,24 +191,12 @@ class CharacterMovement {
       pos(260, 260),
       z(0),
       "handTools",
-      // "tool",
-      { toolKey: "hammer" },
-      { access: false },
-      { toolId: 1 },
-    ]);
-    const hammer = add([
-      rect(block_size * 1.65, block_size * 1.3),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(260, 370),
-      z(0),
-      "handTools",
       "tool",
       { toolKey: "hammer" },
       { access: false },
       { toolId: 1 },
-    ])
+    ]);
+
     const scissors = add([
       rect(block_size * 1.65, block_size*1.15),
       color(256, 0, 0),
@@ -366,9 +354,30 @@ class CharacterMovement {
           .then((data) => {
             const items = data.items; // Access the items property
             console.log("items", items)
+            let containsPaper = items.some(subArray => subArray.includes('paper'));
             // console.log(items.length())
             if (items.length == 0 ){
-              InitialItems()
+
+              InitialItems(["glass", "thread", "paper"])
+            }
+            if(items.length != 3){
+              if(!items.some(subArray => subArray.includes('glass'))){
+                console.log("doesn't have glass")
+                InitialItems(["glass"])
+
+              }
+              if(!items.some(subArray => subArray.includes('thread'))){
+                console.log("doesn't have thread")
+
+                InitialItems(["thread"])
+
+              }
+              if(!items.some(subArray => subArray.includes('paper'))){
+                console.log("doesn't have paper")
+
+                InitialItems(["paper"])
+
+              }
             }
             items.forEach((item) => {
               const itemName = item[0];
@@ -485,14 +494,7 @@ class CharacterMovement {
         hasFound: false,
         alertBox: null,
       },
-      // hammer: {
-      //   spriteName: "hammer",
-      //   alertSprite: "hammerAlert",
-      //   initialPos: { x: 310, y: 300 },
-      //   hasFound: false,
-      //   alertBox: null,
-      //   // onTable: false
-      // },
+
     };
 
     // !Init Functions
@@ -580,14 +582,26 @@ class CharacterMovement {
     let currToolY = 0;
     let currentTool = "";
     let toolAccess = false;
+    
     onCollide("player", "tool", (s, w) => {
+      
       console.log("collided w tool");
       console.log(w.toolKey);
       currToolY = w.pos.y;
       currentTool = w;
       toolAccess = true;
+
+      let toolDisplay = currentTool.toolKey
+        // space
+        .replace(/([A-Z])/g, ' $1')
+        //trim
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+
+      checkCraftable()
       add([
-        text(w.toolKey, {size: 16}),
+        text(toolDisplay, {size: 16}),
         pos(w.pos.x, currToolY - 18),
         color(242, 140, 40),
         z(49),
@@ -598,6 +612,8 @@ class CharacterMovement {
       toolAccess = false;
       currentTool = "";
       destroyAll("interactable")
+      checkCraftable()
+
     })
     // debug.inspect = true;
     let canPopItem = true;
@@ -845,7 +861,17 @@ class CharacterMovement {
       let possessionText = `You possess ${ingredients.length} item${
         ingredients.length > 1 ? "s" : ""
       }:`;
+      let toolname = currentTool.toolKey
+        // space
+        .replace(/([A-Z])/g, ' $1')
+        //trim
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
 
+
+      let toolText = `Let's try crafting with the ${toolname}.`;
+      
       add([
         text(possessionText),
         pos(415, 175),
@@ -855,6 +881,15 @@ class CharacterMovement {
         "crafting",
       ]);
 
+
+      add([
+        text(toolText),
+        pos(415-200+100, 175+50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
       console.log("here are ingredients");
       craftingBackend(ingredients);
 
@@ -936,17 +971,22 @@ class CharacterMovement {
       }, 250); // the button color will toggle every 500ms
       // !TODO: dynamic
       // let result = "wood";
-
+      let craftCheck = false;
       onKeyPress("enter", () => {
-        if (tableItems.length >= 1 && !isPopupVisible) {
+        if (tableItems.length >= 1 && !isPopupVisible && !craftCheck) {
+          craftCheck = true;
+
+
           console.log("here is popup", isPopupVisible);
           madeCraft(result);
 
           // let craftText = `You made ${result.itemKey}! ${
           //   result.isFinal ? "You can find this final item in your documentation station" : ""
           // }`;
+          console.log("pressed")
 
           async function madeCraft() {
+            handleSavingData();
             let craftText = `You made ${result.itemKey}! ${
               result.isFinal
                 ? `You can find ${result.itemKey} in the documentation station.`
@@ -1031,11 +1071,25 @@ class CharacterMovement {
             // atCraftingTable = false;
           }
           async function exitCraft() {
+            SPEED = 300;
             clearTable();
             destroyAll("crafting");
             destroyAll("madeItem");
             destroyAll("craftPop");
             isCraftingVisible = false;
+            craftCheck = false;
+            add([
+              text("Saving..."),
+              pos(615-100-50, 615),
+              z(53),
+              color(0, 0, 0),
+              scale(0.5),
+              "crafting",
+            ]);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            destroyAll("crafting");
+
+
           }
         }
       });
@@ -1063,6 +1117,7 @@ class CharacterMovement {
         tableItems.length >= 1 &&
         !isPopupVisible
       ) {
+        SPEED = 0;
         destroyAll("craft");
         add([
           "craft",
@@ -1222,7 +1277,6 @@ class CharacterMovement {
 
       // let currItems = vendingKeys;
       // * will be renamed as machines
-      // let currTools = ["hammer"]
       console.log(currItems, "currItems");
       console.log(currTools, "currTools");
 
@@ -1561,6 +1615,7 @@ class CharacterMovement {
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
+      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
       if (vendingContents.length > 0) {
         // itemText = (vendingContents[vendingSelect].itemKey);
         let itemText = vendingContents[0].itemKey;
@@ -1591,6 +1646,8 @@ class CharacterMovement {
           "selected",
         ]);
       }
+      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
+
       for (let i = 0; i < contents.length; i++) {
         const item = contents[i];
         const itemKey = item.itemKey;
@@ -1679,14 +1736,18 @@ class CharacterMovement {
         destroyAll("vending");
         destroyAll("itemText");
         destroyAll("selected");
+        handleSavingData();
         isPopupVisible = false;
         SPEED = 300;
       } else {
-        showVendingContents(vendingContents);
-        destroyAll("craft");
-        isPopupVisible = true;
-        SPEED = 0;
-        vendingSelect = 0;
+        if(!isDocVisible){
+          showVendingContents(vendingContents);
+          destroyAll("craft");
+          isPopupVisible = true;
+          SPEED = 0;
+          vendingSelect = 0;
+        }
+       
       }
     });
     let isDocVisible = false;
@@ -1755,7 +1816,7 @@ class CharacterMovement {
       canAccessDocumentation = true;
       
       add([
-        text("documentation station", {size: 16}),
+        text("Documentation Station", {size: 16}),
         pos(700, 100 - 18),
         color(242, 140, 40),
         z(49),
@@ -1900,7 +1961,9 @@ class CharacterMovement {
       ) {
         isCraftable = true;
         if (isCraftable) {
+          // !TODO: allow users to move around, for now, only allow them to stay at the station until the craft is complete
           // console.log("hit");
+          SPEED = 0;
           add([
             "craft",
             text("Craft?", {
