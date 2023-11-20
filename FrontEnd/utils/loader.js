@@ -61,6 +61,9 @@ export const load = {
         loadSprite("mountains", "./assets/pixelbg2.jpeg")
 
 
+        // !Metal Trail
+        loadSprite("metal", "./assets/metal.png")
+
         //Developer sprites
         loadSprite("Alex", "./assets/1Alex.png")
         loadSprite("Dasol", "./assets/1Dasol.png")
