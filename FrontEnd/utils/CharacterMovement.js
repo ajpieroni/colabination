@@ -184,11 +184,11 @@ class CharacterMovement {
 
     // !Tables
     const handTools = add([
-      rect(block_size * 1.65, block_size * 4),
+      rect(block_size * 1.65, block_size * 2),
       color(256, 0, 0),
       area(),
       body({ isStatic: true }),
-      pos(260, 260),
+      pos(260, 360),
       z(0),
       "handTools",
       "tool",
@@ -616,7 +616,7 @@ class CharacterMovement {
       checkCraftable()
 
     })
-    // debug.inspect = true;
+      debug.inspect = true;
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
