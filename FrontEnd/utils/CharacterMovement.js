@@ -616,7 +616,7 @@ class CharacterMovement {
       checkCraftable()
 
     })
-      debug.inspect = true;
+      // debug.inspect = true;
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
