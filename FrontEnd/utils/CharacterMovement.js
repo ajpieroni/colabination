@@ -360,7 +360,8 @@ class CharacterMovement {
 
               InitialItems(["glass", "thread", "paper"])
             }
-            if(items.length != 3){
+            // !TODO: load in starting items conditionally 
+            if(items.length < 3 && items.length != 0){
               if(!items.some(subArray => subArray.includes('glass'))){
                 console.log("doesn't have glass")
                 InitialItems(["glass"])
@@ -1925,7 +1926,7 @@ class CharacterMovement {
         table_y = currToolY;
       }
 
-      if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
+      if (toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
         let alertText = "There are too many items on the table; try crafting!";
 
         add([
@@ -1957,10 +1958,6 @@ class CharacterMovement {
         setTimeout(() => {
           destroyAll("alertPop");
         }, 2000);
-        
-
-
-        
         // checkCraftable();
       } else {
         console.log(
