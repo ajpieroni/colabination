@@ -1896,7 +1896,7 @@ class CharacterMovement {
         table_y = currToolY;
       }
 
-      if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
+      if (toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
         alert("There are too many items on the table; try crafting!");
         // checkCraftable();
       } else {
