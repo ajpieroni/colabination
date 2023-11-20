@@ -798,6 +798,7 @@ class CharacterMovement {
     let result = {};
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
+      console.log(toolId, item1Id, item2Id)
       fetch(
         `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
       )
