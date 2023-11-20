@@ -39,9 +39,14 @@ puts 'seeding'
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
 
 # Creating metal trail
-    aluminum = Item.create(name:'stainedglass', description: "Bendy!", item_type: 'material', rarity: 1)
-    metalsheet = Item.create(name:'metalsheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1)
-    metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1)
+    aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)
+    metalsheet = Item.create(name:'metalsheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
+    metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
+    copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
+    gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
+    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
+
+
     
 
 
@@ -89,6 +94,16 @@ puts 'seeding'
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
     Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+
+    # Metal: level 2
+    Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
+
+    # Metal: level 3
+    Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
+    Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
+
+
+
 
 
 
