@@ -1896,7 +1896,31 @@ class CharacterMovement {
       }
 
       if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
-        alert("There are too many items on the table; try crafting!");
+        let alertText = "There are too many items on the table; try crafting!";
+
+        add([
+          "alertPop",
+          text(alertText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500+25, 500-300),
+          z(20),
+          // scale(.5)
+        ]);
+
+        setTimeout(() => {
+          destroyAll("alertPop");
+        }, 5000);
+        
+
+
+        
         // checkCraftable();
       } else {
         console.log(
