@@ -23,6 +23,8 @@ puts 'seeding'
     plastic = Item.create(name: 'plastic', description: 'A synthetic material from polymers', item_type: 'material', rarity: 1, isFinal: false)
     nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1, isFinal: false)
     trash =  Item.create(name: 'trash', description: 'A whole lot of junk', item_type: 'nothing', rarity: 1, isFinal: true)
+    metal =  Item.create(name: 'metal', description: 'Metallic legend', item_type: 'material', rarity: 1, isFinal: false)
+
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
@@ -37,6 +39,14 @@ puts 'seeding'
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
 
+# Creating metal trail
+    aluminum = Item.create(name:'stainedglass', description: "Bendy!", item_type: 'material', rarity: 1)
+    metalsheet = Item.create(name:'metalsheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1)
+    metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1)
+    
+
+
+
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
@@ -49,6 +59,8 @@ puts 'seeding'
     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
+    mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+
 
 # seed some users
     user1 = User.create(username: "pandaMan", pin: 1234)
@@ -74,6 +86,14 @@ puts 'seeding'
 # Glass combos:
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
+# !Metal Combos:
+    Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
+    Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
+    Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+
+
+
+
 
 # scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
 # hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)

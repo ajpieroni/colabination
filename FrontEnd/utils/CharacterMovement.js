@@ -358,9 +358,9 @@ class CharacterMovement {
             // console.log(items.length())
             if (items.length == 0 ){
 
-              InitialItems(["glass", "thread", "paper"])
+              InitialItems(["glass", "thread", "paper", "metal"])
             }
-            if(items.length != 3){
+            if(items.length != 4){
               if(!items.some(subArray => subArray.includes('glass'))){
                 console.log("doesn't have glass")
                 InitialItems(["glass"])
@@ -376,6 +376,12 @@ class CharacterMovement {
                 console.log("doesn't have paper")
 
                 InitialItems(["paper"])
+
+              }
+              if(!items.some(subArray => subArray.includes('metal'))){
+                console.log("doesn't have paper")
+
+                InitialItems(["metal"])
 
               }
             }
