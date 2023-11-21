@@ -361,7 +361,7 @@ class CharacterMovement {
               InitialItems(["glass", "thread", "paper"])
             }
             // !TODO: load in starting items conditionally 
-            if(items.length < 3 && items.length != 0){
+            if(items.length != 0){
               if(!items.some(subArray => subArray.includes('glass'))){
                 console.log("doesn't have glass")
                 InitialItems(["glass"])
