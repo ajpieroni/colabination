@@ -1449,7 +1449,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1486,7 +1486,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1523,7 +1523,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1566,7 +1566,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 270 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1611,8 +1611,8 @@ class CharacterMovement {
         // scale(0.75),
         "vending",
       ]);
-      const startX = popup.pos.x + 105;
-      const startY = popup.pos.y + 125;
+      const startX = popup.pos.x + 108;
+      const startY = popup.pos.y + 155;
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
