@@ -150,11 +150,22 @@ class UIManager{
             const enteredUsername = usernameInput.value;
             const enteredPassword = passwordInput.value;
             const enteredConfirmPassword = confirmPasswordInput.value;
-        
             // Validation for matching passwords
             if (enteredPassword !== enteredConfirmPassword) {
 
                 let alertMessage = "Passwords do not match.";
+                add([
+                    text(alertMessage),
+                    pos(415-100+50+25, 175+100+25),
+                    z(51),
+                    color(0, 0, 0),
+                    scale(0.5),
+                    "alert",
+                  ]);
+                return;
+            }
+            if (isNaN(enteredPassword)){
+                let alertMessage = "PIN must only contain numbers";
                 add([
                     text(alertMessage),
                     pos(415-100+50+25, 175+100+25),
