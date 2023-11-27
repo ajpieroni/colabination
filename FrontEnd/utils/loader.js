@@ -70,6 +70,7 @@ export const load = {
         loadSprite("CD", "./assets/CD.png")
         loadSprite("musicCD", "./assets/musicCD.png")
         loadSprite("jewelry", "./assets/jewelry.png")
+        loadSprite("wire", "./assets/wire.png")
 
 
 
