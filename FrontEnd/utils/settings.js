@@ -350,7 +350,7 @@ class Settings {
       z(2),
     ]);
     add([
-      text("Back Pack ------------------- B", {
+      text("Back Pack --------------- Space", {
         size: 24,
         width: 460,
       }),
