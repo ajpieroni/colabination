@@ -19,6 +19,12 @@ export default function InitialItems(itemsToAdd){
         position: center().x + 100,
         image: "thread",
         itemKey: "thread"
+    },
+    metal: {
+        sprite: "metal",
+        position: center().x + 100,
+        image: "metal",
+        itemKey: "metal"
     }
 };
 

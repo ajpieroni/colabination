@@ -358,7 +358,7 @@ class CharacterMovement {
             // console.log(items.length())
             if (items.length == 0 ){
 
-              InitialItems(["glass", "thread", "paper"])
+              InitialItems(["glass", "thread", "paper", "metal"])
             }
             // !TODO: load in starting items conditionally 
             if(items.length != 0){
@@ -377,6 +377,12 @@ class CharacterMovement {
                 console.log("doesn't have paper")
 
                 InitialItems(["paper"])
+
+              }
+              if(!items.some(subArray => subArray.includes('metal'))){
+                console.log("doesn't have paper")
+
+                InitialItems(["metal"])
 
               }
             }
@@ -793,6 +799,7 @@ class CharacterMovement {
     let result = {};
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
+      console.log(toolId, item1Id, item2Id)
       fetch(
         `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
       )

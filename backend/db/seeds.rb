@@ -24,6 +24,7 @@ puts 'seeding'
     nothing = Item.create(name: 'nothing', description: ' ', item_type: 'nothing', rarity: 1, isFinal: false)
     trash =  Item.create(name: 'trash', description: 'A whole lot of junk', item_type: 'nothing', rarity: 1, isFinal: true)
 
+
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1, isFinal: false)
@@ -33,9 +34,66 @@ puts 'seeding'
     confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1, isFinal: false)
     party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1, isFinal: true)
 
+
+    table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
+
+    # Creating plastic trail
+    vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
+    # creating thread trail
+    hat = Item.create(name:'hat', description: "M'lady.", item_type: 'material', rarity: 1, isFinal: false)
+    doll = Item.create(name:'doll', description: "How cute.", item_type: 'material', rarity: 1, isFinal: false)
+    jacket = Item.create(name:'jacket', description: "For keeping warm.", item_type: 'material', rarity: 1, isFinal: false)
+
+# Creating metal trail
+    aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)
+    metalsheet = Item.create(name:'metalsheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
+    metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
+    copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
+    gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
+    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
+    musicCD = Item.create(name:'musicCD', description: "Pump the jams!", item_type: 'material', rarity: 1, isFinal: false)
+
+    CD = Item.create(name:'CD', description: "DJ time!", item_type: 'material', rarity: 1, isFinal: false)
+
+    lamp = Item.create(name:'lamp', description: "Mood lighting!", item_type: 'material', rarity: 1, isFinal: false)
+    chains = Item.create(name:'chains', description: "For big projects, or holding up the minotaur!", item_type: 'material', rarity: 1, isFinal: false)
+
+    bowl = Item.create(name:'bowl', description: "For cereal!", item_type: 'material', rarity: 1, isFinal: false)
+    car = Item.create(name:'car', description: "For driving!", item_type: 'material', rarity: 1, isFinal: false)
+
+    prison = Item.create(name:'prison', description: "Uh oh.", item_type: 'material', rarity: 1, isFinal: true)
+    armor = Item.create(name:'armor', description: "For protection.", item_type: 'material', rarity: 1, isFinal: false)
+    cauldron = Item.create(name:'cauldron', description: "For brewing!", item_type: 'material', rarity: 1, isFinal: false)
+    diningtable = Item.create(name:'diningtable', description: "For family meals!", item_type: 'material', rarity: 1, isFinal: false)
+    stoplight = Item.create(name:'stoplight', description: "Stop on red!", item_type: 'material', rarity: 1, isFinal: false)
+
+
+    # level 3
+    vinylCD = Item.create(name:'vinylCD', description: "For music all night long.", item_type: 'material', rarity: 1, isFinal: true)
+    jewelry = Item.create(name:'jewelry', description: "For decoration of the self.", item_type: 'material', rarity: 1, isFinal: true)
+    crown = Item.create(name:'crown', description: "You're royalty!", item_type: 'material', rarity: 1, isFinal: false)
+
+    knight = Item.create(name:'knight', description: "Hero in shining armor!", item_type: 'material', rarity: 1, isFinal: false)
+    witch = Item.create(name:'witch', description: "Spooky!", item_type: 'material', rarity: 1, isFinal: true)
+    family = Item.create(name:'family', description: "Home is where the fam is!", item_type: 'material', rarity: 1, isFinal: false)
+    street = Item.create(name:'street', description: "To ride on!", item_type: 'material', rarity: 1, isFinal: false)
+    
+#    level 4
+    monarchdoll = Item.create(name:'monarchdoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
+    kingdom = Item.create(name:'kingdom', description: "I used to rule the world...", item_type: 'material', rarity: 1, isFinal: false)
+    home = Item.create(name:'home', description: "Humble abode!", item_type: 'material', rarity: 1, isFinal: true)
+    city = Item.create(name:'city', description: "Big apple!", item_type: 'material', rarity: 1, isFinal: true)
+# level 5
+fairytale = Item.create(name:'fairytale', description: "Dreams come true!", item_type: 'material', rarity: 1, isFinal: true)
+
+# !UNKNOWN
+lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
+wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
+building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
+
 
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
@@ -49,6 +107,8 @@ puts 'seeding'
     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
+    mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+
 
 # seed some users
     user1 = User.create(username: "pandaMan", pin: 1234)
@@ -74,14 +134,74 @@ puts 'seeding'
 # Glass combos:
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
+# !Metal Combos:
+    Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
+    Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
+    Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
 
-# scissor = Tool.create(name: "scissor", description: "it cuts materials", globalCount: 0)
-# hammer = Tool.create(name: "hammer", description: "it slams stuff", globalCount: 0)
+    # Metal: level 2
+    Combination.create(tool: solder, item1: aluminum, item2: aluminum, creation: CD)
+    Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
-# user1 = User.create(username: "pandaMan", pin: 1234)
-# user2 = User.create(username: "bruin36", pin: 2468)
+    Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
+    Combination.create(tool: solder, item1: metalbars, item2: thread, creation: chains)
 
-# itemTool1 = ItemTool.create(item: item1, tool: hammer)
+    Combination.create(tool: hatpress, item1: metalsheet, item2: nothing, creation: bowl)
+    Combination.create(tool: mill, item1: metalsheet, item2: wagon, creation: car)
+
+
+    # Metal: level 3
+    Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
+    Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
+    Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
+
+    Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
+    Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
+    Combination.create(tool: solder, item1: bowl, item2: bowl, creation: cauldron)
+    Combination.create(tool: hands, item1: bowl, item2: table, creation: diningtable)
+    Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
+
+
+    # Metal: level 4
+    Combination.create(tool: solder, item1: musicCD, item2: vinyl, creation: vinylCD)
+    Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
+    Combination.create(tool: hammer, item1: gold, item2: hat, creation: crown)
+    Combination.create(tool: hands, item1: armor, item2: doll, creation: knight)
+    # Witch
+    Combination.create(tool: hands, item1: cauldron, item2: doll, creation: witch)
+    # Family
+    Combination.create(tool: hands, item1: diningtable, item2: doll, creation: family)
+    # Street
+    Combination.create(tool: hands, item1: stoplight, item2: car, creation: street)
+
+
+    # Metal: level 5
+    # Monarch doll
+    Combination.create(tool: hands, item1: crown, item2: doll, creation: monarchdoll)
+    # Kingdom
+    Combination.create(tool: hands, item1: knight, item2: monarchdoll, creation: kingdom)
+    # Home
+    Combination.create(tool: hammer, item1: family, item2: building, creation: home)
+
+    # City
+    Combination.create(tool: hands, item1: street, item2: building, creation: city)
+
+
+    # Metal: level 6
+    # Fairy Tale
+    Combination.create(tool: hands, item1: kingdom, item2: witch, creation: fairytale)
+
+
+
+
+
+
+
+
+
+
+
+
 
 puts 'successfully seeded'
 
