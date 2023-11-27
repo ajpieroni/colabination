@@ -184,11 +184,11 @@ class CharacterMovement {
 
     // !Tables
     const handTools = add([
-      rect(block_size * 1.65, block_size * 4),
+      rect(block_size * 1.65, block_size * 2),
       color(256, 0, 0),
       area(),
       body({ isStatic: true }),
-      pos(260, 260),
+      pos(260, 360),
       z(0),
       "handTools",
       "tool",
@@ -360,7 +360,8 @@ class CharacterMovement {
 
               InitialItems(["glass", "thread", "paper", "metal"])
             }
-            if(items.length != 4){
+            // !TODO: load in starting items conditionally 
+            if(items.length != 0){
               if(!items.some(subArray => subArray.includes('glass'))){
                 console.log("doesn't have glass")
                 InitialItems(["glass"])
@@ -621,7 +622,7 @@ class CharacterMovement {
       checkCraftable()
 
     })
-    // debug.inspect = true;
+      // debug.inspect = true;
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
@@ -1455,7 +1456,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1492,7 +1493,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1529,7 +1530,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 275 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1572,7 +1573,7 @@ class CharacterMovement {
           let gridY = Math.floor(vendingSelect / 3);
           const selected = add([
             rect(70, 70),
-            pos(385 + gridX * 95, 270 + gridY * 70),
+            pos(393 + gridX * 86, 305 + gridY * 100),
             z(11),
             color(255, 255, 255),
             "selected",
@@ -1617,8 +1618,8 @@ class CharacterMovement {
         // scale(0.75),
         "vending",
       ]);
-      const startX = popup.pos.x + 105;
-      const startY = popup.pos.y + 125;
+      const startX = popup.pos.x + 108;
+      const startY = popup.pos.y + 155;
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
@@ -1711,8 +1712,38 @@ class CharacterMovement {
         inPocket.push(newItem);
         itemsInPocket++;
       } else {
+        let alertText = "Remove items from pocket to select from vending machine";
+
+        add([
+          "alertPop",
+          text(alertText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500+25, 500-300),
+          z(20),
+          // scale(.5)
+        ]);
+        add([
+          rect(500+200+200,50),
+          area(),
+          anchor("center"),
+          pos(500+25, 500-300),
+          z(19),
+          color(242, 140, 40),
+          "alertPop"
+
+        ])
+
+        setTimeout(() => {
+          destroyAll("alertPop");
+        }, 2000);
         // shake(5);
-        alert("Remove items from pocket to select from vending machine");
       }
     }
     
@@ -1902,8 +1933,38 @@ class CharacterMovement {
         table_y = currToolY;
       }
 
-      if (toolAccess && onItemsOnTable >= 3 && !isPopupVisible) {
-        alert("There are too many items on the table; try crafting!");
+      if (toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
+        let alertText = "There are too many items on the table; try crafting!";
+
+        add([
+          "alertPop",
+          text(alertText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(500+25, 500-300),
+          z(20),
+          // scale(.5)
+        ]);
+        add([
+          rect(500+200+200,50),
+          area(),
+          anchor("center"),
+          pos(500+25, 500-300),
+          z(19),
+          color(242, 140, 40),
+          "alertPop"
+
+        ])
+
+        setTimeout(() => {
+          destroyAll("alertPop");
+        }, 2000);
         // checkCraftable();
       } else {
         console.log(

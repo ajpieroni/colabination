@@ -150,14 +150,25 @@ class UIManager{
             const enteredUsername = usernameInput.value;
             const enteredPassword = passwordInput.value;
             const enteredConfirmPassword = confirmPasswordInput.value;
-        
             // Validation for matching passwords
             if (enteredPassword !== enteredConfirmPassword) {
 
                 let alertMessage = "Passwords do not match.";
                 add([
                     text(alertMessage),
-                    pos(415-100+50, 175+100+25),
+                    pos(415-100+50+25, 175+100+25),
+                    z(51),
+                    color(0, 0, 0),
+                    scale(0.5),
+                    "alert",
+                  ]);
+                return;
+            }
+            if (isNaN(enteredPassword)){
+                let alertMessage = "PIN must only contain numbers";
+                add([
+                    text(alertMessage),
+                    pos(415-100+50+25, 175+100+25),
                     z(51),
                     color(0, 0, 0),
                     scale(0.5),
@@ -205,10 +216,10 @@ class UIManager{
                 } else {
                     // Handling different error cases
                     if (data.username) {
-                        let alertMessage = `Error: Username ${data.username.join(', ')}`;
+                        let alertMessage = `Username ${data.username.join(', ')}`;
                         add([
                             text(alertMessage),
-                            pos(415-100+50, 175+100+25),
+                            pos(415-100+50-10, 175+100+25-10),
                             z(51),
                             color(0, 0, 0),
                             scale(0.5),
