@@ -11,6 +11,10 @@ class CharacterMovement {
   display() {
     //! Level Schema
 
+    
+
+
+
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;

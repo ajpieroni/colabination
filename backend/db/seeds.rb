@@ -130,6 +130,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
     Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
+    
+
 
 # Glass combos:
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
