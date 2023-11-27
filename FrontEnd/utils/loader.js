@@ -67,10 +67,51 @@ export const load = {
         loadSprite("aluminum", "./assets/aluminum.png")
         loadSprite("copper", "./assets/copper.png")
         loadSprite("gold", "./assets/gold.png")
-        loadSprite("CD", "./assets/CD.png")
-        loadSprite("musicCD", "./assets/musicCD.png")
         loadSprite("jewelry", "./assets/jewelry.png")
         loadSprite("wire", "./assets/wire.png")
+        loadSprite("musicCD", "./assets/musicCD.png")
+        loadSprite("CD", "./assets/CD.png")
+
+        // TO BE MADE
+        loadSprite("lamp", "./assets/benchy.png")
+        loadSprite("chains", "./assets/benchy.png")
+        loadSprite("bowl", "./assets/benchy.png")
+        loadSprite("car", "./assets/benchy.png")
+
+        loadSprite("prison", "./assets/benchy.png")
+        loadSprite("armor", "./assets/benchy.png")
+        loadSprite("cauldron", "./assets/benchy.png")
+        loadSprite("dining table", "./assets/benchy.png")
+        loadSprite("stoplight", "./assets/benchy.png")
+
+        loadSprite("vinylCD", "./assets/benchy.png")
+        loadSprite("crown", "./assets/benchy.png")
+        loadSprite("knight", "./assets/benchy.png")
+        loadSprite("witch", "./assets/benchy.png")
+        loadSprite("family", "./assets/benchy.png")
+        loadSprite("street", "./assets/benchy.png")
+
+        loadSprite("monarchdoll", "./assets/benchy.png")
+        loadSprite("kingdom", "./assets/benchy.png")
+        loadSprite("home", "./assets/benchy.png")
+        loadSprite("city", "./assets/benchy.png")
+
+        loadSprite("fairytale", "./assets/benchy.png")
+
+
+
+
+
+
+// Thread trail 
+loadSprite("jacket", "./assets/benchy.png")
+
+// Unknown
+loadSprite("lightbulb", "./assets/benchy.png")
+loadSprite("wagon", "./assets/benchy.png")
+
+
+
 
 
 
