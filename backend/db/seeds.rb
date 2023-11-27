@@ -45,9 +45,30 @@ puts 'seeding'
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
     wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
+    musicCD = Item.create(name:'musicCD', description: "Pump the jams!", item_type: 'material', rarity: 1, isFinal: false)
 
+    CD = Item.create(name:'CD', description: "DJ time!", item_type: 'material', rarity: 1, isFinal: false)
+
+    lamp = Item.create(name:'lamp', description: "Mood lighting!", item_type: 'material', rarity: 1, isFinal: false)
+    chains = Item.create(name:'chains', description: "For big projects, or holding up the minotaur!", item_type: 'material', rarity: 1, isFinal: false)
+
+    bowl = Item.create(name:'bowl', description: "For cereal!", item_type: 'material', rarity: 1, isFinal: false)
+    car = Item.create(name:'car', description: "For driving!", item_type: 'material', rarity: 1, isFinal: false)
+
+    prison = Item.create(name:'prison', description: "Uh oh.", item_type: 'material', rarity: 1, isFinal: true)
+    armor = Item.create(name:'armor', description: "For protection.", item_type: 'material', rarity: 1, isFinal: false)
+
+    # level 3
+    jewelry = Item.create(name:'jewelry', description: "For decoration of the self.", item_type: 'material', rarity: 1, isFinal: true)
+
+
+# Thread trail
+jacket = Item.create(name:'jacket', description: "For keeping warm.", item_type: 'material', rarity: 1, isFinal: false)
 
     
+# !UNKNOWN
+lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
+wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
 
 
@@ -96,11 +117,49 @@ puts 'seeding'
     Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
 
     # Metal: level 2
+    Combination.create(tool: solder, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
+    Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
+    Combination.create(tool: solder, item1: metalbars, item2: thread, creation: chains)
+
+    Combination.create(tool: hatpress, item1: metalsheet, item2: nothing, creation: bowl)
+    Combination.create(tool: mill, item1: metalsheet, item2: wagon, creation: car)
+
+
     # Metal: level 3
+    Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
+
+    Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
+    Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
+    # Cauldron
+    # Dining table
+    # Spotlight
+
+    # Metal: level 4
+    # Vinyl CD
+    Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
+
+    # Crown
+
+    # Knight
+    # Witch
+    # Family
+    # Street
+
+    # Metal: level 5
+    # Monarch doll
+    # Kingdom
+    # Home
+    # City
+
+    # Metal: level 6
+    # Fairy Tale
+
+
+
 
 
 

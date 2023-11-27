@@ -67,6 +67,12 @@ export const load = {
         loadSprite("aluminum", "./assets/aluminum.png")
         loadSprite("copper", "./assets/copper.png")
         loadSprite("gold", "./assets/gold.png")
+        loadSprite("CD", "./assets/CD.png")
+        loadSprite("musicCD", "./assets/musicCD.png")
+        loadSprite("jewelry", "./assets/jewelry.png")
+
+
+
 
 
 
