@@ -1762,7 +1762,7 @@ class CharacterMovement {
     }
     
     // backpack functionality
-    onKeyPress("v", () => {
+    onKeyPress("space", () => {
       if (isPopupVisible) {
         destroyAll("vending");
         destroyAll("itemText");
