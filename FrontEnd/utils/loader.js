@@ -104,6 +104,8 @@ export const load = {
 
 
 // Thread trail 
+loadSprite("cloth", "./assets/cloth.png")
+loadSprite("cut cloth", "./assets/cutcloth.png")
 loadSprite("skirt", "./assets/skirt.png")
 loadSprite("jacket", "./assets/benchy.png")
 
