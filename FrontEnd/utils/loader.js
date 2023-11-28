@@ -40,7 +40,7 @@ export const load = {
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
         loadSprite("hammer", "./assets/hammer.png")
-        loadSprite("thread", "./assets/yarn.png")
+        loadSprite("thread", "./assets/thread.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
         loadSprite("threadAlert", "./assets/yarn.png")
 
@@ -104,6 +104,7 @@ export const load = {
 
 
 // Thread trail 
+loadSprite("skirt", "./assets/skirt.png")
 loadSprite("jacket", "./assets/benchy.png")
 
 // Unknown
