@@ -94,7 +94,10 @@ lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'm
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
-
+# Creating Thread trail
+    cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
+    cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
+    skirt = Item.create(name: 'skirt', description: "Flowy, covers some part of your legs", item_type: "material", rarity: 1, isFinal: false)
 # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
@@ -193,9 +196,10 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     # Fairy Tale
     Combination.create(tool: hands, item1: kingdom, item2: witch, creation: fairytale)
 
-
-
-
+# Thread combos
+    Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
+    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
+    Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
 
 
 
