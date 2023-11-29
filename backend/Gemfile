@@ -11,6 +11,9 @@ gem "mysql2", "~> 0.5.3"
 
 gem 'rack-cors'
 
+gem 'auto-session-timeout'
+
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 

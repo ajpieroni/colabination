@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   
   post '/signup', to: 'users#create', defaults: { format: :json }
   post '/login', to: 'sessions#create', defaults: { format: :json }
+  delete '/logout', to: 'sessions#destroy', defaults: {format: :json}
+
   
   resources :tools do
     collection do
@@ -39,6 +41,8 @@ Rails.application.routes.draw do
 
   resources :combinations, only: [:index]
   get 'combinations_all', to: 'combinations#all'
+
+
 
 end
 

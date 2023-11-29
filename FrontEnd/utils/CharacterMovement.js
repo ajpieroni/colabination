@@ -2066,7 +2066,32 @@ class CharacterMovement {
       atCraftingTable = false;
       checkCraftable();
     });
-  }
-}
+    // Function to check session status
+    let inactivityTimer;
+
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        // Call the logout function after 15 minutes of inactivity
+        logout();
+      }, 60000); // 15 minutes in milliseconds
+    }
+
+    function logout() {
+      fetch('http://localhost:8081/logout', { method: 'DELETE' })
+        .then(response => {
+          if (response.ok) {
+            go("login"); // Redirect to login page
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    onKeyPress(() => {
+      resetInactivityTimer()
+    });
+    resetInactivityTimer();
+      }
+    }
+
 
 export const characterMovement = new CharacterMovement();
