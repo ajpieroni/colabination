@@ -585,6 +585,7 @@ class CharacterMovement {
 
     onCollide("player", "tool", (s, w) => {
       console.log("collided w tool");
+      finalCraftCheck = true;
       console.log(w.toolKey);
       currToolY = w.pos.y;
       currentTool = w;
@@ -1880,7 +1881,8 @@ class CharacterMovement {
     });
 
     player.onCollide("material", (materialEntity) => {
-      if (!atCraftingTable) {
+      if (tableItems.length == 0) {
+
         console.log("Collided with material", materialEntity.itemKey);
         // console.log(`Here's the current vending keys: ${vendingKeys}`)
         // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
@@ -2020,6 +2022,7 @@ class CharacterMovement {
         }
       }
     }
+    let finalCraftCheck = false;
 
     function checkCraftable() {
       if (
@@ -2048,6 +2051,8 @@ class CharacterMovement {
             z(20),
             // scale(.5)
           ]);
+          finalCraftCheck = true;
+
         }
       }
       if (!toolAccess || isPopupVisible) {
