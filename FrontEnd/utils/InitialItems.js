@@ -22,7 +22,7 @@ export default function InitialItems(itemsToAdd){
     },
     metal: {
         sprite: "metal",
-        position: center().x + 100,
+        position: center().x + 300,
         image: "metal",
         itemKey: "metal"
     }
