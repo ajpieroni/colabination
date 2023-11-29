@@ -2,6 +2,7 @@ class UIManager{
     
 
     displayLoginScreen(){
+        
         add([
             sprite("loginPage"),
             scale(.85),

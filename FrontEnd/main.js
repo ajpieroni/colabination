@@ -27,8 +27,7 @@ load.assets()
 const scenes = {
     login: () => {
         // go to login screen
-        uiManager.displayLoginScreen()
-            
+        uiManager.displayLoginScreen()            
     },
     
     menu: () =>{

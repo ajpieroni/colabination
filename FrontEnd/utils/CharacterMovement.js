@@ -2074,24 +2074,26 @@ class CharacterMovement {
       inactivityTimer = setTimeout(() => {
         // Call the logout function after 15 minutes of inactivity
         logout();
-      }, 60000); // 15 minutes in milliseconds
+      }, 15000); // 15 minutes in milliseconds
     }
 
     function logout() {
       fetch('http://localhost:8081/logout', { method: 'DELETE' })
         .then(response => {
           if (response.ok) {
-            go("login"); // Redirect to login page
+
+            go("login");
           }
         })
         .catch(error => console.error('Error:', error));
     }
-    onKeyPress(() => {
-      resetInactivityTimer()
-    });
     resetInactivityTimer();
+    onKeyPress(() => {
+      resetInactivityTimer();
+    })
+    onMouseMove(() =>{
+      resetInactivityTimer();
+    })
       }
     }
-
-
 export const characterMovement = new CharacterMovement();
