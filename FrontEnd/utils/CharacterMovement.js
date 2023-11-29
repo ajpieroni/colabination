@@ -9,10 +9,6 @@ class CharacterMovement {
   display() {
     //! Level Schema
 
-    
-
-
-
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
@@ -200,7 +196,7 @@ class CharacterMovement {
     ]);
 
     const scissors = add([
-      rect(block_size * 1.65, block_size*1.15),
+      rect(block_size * 1.65, block_size * 1.15),
       color(256, 0, 0),
       area(),
       body({ isStatic: true }),
@@ -211,7 +207,7 @@ class CharacterMovement {
       { toolKey: "scissors" },
       { access: false },
       { toolId: 2 },
-    ])
+    ]);
     const leatherTools = add([
       rect(block_size * 1.65, block_size * 4),
       color(256, 0, 0),
@@ -355,37 +351,34 @@ class CharacterMovement {
           })
           .then((data) => {
             const items = data.items; // Access the items property
-            console.log("items", items)
-            let containsPaper = items.some(subArray => subArray.includes('paper'));
+            console.log("items", items);
+            let containsPaper = items.some((subArray) =>
+              subArray.includes("paper")
+            );
             // console.log(items.length())
-            if (items.length == 0 ){
-
-              InitialItems(["glass", "thread", "paper", "metal"])
+            if (items.length == 0) {
+              InitialItems(["glass", "thread", "paper", "metal"]);
             }
-            // !TODO: load in starting items conditionally 
-            if(items.length != 0){
-              if(!items.some(subArray => subArray.includes('glass'))){
-                console.log("doesn't have glass")
-                InitialItems(["glass"])
-
+            // !TODO: load in starting items conditionally
+            if (items.length != 0) {
+              if (!items.some((subArray) => subArray.includes("glass"))) {
+                console.log("doesn't have glass");
+                InitialItems(["glass"]);
               }
-              if(!items.some(subArray => subArray.includes('thread'))){
-                console.log("doesn't have thread")
+              if (!items.some((subArray) => subArray.includes("thread"))) {
+                console.log("doesn't have thread");
 
-                InitialItems(["thread"])
-
+                InitialItems(["thread"]);
               }
-              if(!items.some(subArray => subArray.includes('paper'))){
-                console.log("doesn't have paper")
+              if (!items.some((subArray) => subArray.includes("paper"))) {
+                console.log("doesn't have paper");
 
-                InitialItems(["paper"])
-
+                InitialItems(["paper"]);
               }
-              if(!items.some(subArray => subArray.includes('metal'))){
-                console.log("doesn't have paper")
+              if (!items.some((subArray) => subArray.includes("metal"))) {
+                console.log("doesn't have paper");
 
-                InitialItems(["metal"])
-
+                InitialItems(["metal"]);
               }
             }
             items.forEach((item) => {
@@ -431,12 +424,11 @@ class CharacterMovement {
     fetchUserItems(curr_user)
       .then((itemNames) => {
         console.log(itemNames);
-
-        
-    }).catch(error => {
-        console.error('Error fetching user items:', error);
+      })
+      .catch((error) => {
+        console.error("Error fetching user items:", error);
         InitialItems();
-    });
+      });
     // load in tools
 
     // InitialItems();
@@ -476,7 +468,7 @@ class CharacterMovement {
     // !Materials
     let nearCraftingTable = false;
     let currentIndex = 0;
-    
+
     // keep merge?
     const items = {
       // scissors: {
@@ -503,7 +495,6 @@ class CharacterMovement {
         hasFound: false,
         alertBox: null,
       },
-
     };
 
     // !Init Functions
@@ -591,9 +582,8 @@ class CharacterMovement {
     let currToolY = 0;
     let currentTool = "";
     let toolAccess = false;
-    
+
     onCollide("player", "tool", (s, w) => {
-      
       console.log("collided w tool");
       console.log(w.toolKey);
       currToolY = w.pos.y;
@@ -602,29 +592,30 @@ class CharacterMovement {
 
       let toolDisplay = currentTool.toolKey
         // space
-        .replace(/([A-Z])/g, ' $1')
+        .replace(/([A-Z])/g, " $1")
         //trim
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
 
-      checkCraftable()
+      checkCraftable();
       add([
-        text(toolDisplay, {size: 16}),
+        text(toolDisplay, { size: 16 }),
         pos(w.pos.x, currToolY - 18),
         color(242, 140, 40),
         z(49),
-        "interactable"
-      ])
-    })
-    onCollideEnd("player", "tool", () =>{
+        "interactable",
+      ]);
+    });
+    onCollideEnd("player", "tool", () => {
       toolAccess = false;
       currentTool = "";
-      destroyAll("interactable")
-      checkCraftable()
-
-    })
-      // debug.inspect = true;
+      destroyAll("interactable");
+      checkCraftable();
+    });
+    // debug.inspect = true;
     let canPopItem = true;
     // cricut drawer
     let myCDrawer = ["", "wood", "paper", "scissors"];
@@ -696,7 +687,7 @@ class CharacterMovement {
         }
       }
     }
-    
+
     function discoverCricut() {
       if (cricut.access && !hasUnlockedCricut) {
         cricutAlertBox = add([
@@ -801,7 +792,7 @@ class CharacterMovement {
     let result = {};
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
-      console.log(toolId, item1Id, item2Id)
+      console.log(toolId, item1Id, item2Id);
       fetch(
         `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
       )
@@ -873,15 +864,16 @@ class CharacterMovement {
       }:`;
       let toolname = currentTool.toolKey
         // space
-        .replace(/([A-Z])/g, ' $1')
+        .replace(/([A-Z])/g, " $1")
         //trim
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
-
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
 
       let toolText = `Let's try crafting with the ${toolname}.`;
-      
+
       add([
         text(possessionText),
         pos(415, 175),
@@ -891,10 +883,9 @@ class CharacterMovement {
         "crafting",
       ]);
 
-
       add([
         text(toolText),
-        pos(415-200+100, 175+50),
+        pos(415 - 200 + 100, 175 + 50),
         z(51),
         color(0, 0, 0),
         scale(0.5),
@@ -986,14 +977,13 @@ class CharacterMovement {
         if (tableItems.length >= 1 && !isPopupVisible && !craftCheck) {
           craftCheck = true;
 
-
           console.log("here is popup", isPopupVisible);
           madeCraft(result);
 
           // let craftText = `You made ${result.itemKey}! ${
           //   result.isFinal ? "You can find this final item in your documentation station" : ""
           // }`;
-          console.log("pressed")
+          console.log("pressed");
 
           async function madeCraft() {
             handleSavingData();
@@ -1090,7 +1080,7 @@ class CharacterMovement {
             craftCheck = false;
             add([
               text("Saving..."),
-              pos(615-100-50, 615),
+              pos(615 - 100 - 50, 615),
               z(53),
               color(0, 0, 0),
               scale(0.5),
@@ -1098,8 +1088,6 @@ class CharacterMovement {
             ]);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             destroyAll("crafting");
-
-
           }
         }
       });
@@ -1174,7 +1162,6 @@ class CharacterMovement {
     // dismiss alerts
 
     onKeyPress("enter", () => {
-
       setTimeout(() => {
         destroyAll("alert");
       }, 2000);
@@ -1365,7 +1352,7 @@ class CharacterMovement {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name: currFinal, username: curr_user}),
+              body: JSON.stringify({ name: currFinal, username: curr_user }),
             })
               .then((response) => {
                 if (!response.ok) {
@@ -1610,7 +1597,6 @@ class CharacterMovement {
     });
 
     function showVendingContents(contents) {
-     
       console.log("vending contents shown");
       const popup = add([
         sprite("backpack"),
@@ -1714,7 +1700,8 @@ class CharacterMovement {
         inPocket.push(newItem);
         itemsInPocket++;
       } else {
-        let alertText = "Remove items from pocket to select from vending machine";
+        let alertText =
+          "Remove items from pocket to select from vending machine";
 
         add([
           "alertPop",
@@ -1727,20 +1714,19 @@ class CharacterMovement {
           }),
           area(),
           anchor("center"),
-          pos(500+25, 500-300),
+          pos(500 + 25, 500 - 300),
           z(20),
           // scale(.5)
         ]);
         add([
-          rect(500+200+200,50),
+          rect(500 + 200 + 200, 50),
           area(),
           anchor("center"),
-          pos(500+25, 500-300),
+          pos(500 + 25, 500 - 300),
           z(19),
           color(242, 140, 40),
-          "alertPop"
-
-        ])
+          "alertPop",
+        ]);
 
         setTimeout(() => {
           destroyAll("alertPop");
@@ -1748,38 +1734,35 @@ class CharacterMovement {
         // shake(5);
       }
     }
-    
-    
-    let firstItem = false
+
+    let firstItem = false;
     function updatePocket(material, inPocket) {
-    console.log("size of pocket pre", itemsInPocket)
+      console.log("size of pocket pre", itemsInPocket);
       if (itemsInPocket < 2) {
         material.scaleTo(1);
         material.moveTo(880, itemsInPocket === 0 ? 725 : 775),
-        // if has 0 itmems
-        // if (itemsInPocket === 0) {
-        //   material.moveTo(880, 725);
-        //   firstItem = true;
-        //   // if has 1 item
-        // } else if (itemsInPocket === 1 && !firstItem) {
-        //   material.moveTo(880, 725);
-        //   material.scaleTo(1);
-        //   firstItem = true;
-        // } else {
-        //   material.moveTo(880, 775);
-        //   material.scaleTo(1);
+          // if has 0 itmems
+          // if (itemsInPocket === 0) {
+          //   material.moveTo(880, 725);
+          //   firstItem = true;
+          //   // if has 1 item
+          // } else if (itemsInPocket === 1 && !firstItem) {
+          //   material.moveTo(880, 725);
+          //   material.scaleTo(1);
+          //   firstItem = true;
+          // } else {
+          //   material.moveTo(880, 775);
+          //   material.scaleTo(1);
 
-        // }
-        inPocket.push(material);
+          // }
+          inPocket.push(material);
         itemsInPocket++;
-        console.log("size of pocket post", itemsInPocket)
-
+        console.log("size of pocket post", itemsInPocket);
       } else {
         destroy(material);
       }
     }
 
-    
     // backpack functionality
     onKeyPress("space", () => {
       if (isPopupVisible) {
@@ -1790,14 +1773,13 @@ class CharacterMovement {
         isPopupVisible = false;
         SPEED = 300;
       } else {
-        if(!isDocVisible){
+        if (!isDocVisible) {
           showVendingContents(vendingContents);
           destroyAll("craft");
           isPopupVisible = true;
           SPEED = 0;
           vendingSelect = 0;
         }
-       
       }
     });
     let isDocVisible = false;
@@ -1841,7 +1823,7 @@ class CharacterMovement {
         ]);
 
         const finalItemText = add([
-          pos(currentX, currentY+50),
+          pos(currentX, currentY + 50),
           text(itemText, {
             // optional object
             size: 16,
@@ -1864,14 +1846,14 @@ class CharacterMovement {
 
     player.onCollide("documentationStation", () => {
       canAccessDocumentation = true;
-      
+
       add([
-        text("Documentation Station", {size: 16}),
+        text("Documentation Station", { size: 16 }),
         pos(700, 100 - 18),
         color(242, 140, 40),
         z(49),
-        "interactable"
-      ])
+        "interactable",
+      ]);
       if (!eventListenerAttached) {
         eventListenerAttached = true;
 
@@ -1894,34 +1876,37 @@ class CharacterMovement {
 
     player.onCollideEnd("documentationStation", () => {
       canAccessDocumentation = false;
-      destroyAll("interactable")
+      destroyAll("interactable");
     });
 
     player.onCollide("material", (materialEntity) => {
-      // console.log(`Here's the current vending keys: ${vendingKeys}`)
-      // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
-      if (
-        !vendingContents.includes(materialEntity) &&
-        !vendingKeys.includes(materialEntity.itemKey)
-      ) {
-        console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
-        vendingContents.push(materialEntity);
-        vendingKeys.push(materialEntity.itemKey);
+      if (!atCraftingTable) {
+        console.log("Collided with material", materialEntity.itemKey);
+        // console.log(`Here's the current vending keys: ${vendingKeys}`)
+        // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
+        if (
+          !vendingContents.includes(materialEntity) &&
+          !vendingKeys.includes(materialEntity.itemKey)
+        ) {
+          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+          vendingContents.push(materialEntity);
+          vendingKeys.push(materialEntity.itemKey);
+        }
+        if (volumeSetting) {
+          play("bubble");
+        }
+
+        console.log("material", materialEntity);
+        console.log("Updating pocket");
+        updatePocket(materialEntity, inPocket);
+
+        materialEntity.use(body({ isStatic: true }));
       }
-      if (volumeSetting) {
-        play("bubble");
-      }
-      
-      console.log("material", materialEntity);
-      console.log("Updating pocket")
-      updatePocket(materialEntity, inPocket);
-      
-      materialEntity.use(body({ isStatic: true }));
     });
 
     let atCraftingTable = false;
     let table_x = 700;
-    let table_y = 350;
+    let table_y = 550;
     let onItemsOnTable = 0;
     let tableItems = [];
     function clearTable() {
@@ -1929,7 +1914,7 @@ class CharacterMovement {
       destroyAll("onTable");
       destroyAll("craft");
       table_x = 700;
-      table_y = 300;
+      table_y = 550;
       onItemsOnTable = 0;
       tableItems = [];
     }
@@ -1942,7 +1927,7 @@ class CharacterMovement {
 
     // Dropping item on table
     onKeyPress("q", () => {
-      console.log("items in pocket",itemsInPocket)
+      console.log("items in pocket on q", itemsInPocket);
       // !TODO: set max items on table
       if (tableItems.length == 0 && currentTool) {
         table_x = currentTool.pos.x;
@@ -1963,20 +1948,19 @@ class CharacterMovement {
           }),
           area(),
           anchor("center"),
-          pos(500+25, 500-300),
+          pos(500 + 25, 500 - 300),
           z(20),
           // scale(.5)
         ]);
         add([
-          rect(500+200+200,50),
+          rect(500 + 200 + 200, 50),
           area(),
           anchor("center"),
-          pos(500+25, 500-300),
+          pos(500 + 25, 500 - 300),
           z(19),
           color(242, 140, 40),
-          "alertPop"
-
-        ])
+          "alertPop",
+        ]);
 
         setTimeout(() => {
           destroyAll("alertPop");
@@ -1993,15 +1977,18 @@ class CharacterMovement {
           onItemsOnTable < 6 &&
           !isPopupVisible
         ) {
+          console.log("drop item on table");
+
           itemsInPocket--;
+          console.log("items in pocket after dropping table", itemsInPocket);
 
           let item = inPocket.shift();
-          // console.log("here's item:", item);
+          console.log("here's item shifted:", item.itemKey);
           // console.log("here item key", item.itemKey);
           item.use("onTable");
 
           item.moveTo(table_x, table_y);
-          if (inPocket.length > 0 ){
+          if (inPocket.length === 1) {
             inPocket[0].moveTo(880, 725);
           }
           tableItems[onItemsOnTable] = item.itemKey;
@@ -2009,23 +1996,21 @@ class CharacterMovement {
           table_y += 50;
           onItemsOnTable++;
           checkCraftable(tableItems);
-
         } else {
+          console.log("hit else");
           checkCraftable();
           rearrangePocket();
-          
         }
-        
       }
     });
-    function rearrangePocket(){
+    function rearrangePocket() {
       if (inPocket.length > 0) {
         if (volumeSetting) {
           play("bubble");
         }
         let item = inPocket.shift(); // Remove the first item from the pocket
         itemsInPocket--;
-        destroy(item)
+        destroy(item);
         // Shift remaining items to the first slot if any
         if (inPocket.length > 0) {
           inPocket[0].moveTo(880, 725);
