@@ -2,7 +2,7 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
-import { updatePocket } from "./Pocket.js";
+import { updatePocket, updatePocketVending } from "./Pocket.js";
 
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -579,10 +579,6 @@ class CharacterMovement {
 
           console.log("here is popup", isPopupVisible);
           madeCraft(result);
-
-          // let craftText = `You made ${result.itemKey}! ${
-          //   result.isFinal ? "You can find this final item in your documentation station" : ""
-          // }`;
           console.log("pressed");
 
           async function madeCraft() {
@@ -664,7 +660,11 @@ class CharacterMovement {
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             if (!madeItem.isFinal) {
-              updatePocketVending(result, inPocket);
+              updatePocketVending(result, inPocket, itemsInPocket, volumeSetting);
+              inPocket = result?.inPocket;
+        itemsInPocket = result?.itemsInPocket;
+               handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+
             }
             // updatePocket(madeItem, inPocket);
             madeItem.use(body({ isStatic: true }));
@@ -1026,7 +1026,11 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       if (isPopupVisible && vendingContents.length > 0) {
         let item = vendingContents[vendingSelect];
-        updatePocketVending(item, inPocket);
+        let result = updatePocketVending(item, inPocket, itemsInPocket, volumeSetting);
+        inPocket = result?.inPocket;
+        itemsInPocket = result?.itemsInPocket;
+    handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+
       }
     });
 
@@ -1116,60 +1120,7 @@ class CharacterMovement {
 
     let itemsInPocket = 0;
 
-    function updatePocketVending(material, inPocket) {
-      if (itemsInPocket < 2) {
-        if (volumeSetting) {
-          play("bubble");
-        }
-        const newItem = add([
-          pos(880, itemsInPocket === 0 ? 725 : 775),
-          z(11),
-          sprite(`${material.itemKey}`),
-          scale(1),
-          "material",
-          { image: material.itemKey },
-          { itemKey: material.itemKey },
-        ]);
-        console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
-        inPocket.push(newItem);
-        itemsInPocket++;
-      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
 
-      } else {
-        let alertText =
-          "Remove items from pocket to select from vending machine";
-
-        add([
-          "alertPop",
-          text(alertText, {
-            // optional object
-            size: 24,
-            outline: 4,
-            color: (0, 0, 0),
-            // can specify font here,
-          }),
-          area(),
-          anchor("center"),
-          pos(500 + 25, 500 - 300),
-          z(20),
-          // scale(.5)
-        ]);
-        add([
-          rect(500 + 200 + 200, 50),
-          area(),
-          anchor("center"),
-          pos(500 + 25, 500 - 300),
-          z(19),
-          color(242, 140, 40),
-          "alertPop",
-        ]);
-
-        setTimeout(() => {
-          destroyAll("alertPop");
-        }, 2000);
-        // shake(5);
-      }
-    }
 
     let firstItem = false;
 
@@ -1310,8 +1261,8 @@ class CharacterMovement {
         console.log("material", materialEntity);
         console.log("Updating pocket");
         let result = updatePocket(materialEntity, inPocket, itemsInPocket);
-        inPocket = result.inPocket;
-        itemsInPocket = result.itemsInPocket;
+        inPocket = result?.inPocket;
+        itemsInPocket = result?.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });
