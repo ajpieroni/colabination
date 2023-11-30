@@ -1,6 +1,9 @@
 import InitialItems from "./InitialItems.js";
 
 class CharacterMovement {
+  // !TODO: add a "on floor" variable for game objects
+  // !TODO: figure out how to pass image parameter into vending contents
+  // music = null;
   music = null;
   constructor() {
     this.level = null;
@@ -2068,7 +2071,35 @@ class CharacterMovement {
       atCraftingTable = false;
       checkCraftable();
     });
-  }
-}
+    // Function to check session status
+    let inactivityTimer;
 
+    function resetInactivityTimer() {
+      clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        // Call the logout function after 15 minutes of inactivity
+        logout();
+      }, 900000); // 15 minutes in milliseconds
+    }
+
+    function logout() {
+      fetch('http://localhost:8081/logout', { method: 'DELETE' })
+        .then(response => {
+          if (response.ok) {
+            go("login");
+            window.location.reload();
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    resetInactivityTimer();
+    onKeyPress(() => {
+      resetInactivityTimer();
+
+    })
+    onMouseMove(() =>{
+      resetInactivityTimer();
+    })
+      }
+    }
 export const characterMovement = new CharacterMovement();

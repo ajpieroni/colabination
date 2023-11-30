@@ -68,6 +68,8 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
+    auto-session-timeout (1.1)
+      actionpack (>= 3.2, < 7.2)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -228,6 +230,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  auto-session-timeout
   bootsnap
   capybara
   debug

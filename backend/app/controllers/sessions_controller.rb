@@ -10,4 +10,8 @@ class SessionsController < ApplicationController
         render json: { status: 'error', message: 'Invalid username/PIN combination' }, status: :unauthorized
       end
     end
+    def destroy
+      reset_session
+      render json: { message: 'Logged out' }
+    end
   end

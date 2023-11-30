@@ -27,8 +27,7 @@ load.assets()
 const scenes = {
     login: () => {
         // go to login screen
-        uiManager.displayLoginScreen()
-            
+        uiManager.displayLoginScreen()            
     },
     
     menu: () =>{
@@ -36,8 +35,7 @@ const scenes = {
         // go("menu");        
         // add takes in an array of components
         add([text("test"), pos(500, 500), color(0,0,0)])
-        uiManager.displayMainMenu()
-        
+        uiManager.displayMainMenu()        
         
     },
     // tutorial

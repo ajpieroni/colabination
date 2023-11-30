@@ -2,6 +2,7 @@ class UIManager{
     
 
     displayLoginScreen(){
+        // localStorage.setItem('soundTogg', 0);
         add([
             sprite("loginPage"),
             scale(.85),
