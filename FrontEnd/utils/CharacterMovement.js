@@ -13,23 +13,22 @@ class CharacterMovement {
   }
 
   display() {
-
-
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
-    add([sprite("tables"),pos(0, 0), z(6)]);
+    add([sprite("tables"), pos(0, 0), z(6)]);
     map();
   }
 
   play() {
-    // ! Game Objects
+    // ! Music
+    this.music = play("soundtrack", {
+      volume: volumeSetting,
+      loop: true,
+    });
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
 
-      this.music = play("soundtrack", {
-        volume: volumeSetting,
-        loop: true,
-      });
+  
     Tools();
 
     let curr_user = localStorage.getItem("username");
@@ -773,9 +772,7 @@ class CharacterMovement {
 
         // console.log(`change scene here to ${tableItems}`);
         showContainer(tableItems);
-
       }
-
     });
 
     // !TODO: make the enter function dynamic for sprite
