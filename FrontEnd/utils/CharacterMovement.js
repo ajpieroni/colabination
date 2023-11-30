@@ -211,68 +211,7 @@ class CharacterMovement {
         console.error("Error fetching user items:", error);
       });
 
-    // !Materials
-    let nearCraftingTable = false;
-    let currentIndex = 0;
 
-    // keep merge?
-    const items = {
-      // scissors: {
-      //   spriteName: "scissors",
-      //   alertSprite: "scissorsAlert",
-      //   initialPos: { x: 300, y: 300 },
-      //   hasFound: false,
-      //   alertBox: null,
-      // },
-      paper: {
-        spriteName: "paper",
-        alertSprite: "paperAlert",
-        initialPos: { x: 280, y: 300 },
-        hasFound: false,
-        alertBox: null,
-        // onTable: false
-      },
-
-      thread: {
-        spriteName: "thread",
-        alertSprite: "threadAlert",
-
-        initialPos: { x: 330, y: 300 },
-        hasFound: false,
-        alertBox: null,
-      },
-    };
-
-    // !Init Functions
-    function interactWithItem(itemKey) {
-      const item = items[itemKey];
-      if (cdrawer.access) {
-        add([
-          sprite(item.alertSprite),
-          pos(center().x - 100, 20),
-          scale(0.15),
-          z(10),
-          "alert",
-          // pos(item.initialPos.x, item.initialPos.y),
-        ]);
-      }
-
-      if (item.alertBox == null && !item.hasFound) {
-        add([
-          sprite(item.spriteName),
-          area(),
-          body(),
-          pos(center().x - 100, center().y),
-          z(10),
-          scale(1.5),
-          "material",
-          { image: item.spriteName },
-          { itemKey: item.spriteName },
-        ]);
-      }
-    }
-
-    // keep merge
 
     // !Player
 
@@ -1244,8 +1183,6 @@ class CharacterMovement {
     player.onCollide("material", (materialEntity) => {
       if (tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
-        // console.log(`Here's the current vending keys: ${vendingKeys}`)
-        // console.log(`!vending: ${!vendingKeys.includes(materialEntity.itemKey)}`)
         if (
           !vendingContents.includes(materialEntity) &&
           !vendingKeys.includes(materialEntity.itemKey)
@@ -1286,7 +1223,6 @@ class CharacterMovement {
     // !TODO: Remove hardcode after Ollie's code
     let isCraftable = false;
 
-    // prompting trail
 
     // Dropping item on table
     onKeyPress("q", () => {
