@@ -107,7 +107,7 @@ export default function Tools(){
     // z(10),
     body({ isStatic: true }),
     { buildNoBlueprint: false },
-    { toolKey: "cricutvinylcutter" },
+    { toolKey: "cricut vinyl cutter" },
     { access: false },
     { toolId: 8 },
   ]);

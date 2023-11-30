@@ -1,7 +1,6 @@
 import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 
-
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -12,38 +11,7 @@ class CharacterMovement {
     localStorage.setItem("soundTogg", 1);
   }
   display() {
-    //! Level Schema    
-    let volumeSetting = localStorage.getItem("soundTogg")
-      ? parseFloat(localStorage.getItem("soundTogg"))
-      : 1;
-    console.log("here's volume setting", volumeSetting);
     //! Level Schema
-    // stop("soundtrack");
-    this.music = play("soundtrack", {
-      volume: volumeSetting,
-      loop: true,
-    });
-
-    const block_size = 32;
-
-    const map = [
-      // "=====================",
-      "=$$$$$$$$$$$$$$$$$$$$$=",
-      "=*********************=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$            *=",
-      "==$                    ",
-      "=9999999999    !99999=",
-      "=9999999999    !99999=",
-      "---------------------",
-    ];
 
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([
@@ -52,72 +20,8 @@ class CharacterMovement {
       z(6),
       // scale(.5)
     ]);
-
-    const level_config = {
-      tileWidth: 64,
-      tileHeight: 64,
-      pos: vec2(-65, -70),
-
-      // "=": () => [rect(block_size, block_size), color(255, 0, 0), area(), "wall"],
-      tiles: {
-        "=": () => [
-          rect(block_size * 2, block_size),
-          color(255, 0, 0),
-          "wall",
-          area(),
-          body({ isStatic: true }),
-          // z(15)
-        ],
-        "-": () => [
-          rect(block_size / 2, block_size / 2),
-          color(255, 0, 0),
-          "wall",
-          area(),
-          body({ isStatic: true }),
-          pos(0, 25),
-          // z(15)
-        ],
-        $: () => [
-          rect(block_size * 2, block_size * 2),
-          color(128, 128, 128),
-          area(),
-          body({ isStatic: true }),
-          pos(0, 25),
-          // z(15)
-        ],
-
-        "*": () => [
-          rect(block_size * 2, block_size * 2.5),
-          color(255, 0, 0),
-          area(),
-          body({ isStatic: true }),
-          pos(5, 25),
-          // z(15)
-        ],
-        9: () => [
-          rect(block_size * 3.5, block_size * 3.25),
-          color(128, 128, 128),
-          area(),
-          body({ isStatic: true }),
-          pos(0, 15),
-          // z(15)
-        ],
-        "!": () => [
-          rect(block_size * 5, block_size * 5),
-          color(255, 0, 0),
-          area(),
-          body({ isStatic: true }),
-          pos(-35, 0),
-          // z(15)
-        ],
-
-        // "(":drawer,
-      },
-    };
-
-    var level = addLevel(map, level_config);
+    map();
   }
-
 
   play() {
     // ! Game Objects
@@ -127,8 +31,6 @@ class CharacterMovement {
     const block_size = 64;
 
     Tools();
-
-
 
     let curr_user = localStorage.getItem("username");
 
@@ -467,7 +369,7 @@ class CharacterMovement {
 
     //! Listen for spacebar key press, when near drawer activate alert
     // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
-  
+
     function craftingBackend(ingredients) {
       // !POSTING
 
