@@ -99,6 +99,9 @@ export const load = {
 
         loadSprite("fairytale", "./assets/benchy.png")
 
+        loadSprite("plastic", "./assets/benchy.png")
+
+
 
 
 
