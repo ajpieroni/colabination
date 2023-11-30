@@ -1,4 +1,6 @@
 import InitialItems from "./InitialItems.js";
+import Tools from "./Tools.js";
+
 
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -112,7 +114,6 @@ class CharacterMovement {
         // "(":drawer,
       },
     };
-
     var level = addLevel(map, level_config);
   }
 
@@ -123,171 +124,158 @@ class CharacterMovement {
       : 1;
     const block_size = 64;
 
-    const cricut = add([
-      rect(block_size * 2.25, block_size),
-      "machine",
-      "cricut",
-      // sprite("cricut"),
-      area(),
-      color(0, 0, 255),
-      pos(330, 710),
-      // z(10),
-      body({ isStatic: true }),
-      { access: false },
-      { buildNoBlueprint: false },
-    ]);
+    Tools();
 
-    let cricutAlertBox;
-    let neededAlert;
-    let PLAalertBox;
-    let buildAlert;
+
 
     // const block_size = 64;
 
-    const cdrawer = add([
-      rect(block_size * 2, block_size),
-      color(0, 0, 225),
-      area(),
-      body({ isStatic: true }),
-      pos(85, 700),
-      rotate(270),
-      // z(10),
-      "cdrawer",
-      { access: false },
-      { alertSprite: "cricutAlert" },
-    ]);
-    const documentationStation = add([
-      rect(block_size, block_size * 2),
-      color(0, 100, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(900 - 15 - 10 - 50 - 50, 250 - 10 - 10 + 20 - 100 - 50),
-      rotate(270),
-      // z(10),
-      "documentationStation",
-      { access: false },
-    ]);
-
-    // const drawer = add([
+    // const cdrawer = add([
     //   rect(block_size * 2, block_size),
+    //   color(0, 0, 225),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(85, 700),
+    //   rotate(270),
+    //   // z(10),
+    //   "cdrawer",
+    //   { access: false },
+    //   { alertSprite: "cricutAlert" },
+    // ]);
+    // const documentationStation = add([
+    //   rect(block_size, block_size * 2),
     //   color(0, 100, 0),
     //   area(),
     //   body({ isStatic: true }),
-    //   pos(900 - 15 - 10, 250 - 10 - 10),
+    //   pos(900 - 15 - 10 - 50 - 50, 250 - 10 - 10 + 20 - 100 - 50),
     //   rotate(270),
     //   // z(10),
-    //   "drawer",
+    //   "documentationStation",
     //   { access: false },
     // ]);
 
-    // let cricutAlertBox;
+    // // !Tables
+    // const handTools = add([
+    //   rect(block_size * 1.65, block_size * 2),
+    //   color(256, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(260, 360),
+    //   z(0),
+    //   "handTools",
+    //   "tool",
+    //   { toolKey: "hammer" },
+    //   { access: false },
+    //   { toolId: 1 },
+    // ]);
 
-    // !Tables
-    const handTools = add([
-      rect(block_size * 1.65, block_size * 2),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(260, 360),
-      z(0),
-      "handTools",
-      "tool",
-      { toolKey: "hammer" },
-      { access: false },
-      { toolId: 1 },
-    ]);
+    // const scissors = add([
+    //   rect(block_size * 1.65, block_size * 1.15),
+    //   color(256, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(260, 260),
+    //   z(0),
+    //   "handTools",
+    //   "tool",
+    //   { toolKey: "scissors" },
+    //   { access: false },
+    //   { toolId: 2 },
+    // ]);
+    // const leatherTools = add([
+    //   rect(block_size * 1.65, block_size * 4),
+    //   color(256, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(470, 260),
+    //   z(0),
+    //   "leatherTable",
+    //   "tool",
+    //   { toolKey: "screwdriver" },
+    //   { access: false },
+    //   { toolId: 10 },
+    // ]);
 
-    const scissors = add([
-      rect(block_size * 1.65, block_size * 1.15),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(260, 260),
-      z(0),
-      "handTools",
-      "tool",
-      { toolKey: "scissors" },
-      { access: false },
-      { toolId: 2 },
-    ]);
-    const leatherTools = add([
-      rect(block_size * 1.65, block_size * 4),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(470, 260),
-      z(0),
-      "leatherTable",
-      "tool",
-      { toolKey: "screwdriver" },
-      { access: false },
-      { toolId: 10 },
-    ]);
+    // const craftingTable = add([
+    //   rect(block_size * 1.65, block_size * 4),
+    //   color(256, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(670, 260),
+    //   z(0),
+    //   "craftingTable",
+    //   "tool",
+    //   { toolKey: "craftingTable" },
+    //   { access: false },
+    //   { toolId: 3 },
+    // ]);
+    // const cricut = add([
+    //   rect(block_size * 2.25, block_size),
+    //   "tool",
+    //   "cricut vinyl cutter",
+    //   // sprite("cricut"),
+    //   area(),
+    //   color(0, 0, 255),
+    //   pos(330, 710),
+    //   // z(10),
+    //   body({ isStatic: true }),
+    //   { buildNoBlueprint: false },
+    //   { toolKey: "cricutvinylcutter" },
+    //   { access: false },
+    //   { toolId: 8 },
+    // ]);
 
-    const craftingTable = add([
-      rect(block_size * 1.65, block_size * 4),
-      color(256, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(670, 260),
-      z(0),
-      "craftingTable",
-      "tool",
-      { toolKey: "craftingTable" },
-      { access: false },
-      { toolId: 3 },
-    ]);
 
-    // !Machines
-    const printer1 = add([
-      rect(block_size, block_size * 2),
-      color(0, 0, 255),
-      area(),
-      body({ isStatic: true }),
-      pos(65, 200),
-      // z(10),
-      "printer",
-      { toolKey: "printer1" },
-      { access: false },
-    ]);
-    const printer2 = add([
-      rect(block_size, block_size * 2),
-      color(0, 0, 255),
-      area(),
-      body({ isStatic: true }),
-      pos(65, 365),
-      // z(10),
-      "printer",
-      { toolKey: "printer2" },
-      { access: false },
-    ]);
-    const sewingMachine = add([
-      rect(block_size * 2.5, block_size),
-      color(255, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(500, 710),
-      z(0),
-      "printer",
-      "tool",
-      { toolKey: "sewing machine" },
-      { access: false },
-      { toolId: 11 },
-    ]);
-    const solderingStation = add([
-      rect(block_size * 2.25, block_size),
-      color(255, 0, 0),
-      area(),
-      body({ isStatic: true }),
-      pos(140, 40),
-      // z(10),
+    // // !Machines
+    // const printer1 = add([
+    //   rect(block_size, block_size * 2),
+    //   color(0, 0, 255),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(65, 200),
+    //   // z(10),
+    //   "printer",
+    //   { toolKey: "printer1" },
+    //   { access: false },
+    // ]);
+    // const printer2 = add([
+    //   rect(block_size, block_size * 2),
+    //   color(0, 0, 255),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(65, 365),
+    //   // z(10),
+    //   "printer",
+    //   { toolKey: "printer2" },
+    //   { access: false },
+    // ]);
+    // const sewingMachine = add([
+    //   rect(block_size * 2.5, block_size),
+    //   color(255, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(500, 710),
+    //   z(0),
+    //   "printer",
+    //   "tool",
+    //   { toolKey: "sewing machine" },
+    //   { access: false },
+    //   { toolId: 11 },
+    // ]);
+    // const solderingStation = add([
+    //   rect(block_size * 2.25, block_size),
+    //   color(255, 0, 0),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   pos(140, 40),
+    //   // z(10),
 
-      "printer",
-      "tool",
-      { toolKey: "solderingStation" },
-      { access: false },
-      { toolId: 7 },
-    ]);
+    //   "printer",
+    //   "tool",
+    //   { toolKey: "solderingStation" },
+    //   { access: false },
+    //   { toolId: 7 },
+    // ]);
 
     let curr_user = localStorage.getItem("username");
 
@@ -553,32 +541,6 @@ class CharacterMovement {
     // !TO FIX:
     // -if collide into drawer then into printer, both alerts show
     //* Constructor
-    // Drawer functionality
-    // drawer.access = false;
-    // Machine functionlaity
-    cricut.access = false;
-    let hasUnlockedCricut = false;
-    // Blueprint
-    this.foundBlueprint = false;
-
-    // PLA Logic
-    this.isAlertedPLA = false;
-    this.hasFoundPLA = false;
-    //! TEMP!
-    let benchyFound = false;
-    let benchyAdded = false;
-
-    let paperCraft = true;
-    let scissorsCraft = true;
-
-    // C Drawer Logic
-    cdrawer.access = false;
-    // Scissors Logic
-    this.isAlertedScissors = false;
-    this.hasFoundScissors = false;
-    // Paper Logic
-    this.isAlertedPaper = false;
-    this.hasFoundPaper = false;
 
     // Tool Logic
     let currToolY = 0;
