@@ -14,14 +14,15 @@ class CharacterMovement {
 
   display() {
     // Music
-    
+
+   
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
     this.music = play("soundtrack", {
       volume: volumeSetting,
       loop: true,
     });
-    let volumeSetting = localStorage.getItem("soundTogg")
-      ? parseFloat(localStorage.getItem("soundTogg"))
-      : 1;
 
     // Map Sprites
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
@@ -100,37 +101,25 @@ class CharacterMovement {
             return response.json();
           })
           .then((data) => {
-            const items = data.items; // Access the items property
+            const items = data.items; 
             console.log("items", items);
             let containsPaper = items.some((subArray) =>
               subArray.includes("paper")
             );
-            // console.log(items.length())
             if (items.length == 0) {
               InitialItems(["glass", "thread", "paper", "metal"]);
             }
-            // !TODO: load in starting items conditionally
-            if (items.length != 0) {
-              if (!items.some((subArray) => subArray.includes("glass"))) {
-                console.log("doesn't have glass");
-                InitialItems(["glass"]);
-              }
-              if (!items.some((subArray) => subArray.includes("thread"))) {
-                console.log("doesn't have thread");
+            if (items.length !== 0) {
+              const materials = ["glass", "thread", "paper", "metal"];
 
-                InitialItems(["thread"]);
-              }
-              if (!items.some((subArray) => subArray.includes("paper"))) {
-                console.log("doesn't have paper");
-
-                InitialItems(["paper"]);
-              }
-              if (!items.some((subArray) => subArray.includes("metal"))) {
-                console.log("doesn't have paper");
-
-                InitialItems(["metal"]);
-              }
+              materials.forEach((material) => {
+                if (!items.some((subArray) => subArray.includes(material))) {
+                  console.log(`doesn't have ${material}`);
+                  InitialItems([material]);
+                }
+              });
             }
+
             items.forEach((item) => {
               const itemName = item[0];
               const isFinal = item[1];
