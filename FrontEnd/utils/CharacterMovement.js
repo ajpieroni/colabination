@@ -1,5 +1,6 @@
 import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
+import map from "./map.js";
 
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -10,8 +11,19 @@ class CharacterMovement {
     this.level = null;
     localStorage.setItem("soundTogg", 1);
   }
+
   display() {
     //! Level Schema
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
+    console.log("here's volume setting", volumeSetting);
+    //! Level Schema
+    // stop("soundtrack");
+    this.music = play("soundtrack", {
+      volume: volumeSetting,
+      loop: true,
+    });
 
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([

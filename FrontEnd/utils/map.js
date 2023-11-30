@@ -1,14 +1,5 @@
 export default function map(){
-    let volumeSetting = localStorage.getItem("soundTogg")
-    ? parseFloat(localStorage.getItem("soundTogg"))
-    : 1;
-  console.log("here's volume setting", volumeSetting);
-  //! Level Schema
-  // stop("soundtrack");
-  this.music = play("soundtrack", {
-    volume: volumeSetting,
-    loop: true,
-  });
+
 
   const block_size = 32;
 
