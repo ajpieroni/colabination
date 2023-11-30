@@ -2,6 +2,7 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
+import { updatePocket } from "./Pocket.js";
 
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -1171,32 +1172,7 @@ class CharacterMovement {
     }
 
     let firstItem = false;
-    function updatePocket(material, inPocket) {
-      console.log("size of pocket pre", itemsInPocket);
-      if (itemsInPocket < 2) {
-        material.scaleTo(1);
-        material.moveTo(880, itemsInPocket === 0 ? 725 : 775),
-          // if has 0 itmems
-          // if (itemsInPocket === 0) {
-          //   material.moveTo(880, 725);
-          //   firstItem = true;
-          //   // if has 1 item
-          // } else if (itemsInPocket === 1 && !firstItem) {
-          //   material.moveTo(880, 725);
-          //   material.scaleTo(1);
-          //   firstItem = true;
-          // } else {
-          //   material.moveTo(880, 775);
-          //   material.scaleTo(1);
 
-          // }
-          inPocket.push(material);
-        itemsInPocket++;
-        console.log("size of pocket post", itemsInPocket);
-      } else {
-        destroy(material);
-      }
-    }
 
     // backpack functionality
     onKeyPress("space", () => {
@@ -1333,8 +1309,9 @@ class CharacterMovement {
 
         console.log("material", materialEntity);
         console.log("Updating pocket");
-        updatePocket(materialEntity, inPocket);
-
+        let result = updatePocket(materialEntity, inPocket, itemsInPocket);
+        inPocket = result.inPocket;
+        itemsInPocket = result.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });
