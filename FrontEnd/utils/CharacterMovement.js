@@ -275,7 +275,7 @@ class CharacterMovement {
       z(0),
       "printer",
       "tool",
-      { toolKey: "sewingMachine" },
+      { toolKey: "sewing machine" },
       { access: false },
       { toolId: 11 },
     ]);

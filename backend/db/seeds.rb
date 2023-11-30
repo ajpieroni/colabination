@@ -94,8 +94,18 @@ lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'm
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
+# Creating Thread trail
+    cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
+    cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
+    embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
+    yarn = Item.create(name: 'yarn', description: "Thick, warm string", item_type: "material", rarity: 1, isFinal: false)
+    skirt = Item.create(name: 'skirt', description: "Flowy, covers some part of your legs", item_type: "material", rarity: 1, isFinal: false)
+    dress = Item.create(name: 'dress', description: "Long flowy garment, covers torso and legs", item_type: "material", rarity: 1, isFinal: false)
+    straw = Item.create(name: 'straw', description: "Dried grain, made out of string in this game...", item_type: "material", rarity: 1, isFinal: false)
+    scarecrow = Item.create(name: 'scarecrow', description: "Almost human... scares the crows!", item_type: "material", rarity: 1, isFinal: true)
+    shirt = Item.create(name: 'shirt', description: "Garment that covers your torso", item_type: "material", rarity: 1, isFinal: false)
 
-# Creating tools
+    # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
@@ -193,13 +203,18 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     # Fairy Tale
     Combination.create(tool: hands, item1: kingdom, item2: witch, creation: fairytale)
 
+# Thread combos
+    Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
+    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
+    Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
 
-
-
-
-
-
-
+    Combination.create(tool: hands, item1: thread, item2: nothing, creation: embroiderythread)
+    Combination.create(tool: sewingmachine, item1: embroiderythread, item2: embroiderythread, creation: yarn)
+    Combination.create(tool: hands, item1: embroiderythread, item2: nothing, creation:  straw)
+    Combination.create(tool: sewingmachine, item1: shirt, item2: skirt, creation: dress)
+    Combination.create(tool: sewingmachine, item1: cutcloth, item2: nothing, creation: shirt)
+    Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
+    Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
 
 
 

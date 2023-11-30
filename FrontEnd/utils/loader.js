@@ -40,9 +40,9 @@ export const load = {
         loadSprite("3DBenchy", "./assets/benchy.png")
         loadSprite("3DBenchyAlert", "./assets/benchyAlert.png")
         loadSprite("hammer", "./assets/hammer.png")
-        loadSprite("thread", "./assets/yarn.png")
+        loadSprite("thread", "./assets/thread.png")
         loadSprite("hammerAlert", "./assets/hammer.png")
-        loadSprite("threadAlert", "./assets/yarn.png")
+        loadSprite("yarn", "./assets/yarn.png")
 
         loadSprite("solder", "./assets/solder.PNG")
         loadSprite("woodArtMario", "./assets/woodartmario.PNG")
@@ -104,7 +104,17 @@ export const load = {
 
 
 // Thread trail 
+loadSprite("cloth", "./assets/cloth.png")
+loadSprite("cut cloth", "./assets/cutcloth.png")
+loadSprite("skirt", "./assets/skirt.png")
 loadSprite("jacket", "./assets/benchy.png")
+loadSprite("shirt", "./assets/benchy.png")
+
+loadSprite("embroidery thread", "./assets/embroiderythread.png")
+loadSprite("dress", "./assets/dress.png")
+loadSprite('straw', './assets/straw.png')
+loadSprite('doll', './assets/doll.png')
+loadSprite("scarecrow", './assets/scarecrow.png')
 
 // Unknown
 loadSprite("lightbulb", "./assets/benchy.png")
