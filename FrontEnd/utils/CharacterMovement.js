@@ -12,11 +12,11 @@ class CharacterMovement {
     localStorage.setItem("soundTogg", 1);
   }
   display() {
-    //! Level Schema
-
+    //! Level Schema    
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
+    console.log("here's volume setting", volumeSetting);
     //! Level Schema
     // stop("soundtrack");
     this.music = play("soundtrack", {
@@ -114,8 +114,10 @@ class CharacterMovement {
         // "(":drawer,
       },
     };
+
     var level = addLevel(map, level_config);
   }
+
 
   play() {
     // ! Game Objects
