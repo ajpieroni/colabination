@@ -3,8 +3,9 @@ import InitialItems from "./InitialItems.js";
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
-  music = null;
+  // music = null;
   constructor() {
+    this.music = null;
     this.level = null;
     localStorage.setItem("soundTogg", 1);
   }
@@ -2074,15 +2075,15 @@ class CharacterMovement {
       inactivityTimer = setTimeout(() => {
         // Call the logout function after 15 minutes of inactivity
         logout();
-      }, 15000); // 15 minutes in milliseconds
+      }, 900000); // 15 minutes in milliseconds
     }
 
     function logout() {
       fetch('http://localhost:8081/logout', { method: 'DELETE' })
         .then(response => {
           if (response.ok) {
-
             go("login");
+            window.location.reload();
           }
         })
         .catch(error => console.error('Error:', error));
@@ -2090,6 +2091,7 @@ class CharacterMovement {
     resetInactivityTimer();
     onKeyPress(() => {
       resetInactivityTimer();
+
     })
     onMouseMove(() =>{
       resetInactivityTimer();
