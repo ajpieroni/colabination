@@ -1,5 +1,4 @@
 export default function checkCraftable(){
-    function checkCraftable() {
         if (
           toolAccess &&
           // tableItems.includes("paper") &&
@@ -32,5 +31,4 @@ export default function checkCraftable(){
         if (!toolAccess || isPopupVisible) {
           destroyAll("craft");
         }
-      }
 }
