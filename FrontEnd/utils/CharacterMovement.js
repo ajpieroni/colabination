@@ -45,13 +45,13 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    // add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
-    // add([
-    //   sprite("tables"),
-    //   pos(0, 0),
-    //   z(6),
-    //   // scale(.5)
-    // ]);
+    add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
+    add([
+      sprite("tables"),
+      pos(0, 0),
+      z(6),
+      // scale(.5)
+    ]);
 
     const level_config = {
       tileWidth: 64,

@@ -3,7 +3,7 @@
 export default function Tools(){
 
   // !Tables
-  const block_size = 32;
+  const block_size = 64;
   
   const handTools = add([
     rect(block_size * 1.65, block_size * 2),
