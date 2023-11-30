@@ -335,40 +335,6 @@ class CharacterMovement {
       destroyAll("interactable");
       checkCraftable();
     });
-    // debug.inspect = true;
-    let canPopItem = true;
-    // cricut drawer
-    let myCDrawer = ["", "wood", "paper", "scissors"];
-    const myCDrawerData = {
-      scissors: { alertBox: null, hasFound: false },
-      paper: { alertBox: null, hasFound: false },
-      wood: { alertBox: null, hasFound: false },
-      // benchy: {alertBox: null, hasFound: false}
-    };
-    const woodObject = myCDrawerData.wood;
-    const finalItems = ["", "benchy"];
-    const finalItemsData = {
-      benchy: { alertBox: null, hasFound: false },
-    };
-    // drawer by printers
-    let myDrawer = ["PLA"];
-    const myDrawerData = {
-      PLA: { alertBox: null, hasFound: false },
-    };
-    const PLA = myDrawerData["PLA"];
-
-    // let cdrawerItems = ["", "banana", "cherry"];
-    //*Player Collides and interacts
-    function playerCraftsScissorsPaper() {
-      if (paperCraft && scissorsCraft) {
-        console.log("trueeeee");
-      } else {
-        console.log("fallsslssee");
-      }
-    }
-
-    //! Listen for spacebar key press, when near drawer activate alert
-    // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
 
     function craftingBackend(ingredients) {
       // !POSTING
