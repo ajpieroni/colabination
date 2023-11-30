@@ -13,25 +13,10 @@ class CharacterMovement {
   }
 
   display() {
-    //! Level Schema
-    let volumeSetting = localStorage.getItem("soundTogg")
-      ? parseFloat(localStorage.getItem("soundTogg"))
-      : 1;
-    console.log("here's volume setting", volumeSetting);
-    //! Level Schema
-    // stop("soundtrack");
-    this.music = play("soundtrack", {
-      volume: volumeSetting,
-      loop: true,
-    });
+
 
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
-    add([
-      sprite("tables"),
-      pos(0, 0),
-      z(6),
-      // scale(.5)
-    ]);
+    add([sprite("tables"),pos(0, 0), z(6)]);
     map();
   }
 
@@ -40,8 +25,11 @@ class CharacterMovement {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-    const block_size = 64;
 
+      this.music = play("soundtrack", {
+        volume: volumeSetting,
+        loop: true,
+      });
     Tools();
 
     let curr_user = localStorage.getItem("username");
@@ -785,22 +773,9 @@ class CharacterMovement {
 
         // console.log(`change scene here to ${tableItems}`);
         showContainer(tableItems);
-        // console.log("here is tableItems", tableItems);
 
-        // clearTable();
-
-        // go(`${tableItems}trail`);
       }
-      //! DRAWER
-      //* Cricut Drawer: Scissors, Paper, Wood, noItems
-      //  interactWithCDrawer.call(this);
-      //* Printing Drawer: PLA Plastic, (Pliers)
-      // interactWithDrawer.call(this);
-      // !Machines
-      //* Cricut: discovery, needs
-      discoverCricut.call(this);
-      //* Cricut: craft
-      cricutCraft.call(this);
+
     });
 
     // !TODO: make the enter function dynamic for sprite
