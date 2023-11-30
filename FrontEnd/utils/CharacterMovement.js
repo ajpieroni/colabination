@@ -45,13 +45,13 @@ class CharacterMovement {
       "---------------------",
     ];
 
-    add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
-    add([
-      sprite("tables"),
-      pos(0, 0),
-      z(6),
-      // scale(.5)
-    ]);
+    // add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
+    // add([
+    //   sprite("tables"),
+    //   pos(0, 0),
+    //   z(6),
+    //   // scale(.5)
+    // ]);
 
     const level_config = {
       tileWidth: 64,
@@ -614,94 +614,7 @@ class CharacterMovement {
 
     //! Listen for spacebar key press, when near drawer activate alert
     // For the player's interaction with drawer: Scissors, Paper, Wood, noItems
-    function interactWithCDrawer() {
-      if (cdrawer.access) {
-        if (myCDrawer.length >= 0 && canPopItem) {
-          let itemName = myCDrawer.pop();
-          let foundCItem = myCDrawerData[itemName];
-          canPopItem = false;
-          if (foundCItem) {
-            if (foundCItem.alertBox === null && !foundCItem.hasFound) {
-              let currSpriteAlert = `${itemName}Alert`;
-              foundCItem.alertBox = add([
-                area(),
-                "alert",
-                pos(center().x - 100, center().y - 200),
-                color(230, 230, 250),
-                sprite(`${currSpriteAlert}`),
-                color(230, 230, 250),
-                z(10),
-                scale(0.25),
-              ]);
-              cdrawer.access = false;
-              foundCItem.alertBox = true;
-              foundCItem.hasFound = true;
-            }
-          }
-        }
-        if (myCDrawer.length <= 0) {
-          noItemsAlert = add([
-            area(),
-            "alert",
-            pos(center().x - 100, center().y - 200),
-            color(230, 230, 250),
-            z(10),
-            sprite("noItems"),
-            scale(0.45),
-          ]);
-        }
-      }
-    }
-
-    function discoverCricut() {
-      if (cricut.access && !hasUnlockedCricut) {
-        cricutAlertBox = add([
-          area(),
-          "alert",
-          pos(center().x - 100, center().y - 200),
-          color(230, 230, 250),
-          z(15),
-          sprite("cricutAlertBox"),
-          scale(0.75),
-        ]);
-        cricut.access = false;
-        this.isAlertedPLA = true;
-        // cricut.access = false;
-        hasUnlockedCricut = true;
-      }
-      if (cricut.access && hasUnlockedCricut && !PLA.hasFound) {
-        neededAlert = add([
-          area(),
-          "alert",
-          pos(center().x - 100, center().y - 200),
-          color(230, 230, 250),
-          z(10),
-          sprite("neededAlert"),
-          scale(0.75),
-        ]);
-        // cricut.access = false;
-        cricut.access = false;
-        // cricut.buildNoBlueprint = true;
-      }
-    }
-    function cricutCraft() {
-      if (cricut.access && hasUnlockedCricut && PLA.hasFound) {
-        buildAlert = add([
-          area(),
-          "alert",
-          pos(center().x - 100, center().y - 200),
-          color(230, 230, 250),
-          z(10),
-          sprite("3DBenchyAlert"),
-          scale(0.75),
-        ]);
-        benchyFound = true;
-        // cricut.access = false;
-        cricut.access = false;
-        // cricut.buildNoBlueprint = true;
-      }
-    }
-
+  
     function craftingBackend(ingredients) {
       // !POSTING
 
