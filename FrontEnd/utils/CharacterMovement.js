@@ -3,7 +3,7 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
-import { showVendingContents } from "./Vending.js";
+import { showVendingContents, onKeyPressLeft, onKeyPressRight } from "./Vending.js";
 import { fetchUserItems, fetchUserTools } from "./User.js";
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -25,6 +25,8 @@ class CharacterMovement {
       loop: true,
     });
 
+    Tools();
+
     // Map Sprites
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([sprite("tables"), pos(0, 0), z(6)]);
@@ -36,29 +38,27 @@ class CharacterMovement {
     let currItems = [];
     let currTools = [];
     let currFinals = [];
+    // Vending & Pocket
     let vendingKeys = [];
     let isPopupVisible = false;
     let vendingContents = [];
     let inPocket = [];
     let vendingSelect = 0;
+    // Documentation Station
     let areFinal = [];
-
-    
-    // Music
-    let volumeSetting = localStorage.getItem("soundTogg")
-      ? parseFloat(localStorage.getItem("soundTogg"))
-      : 1;
-    // Load in tools
-    Tools();
 
     // User
     let curr_user = localStorage.getItem("username");
     let hasSavedItems = [];
     let hasSavedFinal = [];
-    let hasSavedTools = [];
 
-
-    fetchUserItems(curr_user, hasSavedItems, vendingKeys, vendingContents, areFinal)
+    fetchUserItems(
+      curr_user,
+      hasSavedItems,
+      vendingKeys,
+      vendingContents,
+      areFinal
+    )
       .then((itemNames) => {
         console.log(itemNames);
       })
@@ -74,13 +74,13 @@ class CharacterMovement {
         console.error("Error fetching user items:", error);
       });
 
-    // !Player
+    // Music
+    let volumeSetting = localStorage.getItem("soundTogg")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
 
-    // add creates game object to be displayed on the screen
-    // add function returns game objects, can store in const or var
-
+    // Player
     let SPEED = 300;
-
     const player = add([
       sprite("characterSprite"),
       scale(0.25),
@@ -90,13 +90,6 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
-
-    // isColliding(o: GameObj) => boolean
-    // If is currently colliding with another game obj.
-
-    // !TO FIX:
-    // -if collide into drawer then into printer, both alerts show
-    //* Constructor
 
     // Tool Logic
     let currToolY = 0;
@@ -136,7 +129,7 @@ class CharacterMovement {
       destroyAll("interactable");
       checkCraftable();
     });
-
+// *TODO: move to file
     function craftingBackend(ingredients) {
       // !POSTING
 
@@ -190,6 +183,7 @@ class CharacterMovement {
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
     }
     let result = {};
+// *TODO: move to file
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
       console.log(toolId, item1Id, item2Id);
@@ -235,6 +229,8 @@ class CharacterMovement {
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
+// *TODO: move to file
+
     async function showContainer(tableItems) {
       isCraftingVisible = true;
 
@@ -519,6 +515,8 @@ class CharacterMovement {
 
     onKeyPress("enter", () => {
       // !Craft
+// *TODO: move to file
+
       if (
         toolAccess &&
         isCraftable &&
@@ -608,72 +606,11 @@ class CharacterMovement {
       cricut.access = true;
     });
 
-    // Collide Logic: Player and Drawer
-    // onCollide("player", "drawer", (s, w) => {
-    //   drawer.access = true;
-    // });
-
-    // onCollide("player", "documentationStation", (s,w) => {
-    //   console.log("hit station"
-    //   )
-    // })
-    // onCollideEnd("player", "documentationStation", (s,w) => {
-    //   console.log("left station"
-    //   )
-    // })
-
-    onCollide("player", "cdrawer", (s, w) => {
-      cdrawer.access = true;
-    });
-
-    // player.onUpdate(() =>{
-    //     if(!player.isColliding())
-    // });
-
-    onCollideEnd("player", "cdrawer", () => {
-      cdrawer.access = false;
-    });
-
     onCollideEnd("player", "craftingTable", () => {
-      //end crafting access
       atCraftingTable = false;
     });
 
-    onCollideEnd("player", "cricut", () => {
-      //end crafting access
-      cricut.access = false;
-    });
-    //*isColliding
-    player.onUpdate(() => {
-      if (player.isColliding("cricut")) {
-        cricut.access = true;
-      }
-      if (player.isColliding("paper")) {
-        paperCraft = true;
-      }
-      if (player.isColliding("scissors")) {
-        scissorsCraft = true;
-      }
-    });
-
-    //handle saving data and uploading to DB
-
-    // saving for now :D
-    onKeyPress("z", () => {
-      handleSavingData(
-        vendingKeys,
-        hasSavedItems,
-        areFinal,
-        currItems,
-        currTools,
-        currFinals,
-        hasSavedFinal
-      );
-    });
-    let menuOpen = false;
-
     // !INVENTORY
-
     // Character pocket
     const pocket = add([
       // pos(1300, 600),
@@ -691,79 +628,14 @@ class CharacterMovement {
     // !VENDING
     let itemText = "";
 
+// *TODO: move
     onKeyPress("left", () => {
-      if (isPopupVisible) {
-        if (vendingSelect > 0) {
-          // console.log(vendingSelect);
-          vendingSelect--;
-          destroyAll("selected");
-          let gridX = vendingSelect % 3;
-          let gridY = Math.floor(vendingSelect / 3);
-          const selected = add([
-            rect(70, 70),
-            pos(393 + gridX * 86, 305 + gridY * 100),
-            z(11),
-            color(255, 255, 255),
-            "selected",
-          ]);
-          destroyAll("itemText");
-          let itemText = vendingContents[vendingSelect].itemKey;
-          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-          const selectedText = add([
-            "itemText",
-            text(itemText, {
-              // optional object
-              size: 24,
-              outline: 4,
-              color: (0, 0, 0),
-              // can specify font here,
-            }),
-            area(),
-            anchor("center"),
-            pos(500 + 25, 500 + 100 + 25),
-            z(20),
-
-            // scale(.5)
-          ]);
-        }
-      }
+      vendingSelect = onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents);
     });
-    onKeyPress("right", () => {
-      if (isPopupVisible) {
-        if (vendingSelect < vendingContents.length - 1) {
-          vendingSelect++;
-          // console.log(vendingSelect);
-          destroyAll("selected");
-          let gridX = vendingSelect % 3;
-          let gridY = Math.floor(vendingSelect / 3);
-          const selected = add([
-            rect(70, 70),
-            pos(393 + gridX * 86, 305 + gridY * 100),
-            z(11),
-            color(255, 255, 255),
-            "selected",
-          ]);
-          destroyAll("itemText");
-          let itemText = vendingContents[vendingSelect].itemKey;
-          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-          const selectedText = add([
-            "itemText",
-            text(itemText, {
-              // optional object
-              size: 24,
-              outline: 4,
-              color: (0, 0, 0),
-              // can specify font here,
-            }),
-            area(),
-            anchor("center"),
-            pos(500 + 25, 500 + 100 + 25),
-            z(20),
 
-            // scale(.5)
-          ]);
-        }
-      }
+    onKeyPress("right", () => {
+      vendingSelect = onKeyPressRight(isPopupVisible, vendingSelect, vendingContents);
+
     });
     onKeyPress("down", () => {
       if (isPopupVisible) {
