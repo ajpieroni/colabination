@@ -4,6 +4,7 @@ import map from "./map.js";
 import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { showVendingContents } from "./Vending.js";
+import { fetchUserItems, fetchUserTools } from "./User.js";
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -16,7 +17,6 @@ class CharacterMovement {
 
   display() {
     // Music
-   
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
@@ -32,142 +32,33 @@ class CharacterMovement {
   }
 
   play() {
-
-    // !Init Inventory 
+    // Init Inventory
     let currItems = [];
     let currTools = [];
     let currFinals = [];
-    // !Music
+    let vendingKeys = [];
+    let isPopupVisible = false;
+    let vendingContents = [];
+    let inPocket = [];
+    let vendingSelect = 0;
+    let areFinal = [];
+
     
+    // Music
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-    // !Load in tools
+    // Load in tools
     Tools();
 
+    // User
     let curr_user = localStorage.getItem("username");
-
-    function fetchData(url) {
-      return new Promise((resolve, reject) => {
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
-    fetchData(
-      `http://localhost:8081/user_items/final_items?username=${curr_user}`
-    )
-      .then((final) => {
-        console.log("final:", final);
-        const itemNames = final.final_items;
-        itemNames.forEach((itemName) => {
-          const savedItem = add([
-            pos(0, 0),
-            sprite(`${itemName}`),
-
-            scale(1.5),
-            area(),
-            z(0),
-            "material",
-            {
-              itemKey: itemName,
-            },
-          ]);
-          console.log(`${itemName} pushed to are final`);
-          if (!areFinal.includes(itemName)) {
-            areFinal.push(itemName);
-          }
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching final items:", error);
-      });
-    //loading items
     let hasSavedItems = [];
     let hasSavedFinal = [];
     let hasSavedTools = [];
 
-    function fetchUserItems(username) {
-      console.log(`Fetching for ${username}`);
-      return new Promise((resolve, reject) => {
-        fetch(`http://localhost:8081/user_items?username=${username}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const items = data.items; 
-            console.log("items", items);
-            let containsPaper = items.some((subArray) =>
-              subArray.includes("paper")
-            );
-            if (items.length == 0) {
-              InitialItems(["glass", "thread", "paper", "metal"]);
-            }
-            if (items.length !== 0) {
-              const materials = ["glass", "thread", "paper", "metal"];
 
-              materials.forEach((material) => {
-                if (!items.some((subArray) => subArray.includes(material))) {
-                  console.log(`doesn't have ${material}`);
-                  InitialItems([material]);
-                }
-              });
-            }
-
-            items.forEach((item) => {
-              const itemName = item[0];
-              const isFinal = item[1];
-              console.log(itemName, isFinal);
-              const savedItem = add([
-                // rect(item.width, item.height) ,
-                pos(0, 0),
-                pos(0, 0),
-                z(0),
-                // color(item.color.r, item.color.g, item.color.b),
-                sprite(`${itemName}`),
-                // rect(10,10),
-                // sprite(`${image}`),
-                scale(1.5),
-                area(),
-                // z(11),
-                "material",
-                {
-                  itemKey: itemName,
-                  isFinal: isFinal,
-                },
-              ]);
-              if (!savedItem.isFinal) {
-                hasSavedItems.push(itemName);
-                vendingKeys.push(savedItem.itemKey);
-                vendingContents.push(savedItem);
-              } else {
-                if (!areFinal.includes(itemName)) {
-                  areFinal.push(itemName);
-                }
-              }
-            });
-            // resolve(itemNames);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
-
-    fetchUserItems(curr_user)
+    fetchUserItems(curr_user, hasSavedItems, vendingKeys, vendingContents, areFinal)
       .then((itemNames) => {
         console.log(itemNames);
       })
@@ -175,34 +66,6 @@ class CharacterMovement {
         console.error("Error fetching user items:", error);
         InitialItems();
       });
-    // load in tools
-
-    // InitialItems();
-
-    function fetchUserTools(username) {
-      return new Promise((resolve, reject) => {
-        fetch(`http://localhost:8081/user_tools?username=${username}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const toolNames = data.items; // Access the items property
-
-            if (toolNames) {
-              toolNames.forEach((toolName) => {
-                hasSavedTools.push(toolName);
-              });
-              resolve(toolNames);
-            }
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    }
     fetchUserTools(curr_user)
       .then((itemTools) => {
         console.log(itemTools);
@@ -210,8 +73,6 @@ class CharacterMovement {
       .catch((error) => {
         console.error("Error fetching user items:", error);
       });
-
-
 
     // !Player
 
@@ -521,7 +382,15 @@ class CharacterMovement {
           console.log("pressed");
 
           async function madeCraft() {
-            handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
+            handleSavingData(
+              vendingKeys,
+              hasSavedItems,
+              areFinal,
+              currItems,
+              currTools,
+              currFinals,
+              hasSavedFinal
+            );
             let craftText = `You made ${result.itemKey}! ${
               result.isFinal
                 ? `You can find ${result.itemKey} in the documentation station.`
@@ -599,15 +468,27 @@ class CharacterMovement {
             let item = vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             if (!madeItem.isFinal) {
-              updatePocketVending(result, inPocket, itemsInPocket, volumeSetting);
+              updatePocketVending(
+                result,
+                inPocket,
+                itemsInPocket,
+                volumeSetting
+              );
               // console.log(result);
-              if(result.n){
+              if (result.n) {
                 inPocket = result.inPocket;
                 itemsInPocket = result.itemsInPocket;
               }
-             
-               handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
 
+              handleSavingData(
+                vendingKeys,
+                hasSavedItems,
+                areFinal,
+                currItems,
+                currTools,
+                currFinals,
+                hasSavedFinal
+              );
             }
             // updatePocket(madeItem, inPocket);
             madeItem.use(body({ isStatic: true }));
@@ -634,9 +515,7 @@ class CharacterMovement {
           }
         }
       });
-
     }
- 
 
     onKeyPress("enter", () => {
       // !Craft
@@ -781,20 +660,20 @@ class CharacterMovement {
 
     // saving for now :D
     onKeyPress("z", () => {
-      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
+      handleSavingData(
+        vendingKeys,
+        hasSavedItems,
+        areFinal,
+        currItems,
+        currTools,
+        currFinals,
+        hasSavedFinal
+      );
     });
     let menuOpen = false;
-   
 
     // !INVENTORY
 
-    let isPopupVisible = false;
-    // let vendingContents = [];
-    let vendingContents = [];
-    let vendingKeys = [];
-    let vendingSet = new Set(vendingContents);
-    let inPocket = [];
-    let vendingSelect = 0;
     // Character pocket
     const pocket = add([
       // pos(1300, 600),
@@ -925,7 +804,15 @@ class CharacterMovement {
     });
     onKeyPress("m", () => {
       this.music.paused = true;
-      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
+      handleSavingData(
+        vendingKeys,
+        hasSavedItems,
+        areFinal,
+        currItems,
+        currTools,
+        currFinals,
+        hasSavedFinal
+      );
       go("settings");
     });
 
@@ -969,25 +856,30 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       if (isPopupVisible && vendingContents.length > 0) {
         let item = vendingContents[vendingSelect];
-        
-        let result = updatePocketVending(item, inPocket, itemsInPocket, volumeSetting);
-        if(result.n){
+
+        let result = updatePocketVending(
+          item,
+          inPocket,
+          itemsInPocket,
+          volumeSetting
+        );
+        if (result.n) {
           inPocket = result?.inPocket;
           itemsInPocket = result?.itemsInPocket;
         }
-    handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
-
+        handleSavingData(
+          vendingKeys,
+          hasSavedItems,
+          areFinal,
+          currItems,
+          currTools,
+          currFinals,
+          hasSavedFinal
+        );
       }
     });
 
-
-
     let itemsInPocket = 0;
-
-
-
-    let firstItem = false;
-
 
     // backpack functionality
     onKeyPress("space", () => {
@@ -995,7 +887,15 @@ class CharacterMovement {
         destroyAll("vending");
         destroyAll("itemText");
         destroyAll("selected");
-        handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
+        handleSavingData(
+          vendingKeys,
+          hasSavedItems,
+          areFinal,
+          currItems,
+          currTools,
+          currFinals,
+          hasSavedFinal
+        );
         isPopupVisible = false;
         SPEED = 300;
       } else {
@@ -1009,7 +909,6 @@ class CharacterMovement {
       }
     });
     let isDocVisible = false;
-    let areFinal = [];
 
     function showFinalItems() {
       const docPop = add([
@@ -1148,7 +1047,6 @@ class CharacterMovement {
     // !TODO: Remove hardcode after Ollie's code
     let isCraftable = false;
 
-
     // Dropping item on table
     onKeyPress("q", () => {
       console.log("items in pocket on q", itemsInPocket);
@@ -1203,13 +1101,11 @@ class CharacterMovement {
         ) {
           console.log("drop item on table");
           console.log("inpocket", inPocket);
-          
-          
 
           itemsInPocket--;
           console.log("items in pocket after dropping table", itemsInPocket);
 
-            let item = inPocket.shift();
+          let item = inPocket.shift();
 
           // console.log("here's item shifted:", item.itemKey);
           // console.log("here item key", item.itemKey);
