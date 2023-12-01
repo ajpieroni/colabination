@@ -600,8 +600,12 @@ class CharacterMovement {
             // console.log("here's item", item.itemKey)
             if (!madeItem.isFinal) {
               updatePocketVending(result, inPocket, itemsInPocket, volumeSetting);
-              inPocket = result?.inPocket;
-        itemsInPocket = result?.itemsInPocket;
+              // console.log(result);
+              if(result){
+                inPocket = result?.inPocket;
+                itemsInPocket = result?.itemsInPocket;
+              }
+             
                handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
 
             }
@@ -965,9 +969,12 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       if (isPopupVisible && vendingContents.length > 0) {
         let item = vendingContents[vendingSelect];
+        
         let result = updatePocketVending(item, inPocket, itemsInPocket, volumeSetting);
-        inPocket = result?.inPocket;
-        itemsInPocket = result?.itemsInPocket;
+        if(result){
+          inPocket = result?.inPocket;
+          itemsInPocket = result?.itemsInPocket;
+        }
     handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
 
       }

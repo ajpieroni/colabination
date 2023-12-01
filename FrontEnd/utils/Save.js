@@ -18,7 +18,7 @@ export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, c
       // console.log(`hasSaved: ${hasSavedItems}`);
       if (!hasSavedItems.includes(currItems[i])) {
         {
-          console.log(`Attempting to save ${currItem}`);
+        //   console.log(`Attempting to save ${currItem}`);
 
           fetch("http://localhost:8081/user_items", {
             method: "POST",
@@ -39,7 +39,7 @@ export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, c
           hasSavedItems.push(currItem);
         }
       } else {
-        console.log(`You've already saved ${currItem}`);
+        // console.log(`You've already saved ${currItem}`);
       }
     }
     for (let j = 0; j < currTools.length; j++) {
