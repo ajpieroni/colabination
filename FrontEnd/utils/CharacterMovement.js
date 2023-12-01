@@ -3,7 +3,7 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
-
+import { showVendingContents } from "./Vending.js";
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
   // !TODO: figure out how to pass image parameter into vending contents
@@ -521,7 +521,7 @@ class CharacterMovement {
           console.log("pressed");
 
           async function madeCraft() {
-            handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+            handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
             let craftText = `You made ${result.itemKey}! ${
               result.isFinal
                 ? `You can find ${result.itemKey} in the documentation station.`
@@ -601,12 +601,12 @@ class CharacterMovement {
             if (!madeItem.isFinal) {
               updatePocketVending(result, inPocket, itemsInPocket, volumeSetting);
               // console.log(result);
-              if(result){
-                inPocket = result?.inPocket;
-                itemsInPocket = result?.itemsInPocket;
+              if(result.n){
+                inPocket = result.inPocket;
+                itemsInPocket = result.itemsInPocket;
               }
              
-               handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+               handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
 
             }
             // updatePocket(madeItem, inPocket);
@@ -781,7 +781,7 @@ class CharacterMovement {
 
     // saving for now :D
     onKeyPress("z", () => {
-      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
     });
     let menuOpen = false;
    
@@ -925,7 +925,7 @@ class CharacterMovement {
     });
     onKeyPress("m", () => {
       this.music.paused = true;
-      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+      handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
       go("settings");
     });
 
@@ -971,98 +971,16 @@ class CharacterMovement {
         let item = vendingContents[vendingSelect];
         
         let result = updatePocketVending(item, inPocket, itemsInPocket, volumeSetting);
-        if(result){
+        if(result.n){
           inPocket = result?.inPocket;
           itemsInPocket = result?.itemsInPocket;
         }
-    handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+    handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
 
       }
     });
 
-    function showVendingContents(contents) {
-      console.log("vending contents shown");
-      const popup = add([
-        sprite("backpack"),
-        pos(475 - 190, 125 + 25),
-        z(11),
-        outline(4),
-        // scale(0.75),
-        "vending",
-      ]);
-      const startX = popup.pos.x + 108;
-      const startY = popup.pos.y + 155;
-      let currentX = startX;
-      let currentY = startY;
-      let currRow = 0;
-      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
-      if (vendingContents.length > 0) {
-        // itemText = (vendingContents[vendingSelect].itemKey);
-        let itemText = vendingContents[0].itemKey;
-        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
-        const selectedText = add([
-          "itemText",
-          text(itemText, {
-            // optional object
-            size: 24,
-            outline: 4,
-            color: (0, 0, 0),
-            // can specify font here,
-          }),
-          area(),
-          anchor("center"),
-          pos(500 + 25, 500 + 100 + 25),
-          z(20),
-
-          // scale(.5)
-        ]);
-
-        const selected = add([
-          rect(70, 70),
-          pos(startX, startY),
-          z(11),
-          color(255, 255, 255),
-          "selected",
-        ]);
-      }
-      contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
-
-      for (let i = 0; i < contents.length; i++) {
-        const item = contents[i];
-        const itemKey = item.itemKey;
-        // starts a new line
-
-        if (currRow === 3) {
-          currentY += item.height + 50;
-          currentX = startX;
-          currRow = 0;
-        }
-
-        const vendingItem = add([
-          // rect(item.width, item.height) ,
-          pos(currentX, currentY),
-          z(11),
-          // color(item.color.r, item.color.g, item.color.b),
-          "vending",
-          sprite(`${item.itemKey}`),
-          // rect(10,10),
-          // sprite(`${image}`),
-          scale(1.5),
-          z(12),
-          "material",
-          {
-            itemKey: itemKey,
-          },
-        ]);
-
-        // console.log(currRow);
-        currRow++;
-        currentX += item.width + 35;
-      }
-
-      isPopupVisible = true;
-    }
 
     let itemsInPocket = 0;
 
@@ -1077,12 +995,12 @@ class CharacterMovement {
         destroyAll("vending");
         destroyAll("itemText");
         destroyAll("selected");
-        handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals);
+        handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal);
         isPopupVisible = false;
         SPEED = 300;
       } else {
         if (!isDocVisible) {
-          showVendingContents(vendingContents);
+          showVendingContents(vendingContents, isPopupVisible);
           destroyAll("craft");
           isPopupVisible = true;
           SPEED = 0;
@@ -1284,12 +1202,16 @@ class CharacterMovement {
           !isPopupVisible
         ) {
           console.log("drop item on table");
+          console.log("inpocket", inPocket);
+          
+          
 
           itemsInPocket--;
           console.log("items in pocket after dropping table", itemsInPocket);
 
-          let item = inPocket.shift();
-          console.log("here's item shifted:", item.itemKey);
+            let item = inPocket.shift();
+
+          // console.log("here's item shifted:", item.itemKey);
           // console.log("here item key", item.itemKey);
           item.use("onTable");
 

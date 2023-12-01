@@ -33,8 +33,9 @@ export function updatePocketVending(
     console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
     inPocket.push(newItem);
     itemsInPocket++;
+    let n = true;
 
-    return { inPocket, itemsInPocket };
+    return { inPocket, itemsInPocket, n };
   } else {
     let alertText = "Remove items from pocket to select from vending machine";
 
@@ -66,8 +67,8 @@ export function updatePocketVending(
     setTimeout(() => {
       destroyAll("alertPop");
     }, 2000);
-
-    return
+let n  = false;
+    return {n}
     // shake(5);
   }
 }

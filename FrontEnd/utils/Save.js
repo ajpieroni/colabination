@@ -1,4 +1,4 @@
-export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals) {
+export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal){
     //hard coded items and tools, should be dynamic at some point
    
     let curr_user = localStorage.getItem("username");
