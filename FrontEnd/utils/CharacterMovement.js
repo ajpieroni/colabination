@@ -3,7 +3,7 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
-import { showVendingContents, onKeyPressLeft, onKeyPressRight } from "./Vending.js";
+import { showVendingContents, onKeyPressLeft, onKeyPressRight, onKeyPressDown, onKeyPressUp } from "./Vending.js";
 import { fetchUserItems, fetchUserTools } from "./User.js";
 class CharacterMovement {
   // !TODO: add a "on floor" variable for game objects
@@ -630,50 +630,24 @@ class CharacterMovement {
 
 // *TODO: move
     onKeyPress("left", () => {
+      console.log("left")
       vendingSelect = onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents);
     });
 
     onKeyPress("right", () => {
+      console.log("right")
       vendingSelect = onKeyPressRight(isPopupVisible, vendingSelect, vendingContents);
 
     });
     onKeyPress("down", () => {
-      if (isPopupVisible) {
-        if (vendingSelect + 3 < vendingContents.length) {
-          vendingSelect += 3;
-          // console.log(vendingSelect);
-          destroyAll("selected");
-          let gridX = vendingSelect % 3;
-          let gridY = Math.floor(vendingSelect / 3);
-          const selected = add([
-            rect(70, 70),
-            pos(393 + gridX * 86, 305 + gridY * 100),
-            z(11),
-            color(255, 255, 255),
-            "selected",
-          ]);
-          destroyAll("itemText");
-          let itemText = vendingContents[vendingSelect].itemKey;
-          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-          const selectedText = add([
-            "itemText",
-            text(itemText, {
-              // optional object
-              size: 24,
-              outline: 4,
-              color: (0, 0, 0),
-              // can specify font here,
-            }),
-            area(),
-            anchor("center"),
-            pos(500 + 25, 500 + 100 + 25),
-            z(20),
-
-            // scale(.5)
-          ]);
-        }
-      }
+      console.log("down")
+      vendingSelect = onKeyPressDown(isPopupVisible, vendingSelect, vendingContents);
     });
+
+    onKeyPress("up", () => {
+      vendingSelect = onKeyPressUp(isPopupVisible, vendingSelect, vendingContents);
+    });
+
     onKeyPress("m", () => {
       this.music.paused = true;
       handleSavingData(
@@ -688,43 +662,7 @@ class CharacterMovement {
       go("settings");
     });
 
-    onKeyPress("up", () => {
-      if (isPopupVisible) {
-        if (vendingSelect - 3 >= 0) {
-          vendingSelect -= 3;
-          // console.log(vendingSelect);
-          destroyAll("selected");
-          let gridX = vendingSelect % 3;
-          let gridY = Math.floor(vendingSelect / 3);
-          const selected = add([
-            rect(70, 70),
-            pos(393 + gridX * 86, 305 + gridY * 100),
-            z(11),
-            color(255, 255, 255),
-            "selected",
-          ]);
-          destroyAll("itemText");
-          let itemText = vendingContents[vendingSelect].itemKey;
-          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-          const selectedText = add([
-            "itemText",
-            text(itemText, {
-              // optional object
-              size: 24,
-              outline: 4,
-              color: (0, 0, 0),
-              // can specify font here,
-            }),
-            area(),
-            anchor("center"),
-            pos(500 + 25, 500 + 100 + 25),
-            z(20),
-
-            // scale(.5)
-          ]);
-        }
-      }
-    });
+    
     onKeyPress("enter", () => {
       if (isPopupVisible && vendingContents.length > 0) {
         let item = vendingContents[vendingSelect];
