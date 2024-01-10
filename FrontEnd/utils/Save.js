@@ -1,4 +1,4 @@
-export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal){
+export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems, currTools, currFinals, hasSavedFinal){
     //hard coded items and tools, should be dynamic at some point
    
     let curr_user = localStorage.getItem("username");
@@ -106,3 +106,25 @@ export default function handleSavingData(vendingKeys, hasSavedItems, areFinal, c
       }
     }
   }
+
+  // Logout
+  let inactivityTimer;
+
+export function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    // Call the logout function after 15 minutes of inactivity
+    logout();
+  }, 900000); // 15 minutes in milliseconds
+}
+
+export function logout() {
+  fetch("http://localhost:8081/logout", { method: "DELETE" })
+    .then((response) => {
+      if (response.ok) {
+        go("login");
+        window.location.reload();
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+}

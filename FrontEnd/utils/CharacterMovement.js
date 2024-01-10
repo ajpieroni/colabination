@@ -1,7 +1,7 @@
 import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
-import handleSavingData from "./Save.js";
+import { resetInactivityTimer, logout, handleSavingData } from './Save.js';
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import {
   showVendingContents,
@@ -996,26 +996,7 @@ class CharacterMovement {
       checkCraftable();
     });
     // Function to check session status
-    let inactivityTimer;
 
-    function resetInactivityTimer() {
-      clearTimeout(inactivityTimer);
-      inactivityTimer = setTimeout(() => {
-        // Call the logout function after 15 minutes of inactivity
-        logout();
-      }, 900000); // 15 minutes in milliseconds
-    }
-
-    function logout() {
-      fetch("http://localhost:8081/logout", { method: "DELETE" })
-        .then((response) => {
-          if (response.ok) {
-            go("login");
-            window.location.reload();
-          }
-        })
-        .catch((error) => console.error("Error:", error));
-    }
     resetInactivityTimer();
     onKeyPress(() => {
       resetInactivityTimer();

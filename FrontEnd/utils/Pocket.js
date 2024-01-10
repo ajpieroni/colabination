@@ -1,4 +1,4 @@
-import handleSavingData from "./Save.js";
+import {handleSavingData} from "./Save.js";
 export function updatePocket(material, inPocket, itemsInPocket) {
   if (itemsInPocket < 2) {
     material.scaleTo(1);
