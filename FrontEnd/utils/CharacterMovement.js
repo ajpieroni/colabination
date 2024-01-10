@@ -828,8 +828,8 @@ class CharacterMovement {
         console.log("material", materialEntity);
         console.log("Updating pocket");
         let result = updatePocket(materialEntity, inventoryState.inPocket, inventoryState.itemsInPocket);
-        inventoryState.inPocket = result?.inventoryState.inPocket;
-        inventoryState.itemsInPocket = result?.inventoryState.itemsInPocket;
+        inventoryState.inPocket = result?.inPocket;
+        inventoryState.itemsInPocket = result?.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });
