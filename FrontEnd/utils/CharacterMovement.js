@@ -5,6 +5,7 @@ import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { showVendingContents, onKeyPressLeft, onKeyPressRight, onKeyPressDown, onKeyPressUp } from "./Vending.js";
 import { fetchUserItems, fetchUserTools } from "./User.js";
+import { handleCollideDocumentationStation } from "./Collide.js";
 class CharacterMovement {
   // This file acts as our main control.
   music = null;
@@ -90,6 +91,14 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
+    // Collision Control
+    let collisionState = {
+      canAccessDocumentation: false,
+      isDocVisible: false,
+      eventListenerAttached: false,
+      SPEED: 300
+    };
+    
 
     // Tool Logic
     let currToolY = 0;
@@ -699,7 +708,7 @@ class CharacterMovement {
         isPopupVisible = false;
         SPEED = 300;
       } else {
-        if (!isDocVisible) {
+        if (!collisionState.isDocVisible) {
           showVendingContents(vendingContents, isPopupVisible);
           destroyAll("craft");
           isPopupVisible = true;
@@ -708,7 +717,7 @@ class CharacterMovement {
         }
       }
     });
-    let isDocVisible = false;
+    collisionState.isDocVisible = false;
 
     function showFinalItems() {
       const docPop = add([
@@ -763,40 +772,14 @@ class CharacterMovement {
         currentX += 100;
       }
 
-      isDocVisible = true;
+      collisionState.isDocVisible = true;
     }
 
     let canAccessDocumentation = false;
     let eventListenerAttached = false;
 
     player.onCollide("documentationStation", () => {
-      canAccessDocumentation = true;
-
-      add([
-        text("Documentation Station", { size: 16 }),
-        pos(700, 100 - 18),
-        color(242, 140, 40),
-        z(49),
-        "interactable",
-      ]);
-      if (!eventListenerAttached) {
-        eventListenerAttached = true;
-
-        onKeyPress("enter", () => {
-          // If documentation cannot be accessed, simply return
-          if (!canAccessDocumentation) return;
-
-          if (isDocVisible) {
-            destroyAll("final");
-            isDocVisible = false;
-            SPEED = 300;
-          } else {
-            showFinalItems();
-            isDocVisible = true;
-            SPEED = 0;
-          }
-        });
-      }
+      handleCollideDocumentationStation(collisionState, showFinalItems);
     });
 
     player.onCollideEnd("documentationStation", () => {
