@@ -58,6 +58,7 @@ class CharacterMovement {
       hasSavedItems: [],
       hasSavedFinal: [],
       itemsInPocket: 0,
+      finalCraftCheck: false,
     };
 
 
@@ -100,6 +101,17 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
+
+    // Logout
+    // Function to check session status
+    resetInactivityTimer();
+    onKeyPress(() => {
+      resetInactivityTimer();
+    });
+    onMouseMove(() => {
+      resetInactivityTimer();
+    });
+
     // Collision Control
     let collisionState = {
       canAccessDocumentation: false,
@@ -115,7 +127,7 @@ class CharacterMovement {
     };
 
     onCollide("player", "tool", (s, w) => {
-      finalCraftCheck = true;
+      inventoryState.finalCraftCheck = true;
       console.log(w.toolKey);
       toolState.currToolY = w.pos.y;
       toolState.currentTool = w;
@@ -950,7 +962,7 @@ class CharacterMovement {
         }
       }
     }
-    let finalCraftCheck = false;
+    inventoryState.finalCraftCheck = false;
 
     function checkCraftable() {
       if (
@@ -979,7 +991,7 @@ class CharacterMovement {
             z(20),
             // scale(.5)
           ]);
-          finalCraftCheck = true;
+          inventoryState.finalCraftCheck = true;
         }
       }
       if (!toolState.toolAccess || inventoryState.isPopupVisible) {
@@ -995,15 +1007,7 @@ class CharacterMovement {
       atCraftingTable = false;
       checkCraftable();
     });
-    // Function to check session status
-
-    resetInactivityTimer();
-    onKeyPress(() => {
-      resetInactivityTimer();
-    });
-    onMouseMove(() => {
-      resetInactivityTimer();
-    });
+    
   }
 }
 export const characterMovement = new CharacterMovement();
