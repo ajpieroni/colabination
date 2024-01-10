@@ -6,9 +6,7 @@ import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { showVendingContents, onKeyPressLeft, onKeyPressRight, onKeyPressDown, onKeyPressUp } from "./Vending.js";
 import { fetchUserItems, fetchUserTools } from "./User.js";
 class CharacterMovement {
-  // !TODO: add a "on floor" variable for game objects
-  // !TODO: figure out how to pass image parameter into vending contents
-  // music = null;
+  // This file acts as our main control.
   music = null;
   constructor() {
     this.level = null;
@@ -24,13 +22,15 @@ class CharacterMovement {
       volume: volumeSetting,
       loop: true,
     });
-
+  
+    // Initialize Tools
     Tools();
 
     // Map Sprites
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([sprite("tables"), pos(0, 0), z(6)]);
     map();
+
   }
 
   play() {
@@ -97,7 +97,6 @@ class CharacterMovement {
     let toolAccess = false;
 
     onCollide("player", "tool", (s, w) => {
-      console.log("collided w tool");
       finalCraftCheck = true;
       console.log(w.toolKey);
       currToolY = w.pos.y;
@@ -595,15 +594,6 @@ class CharacterMovement {
 
     onKeyDown("down", () => {
       player.move(0, SPEED);
-    });
-
-    //! Collide Logic: Player and Machine
-    onCollide("player", "machine", (s, w) => {
-      cricut.access = true;
-    });
-
-    onCollide("player", "cricut", (s, w) => {
-      cricut.access = true;
     });
 
     onCollideEnd("player", "craftingTable", () => {
