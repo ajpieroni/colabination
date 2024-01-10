@@ -3,7 +3,13 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import handleSavingData from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
-import { showVendingContents, onKeyPressLeft, onKeyPressRight, onKeyPressDown, onKeyPressUp } from "./Vending.js";
+import {
+  showVendingContents,
+  onKeyPressLeft,
+  onKeyPressRight,
+  onKeyPressDown,
+  onKeyPressUp,
+} from "./Vending.js";
 import { fetchUserItems, fetchUserTools } from "./User.js";
 import { handleCollideDocumentationStation } from "./Collide.js";
 class CharacterMovement {
@@ -23,7 +29,7 @@ class CharacterMovement {
       volume: volumeSetting,
       loop: true,
     });
-  
+
     // Initialize Tools
     Tools();
 
@@ -31,34 +37,37 @@ class CharacterMovement {
     add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
     add([sprite("tables"), pos(0, 0), z(6)]);
     map();
-
   }
 
   play() {
-    // Init Inventory
-    let currItems = [];
-    let currTools = [];
-    let currFinals = [];
-    // Vending & Pocket
-    let vendingKeys = [];
-    let isPopupVisible = false;
-    let vendingContents = [];
-    let inPocket = [];
-    let vendingSelect = 0;
-    // Documentation Station
-    let areFinal = [];
+    // Inventory Control
+    let inventoryState = {
+      // Init Inventory
+      currItems: [],
+      currTools: [],
+      currFinals: [],
+      // Vending & Pocket
+      vendingKeys: [],
+      isPopupVisible: false,
+      vendingContents: [],
+      inPocket: [],
+      vendingSelect: 0,
+      // Documentation Station
+      areFinal: [],
+      curr_user: localStorage.getItem("username"),
+      hasSavedItems: [],
+      hasSavedFinal: [],
+      itemsInPocket: 0,
+    };
 
-    // User
-    let curr_user = localStorage.getItem("username");
-    let hasSavedItems = [];
-    let hasSavedFinal = [];
+
 
     fetchUserItems(
-      curr_user,
-      hasSavedItems,
-      vendingKeys,
-      vendingContents,
-      areFinal
+      inventoryState.curr_user,
+      inventoryState.hasSavedItems,
+      inventoryState.vendingKeys,
+      inventoryState.vendingContents,
+      inventoryState.areFinal
     )
       .then((itemNames) => {
         console.log(itemNames);
@@ -67,7 +76,7 @@ class CharacterMovement {
         console.error("Error fetching user items:", error);
         InitialItems();
       });
-    fetchUserTools(curr_user)
+    fetchUserTools(inventoryState.curr_user)
       .then((itemTools) => {
         console.log(itemTools);
       })
@@ -96,16 +105,14 @@ class CharacterMovement {
       canAccessDocumentation: false,
       isDocVisible: false,
       eventListenerAttached: false,
-      SPEED: 300
+      SPEED: 300,
     };
-    
+
     let toolState = {
       currToolY: 0,
       currentTool: "",
       toolAccess: false,
-    }
-
-
+    };
 
     onCollide("player", "tool", (s, w) => {
       finalCraftCheck = true;
@@ -139,7 +146,7 @@ class CharacterMovement {
       destroyAll("interactable");
       checkCraftable();
     });
-// *TODO: move to file
+    // *TODO: move to file
     function craftingBackend(ingredients) {
       // !POSTING
 
@@ -193,7 +200,7 @@ class CharacterMovement {
       // http://localhost:8081/combinations?tool=1&item1=1&item2=1
     }
     let result = {};
-// *TODO: move to file
+    // *TODO: move to file
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
       console.log(toolId, item1Id, item2Id);
@@ -239,7 +246,7 @@ class CharacterMovement {
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
-// *TODO: move to file
+    // *TODO: move to file
 
     async function showContainer(tableItems) {
       isCraftingVisible = true;
@@ -380,22 +387,22 @@ class CharacterMovement {
       // let result = "wood";
       let craftCheck = false;
       onKeyPress("enter", () => {
-        if (tableItems.length >= 1 && !isPopupVisible && !craftCheck) {
+        if (tableItems.length >= 1 && !inventoryState.isPopupVisible && !craftCheck) {
           craftCheck = true;
 
-          console.log("here is popup", isPopupVisible);
+          console.log("here is popup", inventoryState.isPopupVisible);
           madeCraft(result);
           console.log("pressed");
 
           async function madeCraft() {
             handleSavingData(
-              vendingKeys,
-              hasSavedItems,
-              areFinal,
-              currItems,
-              currTools,
-              currFinals,
-              hasSavedFinal
+              inventoryState.vendingKeys,
+              inventoryState.hasSavedItems,
+              inventoryState.areFinal,
+              inventoryState.currItems,
+              inventoryState.currTools,
+              inventoryState.currFinals,
+              inventoryState.hasSavedFinal
             );
             let craftText = `You made ${result.itemKey}! ${
               result.isFinal
@@ -451,18 +458,18 @@ class CharacterMovement {
             ]);
 
             if (
-              !vendingContents.includes(madeItem.itemKey) &&
-              !vendingKeys.includes(madeItem.itemKey) &&
+              !inventoryState.vendingContents.includes(madeItem.itemKey) &&
+              !inventoryState.vendingKeys.includes(madeItem.itemKey) &&
               !madeItem.isFinal
             ) {
               console.log("passed", !madeItem.isFinal);
-              vendingContents.push(madeItem);
-              vendingKeys.push(madeItem.itemKey);
+              inventoryState.vendingContents.push(madeItem);
+              inventoryState.vendingKeys.push(madeItem.itemKey);
             }
 
-            if (madeItem.isFinal && !areFinal.includes(madeItem.itemKey)) {
+            if (madeItem.isFinal && !inventoryState.areFinal.includes(madeItem.itemKey)) {
               console.log(`${madeItem.itemKey} pushed to are final`);
-              areFinal.push(madeItem.itemKey);
+              inventoryState.areFinal.push(madeItem.itemKey);
             }
             await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -471,32 +478,32 @@ class CharacterMovement {
             if (volumeSetting) {
               play("bubble");
             }
-            let item = vendingContents[length - 1];
+            let item = inventoryState.vendingContents[length - 1];
             // console.log("here's item", item.itemKey)
             if (!madeItem.isFinal) {
               updatePocketVending(
                 result,
-                inPocket,
-                itemsInPocket,
+                inventoryState.inPocket,
+                inventoryState.itemsInPocket,
                 volumeSetting
               );
               // console.log(result);
               if (result.n) {
-                inPocket = result.inPocket;
-                itemsInPocket = result.itemsInPocket;
+                inventoryState.inPocket = result.inventoryState.inPocket;
+                inventoryState.itemsInPocket = result.inventoryState.itemsInPocket;
               }
 
               handleSavingData(
-                vendingKeys,
-                hasSavedItems,
-                areFinal,
-                currItems,
-                currTools,
-                currFinals,
-                hasSavedFinal
+                inventoryState.vendingKeys,
+                inventoryState.hasSavedItems,
+                inventoryState.areFinal,
+                inventoryState.currItems,
+                inventoryState.currTools,
+                inventoryState.currFinals,
+                inventoryState.hasSavedFinal
               );
             }
-            // updatePocket(madeItem, inPocket);
+            // updatePocket(madeItem, inventoryState.inPocket);
             madeItem.use(body({ isStatic: true }));
             // atCraftingTable = false;
           }
@@ -525,14 +532,14 @@ class CharacterMovement {
 
     onKeyPress("enter", () => {
       // !Craft
-// *TODO: move to file
+      // *TODO: move to file
 
       if (
         toolState.toolAccess &&
         isCraftable &&
         !isCraftingVisible &&
         tableItems.length >= 1 &&
-        !isPopupVisible
+        !inventoryState.isPopupVisible
       ) {
         SPEED = 0;
         destroyAll("craft");
@@ -629,93 +636,107 @@ class CharacterMovement {
     // !VENDING
     let itemText = "";
 
-// *TODO: move
+    // *TODO: move
     onKeyPress("left", () => {
-      console.log("left")
-      vendingSelect = onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents);
+      console.log("left");
+      inventoryState.vendingSelect = onKeyPressLeft(
+        inventoryState.isPopupVisible,
+        inventoryState.vendingSelect,
+        inventoryState.vendingContents
+      );
     });
 
     onKeyPress("right", () => {
-      console.log("right")
-      vendingSelect = onKeyPressRight(isPopupVisible, vendingSelect, vendingContents);
-
+      console.log("right");
+      inventoryState.vendingSelect = onKeyPressRight(
+        inventoryState.isPopupVisible,
+        inventoryState.vendingSelect,
+        inventoryState.vendingContents
+      );
     });
     onKeyPress("down", () => {
-      console.log("down")
-      vendingSelect = onKeyPressDown(isPopupVisible, vendingSelect, vendingContents);
+      console.log("down");
+      inventoryState.vendingSelect = onKeyPressDown(
+        inventoryState.isPopupVisible,
+        inventoryState.vendingSelect,
+        inventoryState.vendingContents
+      );
     });
 
     onKeyPress("up", () => {
-      vendingSelect = onKeyPressUp(isPopupVisible, vendingSelect, vendingContents);
+      inventoryState.vendingSelect = onKeyPressUp(
+        inventoryState.isPopupVisible,
+        inventoryState.vendingSelect,
+        inventoryState.vendingContents
+      );
     });
 
     onKeyPress("m", () => {
       this.music.paused = true;
       handleSavingData(
-        vendingKeys,
-        hasSavedItems,
-        areFinal,
-        currItems,
-        currTools,
-        currFinals,
-        hasSavedFinal
+        inventoryState.vendingKeys,
+        inventoryState.hasSavedItems,
+        inventoryState.areFinal,
+        inventoryState.currItems,
+        inventoryState.currTools,
+        inventoryState.currFinals,
+        inventoryState.hasSavedFinal
       );
       go("settings");
     });
 
-    
     onKeyPress("enter", () => {
-      if (isPopupVisible && vendingContents.length > 0) {
-        let item = vendingContents[vendingSelect];
+      if (inventoryState.isPopupVisible && inventoryState.vendingContents.length > 0) {
+        let item = inventoryState.vendingContents[inventoryState.vendingSelect];
 
         let result = updatePocketVending(
           item,
-          inPocket,
-          itemsInPocket,
+          inventoryState.inPocket,
+          inventoryState.itemsInPocket,
           volumeSetting
         );
         if (result.n) {
-          inPocket = result?.inPocket;
-          itemsInPocket = result?.itemsInPocket;
+          inventoryState.inPocket = result.inPocket;
+          inventoryState.itemsInPocket = result?.itemsInPocket;
         }
         handleSavingData(
-          vendingKeys,
-          hasSavedItems,
-          areFinal,
-          currItems,
-          currTools,
-          currFinals,
-          hasSavedFinal
+          inventoryState.vendingKeys,
+          inventoryState.hasSavedItems,
+          inventoryState.areFinal,
+          inventoryState.currItems,
+          inventoryState.currTools,
+          inventoryState.currFinals,
+          inventoryState.hasSavedFinal
         );
       }
     });
 
-    let itemsInPocket = 0;
+    inventoryState.itemsInPocket = 0;
 
     // backpack functionality
     onKeyPress("space", () => {
-      if (isPopupVisible) {
+      if (inventoryState.isPopupVisible) {
         destroyAll("vending");
         destroyAll("itemText");
         destroyAll("selected");
         handleSavingData(
-          vendingKeys,
-          hasSavedItems,
-          areFinal,
-          currItems,
-          currTools,
-          currFinals,
-          hasSavedFinal
+          inventoryState.vendingKeys,
+          inventoryState.hasSavedItems,
+          inventoryState.areFinal,
+          inventoryState.currItems,
+          inventoryState.currTools,
+          inventoryState.currFinals,
+          inventoryState.hasSavedFinal
         );
-        isPopupVisible = false;
+        inventoryState.isPopupVisible = false;
         SPEED = 300;
       } else {
         if (!collisionState.isDocVisible) {
-          showVendingContents(vendingContents, isPopupVisible);
+          showVendingContents(inventoryState.vendingContents, inventoryState.isPopupVisible);
           destroyAll("craft");
-          isPopupVisible = true;
+          inventoryState.isPopupVisible = true;
           SPEED = 0;
-          vendingSelect = 0;
+          inventoryState.vendingSelect = 0;
         }
       }
     });
@@ -736,8 +757,8 @@ class CharacterMovement {
       let currentX = startX;
       let currentY = startY;
       let currRow = 0;
-      for (let i = 0; i < areFinal.length; i++) {
-        const item = areFinal[i];
+      for (let i = 0; i < inventoryState.areFinal.length; i++) {
+        const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
         console.log(item);
 
@@ -793,12 +814,12 @@ class CharacterMovement {
       if (tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
         if (
-          !vendingContents.includes(materialEntity) &&
-          !vendingKeys.includes(materialEntity.itemKey)
+          !inventoryState.vendingContents.includes(materialEntity) &&
+          !inventoryState.vendingKeys.includes(materialEntity.itemKey)
         ) {
           console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
-          vendingContents.push(materialEntity);
-          vendingKeys.push(materialEntity.itemKey);
+          inventoryState.vendingContents.push(materialEntity);
+          inventoryState.vendingKeys.push(materialEntity.itemKey);
         }
         if (volumeSetting) {
           play("bubble");
@@ -806,9 +827,9 @@ class CharacterMovement {
 
         console.log("material", materialEntity);
         console.log("Updating pocket");
-        let result = updatePocket(materialEntity, inPocket, itemsInPocket);
-        inPocket = result?.inPocket;
-        itemsInPocket = result?.itemsInPocket;
+        let result = updatePocket(materialEntity, inventoryState.inPocket, inventoryState.itemsInPocket);
+        inventoryState.inPocket = result?.inventoryState.inPocket;
+        inventoryState.itemsInPocket = result?.inventoryState.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });
@@ -834,14 +855,14 @@ class CharacterMovement {
 
     // Dropping item on table
     onKeyPress("q", () => {
-      console.log("items in pocket on q", itemsInPocket);
+      console.log("items in pocket on q", inventoryState.itemsInPocket);
       // !TODO: set max items on table
       if (tableItems.length == 0 && toolState.currentTool) {
         table_x = toolState.currentTool.pos.x;
         table_y = toolState.currToolY;
       }
 
-      if (toolState.toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
+      if (toolState.toolAccess && onItemsOnTable >= 2 && !inventoryState.isPopupVisible) {
         let alertText = "There are too many items on the table; try crafting!";
 
         add([
@@ -876,29 +897,29 @@ class CharacterMovement {
       } else {
         console.log(
           "check",
-          toolState.toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
+          toolState.toolAccess && inventoryState.itemsInPocket !== 0 && onItemsOnTable < 6
         );
         if (
           toolState.toolAccess &&
-          itemsInPocket !== 0 &&
+          inventoryState.itemsInPocket !== 0 &&
           onItemsOnTable < 6 &&
-          !isPopupVisible
+          !inventoryState.isPopupVisible
         ) {
           console.log("drop item on table");
-          console.log("inpocket", inPocket);
+          console.log("inventoryState.inPocket", inventoryState.inPocket);
 
-          itemsInPocket--;
-          console.log("items in pocket after dropping table", itemsInPocket);
+          inventoryState.itemsInPocket--;
+          console.log("items in pocket after dropping table", inventoryState.itemsInPocket);
 
-          let item = inPocket.shift();
+          let item = inventoryState.inPocket.shift();
 
           // console.log("here's item shifted:", item.itemKey);
           // console.log("here item key", item.itemKey);
           item.use("onTable");
 
           item.moveTo(table_x, table_y);
-          if (inPocket.length === 1) {
-            inPocket[0].moveTo(880, 725);
+          if (inventoryState.inPocket.length === 1) {
+            inventoryState.inPocket[0].moveTo(880, 725);
           }
           tableItems[onItemsOnTable] = item.itemKey;
 
@@ -913,16 +934,16 @@ class CharacterMovement {
       }
     });
     function rearrangePocket() {
-      if (inPocket.length > 0) {
+      if (inventoryState.inPocket.length > 0) {
         if (volumeSetting) {
           play("bubble");
         }
-        let item = inPocket.shift(); // Remove the first item from the pocket
-        itemsInPocket--;
+        let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
+        inventoryState.itemsInPocket--;
         destroy(item);
         // Shift remaining items to the first slot if any
-        if (inPocket.length > 0) {
-          inPocket[0].moveTo(880, 725);
+        if (inventoryState.inPocket.length > 0) {
+          inventoryState.inPocket[0].moveTo(880, 725);
           if (volumeSetting) {
             play("bubble");
           }
@@ -936,7 +957,7 @@ class CharacterMovement {
         toolState.toolAccess &&
         // tableItems.includes("paper") &&
         tableItems.length >= 1 &&
-        !isPopupVisible
+        !inventoryState.isPopupVisible
       ) {
         isCraftable = true;
         if (isCraftable) {
@@ -961,7 +982,7 @@ class CharacterMovement {
           finalCraftCheck = true;
         }
       }
-      if (!toolState.toolAccess || isPopupVisible) {
+      if (!toolState.toolAccess || inventoryState.isPopupVisible) {
         destroyAll("craft");
       }
     }
