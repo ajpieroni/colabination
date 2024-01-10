@@ -99,20 +99,22 @@ class CharacterMovement {
       SPEED: 300
     };
     
+    let toolState = {
+      currToolY: 0,
+      currentTool: "",
+      toolAccess: false,
+    }
 
-    // Tool Logic
-    let currToolY = 0;
-    let currentTool = "";
-    let toolAccess = false;
+
 
     onCollide("player", "tool", (s, w) => {
       finalCraftCheck = true;
       console.log(w.toolKey);
-      currToolY = w.pos.y;
-      currentTool = w;
-      toolAccess = true;
+      toolState.currToolY = w.pos.y;
+      toolState.currentTool = w;
+      toolState.toolAccess = true;
 
-      let toolDisplay = currentTool.toolKey
+      let toolDisplay = toolState.currentTool.toolKey
         // space
         .replace(/([A-Z])/g, " $1")
         //trim
@@ -125,15 +127,15 @@ class CharacterMovement {
       checkCraftable();
       add([
         text(toolDisplay, { size: 16 }),
-        pos(w.pos.x, currToolY - 18),
+        pos(w.pos.x, toolState.currToolY - 18),
         color(242, 140, 40),
         z(49),
         "interactable",
       ]);
     });
     onCollideEnd("player", "tool", () => {
-      toolAccess = false;
-      currentTool = "";
+      toolState.toolAccess = false;
+      toolState.currentTool = "";
       destroyAll("interactable");
       checkCraftable();
     });
@@ -143,9 +145,9 @@ class CharacterMovement {
 
       let toolId;
       // let ingredients = tableItems;
-      if (toolAccess) {
+      if (toolState.toolAccess) {
         // *Hands are id=3, we will always use this for crafting table
-        toolId = currentTool.toolId;
+        toolId = toolState.currentTool.toolId;
         console.log(toolId);
       } else {
         // !TODO: check this doesn't break
@@ -266,7 +268,7 @@ class CharacterMovement {
       let possessionText = `You possess ${ingredients.length} item${
         ingredients.length > 1 ? "s" : ""
       }:`;
-      let toolname = currentTool.toolKey
+      let toolname = toolState.currentTool.toolKey
         // space
         .replace(/([A-Z])/g, " $1")
         //trim
@@ -526,7 +528,7 @@ class CharacterMovement {
 // *TODO: move to file
 
       if (
-        toolAccess &&
+        toolState.toolAccess &&
         isCraftable &&
         !isCraftingVisible &&
         tableItems.length >= 1 &&
@@ -834,12 +836,12 @@ class CharacterMovement {
     onKeyPress("q", () => {
       console.log("items in pocket on q", itemsInPocket);
       // !TODO: set max items on table
-      if (tableItems.length == 0 && currentTool) {
-        table_x = currentTool.pos.x;
-        table_y = currToolY;
+      if (tableItems.length == 0 && toolState.currentTool) {
+        table_x = toolState.currentTool.pos.x;
+        table_y = toolState.currToolY;
       }
 
-      if (toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
+      if (toolState.toolAccess && onItemsOnTable >= 2 && !isPopupVisible) {
         let alertText = "There are too many items on the table; try crafting!";
 
         add([
@@ -874,10 +876,10 @@ class CharacterMovement {
       } else {
         console.log(
           "check",
-          toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
+          toolState.toolAccess && itemsInPocket !== 0 && onItemsOnTable < 6
         );
         if (
-          toolAccess &&
+          toolState.toolAccess &&
           itemsInPocket !== 0 &&
           onItemsOnTable < 6 &&
           !isPopupVisible
@@ -931,7 +933,7 @@ class CharacterMovement {
 
     function checkCraftable() {
       if (
-        toolAccess &&
+        toolState.toolAccess &&
         // tableItems.includes("paper") &&
         tableItems.length >= 1 &&
         !isPopupVisible
@@ -959,7 +961,7 @@ class CharacterMovement {
           finalCraftCheck = true;
         }
       }
-      if (!toolAccess || isPopupVisible) {
+      if (!toolState.toolAccess || isPopupVisible) {
         destroyAll("craft");
       }
     }
