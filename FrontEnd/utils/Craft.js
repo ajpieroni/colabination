@@ -1,8 +1,9 @@
 import { getSpeed, setSpeed } from './Player.js';
-
-console.log(getSpeed()); 
-
-export function checkCraftable(toolState, inventoryState, tableItems) {
+export function checkCraftable(toolState, inventoryState) {
+    console.log("CHECK", toolState.toolAccess &&
+    // tableItems.includes("paper") &&
+    inventoryState.tableItems.length >= 1 &&
+    !inventoryState.isPopupVisible)
     if (
       toolState.toolAccess &&
       // tableItems.includes("paper") &&
@@ -10,8 +11,6 @@ export function checkCraftable(toolState, inventoryState, tableItems) {
       !inventoryState.isPopupVisible
     ) {
       inventoryState.isCraftable = true;
-      if (inventoryState.isCraftable) {
-        setSpeed(0); 
         add([
           "craft",
           text("Craft?", {
@@ -28,7 +27,6 @@ export function checkCraftable(toolState, inventoryState, tableItems) {
           // scale(.5)
         ]);
         inventoryState.finalCraftCheck = true;
-      }
     }
     if (!toolState.toolAccess || inventoryState.isPopupVisible) {
       destroyAll("craft");

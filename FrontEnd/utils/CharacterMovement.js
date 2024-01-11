@@ -3,8 +3,7 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
-import { getSpeed, setSpeed } from './Player.js';
-
+import { getSpeed, setSpeed } from "./Player.js";
 
 import {
   showVendingContents,
@@ -22,7 +21,6 @@ import {
 import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
-  
   // This file acts as our main control.
   music = null;
   constructor() {
@@ -50,7 +48,6 @@ class CharacterMovement {
   }
 
   play() {
-    console.log(getSpeed()); // 300
     // Inventory Control
     let inventoryState = {
       // Init Inventory
@@ -82,7 +79,6 @@ class CharacterMovement {
       : 1;
 
     // Player
-    console.log(getSpeed())
     setSpeed(300);
     const player = add([
       sprite("characterSprite"),
@@ -131,27 +127,24 @@ class CharacterMovement {
       let toolId;
       if (toolState.toolAccess) {
         toolId = toolState.currentTool.toolId;
-        console.log(toolId);
+
       } else {
         toolId = 3;
       }
 
-      console.log(ingredients);
 
       let item1sprite = ingredients[0];
-      console.log("item 1 sprite", item1sprite);
+
       let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-      console.log("item 2 sprite", item2sprite);
+
 
       fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
         .then((response) => response.json())
         .then((item1data) => {
-          console.log("Item 1:", item1data);
           if (item2sprite !== "nothing") {
             fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
               .then((response) => response.json())
               .then((item2data) => {
-                console.log("Item 2:", item2data);
                 fetchCombination(
                   toolId,
                   item1data.id,
@@ -175,7 +168,6 @@ class CharacterMovement {
     // *TODO: move to file
 
     function fetchCombination(toolId, item1Id, item2Id, callback) {
-      console.log(toolId, item1Id, item2Id);
       fetch(
         `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
       )
@@ -186,9 +178,6 @@ class CharacterMovement {
           return response.json();
         })
         .then((data) => {
-          console.log("Combination result:", data);
-          console.log(`${data.creation}`);
-
           fetch(
             `http://localhost:8081/items/find_by_name_craft/${data.creation}`
           )
@@ -199,7 +188,6 @@ class CharacterMovement {
               return response.json();
             })
             .then((additionalData) => {
-              console.log("new item result:", additionalData);
               callback(data.creation, additionalData.data.isFinal, data);
             })
             .catch((error) => {
@@ -214,7 +202,6 @@ class CharacterMovement {
     function handleCreation(creation, final, item) {
       result.itemKey = creation;
       result.isFinal = final;
-      console.log("here is crafted result: ", result);
     }
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -226,7 +213,6 @@ class CharacterMovement {
 
       await new Promise((resolve) => setTimeout(resolve, 500));
       let ingredients = inventoryState.tableItems;
-      console.log(ingredients);
       add([
         rect(725, 550),
         pos(150, 125),
@@ -277,7 +263,6 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      console.log("here are ingredients");
       craftingBackend(ingredients);
 
       for (let index = 0; index < ingredients.length; index++) {
@@ -320,7 +305,6 @@ class CharacterMovement {
         message = "Congratulations! You can make something with these items.";
       }
 
-      console.log("result item key", result.itemKey);
       add([
         text(`${message}`),
         pos(215, 525 - 100 + 50),
@@ -489,7 +473,7 @@ class CharacterMovement {
             // atCraftingTable = false;
           }
           async function exitCraft() {
-            console.log(getSpeed())
+            console.log(getSpeed());
             setSpeed(300);
             clearTable();
             destroyAll("crafting");
@@ -523,9 +507,8 @@ class CharacterMovement {
         inventoryState.tableItems.length >= 1 &&
         !inventoryState.isPopupVisible
       ) {
-        
         setSpeed(0);
-        console.log(getSpeed())
+        console.log(getSpeed());
         destroyAll("craft");
         add([
           "craft",
@@ -559,7 +542,6 @@ class CharacterMovement {
     //! Player Movement
     // Player search
     // WASD
-
 
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
@@ -712,7 +694,7 @@ class CharacterMovement {
           inventoryState.hasSavedFinal
         );
         inventoryState.isPopupVisible = false;
-        console.log(getSpeed())
+        console.log(getSpeed());
         setSpeed(300);
       } else {
         if (!collisionState.isDocVisible) {
@@ -722,7 +704,7 @@ class CharacterMovement {
           );
           destroyAll("craft");
           inventoryState.isPopupVisible = true;
-          console.log(getSpeed())
+          console.log(getSpeed());
           setSpeed(0);
           inventoryState.vendingSelect = 0;
         }
@@ -926,7 +908,7 @@ class CharacterMovement {
 
           table_y += 50;
           onItemsOnTable++;
-          checkCraftable(inventoryState.tableItems);
+          checkCraftable(toolState, inventoryState);
         } else {
           console.log("hit else");
           checkCraftable(toolState, inventoryState);
