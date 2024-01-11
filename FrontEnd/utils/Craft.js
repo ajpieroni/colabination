@@ -1,34 +1,144 @@
-import { getSpeed, setSpeed } from './Player.js';
-export function checkCraftable(toolState, inventoryState) {
-    console.log("CHECK", toolState.toolAccess &&
-    // tableItems.includes("paper") &&
-    inventoryState.tableItems.length >= 1 &&
-    !inventoryState.isPopupVisible)
-    if (
-      toolState.toolAccess &&
+import { getSpeed, setSpeed } from "./Player.js";
+export function checkCraftable(toolState, inventoryState, volumeSetting) {
+  console.log(
+    "CHECK",
+    toolState.toolAccess &&
       // tableItems.includes("paper") &&
       inventoryState.tableItems.length >= 1 &&
       !inventoryState.isPopupVisible
+  );
+  if (
+    toolState.toolAccess &&
+    // tableItems.includes("paper") &&
+    inventoryState.tableItems.length >= 1 &&
+    !inventoryState.isPopupVisible
+  ) {
+    inventoryState.isCraftable = true;
+    add([
+      "craft",
+      text("Craft?", {
+        // optional object
+        size: 36,
+        outline: 4,
+        color: (0, 0, 0),
+        // can specify font here,
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500),
+      z(20),
+      // scale(.5)
+    ]);
+    inventoryState.finalCraftCheck = true;
+  }
+  if (!toolState.toolAccess || inventoryState.isPopupVisible) {
+    destroyAll("craft");
+  }
+}
+// !Inventory Management
+export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
+    console.log(tableState);
+  console.log("items in pocket on q", inventoryState.itemsInPocket);
+  // !TODO: set max items on table
+  if (inventoryState.tableItems.length == 0 && toolState.currentTool) {
+    tableState.table_x = toolState.currentTool.pos.x;
+    tableState.table_y = toolState.currToolY;
+  }
+
+  if (
+    toolState.toolAccess &&
+    tableState.onItemsOnTable >= 2 &&
+    !inventoryState.isPopupVisible
+  ) {
+    let alertText = "There are too many items on the table; try crafting!";
+
+    add([
+      "alertPop",
+      text(alertText, {
+        // optional object
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+        // can specify font here,
+      }),
+      area(),
+      anchor("center"),
+      pos(500 + 25, 500 - 300),
+      z(20),
+      // scale(.5)
+    ]);
+    add([
+      rect(500 + 200 + 200, 50),
+      area(),
+      anchor("center"),
+      pos(500 + 25, 500 - 300),
+      z(19),
+      color(242, 140, 40),
+      "alertPop",
+    ]);
+
+    setTimeout(() => {
+      destroyAll("alertPop");
+    }, 2000);
+    // checkCraftable();
+  } else {
+    console.log(
+      "check",
+      toolState.toolAccess &&
+        inventoryState.itemsInPocket !== 0 &&
+        tableState.onItemsOnTable < 6
+    );
+    if (
+      toolState.toolAccess &&
+      inventoryState.itemsInPocket !== 0 &&
+      tableState.onItemsOnTable < 6 &&
+      !inventoryState.isPopupVisible
     ) {
-      inventoryState.isCraftable = true;
-        add([
-          "craft",
-          text("Craft?", {
-            // optional object
-            size: 36,
-            outline: 4,
-            color: (0, 0, 0),
-            // can specify font here,
-          }),
-          area(),
-          anchor("center"),
-          pos(500, 500),
-          z(20),
-          // scale(.5)
-        ]);
-        inventoryState.finalCraftCheck = true;
+      console.log("drop item on table");
+      console.log("inventoryState.inPocket", inventoryState.inPocket);
+
+      inventoryState.itemsInPocket--;
+      console.log(
+        "items in pocket after dropping table",
+        inventoryState.itemsInPocket
+      );
+
+      let item = inventoryState.inPocket.shift();
+
+      // console.log("here's item shifted:", item.itemKey);
+      // console.log("here item key", item.itemKey);
+      item.use("onTable");
+
+      item.moveTo(tableState.table_x, tableState.table_y);
+      if (inventoryState.inPocket.length === 1) {
+        inventoryState.inPocket[0].moveTo(880, 725);
+      }
+      inventoryState.tableItems[tableState.onItemsOnTable] = item.itemKey;
+
+      tableState.table_y += 50;
+      tableState.onItemsOnTable++;
+      checkCraftable(toolState, inventoryState);
+    } else {
+      console.log("hit else");
+      checkCraftable(toolState, inventoryState);
+      rearrangePocket(inventoryState, volumeSetting);
     }
-    if (!toolState.toolAccess || inventoryState.isPopupVisible) {
-      destroyAll("craft");
+  }
+}
+export function rearrangePocket(inventoryState, volumeSetting) {
+    if (inventoryState.inPocket.length > 0) {
+      if (volumeSetting) {
+        play("bubble");
+      }
+      let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
+      inventoryState.itemsInPocket--;
+      destroy(item);
+      // Shift remaining items to the first slot if any
+      if (inventoryState.inPocket.length > 0) {
+        inventoryState.inPocket[0].moveTo(880, 725);
+        if (volumeSetting) {
+          play("bubble");
+        }
+      }
     }
   }

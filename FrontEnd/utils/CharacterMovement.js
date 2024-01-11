@@ -18,7 +18,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable } from "./Craft.js";
+import { checkCraftable, dropItem } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
@@ -69,6 +69,12 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
+    };
+    let tableState = {
+      atCraftingTable: false,
+      table_x: 700,
+      table_y: 550,
+      onItemsOnTable: 0,
     };
 
     intiailizeUser(inventoryState);
@@ -127,16 +133,13 @@ class CharacterMovement {
       let toolId;
       if (toolState.toolAccess) {
         toolId = toolState.currentTool.toolId;
-
       } else {
         toolId = 3;
       }
 
-
       let item1sprite = ingredients[0];
 
       let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-
 
       fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
         .then((response) => response.json())
@@ -470,7 +473,7 @@ class CharacterMovement {
             }
             // updatePocket(madeItem, inventoryState.inPocket);
             madeItem.use(body({ isStatic: true }));
-            // atCraftingTable = false;
+            // tableState.atCraftingTable = false;
           }
           async function exitCraft() {
             console.log(getSpeed());
@@ -576,7 +579,7 @@ class CharacterMovement {
     });
 
     onCollideEnd("player", "craftingTable", () => {
-      atCraftingTable = false;
+      tableState.atCraftingTable = false;
     });
 
     // !INVENTORY
@@ -808,18 +811,14 @@ class CharacterMovement {
       }
     });
 
-    let atCraftingTable = false;
-    let table_x = 700;
-    let table_y = 550;
-    let onItemsOnTable = 0;
 
     function clearTable() {
       inventoryState.tableItems.length = 0;
       destroyAll("onTable");
       destroyAll("craft");
-      table_x = 700;
-      table_y = 550;
-      onItemsOnTable = 0;
+      tableState.table_x = 700;
+      tableState.table_y = 550;
+      tableState.onItemsOnTable = 0;
       inventoryState.tableItems = [];
     }
 
@@ -829,152 +828,20 @@ class CharacterMovement {
 
     // Dropping item on table
     onKeyPress("q", () => {
-      console.log("items in pocket on q", inventoryState.itemsInPocket);
-      // !TODO: set max items on table
-      if (inventoryState.tableItems.length == 0 && toolState.currentTool) {
-        table_x = toolState.currentTool.pos.x;
-        table_y = toolState.currToolY;
-      }
-
-      if (
-        toolState.toolAccess &&
-        onItemsOnTable >= 2 &&
-        !inventoryState.isPopupVisible
-      ) {
-        let alertText = "There are too many items on the table; try crafting!";
-
-        add([
-          "alertPop",
-          text(alertText, {
-            // optional object
-            size: 24,
-            outline: 4,
-            color: (0, 0, 0),
-            // can specify font here,
-          }),
-          area(),
-          anchor("center"),
-          pos(500 + 25, 500 - 300),
-          z(20),
-          // scale(.5)
-        ]);
-        add([
-          rect(500 + 200 + 200, 50),
-          area(),
-          anchor("center"),
-          pos(500 + 25, 500 - 300),
-          z(19),
-          color(242, 140, 40),
-          "alertPop",
-        ]);
-
-        setTimeout(() => {
-          destroyAll("alertPop");
-        }, 2000);
-        // checkCraftable();
-      } else {
-        console.log(
-          "check",
-          toolState.toolAccess &&
-            inventoryState.itemsInPocket !== 0 &&
-            onItemsOnTable < 6
-        );
-        if (
-          toolState.toolAccess &&
-          inventoryState.itemsInPocket !== 0 &&
-          onItemsOnTable < 6 &&
-          !inventoryState.isPopupVisible
-        ) {
-          console.log("drop item on table");
-          console.log("inventoryState.inPocket", inventoryState.inPocket);
-
-          inventoryState.itemsInPocket--;
-          console.log(
-            "items in pocket after dropping table",
-            inventoryState.itemsInPocket
-          );
-
-          let item = inventoryState.inPocket.shift();
-
-          // console.log("here's item shifted:", item.itemKey);
-          // console.log("here item key", item.itemKey);
-          item.use("onTable");
-
-          item.moveTo(table_x, table_y);
-          if (inventoryState.inPocket.length === 1) {
-            inventoryState.inPocket[0].moveTo(880, 725);
-          }
-          inventoryState.tableItems[onItemsOnTable] = item.itemKey;
-
-          table_y += 50;
-          onItemsOnTable++;
-          checkCraftable(toolState, inventoryState);
-        } else {
-          console.log("hit else");
-          checkCraftable(toolState, inventoryState);
-          rearrangePocket();
-        }
-      }
+      console.log("here is table state", tableState)
+      dropItem(toolState, inventoryState, volumeSetting, tableState);
     });
-    function rearrangePocket() {
-      if (inventoryState.inPocket.length > 0) {
-        if (volumeSetting) {
-          play("bubble");
-        }
-        let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
-        inventoryState.itemsInPocket--;
-        destroy(item);
-        // Shift remaining items to the first slot if any
-        if (inventoryState.inPocket.length > 0) {
-          inventoryState.inPocket[0].moveTo(880, 725);
-          if (volumeSetting) {
-            play("bubble");
-          }
-        }
-      }
-    }
+
     inventoryState.finalCraftCheck = false;
 
-    // function checkCraftable() {
-    //   if (
-    //     toolState.toolAccess &&
-    //     // inventoryState.tableItems.includes("paper") &&
-    //     inventoryState.tableItems.length >= 1 &&
-    //     !inventoryState.isPopupVisible
-    //   ) {
-    //     inventoryState.isCraftable = true;
-    //     if (inventoryState.isCraftable) {
-    //       SPEED = 0;
-    //       add([
-    //         "craft",
-    //         text("Craft?", {
-    //           // optional object
-    //           size: 36,
-    //           outline: 4,
-    //           color: (0, 0, 0),
-    //           // can specify font here,
-    //         }),
-    //         area(),
-    //         anchor("center"),
-    //         pos(500, 500),
-    //         z(20),
-    //         // scale(.5)
-    //       ]);
-    //       inventoryState.finalCraftCheck = true;
-    //     }
-    //   }
-    //   if (!toolState.toolAccess || inventoryState.isPopupVisible) {
-    //     destroyAll("craft");
-    //   }
-    // }
     // Crafting Collisions
     onCollide("player", "craftingTable", (s, w) => {
-      atCraftingTable = true;
-      checkCraftable(toolState, inventoryState);
+      tableState.atCraftingTable = true;
+      checkCraftable(toolState, inventoryState, volumeSetting);
     });
     onCollideEnd("player", "craftingTable", (s, w) => {
-      atCraftingTable = false;
-      checkCraftable(toolState, inventoryState);
+      tableState.atCraftingTable = false;
+      checkCraftable(toolState, inventoryState, volumeSetting);
     });
   }
 }
