@@ -3,6 +3,9 @@ import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
+import { getSpeed, setSpeed } from './Player.js';
+
+
 import {
   showVendingContents,
   onKeyPressLeft,
@@ -19,6 +22,7 @@ import {
 import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
+  
   // This file acts as our main control.
   music = null;
   constructor() {
@@ -46,6 +50,7 @@ class CharacterMovement {
   }
 
   play() {
+    console.log(getSpeed()); // 300
     // Inventory Control
     let inventoryState = {
       // Init Inventory
@@ -66,6 +71,7 @@ class CharacterMovement {
       itemsInPocket: 0,
       finalCraftCheck: false,
       tableItems: [],
+      isCraftable: false,
     };
 
     intiailizeUser(inventoryState);
@@ -76,7 +82,8 @@ class CharacterMovement {
       : 1;
 
     // Player
-    let SPEED = 300;
+    console.log(getSpeed())
+    setSpeed(300);
     const player = add([
       sprite("characterSprite"),
       scale(0.25),
@@ -101,7 +108,6 @@ class CharacterMovement {
       canAccessDocumentation: false,
       isDocVisible: false,
       eventListenerAttached: false,
-      SPEED: 300,
     };
 
     // Tool Control
@@ -483,7 +489,8 @@ class CharacterMovement {
             // atCraftingTable = false;
           }
           async function exitCraft() {
-            SPEED = 300;
+            console.log(getSpeed())
+            setSpeed(300);
             clearTable();
             destroyAll("crafting");
             destroyAll("madeItem");
@@ -511,12 +518,14 @@ class CharacterMovement {
 
       if (
         toolState.toolAccess &&
-        isCraftable &&
+        inventoryState.isCraftable &&
         !isCraftingVisible &&
         inventoryState.tableItems.length >= 1 &&
         !inventoryState.isPopupVisible
       ) {
-        SPEED = 0;
+        
+        setSpeed(0);
+        console.log(getSpeed())
         destroyAll("craft");
         add([
           "craft",
@@ -551,36 +560,37 @@ class CharacterMovement {
     // Player search
     // WASD
 
+
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
-      player.move(-SPEED, 0);
+      player.move(-getSpeed(), 0);
     });
     onKeyDown("d", () => {
-      player.move(SPEED, 0);
+      player.move(getSpeed(), 0);
     });
 
     onKeyDown("w", () => {
-      player.move(0, -SPEED);
+      player.move(0, -getSpeed());
     });
 
     onKeyDown("s", () => {
-      player.move(0, SPEED);
+      player.move(0, getSpeed());
     });
     // Arrow Keys
     onKeyDown("left", () => {
       // .move() is provided by pos() component, move by pixels per second
-      player.move(-SPEED, 0);
+      player.move(-getSpeed(), 0);
     });
     onKeyDown("right", () => {
-      player.move(SPEED, 0);
+      player.move(getSpeed(), 0);
     });
 
     onKeyDown("up", () => {
-      player.move(0, -SPEED);
+      player.move(0, -getSpeed());
     });
 
     onKeyDown("down", () => {
-      player.move(0, SPEED);
+      player.move(0, getSpeed());
     });
 
     onCollideEnd("player", "craftingTable", () => {
@@ -702,7 +712,8 @@ class CharacterMovement {
           inventoryState.hasSavedFinal
         );
         inventoryState.isPopupVisible = false;
-        SPEED = 300;
+        console.log(getSpeed())
+        setSpeed(300);
       } else {
         if (!collisionState.isDocVisible) {
           showVendingContents(
@@ -711,7 +722,8 @@ class CharacterMovement {
           );
           destroyAll("craft");
           inventoryState.isPopupVisible = true;
-          SPEED = 0;
+          console.log(getSpeed())
+          setSpeed(0);
           inventoryState.vendingSelect = 0;
         }
       }
@@ -831,7 +843,7 @@ class CharacterMovement {
 
     // Crafting logic:
     // !TODO: Remove hardcode after Ollie's code
-    let isCraftable = false;
+    inventoryState.isCraftable = false;
 
     // Dropping item on table
     onKeyPress("q", () => {
@@ -948,8 +960,8 @@ class CharacterMovement {
     //     inventoryState.tableItems.length >= 1 &&
     //     !inventoryState.isPopupVisible
     //   ) {
-    //     isCraftable = true;
-    //     if (isCraftable) {
+    //     inventoryState.isCraftable = true;
+    //     if (inventoryState.isCraftable) {
     //       SPEED = 0;
     //       add([
     //         "craft",

@@ -1,3 +1,7 @@
+import { getSpeed, setSpeed } from './Player.js';
+
+console.log(getSpeed()); 
+
 export function checkCraftable(toolState, inventoryState, tableItems) {
     if (
       toolState.toolAccess &&
@@ -5,9 +9,9 @@ export function checkCraftable(toolState, inventoryState, tableItems) {
       inventoryState.tableItems.length >= 1 &&
       !inventoryState.isPopupVisible
     ) {
-      isCraftable = true;
-      if (isCraftable) {
-        SPEED = 0;
+      inventoryState.isCraftable = true;
+      if (inventoryState.isCraftable) {
+        setSpeed(0); 
         add([
           "craft",
           text("Craft?", {
