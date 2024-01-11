@@ -142,3 +142,13 @@ export function rearrangePocket(inventoryState, volumeSetting) {
       }
     }
   }
+export function clearTable(inventoryState, tableState) {
+    console.log("hre is inv state inside craft", inventoryState)
+    inventoryState.tableItems.length = 0;
+    destroyAll("onTable");
+    destroyAll("craft");
+    tableState.table_x = 700;
+    tableState.table_y = 550;
+    tableState.onItemsOnTable = 0;
+    inventoryState.tableItems = [];
+  }

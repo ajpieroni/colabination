@@ -18,7 +18,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable, dropItem } from "./Craft.js";
+import { checkCraftable, clearTable, dropItem } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
@@ -478,7 +478,7 @@ class CharacterMovement {
           async function exitCraft() {
             console.log(getSpeed());
             setSpeed(300);
-            clearTable();
+            clearTable(inventoryState, tableState);
             destroyAll("crafting");
             destroyAll("madeItem");
             destroyAll("craftPop");
@@ -811,19 +811,10 @@ class CharacterMovement {
       }
     });
 
-
-    function clearTable() {
-      inventoryState.tableItems.length = 0;
-      destroyAll("onTable");
-      destroyAll("craft");
-      tableState.table_x = 700;
-      tableState.table_y = 550;
-      tableState.onItemsOnTable = 0;
-      inventoryState.tableItems = [];
-    }
+    console.log("here is inv. state", inventoryState);
+   clearTable(inventoryState, tableState);
 
     // Crafting logic:
-    // !TODO: Remove hardcode after Ollie's code
     inventoryState.isCraftable = false;
 
     // Dropping item on table
