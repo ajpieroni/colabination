@@ -71,6 +71,29 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       });
   });
 }
+export function intiailizeUser(inventoryState){
+  fetchUserItems(
+    inventoryState.curr_user,
+    inventoryState.hasSavedItems,
+    inventoryState.vendingKeys,
+    inventoryState.vendingContents,
+    inventoryState.areFinal
+  )
+    .then((itemNames) => {
+      console.log(itemNames);
+    })
+    .catch((error) => {
+      console.error("Error fetching user items:", error);
+      InitialItems();
+    });
+  fetchUserTools(inventoryState.curr_user)
+    .then((itemTools) => {
+      console.log(itemTools);
+    })
+    .catch((error) => {
+      console.error("Error fetching user items:", error);
+    });
+}
 
 
 // load in tools
