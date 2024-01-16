@@ -393,13 +393,13 @@ class CharacterMovement {
                 inventoryState.itemsInPocket,
                 volumeSetting
               );
-              // console.log(craftState.result);
-              if (craftState.result.n) {
-                inventoryState.inPocket =
-                  craftState.result.inventoryState.inPocket;
-                inventoryState.itemsInPocket =
-                  craftState.result.inventoryState.itemsInPocket;
-              }
+              // // console.log(craftState.result);
+              // console.log(craftState.result.inventoryState.inPocket);
+              // // if (craftState.result.n) {
+              // //   inventoryState.inPocket = craftState.result.inventoryState.inPocket;
+              // //   inventoryState.itemsInPocket =
+              // //     craftState.result.inventoryState.itemsInPocket;
+              // // }
 
               handleSavingData(
                 inventoryState.vendingKeys,
