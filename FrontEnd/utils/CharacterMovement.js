@@ -4,6 +4,7 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
+import { craftingBackend } from "./Craft.js";
 
 import {
   showVendingContents,
@@ -48,8 +49,12 @@ class CharacterMovement {
   }
 
   play() {
-    let craftCheck = false;
-    let resultReady = false;
+    let craftState = {
+      craftCheck: false,
+      resultReady: false,
+      result: { itemKey: "", isFinal: false },
+    };
+
     // Inventory Control
     let inventoryState = {
       // Init Inventory
@@ -71,7 +76,6 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
-      resultReady: false,
     };
     let tableState = {
       atCraftingTable: false,
@@ -130,90 +134,7 @@ class CharacterMovement {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-    function craftingBackend(ingredients) {
-      // !POSTING
-
-      let toolId;
-      if (toolState.toolAccess) {
-        toolId = toolState.currentTool.toolId;
-      } else {
-        toolId = 3;
-      }
-      console.log("Crafting backend...");
-      let item1sprite = ingredients[0];
-
-      let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-
-      fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
-        .then((response) => response.json())
-        .then((item1data) => {
-          if (item2sprite !== "nothing") {
-            fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
-              .then((response) => response.json())
-              .then((item2data) => {
-                fetchCombination(
-                  toolId,
-                  item1data.id,
-                  item2data.id,
-                  handleCreation
-                );
-              })
-              .catch((error) => console.error("Error fetching item 2:", error));
-          } else {
-            fetchCombination(toolId, item1data.id, 6, handleCreation);
-            console.log("Fetching combination...");
-          }
-        })
-        .catch((error) => console.error("Error fetching item 1:", error));
-
-      // fetchCombination(toolId, item1data, item2data)
-      // http://localhost:8081/items/find_by_name/paper
-      // http://localhost:8081/tools/find_by_name/scissors
-      // http://localhost:8081/combinations?tool=1&item1=1&item2=1
-    }
-    let result = {};
     // *TODO: move to file
-
-    function fetchCombination(toolId, item1Id, item2Id, callback) {
-      fetch(
-        `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          fetch(
-            `http://localhost:8081/items/find_by_name_craft/${data.creation}`
-          )
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((additionalData) => {
-              resultReady = true;
-
-              callback(data.creation, additionalData.data.isFinal, data);
-            })
-            .catch((error) => {
-              console.error("Error fetching data:", error);
-            });
-        })
-        .catch((error) => {
-          console.error("Error fetching combination:", error);
-        });
-    }
-
-    function handleCreation(creation, final, item) {
-      result.itemKey = creation;
-      result.isFinal = final;
-
-      console.log("Set result...");
-    }
 
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
@@ -276,9 +197,9 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(ingredients);
+      craftingBackend(toolState, ingredients, craftState);
 
-      console.log("resultReady", resultReady);
+      console.log("craftState.resultReady", craftState.resultReady);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -314,7 +235,7 @@ class CharacterMovement {
       }
 
       let message;
-      if (result.itemKey === "trash") {
+      if (craftState.result.itemKey === "trash") {
         message = "That's definitely creative... let's see what happens!";
       } else {
         message = "Congratulations! You can make something with these items.";
@@ -356,26 +277,27 @@ class CharacterMovement {
         isBright = !isBright;
       }, 250); // the button color will toggle every 500ms
       // !TODO: dynamic
-      // let result = "wood";
-      
+      // let craftState.result = "wood";
+
       onKeyPress("enter", () => {
-        console.log("Result ready: ", resultReady);
+        console.log("Result ready: ", craftState.resultReady);
         if (
           inventoryState.tableItems.length >= 1 &&
           !inventoryState.isPopupVisible &&
-          !craftCheck &&
-          resultReady
+          !craftState.craftCheck &&
+          craftState.resultReady
         ) {
           // !Testing
 
-          craftCheck = !craftCheck;
+          craftState.craftCheck = !craftState.craftCheck;
 
           console.log("here is popup", inventoryState.isPopupVisible);
           console.log("MADE CRAFT CALLED, enter pressed");
-          madeCraft(result);
+          madeCraft(craftState);
 
-          async function madeCraft() {
-            resultReady = false;
+          async function madeCraft(craftState) {
+            console.log("Here is craft state: ", craftState);
+            craftState.resultReady = false;
             handleSavingData(
               inventoryState.vendingKeys,
               inventoryState.hasSavedItems,
@@ -385,13 +307,13 @@ class CharacterMovement {
               inventoryState.currFinals,
               inventoryState.hasSavedFinal
             );
-            let craftText = `You made ${result.itemKey}! ${
-              result.isFinal
-                ? `You can find ${result.itemKey} in the documentation station.`
+            let craftText = `You made ${craftState.result.itemKey}! ${
+              craftState.result.isFinal
+                ? `You can find ${craftState.result.itemKey} in the documentation station.`
                 : ""
             }`;
 
-            let textSizeX = result.isFinal
+            let textSizeX = craftState.result.isFinal
               ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
               : 440 + 40 + 25 - 50;
 
@@ -425,7 +347,7 @@ class CharacterMovement {
               z(100),
               // color(item.color.r, item.color.g, item.color.b),
               "crafting",
-              sprite(`${result.itemKey}`),
+              sprite(`${craftState.result.itemKey}`),
               // rect(10,10),
               // sprite(`${image}`),
               scale(1.5),
@@ -433,8 +355,8 @@ class CharacterMovement {
               // z(11),
               "madeItem",
               {
-                itemKey: result.itemKey,
-                isFinal: result.isFinal,
+                itemKey: craftState.result.itemKey,
+                isFinal: craftState.result.isFinal,
               },
             ]);
 
@@ -466,16 +388,17 @@ class CharacterMovement {
             // console.log("here's item", item.itemKey)
             if (!madeItem.isFinal) {
               updatePocketVending(
-                result,
+                craftState.result,
                 inventoryState.inPocket,
                 inventoryState.itemsInPocket,
                 volumeSetting
               );
-              // console.log(result);
-              if (result.n) {
-                inventoryState.inPocket = result.inventoryState.inPocket;
+              // console.log(craftState.result);
+              if (craftState.result.n) {
+                inventoryState.inPocket =
+                  craftState.result.inventoryState.inPocket;
                 inventoryState.itemsInPocket =
-                  result.inventoryState.itemsInPocket;
+                  craftState.result.inventoryState.itemsInPocket;
               }
 
               handleSavingData(
@@ -491,6 +414,7 @@ class CharacterMovement {
             // updatePocket(madeItem, inventoryState.inPocket);
             madeItem.use(body({ isStatic: true }));
             // tableState.atCraftingTable = false;
+            return craftState.resultReady;
           }
           async function exitCraft() {
             console.log(getSpeed());
@@ -500,7 +424,7 @@ class CharacterMovement {
             destroyAll("madeItem");
             destroyAll("craftPop");
             isCraftingVisible = false;
-            craftCheck = false;
+            craftState.craftCheck = false;
             add([
               text("Saving..."),
               pos(615 - 100 - 50, 615),
@@ -526,7 +450,7 @@ class CharacterMovement {
         !isCraftingVisible &&
         inventoryState.tableItems.length >= 1 &&
         !inventoryState.isPopupVisible &&
-        craftCheck == false
+        craftState.craftCheck == false
       ) {
         setSpeed(0);
         console.log(getSpeed());
@@ -675,15 +599,15 @@ class CharacterMovement {
       ) {
         let item = inventoryState.vendingContents[inventoryState.vendingSelect];
 
-        let result = updatePocketVending(
+        craftState.result = updatePocketVending(
           item,
           inventoryState.inPocket,
           inventoryState.itemsInPocket,
           volumeSetting
         );
-        if (result.n) {
-          inventoryState.inPocket = result.inPocket;
-          inventoryState.itemsInPocket = result?.itemsInPocket;
+        if (craftState.result.n) {
+          inventoryState.inPocket = craftState.result.inPocket;
+          inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
         }
         handleSavingData(
           inventoryState.vendingKeys,
@@ -818,13 +742,13 @@ class CharacterMovement {
 
         console.log("material", materialEntity);
         console.log("Updating pocket");
-        let result = updatePocket(
+        craftState.result = updatePocket(
           materialEntity,
           inventoryState.inPocket,
           inventoryState.itemsInPocket
         );
-        inventoryState.inPocket = result?.inPocket;
-        inventoryState.itemsInPocket = result?.itemsInPocket;
+        inventoryState.inPocket = craftState.result?.inPocket;
+        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });

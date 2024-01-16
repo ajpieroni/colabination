@@ -147,3 +147,88 @@ export function clearTable(inventoryState, tableState) {
     tableState.onItemsOnTable = 0;
     inventoryState.tableItems = [];
   }
+
+
+  // !CRAFTING
+  export function craftingBackend(toolState, ingredients, craftState) {
+    console.log("Ingredients in Craft.js", ingredients);
+    let toolId;
+    if (toolState.toolAccess) {
+      toolId = toolState.currentTool.toolId;
+    } else {
+      toolId = 3;
+    }
+    console.log("Crafting backend...");
+    let item1sprite = ingredients[0];
+
+    let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
+
+    fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
+      .then((response) => response.json())
+      .then((item1data) => {
+        if (item2sprite !== "nothing") {
+          fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+            .then((response) => response.json())
+            .then((item2data) => {
+              fetchCombination(
+                toolId,
+                item1data.id,
+                item2data.id,
+                handleCreation
+              );
+            })
+            .catch((error) => console.error("Error fetching item 2:", error));
+        } else {
+          fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
+          console.log("Fetching combination...");
+        }
+      })
+      .catch((error) => console.error("Error fetching item 1:", error));
+
+    // fetchCombination(toolId, item1data, item2data)
+    // http://localhost:8081/items/find_by_name/paper
+    // http://localhost:8081/tools/find_by_name/scissors
+    // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+  }
+
+
+  function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
+    fetch(
+      `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        fetch(
+          `http://localhost:8081/items/find_by_name_craft/${data.creation}`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((additionalData) => {
+            craftState.resultReady = true;
+
+            callback(data.creation, additionalData.data.isFinal, data, craftState);
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching combination:", error);
+      });
+  }
+
+  function handleCreation(creation, final, item, craftState) {
+    craftState.result.itemKey = creation;
+    craftState.result.isFinal = final;
+
+    console.log("Set result...");
+  }
