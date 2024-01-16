@@ -375,6 +375,7 @@ class CharacterMovement {
           madeCraft(result);
 
           async function madeCraft() {
+            resultReady = false;
             handleSavingData(
               inventoryState.vendingKeys,
               inventoryState.hasSavedItems,
