@@ -1,5 +1,6 @@
 import { getSpeed, setSpeed } from "./Player.js";
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
+  inventoryState.finalCraftCheck = false;
   console.log(
     "CHECK",
     toolState.toolAccess &&
@@ -94,14 +95,8 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
       tableState.onItemsOnTable < 6 &&
       !inventoryState.isPopupVisible
     ) {
-      console.log("drop item on table");
-      console.log("inventoryState.inPocket", inventoryState.inPocket);
 
       inventoryState.itemsInPocket--;
-      console.log(
-        "items in pocket after dropping table",
-        inventoryState.itemsInPocket
-      );
 
       let item = inventoryState.inPocket.shift();
 

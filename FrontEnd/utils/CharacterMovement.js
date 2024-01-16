@@ -48,6 +48,8 @@ class CharacterMovement {
   }
 
   play() {
+    let craftCheck = false;
+    let resultReady = false;
     // Inventory Control
     let inventoryState = {
       // Init Inventory
@@ -69,6 +71,7 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
+      resultReady: false,
     };
     let tableState = {
       atCraftingTable: false,
@@ -136,7 +139,7 @@ class CharacterMovement {
       } else {
         toolId = 3;
       }
-
+      console.log("Crafting backend...");
       let item1sprite = ingredients[0];
 
       let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
@@ -158,6 +161,7 @@ class CharacterMovement {
               .catch((error) => console.error("Error fetching item 2:", error));
           } else {
             fetchCombination(toolId, item1data.id, 6, handleCreation);
+            console.log("Fetching combination...");
           }
         })
         .catch((error) => console.error("Error fetching item 1:", error));
@@ -191,6 +195,8 @@ class CharacterMovement {
               return response.json();
             })
             .then((additionalData) => {
+              resultReady = true;
+
               callback(data.creation, additionalData.data.isFinal, data);
             })
             .catch((error) => {
@@ -205,17 +211,21 @@ class CharacterMovement {
     function handleCreation(creation, final, item) {
       result.itemKey = creation;
       result.isFinal = final;
+
+      console.log("Set result...");
     }
+
     // !Crafting Function: Paper Trail
     let isCraftingVisible = false;
     // *TODO: move to file
     let tableTemp = inventoryState.tableItems;
 
     async function showContainer(tableTemp) {
+      console.log("Showing container...");
       isCraftingVisible = true;
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-      let ingredients = inventoryState.tableItems;
+      let ingredients = tableTemp;
       add([
         rect(725, 550),
         pos(150, 125),
@@ -267,6 +277,8 @@ class CharacterMovement {
         "crafting",
       ]);
       craftingBackend(ingredients);
+
+      console.log("resultReady", resultReady);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -345,18 +357,22 @@ class CharacterMovement {
       }, 250); // the button color will toggle every 500ms
       // !TODO: dynamic
       // let result = "wood";
-      let craftCheck = false;
+      
       onKeyPress("enter", () => {
+        console.log("Result ready: ", resultReady);
         if (
           inventoryState.tableItems.length >= 1 &&
           !inventoryState.isPopupVisible &&
-          !craftCheck
+          !craftCheck &&
+          resultReady
         ) {
-          craftCheck = true;
+          // !Testing
+
+          craftCheck = !craftCheck;
 
           console.log("here is popup", inventoryState.isPopupVisible);
+          console.log("MADE CRAFT CALLED, enter pressed");
           madeCraft(result);
-          console.log("pressed");
 
           async function madeCraft() {
             handleSavingData(
@@ -508,7 +524,8 @@ class CharacterMovement {
         inventoryState.isCraftable &&
         !isCraftingVisible &&
         inventoryState.tableItems.length >= 1 &&
-        !inventoryState.isPopupVisible
+        !inventoryState.isPopupVisible &&
+        craftCheck == false
       ) {
         setSpeed(0);
         console.log(getSpeed());
@@ -812,14 +829,14 @@ class CharacterMovement {
     });
 
     console.log("here is inv. state", inventoryState);
-   clearTable(inventoryState, tableState);
+    clearTable(inventoryState, tableState);
 
     // Crafting logic:
     inventoryState.isCraftable = false;
 
     // Dropping item on table
     onKeyPress("q", () => {
-      console.log("here is table state", tableState)
+      console.log("here is table state", tableState);
       dropItem(toolState, inventoryState, volumeSetting, tableState);
     });
 

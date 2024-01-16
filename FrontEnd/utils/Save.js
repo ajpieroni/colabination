@@ -10,15 +10,15 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
 
     // let currItems = vendingKeys;
     // * will be renamed as machines
-    console.log(currItems, "currItems");
-    console.log(currTools, "currTools");
+    // console.log(currItems, "currItems");
+    // console.log(currTools, "currTools");
 
     for (let i = 0; i < currItems.length; i++) {
       const currItem = currItems[i];
-      // console.log(`hasSaved: ${hasSavedItems}`);
+      // // console.log(`hasSaved: ${hasSavedItems}`);
       if (!hasSavedItems.includes(currItems[i])) {
         {
-        //   console.log(`Attempting to save ${currItem}`);
+        //   // console.log(`Attempting to save ${currItem}`);
 
           fetch("http://localhost:8081/user_items", {
             method: "POST",
@@ -31,7 +31,7 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
               if (!response.ok) {
                 return Promise.reject("Failed to save items");
               }
-              console.log(`Item ${currItem} saved!`, response);
+              // console.log(`Item ${currItem} saved!`, response);
             })
             .catch((error) => {
               console.error("Error saving items:", error);
@@ -39,16 +39,16 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
           hasSavedItems.push(currItem);
         }
       } else {
-        // console.log(`You've already saved ${currItem}`);
+        // // console.log(`You've already saved ${currItem}`);
       }
     }
     for (let j = 0; j < currTools.length; j++) {
       const currTool = currTools[j];
-      // console.log(`hasSaved: ${hasSavedTools}`);
+      // // console.log(`hasSaved: ${hasSavedTools}`);
 
       // if hasn't saved
       if (!hasSavedTools.includes(currTools[j])) {
-        console.log(`Attempting to save ${currTool}`);
+        // console.log(`Attempting to save ${currTool}`);
         fetch("http://localhost:8081/user_tools", {
           method: "POST",
           headers: {
@@ -60,28 +60,29 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
             if (!response.ok) {
               return Promise.reject("Failed to save items");
             }
-            console.log(`Tool ${currTool} saved!`, response);
+            // console.log(`Tool ${currTool} saved!`, response);
           })
           .catch((error) => {
             console.error("Error saving items:", error);
           });
         hasSavedTools.push(currTool);
       } else {
-        console.log(`You've already saved ${currTool}`);
+        // // console.log(`You've already saved ${currTool}`);
+        // // console.log("")
       }
     }
     for (let i = 0; i < areFinal.length; i++) {
-      console.log(areFinal);
+      // console.log(areFinal);
 
       currFinals.push(areFinal[i]);
     }
 
     for (let i = 0; i < currFinals.length; i++) {
       const currFinal = currFinals[i];
-      // console.log(`hasSaved: ${hasSavedItems}`);
+      // // console.log(`hasSaved: ${hasSavedItems}`);
       if (!hasSavedFinal.includes(currFinals[i])) {
         {
-          console.log(`Attempting to save ${currFinal}`);
+          // console.log(`Attempting to save ${currFinal}`);
 
           fetch("http://localhost:8081/user_items", {
             method: "POST",
@@ -94,7 +95,7 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
               if (!response.ok) {
                 return Promise.reject("Failed to save final item");
               }
-              console.log(`Item ${currFinal} saved!`, response);
+              // console.log(`Item ${currFinal} saved!`, response);
             })
             .catch((error) => {
               console.error("Error saving items:", error);
@@ -102,7 +103,7 @@ export function handleSavingData(vendingKeys, hasSavedItems, areFinal, currItems
           hasSavedFinal.push(currFinal);
         }
       } else {
-        console.log(`You've already saved ${currFinal}`);
+        // console.log(`You've already saved ${currFinal}`);
       }
     }
   }
