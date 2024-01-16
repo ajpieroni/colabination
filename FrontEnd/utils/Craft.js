@@ -174,7 +174,7 @@ export function clearTable(inventoryState, tableState) {
                 toolId,
                 item1data.id,
                 item2data.id,
-                handleCreation
+                handleCreation, craftState
               );
             })
             .catch((error) => console.error("Error fetching item 2:", error));
@@ -213,6 +213,7 @@ export function clearTable(inventoryState, tableState) {
             return response.json();
           })
           .then((additionalData) => {
+            console.log("final state",craftState)
             craftState.resultReady = true;
 
             callback(data.creation, additionalData.data.isFinal, data, craftState);
