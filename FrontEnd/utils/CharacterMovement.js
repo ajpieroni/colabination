@@ -43,7 +43,7 @@ class CharacterMovement {
     Tools();
 
     // Map Sprites
-    // add([sprite("walk"), pos(-50, -50), z(5), scale(0.65)]);
+    add([sprite("walk"), pos(-50, -50), z(0), scale(0.65)]);
     // add([sprite("tables"), pos(0, 0), z(6)]);
     map();
   }
@@ -523,18 +523,18 @@ class CharacterMovement {
 
     // !INVENTORY
     // Character pocket
-    const pocket = add([
-      // pos(1300, 600),
-      // pos(1080,520),
-      pos(855, 700),
-      rect(200, 200),
-      outline(4),
-      color(0, 0, 55),
-      area(),
-      body({ isStatic: true }),
-      "pocket",
-      z(0),
-    ]);
+    // const pocket = add([
+    //   // pos(1300, 600),
+    //   // pos(1080,520),
+    //   pos(855, 700),
+    //   rect(200, 200),
+    //   outline(4),
+    //   color(0, 0, 55),
+    //   area(),
+    //   body({ isStatic: true }),
+    //   "pocket",
+    //   z(0),
+    // ]);
 
     // !VENDING
     let itemText = "";
