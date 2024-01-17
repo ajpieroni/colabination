@@ -1,8 +1,10 @@
-export function openBackpack(contents, isPopupVisible) {
+export function openBackpack(contents, craftState) {
+  // craftState.popUp = true;
+  console.log("craft state", craftState.popUp);
   console.log("vending contents shown");
   const popup = add([
     sprite("backpack"),
-    pos(475 - 190-100-100, 125 + 25),
+    pos(475 - 190 - 100 - 100, 125 + 25),
     z(19),
     outline(4),
     // scale(0.75),
@@ -30,7 +32,7 @@ export function openBackpack(contents, isPopupVisible) {
       }),
       area(),
       anchor("center"),
-      pos(500 + 25-100-100, 500 + 100 + 25),
+      pos(325, 625),
       z(20),
 
       // scale(.5)
@@ -79,34 +81,42 @@ export function openBackpack(contents, isPopupVisible) {
     currentX += item.width + 35;
   }
 
-  isPopupVisible = true;
+  // isPopupVisible = true;
 }
 
-export function closeBackpack(){
+export function closeBackpack() {
   destroyAll("vending");
   destroyAll("itemText");
   destroyAll("selected");
 }
 
-export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents, craftState) {
+export function onKeyPressLeft(inventoryState, craftState) {
   // console.log("isPopupVisible", isPopupVisible);
-  if (craftState.popUp) {
-    if (vendingSelect > 0) {
-      console.log("vendingSelect", vendingSelect);
+  console.log("craftState", craftState);
+  console.log("craft state in left", craftState);
 
-      vendingSelect--;
+  if (craftState.popUp) {
+    console.log("passed popup check");
+    console.log(inventoryState.vendingSelect);
+    console.log(inventoryState.vendingContents.length);
+    console.log("passed?");
+    if (inventoryState.vendingSelect > 0) {
+      console.log("vendingSelect", inventoryState.vendingSelect);
+
+      inventoryState.vendingSelect--;
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
         pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -117,10 +127,10 @@ export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents, c
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
+        pos(325, 625),
         z(20),
       ]);
-      return vendingSelect;
+      return inventoryState.vendingSelect;
     }
   }
 }
@@ -128,8 +138,11 @@ export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents, c
 export function onKeyPressRight(
   isPopupVisible,
   vendingSelect,
-  vendingContents, craftState
+  vendingContents,
+  craftState
 ) {
+  console.log("craft state in right", craftState);
+
   if (craftState.popUp) {
     if (vendingSelect < vendingContents.length - 1) {
       vendingSelect++;
@@ -139,8 +152,8 @@ export function onKeyPressRight(
       let gridY = Math.floor(vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
@@ -158,17 +171,20 @@ export function onKeyPressRight(
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
-        z(21),
-
+        pos(325, 625),
+        z(20),
         // scale(.5)
       ]);
-      return vendingSelect;
     }
   }
 }
 
-export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents, craftState) {
+export function onKeyPressDown(
+  isPopupVisible,
+  vendingSelect,
+  vendingContents,
+  craftState
+) {
   if (craftState.popUp) {
     if (vendingSelect + 3 < vendingContents.length) {
       vendingSelect += 3;
@@ -179,7 +195,7 @@ export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents, c
       const selected = add([
         rect(70, 70),
         pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
@@ -197,7 +213,7 @@ export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents, c
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
+        pos(325, 625),
         z(20),
 
         // scale(.5)
@@ -205,11 +221,15 @@ export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents, c
       return vendingSelect;
     }
     return vendingSelect;
-
   }
 }
 
-export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents, craftState) {
+export function onKeyPressUp(
+  isPopupVisible,
+  vendingSelect,
+  vendingContents,
+  craftState
+) {
   if (craftState.popUp) {
     if (vendingSelect - 3 >= 0) {
       vendingSelect -= 3;
@@ -220,7 +240,7 @@ export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents, cra
       const selected = add([
         rect(70, 70),
         pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
@@ -246,6 +266,5 @@ export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents, cra
       return vendingSelect;
     }
     return vendingSelect;
-
   }
 }

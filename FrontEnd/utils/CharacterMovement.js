@@ -4,8 +4,8 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
-import { craftingBackend, openCraftWindow, closeCraftWindow} from "./Craft.js";
-import {closeBackpack }from "./Vending.js";
+import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
+import { closeBackpack } from "./Vending.js";
 
 // Z-Level Tracker:
 // 0: "Walk" background: 0
@@ -15,8 +15,6 @@ import {closeBackpack }from "./Vending.js";
 // 19: Backpack
 // 20: Items in backpack
 // 20: "Crafting..." text
-
-
 
 import {
   openBackpack,
@@ -150,7 +148,6 @@ class CharacterMovement {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-
     let isCraftingVisible = false;
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
@@ -159,7 +156,7 @@ class CharacterMovement {
     });
     onKeyPress("escape", () => {
       closeCraftWindow(craftState);
-    });  
+    });
 
     // !OLD CRAFT
 
@@ -463,7 +460,6 @@ class CharacterMovement {
     }
 
     onKeyPress("enter", () => {
-
       if (
         toolState.toolAccess &&
         inventoryState.isCraftable &&
@@ -565,36 +561,40 @@ class CharacterMovement {
     // *TODO: move
     onKeyPress("left", () => {
       console.log("left");
-      inventoryState.vendingSelect = onKeyPressLeft(
-        inventoryState.isPopupVisible,
-        inventoryState.vendingSelect,
-        inventoryState.vendingContents, craftState
-      );
+      console.log(inventoryState.vendingSelect)
+      onKeyPressLeft(inventoryState, craftState);
     });
 
     onKeyPress("right", () => {
       console.log("right");
-      inventoryState.vendingSelect = onKeyPressRight(
+      console.log("craftState", craftState);
+      console.log("inventory state", inventoryState);
+
+
+      onKeyPressRight(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents, craftState
+        inventoryState.vendingContents,
+        craftState
       );
     });
 
     onKeyPress("down", () => {
       console.log("down");
-      inventoryState.vendingSelect = onKeyPressDown(
+      onKeyPressDown(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents, craftState
+        inventoryState.vendingContents,
+        craftState
       );
     });
 
     onKeyPress("up", () => {
-      inventoryState.vendingSelect = onKeyPressUp(
+      onKeyPressUp(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents, craftState
+        inventoryState.vendingContents,
+        craftState
       );
     });
 
@@ -644,35 +644,34 @@ class CharacterMovement {
     inventoryState.itemsInPocket = 0;
 
     // backpack functionality
-    onKeyPress("space", () => {
-      if (inventoryState.isPopupVisible) {
-        closeBackpack();
-        handleSavingData(
-          inventoryState.vendingKeys,
-          inventoryState.hasSavedItems,
-          inventoryState.areFinal,
-          inventoryState.currItems,
-          inventoryState.currTools,
-          inventoryState.currFinals,
-          inventoryState.hasSavedFinal
-        );
-        inventoryState.isPopupVisible = false;
-        console.log(getSpeed());
-        setSpeed(300);
-      } else {
-        if (!collisionState.isDocVisible) {
-          openBackpack(
-            inventoryState.vendingContents,
-            inventoryState.isPopupVisible
-          );
-          destroyAll("craft");
-          inventoryState.isPopupVisible = true;
-          console.log(getSpeed());
-          setSpeed(0);
-          inventoryState.vendingSelect = 0;
-        }
-      }
-    });
+    // onKeyPress("space", () => {
+    //   if (inventoryState.isPopupVisible) {
+    //     closeBackpack();
+    //     handleSavingData(
+    //       inventoryState.vendingKeys,
+    //       inventoryState.hasSavedItems,
+    //       inventoryState.areFinal,
+    //       inventoryState.currItems,
+    //       inventoryState.currTools,
+    //       inventoryState.currFinals,
+    //       inventoryState.hasSavedFinal
+    //     );
+    //     inventoryState.isPopupVisible = false;
+    //     console.log(getSpeed());
+    //     setSpeed(300);
+    //   } else {
+    //     if (!collisionState.isDocVisible) {
+    //       openBackpack(
+    //         inventoryState.vendingContents, craftState
+    //       );
+    //       destroyAll("craft");
+    //       inventoryState.isPopupVisible = true;
+    //       console.log(getSpeed());
+    //       setSpeed(0);
+    //       inventoryState.vendingSelect = 0;
+    //     }
+    //   }
+    // });
     collisionState.isDocVisible = false;
 
     function showFinalItems() {
