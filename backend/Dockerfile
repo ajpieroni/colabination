@@ -1,5 +1,6 @@
-FROM ruby:latest
-  RUN apt-get update && apt-get install -y nodejs
+FROM ruby:3.2.2
+  RUN apt update
+  RUN apt install -y nodejs
   WORKDIR /app/backend
   COPY Gemfile * ./
   RUN bundle install
