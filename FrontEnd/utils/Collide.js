@@ -30,7 +30,7 @@ export function handleCollideDocumentationStation(state, showFinalItems) {
     }
   }
   
-export function onToolCollide(toolState, inventoryState, s, w){
+export function onToolCollide(craftState, toolState, inventoryState, s, w){
   inventoryState.finalCraftCheck = true;
       console.log(w.toolKey);
       toolState.currToolY = w.pos.y;
@@ -48,7 +48,8 @@ export function onToolCollide(toolState, inventoryState, s, w){
         )
         .join(" ");
 
-      checkCraftable(toolState, inventoryState);
+      // checkCraftable(toolState, inventoryState);
+
       add([
         text(toolDisplay, { size: 16 }),
         pos(w.pos.x, toolState.currToolY - 18),
@@ -56,6 +57,22 @@ export function onToolCollide(toolState, inventoryState, s, w){
         z(49),
         "interactable",
       ]);
+      add([
+        "craft",
+        text("Craft?", {
+          // optional object
+          size: 36,
+          outline: 4,
+          color: (0, 0, 0),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(500, 500),
+        z(20),
+        // scale(.5)
+      ]);
+      craftState.craftSelected = true;
 }
 
 export function onToolCollideEnd(toolState, inventoryState){

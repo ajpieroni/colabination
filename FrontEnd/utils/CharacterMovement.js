@@ -4,7 +4,7 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
-import { craftingBackend } from "./Craft.js";
+import { craftingBackend, openCraftWindow, closeCraftWindow} from "./Craft.js";
 
 import {
   showVendingContents,
@@ -53,6 +53,10 @@ class CharacterMovement {
       craftCheck: false,
       resultReady: false,
       result: { itemKey: "", isFinal: false },
+      // Checks if they've pressed enter on the craft prompt
+      craftSelected: false,
+      // Checks if the new craft popup is open
+      popUp: false,
     };
 
     // Inventory Control
@@ -127,7 +131,7 @@ class CharacterMovement {
     };
 
     onCollide("player", "tool", (s, w) => {
-      onToolCollide(toolState, inventoryState, s, w);
+      onToolCollide(craftState, toolState, inventoryState, s, w);
     });
 
     onCollideEnd("player", "tool", () => {
@@ -137,6 +141,15 @@ class CharacterMovement {
 
     let isCraftingVisible = false;
     let tableTemp = inventoryState.tableItems;
+    // !NEW CRAFT
+    onKeyPress("enter", () => {
+      openCraftWindow(craftState);
+    });
+    onKeyPress("escape", () => {
+      closeCraftWindow(craftState);
+    });  
+
+    // !OLD CRAFT
 
     async function showContainer(tableTemp) {
       console.log("Showing container...");

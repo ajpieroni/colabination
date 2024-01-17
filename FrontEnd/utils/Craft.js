@@ -233,3 +233,25 @@ export function clearTable(inventoryState, tableState) {
 
     console.log("Set result...");
   }
+
+  // !NEW CRAFT
+  export function openCraftWindow(craftState){
+    console.log("craftstate", craftState)
+    // If they pressed enter on the craft prompt, open the craft window
+      if(craftState.craftSelected){
+        add([
+          rect(725, 550),
+          pos(150, 125),
+          z(50),
+          "craft-container",
+          "craftPop",
+        ]);
+
+        craftState.popUp = true;
+      }
+  }
+  export function closeCraftWindow(craftState){
+    // Close the craft window after pressing escape
+    destroyAll("craftPop");
+    setSpeed(300);
+  }
