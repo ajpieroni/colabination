@@ -5,6 +5,18 @@ import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import { craftingBackend, openCraftWindow, closeCraftWindow} from "./Craft.js";
+import {closeBackpack }from "./Vending.js";
+
+// Z-Level Tracker:
+// 0: "Walk" background: 0
+// 10: Player
+// 11: "Craft" text, Tool Labels
+// 11: Selected Item
+// 19: Backpack
+// 20: Items in backpack
+// 20: "Crafting..." text
+
+
 
 import {
   openBackpack,
@@ -143,7 +155,7 @@ class CharacterMovement {
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
     onKeyPress("enter", () => {
-      openCraftWindow(craftState);
+      openCraftWindow(craftState, inventoryState);
     });
     onKeyPress("escape", () => {
       closeCraftWindow(craftState);
@@ -451,8 +463,6 @@ class CharacterMovement {
     }
 
     onKeyPress("enter", () => {
-      // !Craft
-      // *TODO: move to file
 
       if (
         toolState.toolAccess &&
@@ -558,7 +568,7 @@ class CharacterMovement {
       inventoryState.vendingSelect = onKeyPressLeft(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents
+        inventoryState.vendingContents, craftState
       );
     });
 
@@ -567,7 +577,7 @@ class CharacterMovement {
       inventoryState.vendingSelect = onKeyPressRight(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents
+        inventoryState.vendingContents, craftState
       );
     });
 
@@ -576,7 +586,7 @@ class CharacterMovement {
       inventoryState.vendingSelect = onKeyPressDown(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents
+        inventoryState.vendingContents, craftState
       );
     });
 
@@ -584,7 +594,7 @@ class CharacterMovement {
       inventoryState.vendingSelect = onKeyPressUp(
         inventoryState.isPopupVisible,
         inventoryState.vendingSelect,
-        inventoryState.vendingContents
+        inventoryState.vendingContents, craftState
       );
     });
 
@@ -636,9 +646,7 @@ class CharacterMovement {
     // backpack functionality
     onKeyPress("space", () => {
       if (inventoryState.isPopupVisible) {
-        destroyAll("vending");
-        destroyAll("itemText");
-        destroyAll("selected");
+        closeBackpack();
         handleSavingData(
           inventoryState.vendingKeys,
           inventoryState.hasSavedItems,

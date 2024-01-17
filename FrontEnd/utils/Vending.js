@@ -2,8 +2,8 @@ export function openBackpack(contents, isPopupVisible) {
   console.log("vending contents shown");
   const popup = add([
     sprite("backpack"),
-    pos(475 - 190, 125 + 25),
-    z(11),
+    pos(475 - 190-100-100, 125 + 25),
+    z(19),
     outline(4),
     // scale(0.75),
     "vending",
@@ -30,7 +30,7 @@ export function openBackpack(contents, isPopupVisible) {
       }),
       area(),
       anchor("center"),
-      pos(500 + 25, 500 + 100 + 25),
+      pos(500 + 25-100-100, 500 + 100 + 25),
       z(20),
 
       // scale(.5)
@@ -39,7 +39,7 @@ export function openBackpack(contents, isPopupVisible) {
     const selected = add([
       rect(70, 70),
       pos(startX, startY),
-      z(11),
+      z(19),
       color(255, 255, 255),
       "selected",
     ]);
@@ -67,7 +67,7 @@ export function openBackpack(contents, isPopupVisible) {
       // rect(10,10),
       // sprite(`${image}`),
       scale(1.5),
-      z(12),
+      z(20),
       "material",
       {
         itemKey: itemKey,
@@ -82,9 +82,15 @@ export function openBackpack(contents, isPopupVisible) {
   isPopupVisible = true;
 }
 
-export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents) {
-  console.log("isPopupVisible", isPopupVisible);
-  if (isPopupVisible) {
+export function closeBackpack(){
+  destroyAll("vending");
+  destroyAll("itemText");
+  destroyAll("selected");
+}
+
+export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents, craftState) {
+  // console.log("isPopupVisible", isPopupVisible);
+  if (craftState.popUp) {
     if (vendingSelect > 0) {
       console.log("vendingSelect", vendingSelect);
 
@@ -122,9 +128,9 @@ export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents) {
 export function onKeyPressRight(
   isPopupVisible,
   vendingSelect,
-  vendingContents
+  vendingContents, craftState
 ) {
-  if (isPopupVisible) {
+  if (craftState.popUp) {
     if (vendingSelect < vendingContents.length - 1) {
       vendingSelect++;
       // console.log(vendingSelect);
@@ -153,7 +159,7 @@ export function onKeyPressRight(
         area(),
         anchor("center"),
         pos(500 + 25, 500 + 100 + 25),
-        z(20),
+        z(21),
 
         // scale(.5)
       ]);
@@ -162,8 +168,8 @@ export function onKeyPressRight(
   }
 }
 
-export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents) {
-  if (isPopupVisible) {
+export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents, craftState) {
+  if (craftState.popUp) {
     if (vendingSelect + 3 < vendingContents.length) {
       vendingSelect += 3;
       // console.log(vendingSelect);
@@ -203,8 +209,8 @@ export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents) {
   }
 }
 
-export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents) {
-  if (isPopupVisible) {
+export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents, craftState) {
+  if (craftState.popUp) {
     if (vendingSelect - 3 >= 0) {
       vendingSelect -= 3;
       // console.log(vendingSelect);

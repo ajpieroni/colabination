@@ -54,7 +54,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w){
         text(toolDisplay, { size: 16 }),
         pos(w.pos.x, toolState.currToolY - 18),
         color(242, 140, 40),
-        z(49),
+        z(11),
         "interactable",
       ]);
       add([
@@ -69,7 +69,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w){
         area(),
         anchor("center"),
         pos(500, 500),
-        z(20),
+        z(11),
         // scale(.5)
       ]);
       craftState.craftSelected = true;

@@ -1,4 +1,5 @@
 import { getSpeed, setSpeed } from "./Player.js";
+import { closeBackpack, openBackpack } from "./Vending.js";
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
   inventoryState.finalCraftCheck = false;
   console.log(
@@ -235,24 +236,28 @@ export function clearTable(inventoryState, tableState) {
   }
 
   // !NEW CRAFT
-  export function openCraftWindow(craftState){
+  export function openCraftWindow(craftState, inventoryState){
     console.log("craftstate", craftState)
     // If they pressed enter on the craft prompt, open the craft window
       if(craftState.craftSelected){
         add([
-          rect(725, 550),
-          pos(150, 125),
-          z(50),
+          rect(800+100, 750-150+50),
+          pos(150-15-5-50, 125-15-15),
+          z(18),
           "craft-container",
           "craftPop",
+          color(144,238,144)
         ]);
-
+        // Popup is Visible
         craftState.popUp = true;
       }
-      openBackpack(craftState);
+      // Open backpack with current contents
+      openBackpack(inventoryState.vendingContents);
   }
   export function closeCraftWindow(craftState){
     // Close the craft window after pressing escape
     destroyAll("craftPop");
     setSpeed(300);
+    closeBackpack();
+    craftState.popUp = false;
   }
