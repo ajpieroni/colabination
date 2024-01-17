@@ -4,23 +4,9 @@ export default function Tools(){
 
   // !Tables
   const block_size = 64;
-  
-  const handTools = add([
-    rect(block_size * 1.65, block_size * 2),
-    color(256, 0, 0),
-    area(),
-    body({ isStatic: true }),
-    pos(260, 360),
-    z(1),
-    "handTools",
-    "tool",
-    { toolKey: "hammer" },
-    { access: false },
-    { toolId: 1 },
-  ]);
 
-  const scissors = add([
-    rect(block_size * 1.65, block_size * 1.15),
+  const handTools = add([
+    rect(block_size * 1.65, block_size * 4),
     color(256, 0, 0),
     area(),
     body({ isStatic: true }),
@@ -28,24 +14,39 @@ export default function Tools(){
     z(1),
     "handTools",
     "tool",
-    { toolKey: "scissors" },
+    { toolKey: "hammer" },
     { access: false },
-    { toolId: 2 },
-  ]);
-  const leatherTools = add([
-    rect(block_size * 1.65, block_size * 4),
-    color(256, 0, 0),
-    area(),
-    body({ isStatic: true }),
-    pos(470, 260),
-    z(1),
-    "leatherTable",
-    "tool",
-    { toolKey: "screwdriver" },
-    { access: false },
-    { toolId: 10 },
+    { toolId: 1 },
     
   ]);
+  
+  // const scissors = add([
+  //   rect(block_size * 1.65, block_size * 1.15),
+  //   color(256, 0, 0),
+  //   area(),
+  //   body({ isStatic: true }),
+  //   pos(260, 260),
+  //   z(1),
+  //   "handTools",
+  //   "tool",
+  //   { toolKey: "scissors" },
+  //   { access: false },
+  //   { toolId: 2 },
+  // ]);
+  // const leatherTools = add([
+  //   rect(block_size * 1.65, block_size * 4),
+  //   color(256, 0, 0),
+  //   area(),
+  //   body({ isStatic: true }),
+  //   pos(470, 260),
+  //   z(1),
+  //   "leatherTable",
+  //   "tool",
+  //   { toolKey: "screwdriver" },
+  //   { access: false },
+  //   { toolId: 10 },
+    
+  // ]);
 
   const craftingTable = add([
     rect(block_size * 1.65, block_size * 4),
@@ -126,17 +127,18 @@ export default function Tools(){
   //   { access: false },
   //   { toolId: 11 },
   // ]);
-  const solderingStation = add([
-    rect(block_size * 2.25, block_size),
-    color(255, 0, 0),
-    area(),
-    body({ isStatic: true }),
-    pos(140, 40),
-    z(1),
-    "printer",
-    "tool",
-    { toolKey: "solderingStation" },
-    { access: false },
-    { toolId: 7 },
-  ]);
+  // const solderingStation = add([
+  //   rect(block_size * 2.25, block_size),
+  //   color(255, 0, 0),
+  //   area(),
+  //   body({ isStatic: true }),
+  //   pos(140, 40),
+  //   z(1),
+  //   "printer",
+  //   "tool",
+  //   { toolKey: "solderingStation" },
+  //   { access: false },
+  //   { toolId: 7 },
+    
+  // ]);
 }
