@@ -1,4 +1,4 @@
-export function showVendingContents(contents, isPopupVisible) {
+export function openBackpack(contents, isPopupVisible) {
   console.log("vending contents shown");
   const popup = add([
     sprite("backpack"),

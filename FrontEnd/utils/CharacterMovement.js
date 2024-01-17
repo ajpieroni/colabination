@@ -7,7 +7,7 @@ import { getSpeed, setSpeed } from "./Player.js";
 import { craftingBackend, openCraftWindow, closeCraftWindow} from "./Craft.js";
 
 import {
-  showVendingContents,
+  openBackpack,
   onKeyPressLeft,
   onKeyPressRight,
   onKeyPressDown,
@@ -653,7 +653,7 @@ class CharacterMovement {
         setSpeed(300);
       } else {
         if (!collisionState.isDocVisible) {
-          showVendingContents(
+          openBackpack(
             inventoryState.vendingContents,
             inventoryState.isPopupVisible
           );

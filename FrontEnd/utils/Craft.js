@@ -249,6 +249,7 @@ export function clearTable(inventoryState, tableState) {
 
         craftState.popUp = true;
       }
+      openBackpack(craftState);
   }
   export function closeCraftWindow(craftState){
     // Close the craft window after pressing escape
