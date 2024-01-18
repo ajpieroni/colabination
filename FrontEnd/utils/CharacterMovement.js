@@ -540,20 +540,6 @@ class CharacterMovement {
       tableState.atCraftingTable = false;
     });
 
-    // !INVENTORY
-    // Character pocket
-    // const pocket = add([
-    //   // pos(1300, 600),
-    //   // pos(1080,520),
-    //   pos(855, 700),
-    //   rect(200, 200),
-    //   outline(4),
-    //   color(0, 0, 55),
-    //   area(),
-    //   body({ isStatic: true }),
-    //   "pocket",
-    //   z(0),
-    // ]);
 
     // !VENDING
     let itemText = "";

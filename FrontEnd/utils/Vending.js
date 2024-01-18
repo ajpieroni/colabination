@@ -214,7 +214,6 @@ export function onKeyPressUp(inventoryState, craftState) {
   if (craftState.popUp) {
     if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;
-      // console.log(vendingSelect);
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);

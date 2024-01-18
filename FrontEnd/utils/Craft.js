@@ -252,6 +252,7 @@ export function clearTable(inventoryState, tableState) {
         // Popup is Visible
         craftState.popUp = true;
       }
+      setSpeed(0);
       // Open backpack with current contents
       openBackpack(inventoryState.vendingContents, craftState);
     console.log("craftstate", craftState)
