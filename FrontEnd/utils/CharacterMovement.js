@@ -152,7 +152,7 @@ class CharacterMovement {
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
     onKeyPress("enter", () => {
-      openCraftWindow(craftState, inventoryState);
+      openCraftWindow(craftState, inventoryState, toolState);
     });
     onKeyPress("escape", () => {
       closeCraftWindow(craftState);

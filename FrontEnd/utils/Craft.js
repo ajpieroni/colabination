@@ -40,7 +40,7 @@ export function checkCraftable(toolState, inventoryState, volumeSetting) {
 }
 // !Inventory Management
 export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
-    console.log(tableState);
+  console.log(tableState);
   console.log("items in pocket on q", inventoryState.itemsInPocket);
   // !TODO: set max items on table
   if (inventoryState.tableItems.length == 0 && toolState.currentTool) {
@@ -97,7 +97,6 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
       tableState.onItemsOnTable < 6 &&
       !inventoryState.isPopupVisible
     ) {
-
       inventoryState.itemsInPocket--;
 
       let item = inventoryState.inPocket.shift();
@@ -123,145 +122,162 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
   }
 }
 export function rearrangePocket(inventoryState, volumeSetting) {
+  if (inventoryState.inPocket.length > 0) {
+    if (volumeSetting) {
+      play("bubble");
+    }
+    let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
+    inventoryState.itemsInPocket--;
+    destroy(item);
+    // Shift remaining items to the first slot if any
     if (inventoryState.inPocket.length > 0) {
+      inventoryState.inPocket[0].moveTo(880, 725);
       if (volumeSetting) {
         play("bubble");
       }
-      let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
-      inventoryState.itemsInPocket--;
-      destroy(item);
-      // Shift remaining items to the first slot if any
-      if (inventoryState.inPocket.length > 0) {
-        inventoryState.inPocket[0].moveTo(880, 725);
-        if (volumeSetting) {
-          play("bubble");
-        }
-      }
     }
   }
+}
 export function clearTable(inventoryState, tableState) {
-    console.log("hre is inv state inside craft", inventoryState)
-    inventoryState.tableItems.length = 0;
-    destroyAll("onTable");
-    destroyAll("craft");
-    tableState.table_x = 700;
-    tableState.table_y = 550;
-    tableState.onItemsOnTable = 0;
-    inventoryState.tableItems = [];
+  console.log("hre is inv state inside craft", inventoryState);
+  inventoryState.tableItems.length = 0;
+  destroyAll("onTable");
+  destroyAll("craft");
+  tableState.table_x = 700;
+  tableState.table_y = 550;
+  tableState.onItemsOnTable = 0;
+  inventoryState.tableItems = [];
+}
+
+// !CRAFTING
+export function craftingBackend(toolState, ingredients, craftState) {
+  console.log("Ingredients in Craft.js", ingredients);
+  let toolId;
+  if (toolState.toolAccess) {
+    toolId = toolState.currentTool.toolId;
+  } else {
+    toolId = 3;
   }
+  console.log("Crafting backend...");
+  let item1sprite = ingredients[0];
 
+  let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
 
-  // !CRAFTING
-  export function craftingBackend(toolState, ingredients, craftState) {
-    console.log("Ingredients in Craft.js", ingredients);
-    let toolId;
-    if (toolState.toolAccess) {
-      toolId = toolState.currentTool.toolId;
-    } else {
-      toolId = 3;
-    }
-    console.log("Crafting backend...");
-    let item1sprite = ingredients[0];
-
-    let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-
-    fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
-      .then((response) => response.json())
-      .then((item1data) => {
-        if (item2sprite !== "nothing") {
-          fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
-            .then((response) => response.json())
-            .then((item2data) => {
-              fetchCombination(
-                toolId,
-                item1data.id,
-                item2data.id,
-                handleCreation, craftState
-              );
-            })
-            .catch((error) => console.error("Error fetching item 2:", error));
-        } else {
-          fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
-          console.log("Fetching combination...");
-        }
-      })
-      .catch((error) => console.error("Error fetching item 1:", error));
-
-    // fetchCombination(toolId, item1data, item2data)
-    // http://localhost:8081/items/find_by_name/paper
-    // http://localhost:8081/tools/find_by_name/scissors
-    // http://localhost:8081/combinations?tool=1&item1=1&item2=1
-  }
-
-
-  function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
-    fetch(
-      `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        fetch(
-          `http://localhost:8081/items/find_by_name_craft/${data.creation}`
-        )
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
+  fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
+    .then((response) => response.json())
+    .then((item1data) => {
+      if (item2sprite !== "nothing") {
+        fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
+          .then((response) => response.json())
+          .then((item2data) => {
+            fetchCombination(
+              toolId,
+              item1data.id,
+              item2data.id,
+              handleCreation,
+              craftState
+            );
           })
-          .then((additionalData) => {
-            console.log("final state",craftState)
-            craftState.resultReady = true;
-
-            callback(data.creation, additionalData.data.isFinal, data, craftState);
-          })
-          .catch((error) => {
-            console.error("Error fetching data:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Error fetching combination:", error);
-      });
-  }
-
-  function handleCreation(creation, final, item, craftState) {
-    craftState.result.itemKey = creation;
-    craftState.result.isFinal = final;
-
-    console.log("Set result...");
-  }
-
-  // !NEW CRAFT
-  export function openCraftWindow(craftState, inventoryState){
-    console.log("craftstate", craftState)
-    // If they pressed enter on the craft prompt, open the craft window
-      if(craftState.craftSelected){
-        add([
-          rect(800+100, 750-150+50),
-          pos(150-15-5-50, 125-15-15),
-          z(18),
-          "craft-container",
-          "craftPop",
-          color(144,238,144)
-        ]);
-        // Popup is Visible
-        craftState.popUp = true;
+          .catch((error) => console.error("Error fetching item 2:", error));
+      } else {
+        fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
+        console.log("Fetching combination...");
       }
-      setSpeed(0);
-      // Open backpack with current contents
-      openBackpack(inventoryState.vendingContents, craftState);
-    console.log("craftstate", craftState)
+    })
+    .catch((error) => console.error("Error fetching item 1:", error));
 
+  // fetchCombination(toolId, item1data, item2data)
+  // http://localhost:8081/items/find_by_name/paper
+  // http://localhost:8081/tools/find_by_name/scissors
+  // http://localhost:8081/combinations?tool=1&item1=1&item2=1
+}
+
+function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
+  fetch(
+    `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      fetch(`http://localhost:8081/items/find_by_name_craft/${data.creation}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((additionalData) => {
+          console.log("final state", craftState);
+          craftState.resultReady = true;
+
+          callback(
+            data.creation,
+            additionalData.data.isFinal,
+            data,
+            craftState
+          );
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    })
+    .catch((error) => {
+      console.error("Error fetching combination:", error);
+    });
+}
+
+function handleCreation(creation, final, item, craftState) {
+  craftState.result.itemKey = creation;
+  craftState.result.isFinal = final;
+
+  console.log("Set result...");
+}
+
+// !NEW CRAFT
+export function openCraftWindow(craftState, inventoryState, toolState) {
+  console.log("craftstate", craftState);
+  // If they pressed enter on the craft prompt, open the craft window
+  if (craftState.craftSelected) {
+    add([
+      rect(800 + 100, 750 - 150 + 50),
+      pos(150 - 15 - 5 - 50, 125 - 15 - 15),
+      z(18),
+      "craft-container",
+      "craft",
+      color(144, 238, 144),
+    ]);
+    // Popup is Visible
+    craftState.popUp = true;
   }
-  export function closeCraftWindow(craftState){
-    // Close the craft window after pressing escape
-    destroyAll("craftPop");
-    setSpeed(300);
-    closeBackpack();
-    craftState.popUp = false;
-  }
+  setSpeed(0);
+  // Open backpack with current contents
+  openBackpack(inventoryState.vendingContents, craftState);
+  // Add label for the crafting tool
+  let toolDisplay = toolState.currentTool.toolKey
+    // space
+    .replace(/([A-Z])/g, " $1")
+    //trim
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  // Add tool text object
+  add([
+    text(toolDisplay, { size: 24 }),
+    pos(100 + 500, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+  ]);
+}
+export function closeCraftWindow(craftState) {
+  // Close the craft window after pressing escape
+  destroyAll("craft");
+
+  setSpeed(300);
+  closeBackpack();
+  craftState.popUp = false;
+}
