@@ -560,34 +560,23 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
-      console.log("left");
-      console.log(inventoryState.vendingSelect)
       onKeyPressLeft(inventoryState, craftState);
     });
 
     onKeyPress("right", () => {
-      console.log("right");
-      onKeyPressRight(inventoryState,
-        craftState
-      );
+      onKeyPressRight(inventoryState, craftState);
     });
 
     onKeyPress("down", () => {
       console.log("down");
       onKeyPressDown(
-        inventoryState.isPopupVisible,
-        inventoryState.vendingSelect,
-        inventoryState.vendingContents,
-        craftState
+        inventoryState, craftState
       );
     });
 
     onKeyPress("up", () => {
       onKeyPressUp(
-        inventoryState.isPopupVisible,
-        inventoryState.vendingSelect,
-        inventoryState.vendingContents,
-        craftState
+        inventoryState, craftState
       );
     });
 

@@ -125,12 +125,12 @@ export function onKeyPressLeft(inventoryState, craftState) {
   }
 }
 
-export function onKeyPressRight(
-  inventoryState,
-  craftState
-) {
+export function onKeyPressRight(inventoryState, craftState) {
   if (craftState.popUp) {
-    if (inventoryState.vendingSelect < inventoryState.vendingContents.length - 1) {
+    if (
+      inventoryState.vendingSelect <
+      inventoryState.vendingContents.length - 1
+    ) {
       inventoryState.vendingSelect++;
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -143,7 +143,8 @@ export function onKeyPressRight(
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -165,27 +166,29 @@ export function onKeyPressRight(
 }
 
 export function onKeyPressDown(
-  isPopupVisible,
-  vendingSelect,
-  vendingContents,
+  inventoryState,
   craftState
 ) {
   if (craftState.popUp) {
-    if (vendingSelect + 3 < vendingContents.length) {
-      vendingSelect += 3;
+    if (
+      inventoryState.vendingSelect + 3 <
+      inventoryState.vendingContents.length
+    ) {
+      inventoryState.vendingSelect += 3;
       // console.log(vendingSelect);
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
         color(255, 255, 255),
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -203,34 +206,28 @@ export function onKeyPressDown(
 
         // scale(.5)
       ]);
-      return vendingSelect;
     }
-    return vendingSelect;
   }
 }
 
-export function onKeyPressUp(
-  isPopupVisible,
-  vendingSelect,
-  vendingContents,
-  craftState
-) {
+export function onKeyPressUp(inventoryState, craftState) {
   if (craftState.popUp) {
-    if (vendingSelect - 3 >= 0) {
-      vendingSelect -= 3;
+    if (inventoryState.vendingSelect - 3 >= 0) {
+      inventoryState.vendingSelect -= 3;
       // console.log(vendingSelect);
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
+        pos(393 -200 + gridX * 86, 305 + gridY * 100),
         z(19),
         color(255, 255, 255),
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -243,13 +240,11 @@ export function onKeyPressUp(
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
+        pos(500 - 200 + 25, 500 + 100 + 25),
         z(20),
 
         // scale(.5)
       ]);
-      return vendingSelect;
     }
-    return vendingSelect;
   }
 }
