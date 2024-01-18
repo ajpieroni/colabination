@@ -567,14 +567,7 @@ class CharacterMovement {
 
     onKeyPress("right", () => {
       console.log("right");
-      console.log("craftState", craftState);
-      console.log("inventory state", inventoryState);
-
-
-      onKeyPressRight(
-        inventoryState.isPopupVisible,
-        inventoryState.vendingSelect,
-        inventoryState.vendingContents,
+      onKeyPressRight(inventoryState,
         craftState
       );
     });

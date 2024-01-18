@@ -91,25 +91,15 @@ export function closeBackpack() {
 }
 
 export function onKeyPressLeft(inventoryState, craftState) {
-  // console.log("isPopupVisible", isPopupVisible);
-  console.log("craftState", craftState);
-  console.log("craft state in left", craftState);
-
   if (craftState.popUp) {
-    console.log("passed popup check");
-    console.log(inventoryState.vendingSelect);
-    console.log(inventoryState.vendingContents.length);
-    console.log("passed?");
     if (inventoryState.vendingSelect > 0) {
-      console.log("vendingSelect", inventoryState.vendingSelect);
-
       inventoryState.vendingSelect--;
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
         color(255, 255, 255),
         "selected",
@@ -136,20 +126,15 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 
 export function onKeyPressRight(
-  isPopupVisible,
-  vendingSelect,
-  vendingContents,
+  inventoryState,
   craftState
 ) {
-  console.log("craft state in right", craftState);
-
   if (craftState.popUp) {
-    if (vendingSelect < vendingContents.length - 1) {
-      vendingSelect++;
-      // console.log(vendingSelect);
+    if (inventoryState.vendingSelect < inventoryState.vendingContents.length - 1) {
+      inventoryState.vendingSelect++;
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
@@ -158,7 +143,7 @@ export function onKeyPressRight(
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText = inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
