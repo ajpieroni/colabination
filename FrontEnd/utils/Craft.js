@@ -273,6 +273,10 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "craft",
   ]);
 }
+function createCraftText(craftState, inventoryState, toolState){
+  
+
+}
 export function closeCraftWindow(craftState) {
   // Close the craft window after pressing escape
   destroyAll("craft");
