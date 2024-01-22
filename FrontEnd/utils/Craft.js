@@ -306,6 +306,13 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
+  add([
+    text("Press [ Enter ] To Add Items", { size: 16 }),
+    pos(100 + 500, 100 + 50+100-50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+  ]);
   // Popup is Visible
 
   craftState.popUp = true;
