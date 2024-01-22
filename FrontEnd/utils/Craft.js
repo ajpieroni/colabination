@@ -256,14 +256,14 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     const trailCircle1 = add([
       circle(64),
       pos(500 + 200 - 100 + 40, 500 - 200 + 35),
-      z(52),
+      z(20),
       color(228, 228, 228),
       "craft",
     ]);
     const trailCircle2 = add([
       circle(64),
       pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35),
-      z(52),
+      z(20),
       color(228, 228, 228),
       "craft",
     ]);
@@ -317,7 +317,7 @@ export function selectItem(craftState, inventoryState) {
 export function addItemToCraftWindow(currentItem) {
   const craftItem = add([
     // rect(item.width, item.height) ,
-    pos(100, 100),
+    pos(500 + 200 - 100+15 -50 + 40, 500 - 200 + 10+35-50),
     z(12),
     // color(item.color.r, item.color.g, item.color.b),
     "craft",
@@ -325,7 +325,7 @@ export function addItemToCraftWindow(currentItem) {
     // rect(10,10),
     // sprite(`${image}`),
     scale(1.5),
-    z(20),
+    z(22),
     "material",
     {
       itemKey: currentItem,
