@@ -1,10 +1,7 @@
 import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
-let craftPosition = {
-  pos1: false,
-  pos2: false,
-};
+
 let firstItemPosition = {
   x: 605,
   y: 295,
@@ -12,7 +9,7 @@ let firstItemPosition = {
 };
 
 let secondItemPosition = {
-  x: 605 + 100,
+  x: 605 + 200,
   y: 295,
   used: false,
 };
@@ -316,28 +313,25 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   console.log("Pos 1 and Pos 2 set");
 
   onKeyPress("enter", () => {
-    selectItem(craftState, inventoryState, craftPosition);
+    selectItem(craftState, inventoryState);
   });
 }
-export function selectItem(craftState, inventoryState, craftPosition) {
-  console.log(craftPosition.pos1, craftPosition.pos2);
+export function selectItem(craftState, inventoryState) {
   // Craft item selection
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
   if (craftState.popUp && !craftState.firstOpen) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
     //  If position 1 is unfilled, use that
-    if (!craftPosition.pos1) {
+    if (!firstItemPosition.used) {
       console.log("Added to position 1");
       addItemToCraftWindow(selectedItem);
-      craftPosition.pos1 = true;
-    } else if (!craftPosition.pos2) {
+    } else if (!secondItemPosition.used) {
       addItemToCraftWindow(selectedItem);
-      craftPosition.pos2 = true;
-    } else if (craftPosition.pos1 && craftPosition.pos2) {
+    } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
       add([
-        text("Both spaces are filled; craft!", { size: 24 }),
-        pos(100 + 500 - 50, 100 + 50 + 500),
+        text("Both spaces are filled; craft!", { size: 16 }),
+        pos(100 + 500 - 50, 100 + 50 + 500-150),
         color(255, 255, 255),
         z(500),
         "craft",
@@ -348,7 +342,7 @@ export function selectItem(craftState, inventoryState, craftPosition) {
   craftState.firstOpen = false;
 }
 
-export function addItemToCraftWindow(currentItem, craftPosition) {
+export function addItemToCraftWindow(currentItem) {
   // Add the item to the crafting window
   if (!firstItemPosition.used) {
     const craftItem1 = add([
