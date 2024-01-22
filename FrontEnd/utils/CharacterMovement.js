@@ -152,7 +152,12 @@ class CharacterMovement {
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
     onKeyPress("enter", () => {
+    console.log(craftState.popUp, "here is popup")
+    // If pop up is not open and they are colliding with a tool, open the pop up
+    if(!craftState.popUp && toolState.toolAccess){
       openCraftWindow(craftState, inventoryState, toolState);
+
+    }
     });
     onKeyDown("space", () => {
       // console.log("Pressed")
@@ -299,207 +304,207 @@ class CharacterMovement {
       // !TODO: dynamic
       // let craftState.result = "wood";
 
-      onKeyPress("enter", () => {
-        console.log("Result ready: ", craftState.resultReady);
-        if (
-          inventoryState.tableItems.length >= 1 &&
-          !inventoryState.isPopupVisible &&
-          !craftState.craftCheck &&
-          craftState.resultReady
-        ) {
-          // !Testing
+      // onKeyPress("enter", () => {
+      //   console.log("Result ready: ", craftState.resultReady);
+      //   if (
+      //     inventoryState.tableItems.length >= 1 &&
+      //     !inventoryState.isPopupVisible &&
+      //     !craftState.craftCheck &&
+      //     craftState.resultReady
+      //   ) {
+      //     // !Testing
 
-          craftState.craftCheck = !craftState.craftCheck;
+      //     craftState.craftCheck = !craftState.craftCheck;
 
-          console.log("here is popup", inventoryState.isPopupVisible);
-          console.log("MADE CRAFT CALLED, enter pressed");
-          madeCraft(craftState);
+      //     console.log("here is popup", inventoryState.isPopupVisible);
+      //     console.log("MADE CRAFT CALLED, enter pressed");
+      //     madeCraft(craftState);
 
-          async function madeCraft(craftState) {
-            console.log("Here is craft state: ", craftState);
-            craftState.resultReady = false;
-            handleSavingData(
-              inventoryState.vendingKeys,
-              inventoryState.hasSavedItems,
-              inventoryState.areFinal,
-              inventoryState.currItems,
-              inventoryState.currTools,
-              inventoryState.currFinals,
-              inventoryState.hasSavedFinal
-            );
-            let craftText = `You made ${craftState.result.itemKey}! ${
-              craftState.result.isFinal
-                ? `You can find ${craftState.result.itemKey} in the documentation station.`
-                : ""
-            }`;
+      //     async function madeCraft(craftState) {
+      //       console.log("Here is craft state: ", craftState);
+      //       craftState.resultReady = false;
+      //       handleSavingData(
+      //         inventoryState.vendingKeys,
+      //         inventoryState.hasSavedItems,
+      //         inventoryState.areFinal,
+      //         inventoryState.currItems,
+      //         inventoryState.currTools,
+      //         inventoryState.currFinals,
+      //         inventoryState.hasSavedFinal
+      //       );
+      //       let craftText = `You made ${craftState.result.itemKey}! ${
+      //         craftState.result.isFinal
+      //           ? `You can find ${craftState.result.itemKey} in the documentation station.`
+      //           : ""
+      //       }`;
 
-            let textSizeX = craftState.result.isFinal
-              ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
-              : 440 + 40 + 25 - 50;
+      //       let textSizeX = craftState.result.isFinal
+      //         ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
+      //         : 440 + 40 + 25 - 50;
 
-            destroyAll("crafting");
-            add([
-              text(craftText),
-              pos(textSizeX, 615),
-              z(53),
-              color(0, 0, 0),
-              scale(0.5),
-              "crafting",
-            ]);
+      //       destroyAll("crafting");
+      //       add([
+      //         text(craftText),
+      //         pos(textSizeX, 615),
+      //         z(53),
+      //         color(0, 0, 0),
+      //         scale(0.5),
+      //         "crafting",
+      //       ]);
 
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            if (volumeSetting) {
-              play("bubble");
-            }
-            const trailCircle = add([
-              circle(64),
-              pos(440 + 40 + 25 + 25, 135 + 100),
-              z(52),
-              color(152, 251, 152),
-              "crafting",
-            ]);
-            const madeItem = add([
-              // rect(item.width, item.height) ,
-              pos(
-                440 + 40 + 25 + 25 - 25 - 5 - 5 - 5,
-                135 + 100 + 25 - 50 - 10
-              ),
-              z(100),
-              // color(item.color.r, item.color.g, item.color.b),
-              "crafting",
-              sprite(`${craftState.result.itemKey}`),
-              // rect(10,10),
-              // sprite(`${image}`),
-              scale(1.5),
-              area(),
-              // z(11),
-              "madeItem",
-              {
-                itemKey: craftState.result.itemKey,
-                isFinal: craftState.result.isFinal,
-              },
-            ]);
+      //       await new Promise((resolve) => setTimeout(resolve, 500));
+      //       if (volumeSetting) {
+      //         play("bubble");
+      //       }
+      //       const trailCircle = add([
+      //         circle(64),
+      //         pos(440 + 40 + 25 + 25, 135 + 100),
+      //         z(52),
+      //         color(152, 251, 152),
+      //         "crafting",
+      //       ]);
+      //       const madeItem = add([
+      //         // rect(item.width, item.height) ,
+      //         pos(
+      //           440 + 40 + 25 + 25 - 25 - 5 - 5 - 5,
+      //           135 + 100 + 25 - 50 - 10
+      //         ),
+      //         z(100),
+      //         // color(item.color.r, item.color.g, item.color.b),
+      //         "crafting",
+      //         sprite(`${craftState.result.itemKey}`),
+      //         // rect(10,10),
+      //         // sprite(`${image}`),
+      //         scale(1.5),
+      //         area(),
+      //         // z(11),
+      //         "madeItem",
+      //         {
+      //           itemKey: craftState.result.itemKey,
+      //           isFinal: craftState.result.isFinal,
+      //         },
+      //       ]);
 
-            if (
-              !inventoryState.vendingContents.includes(madeItem.itemKey) &&
-              !inventoryState.vendingKeys.includes(madeItem.itemKey) &&
-              !madeItem.isFinal
-            ) {
-              console.log("passed", !madeItem.isFinal);
-              inventoryState.vendingContents.push(madeItem);
-              inventoryState.vendingKeys.push(madeItem.itemKey);
-            }
+      //       if (
+      //         !inventoryState.vendingContents.includes(madeItem.itemKey) &&
+      //         !inventoryState.vendingKeys.includes(madeItem.itemKey) &&
+      //         !madeItem.isFinal
+      //       ) {
+      //         console.log("passed", !madeItem.isFinal);
+      //         inventoryState.vendingContents.push(madeItem);
+      //         inventoryState.vendingKeys.push(madeItem.itemKey);
+      //       }
 
-            if (
-              madeItem.isFinal &&
-              !inventoryState.areFinal.includes(madeItem.itemKey)
-            ) {
-              console.log(`${madeItem.itemKey} pushed to are final`);
-              inventoryState.areFinal.push(madeItem.itemKey);
-            }
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+      //       if (
+      //         madeItem.isFinal &&
+      //         !inventoryState.areFinal.includes(madeItem.itemKey)
+      //       ) {
+      //         console.log(`${madeItem.itemKey} pushed to are final`);
+      //         inventoryState.areFinal.push(madeItem.itemKey);
+      //       }
+      //       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-            exitCraft();
+      //       exitCraft();
 
-            if (volumeSetting) {
-              play("bubble");
-            }
-            let item = inventoryState.vendingContents[length - 1];
-            // console.log("here's item", item.itemKey)
-            if (!madeItem.isFinal) {
-              updatePocketVending(
-                craftState.result,
-                inventoryState.inPocket,
-                inventoryState.itemsInPocket,
-                volumeSetting
-              );
-              // // console.log(craftState.result);
-              // console.log(craftState.result.inventoryState.inPocket);
-              // // if (craftState.result.n) {
-              // //   inventoryState.inPocket = craftState.result.inventoryState.inPocket;
-              // //   inventoryState.itemsInPocket =
-              // //     craftState.result.inventoryState.itemsInPocket;
-              // // }
+      //       if (volumeSetting) {
+      //         play("bubble");
+      //       }
+      //       let item = inventoryState.vendingContents[length - 1];
+      //       // console.log("here's item", item.itemKey)
+      //       if (!madeItem.isFinal) {
+      //         updatePocketVending(
+      //           craftState.result,
+      //           inventoryState.inPocket,
+      //           inventoryState.itemsInPocket,
+      //           volumeSetting
+      //         );
+      //         // // console.log(craftState.result);
+      //         // console.log(craftState.result.inventoryState.inPocket);
+      //         // // if (craftState.result.n) {
+      //         // //   inventoryState.inPocket = craftState.result.inventoryState.inPocket;
+      //         // //   inventoryState.itemsInPocket =
+      //         // //     craftState.result.inventoryState.itemsInPocket;
+      //         // // }
 
-              handleSavingData(
-                inventoryState.vendingKeys,
-                inventoryState.hasSavedItems,
-                inventoryState.areFinal,
-                inventoryState.currItems,
-                inventoryState.currTools,
-                inventoryState.currFinals,
-                inventoryState.hasSavedFinal
-              );
-            }
-            // updatePocket(madeItem, inventoryState.inPocket);
-            madeItem.use(body({ isStatic: true }));
-            // tableState.atCraftingTable = false;
-            return craftState.resultReady;
-          }
-          async function exitCraft() {
-            console.log(getSpeed());
-            setSpeed(300);
-            clearTable(inventoryState, tableState);
-            destroyAll("crafting");
-            destroyAll("madeItem");
-            destroyAll("craftPop");
-            isCraftingVisible = false;
-            craftState.craftCheck = false;
-            add([
-              text("Saving..."),
-              pos(615 - 100 - 50, 615),
-              z(53),
-              color(0, 0, 0),
-              scale(0.5),
-              "crafting",
-            ]);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            destroyAll("crafting");
-          }
-        }
-      });
+      //         handleSavingData(
+      //           inventoryState.vendingKeys,
+      //           inventoryState.hasSavedItems,
+      //           inventoryState.areFinal,
+      //           inventoryState.currItems,
+      //           inventoryState.currTools,
+      //           inventoryState.currFinals,
+      //           inventoryState.hasSavedFinal
+      //         );
+      //       }
+      //       // updatePocket(madeItem, inventoryState.inPocket);
+      //       madeItem.use(body({ isStatic: true }));
+      //       // tableState.atCraftingTable = false;
+      //       return craftState.resultReady;
+      //     }
+      //     async function exitCraft() {
+      //       console.log(getSpeed());
+      //       setSpeed(300);
+      //       clearTable(inventoryState, tableState);
+      //       destroyAll("crafting");
+      //       destroyAll("madeItem");
+      //       destroyAll("craftPop");
+      //       isCraftingVisible = false;
+      //       craftState.craftCheck = false;
+      //       add([
+      //         text("Saving..."),
+      //         pos(615 - 100 - 50, 615),
+      //         z(53),
+      //         color(0, 0, 0),
+      //         scale(0.5),
+      //         "crafting",
+      //       ]);
+      //       await new Promise((resolve) => setTimeout(resolve, 1000));
+      //       destroyAll("crafting");
+      //     }
+      //   }
+      // });
     }
 
-    onKeyPress("enter", () => {
-      if (
-        toolState.toolAccess &&
-        inventoryState.isCraftable &&
-        !isCraftingVisible &&
-        inventoryState.tableItems.length >= 1 &&
-        !inventoryState.isPopupVisible &&
-        craftState.craftCheck == false
-      ) {
-        setSpeed(0);
-        console.log(getSpeed());
-        destroyAll("craft");
-        add([
-          "craft",
-          text("Crafting...", {
-            // optional object
-            size: 36,
-            outline: 4,
-            color: (0, 0, 0),
-            // can specify font here,
-          }),
-          area(),
-          anchor("center"),
-          pos(500, 500),
-          z(20),
+    // onKeyPress("enter", () => {
+    //   if (
+    //     toolState.toolAccess &&
+    //     inventoryState.isCraftable &&
+    //     !isCraftingVisible &&
+    //     inventoryState.tableItems.length >= 1 &&
+    //     !inventoryState.isPopupVisible &&
+    //     craftState.craftCheck == false
+    //   ) {
+    //     setSpeed(0);
+    //     console.log(getSpeed());
+    //     destroyAll("craft");
+    //     add([
+    //       "craft",
+    //       text("Crafting...", {
+    //         // optional object
+    //         size: 36,
+    //         outline: 4,
+    //         color: (0, 0, 0),
+    //         // can specify font here,
+    //       }),
+    //       area(),
+    //       anchor("center"),
+    //       pos(500, 500),
+    //       z(20),
 
-          // scale(.5)
-        ]);
-        if (volumeSetting) {
-          play("craftFX");
-        }
-        showContainer(inventoryState.tableItems);
-      }
-    });
+    //       // scale(.5)
+    //     ]);
+    //     if (volumeSetting) {
+    //       play("craftFX");
+    //     }
+    //     showContainer(inventoryState.tableItems);
+    //   }
+    // });
 
-    onKeyPress("enter", () => {
-      setTimeout(() => {
-        destroyAll("alert");
-      }, 2000);
-    });
+    // onKeyPress("enter", () => {
+    //   setTimeout(() => {
+    //     destroyAll("alert");
+    //   }, 2000);
+    // });
 
     //! Player Movement
     // Player search
@@ -581,36 +586,36 @@ class CharacterMovement {
       go("settings");
     });
 
-    onKeyPress("enter", () => {
-      if (
-        inventoryState.isPopupVisible &&
-        inventoryState.vendingContents.length > 0
-      ) {
-        let item = inventoryState.vendingContents[inventoryState.vendingSelect];
+    // onKeyPress("enter", () => {
+    //   if (
+    //     inventoryState.isPopupVisible &&
+    //     inventoryState.vendingContents.length > 0
+    //   ) {
+    //     let item = inventoryState.vendingContents[inventoryState.vendingSelect];
 
-        craftState.result = updatePocketVending(
-          item,
-          inventoryState.inPocket,
-          inventoryState.itemsInPocket,
-          volumeSetting
-        );
-        if (craftState.result.n) {
-          inventoryState.inPocket = craftState.result.inPocket;
-          inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-        }
-        handleSavingData(
-          inventoryState.vendingKeys,
-          inventoryState.hasSavedItems,
-          inventoryState.areFinal,
-          inventoryState.currItems,
-          inventoryState.currTools,
-          inventoryState.currFinals,
-          inventoryState.hasSavedFinal
-        );
-      }
-    });
+    //     craftState.result = updatePocketVending(
+    //       item,
+    //       inventoryState.inPocket,
+    //       inventoryState.itemsInPocket,
+    //       volumeSetting
+    //     );
+    //     if (craftState.result.n) {
+    //       inventoryState.inPocket = craftState.result.inPocket;
+    //       inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+    //     }
+    //     handleSavingData(
+    //       inventoryState.vendingKeys,
+    //       inventoryState.hasSavedItems,
+    //       inventoryState.areFinal,
+    //       inventoryState.currItems,
+    //       inventoryState.currTools,
+    //       inventoryState.currFinals,
+    //       inventoryState.hasSavedFinal
+    //     );
+    //   }
+    // });
 
-    inventoryState.itemsInPocket = 0;
+    // inventoryState.itemsInPocket = 0;
 
     // backpack functionality
     // onKeyPress("space", () => {

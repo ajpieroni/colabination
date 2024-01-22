@@ -1,5 +1,6 @@
 import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, openBackpack } from "./Vending.js";
+import { getCurrentItemInBackpack } from "./Vending.js";
 
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
   inventoryState.finalCraftCheck = false;
@@ -274,16 +275,24 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Space ] To Close", { size: 24 }),
-    pos(100 + 500-50, 100 + 50+500),
+    pos(100 + 500 - 50, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
     "craft",
   ]);
+  // onKeyPress("enter", () => {
+  //   if(craftState.popUp){
+  //     console.log("Craft state pop up is open")
+  //     console.log("Pressed enter");
+  //     selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+  //     addItemToCraftWindow(selectedItem);
+  //   }
+   
+  // });
 }
-function createCraftText(craftState, inventoryState, toolState){
-  
 
-}
+
+
 export function closeCraftWindow(craftState) {
   // Close the craft window after pressing escape
   // console.log("Pressed closed")
@@ -292,4 +301,24 @@ export function closeCraftWindow(craftState) {
   setSpeed(300);
   closeBackpack();
   craftState.popUp = false;
+}
+
+
+function addItemToCraftWindow(currentItem){
+  const craftItem = add([
+    // rect(item.width, item.height) ,
+    pos(100, 100),
+    z(12),
+    // color(item.color.r, item.color.g, item.color.b),
+    "craft",
+    sprite(`${currentItem}`),
+    // rect(10,10),
+    // sprite(`${image}`),
+    scale(1.5),
+    z(20),
+    "material",
+    {
+      itemKey: currentItem,
+    },
+  ]);
 }

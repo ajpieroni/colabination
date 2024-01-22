@@ -1,3 +1,4 @@
+// Opens backpack window
 export function openBackpack(contents, craftState) {
   // craftState.popUp = true;
   console.log("craft state", craftState.popUp);
@@ -83,13 +84,13 @@ export function openBackpack(contents, craftState) {
 
   // isPopupVisible = true;
 }
-
+// Closes backpack window, and text
 export function closeBackpack() {
   destroyAll("vending");
   destroyAll("itemText");
   destroyAll("selected");
 }
-
+// Left selection in backpack
 export function onKeyPressLeft(inventoryState, craftState) {
   if (craftState.popUp) {
     if (inventoryState.vendingSelect > 0) {
@@ -124,7 +125,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
     }
   }
 }
-
+// Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
   if (craftState.popUp) {
     if (
@@ -164,7 +165,7 @@ export function onKeyPressRight(inventoryState, craftState) {
     }
   }
 }
-
+// Down selection in backpack
 export function onKeyPressDown(
   inventoryState,
   craftState
@@ -209,7 +210,7 @@ export function onKeyPressDown(
     }
   }
 }
-
+// Up selection in backpack
 export function onKeyPressUp(inventoryState, craftState) {
   if (craftState.popUp) {
     if (inventoryState.vendingSelect - 3 >= 0) {
@@ -246,4 +247,9 @@ export function onKeyPressUp(inventoryState, craftState) {
       ]);
     }
   }
+}
+
+export function getCurrentItemInBackpack(inventoryState, craftState){
+  let currentItem = inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+  return currentItem;
 }
