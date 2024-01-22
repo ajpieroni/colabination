@@ -245,7 +245,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   if (craftState.craftSelected) {
     add([
       rect(800 + 100, 750 - 150 + 50),
-      pos(150 - 15 - 5 - 50, 125 - 15 - 15),
+      pos(150 - 70, 125 - 15 - 15),
       z(18),
       "craft-container",
       "craft",
@@ -253,6 +253,22 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     ]);
     // Popup is Visible
     craftState.popUp = true;
+  //  Add white boxes for selection
+
+  const trailCircle1 = add([
+    circle(64),
+    pos(500 +200-100+ 40, 500-200 + 35),
+    z(52),
+    color(228, 228, 228),
+    "craft",
+  ]);
+  const trailCircle2 = add([
+    circle(64),
+    pos(500 +200-100+ 200 +40, 500-200 + 35),
+    z(52),
+    color(228, 228, 228),
+    "craft",
+  ]);
   }
   setSpeed(0);
   // Open backpack with current contents
@@ -271,7 +287,8 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     pos(100 + 500, 100 + 50),
     color(255, 255, 255),
     z(500),
-    "craft",
+    "craftingitem",
+    "craft"
   ]);
   add([
     text("Press [ Space ] To Close", { size: 24 }),
@@ -280,31 +297,29 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
-  onKeyPress("", () => {
-    // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
-    if(craftState.popUp){
-      let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
-      console.log(`Item selected for craft: ${selectedItem}`)
-      addItemToCraftWindow(selectedItem);
-    }
-   
-  });
+
+
+  
+}
+export function selectItem(craftState, inventoryState){
+// Craft item selection
+onKeyPress("z", () => {
+  // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
+  if (craftState.popUp) {
+    let selectedItem = getCurrentItemInBackpack(
+      inventoryState,
+      craftState
+    );
+    console.log(`Item selected for craft: ${selectedItem}`);
+    addItemToCraftWindow(selectedItem);
+  }
+});
 }
 
 
 
-export function closeCraftWindow(craftState) {
-  // Close the craft window after pressing escape
-  // console.log("Pressed closed")
-  destroyAll("craft");
 
-  setSpeed(300);
-  closeBackpack();
-  craftState.popUp = false;
-}
-
-
-function addItemToCraftWindow(currentItem){
+export function addItemToCraftWindow(currentItem){
   const craftItem = add([
     // rect(item.width, item.height) ,
     pos(100, 100),
@@ -321,4 +336,13 @@ function addItemToCraftWindow(currentItem){
       itemKey: currentItem,
     },
   ]);
+}
+export function closeCraftWindow(craftState) {
+  // Close the craft window after pressing escape
+  // console.log("Pressed closed")
+  destroyAll("craft");
+
+  setSpeed(300);
+  closeBackpack();
+  craftState.popUp = false;
 }

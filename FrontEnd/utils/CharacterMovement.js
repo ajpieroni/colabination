@@ -5,8 +5,9 @@ import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
+import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
-
+import { addItemToCraftWindow } from "./Craft.js";
 // Z-Level Tracker:
 // 0: "Walk" background: 0
 // 10: Player
@@ -151,13 +152,14 @@ class CharacterMovement {
     let isCraftingVisible = false;
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
-    
-    onKeyPress("enter", () => {
-    // If pop up is not open and they are colliding with a tool, open the pop up
-    if(!craftState.popUp && toolState.toolAccess){
-      openCraftWindow(craftState, inventoryState, toolState);
 
-    }
+    onKeyPress("enter", () => {
+      // If pop up is not open and they are colliding with a tool, open the pop up
+      if (!craftState.popUp && toolState.toolAccess) {
+        openCraftWindow(craftState, inventoryState, toolState);
+      }
+
+     
     });
     onKeyDown("space", () => {
       // console.log("Pressed")
@@ -546,7 +548,6 @@ class CharacterMovement {
       tableState.atCraftingTable = false;
     });
 
-
     // !VENDING
     let itemText = "";
 
@@ -561,15 +562,11 @@ class CharacterMovement {
 
     onKeyPress("down", () => {
       console.log("down");
-      onKeyPressDown(
-        inventoryState, craftState
-      );
+      onKeyPressDown(inventoryState, craftState);
     });
 
     onKeyPress("up", () => {
-      onKeyPressUp(
-        inventoryState, craftState
-      );
+      onKeyPressUp(inventoryState, craftState);
     });
 
     onKeyPress("m", () => {
