@@ -272,6 +272,13 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
+  add([
+    text("Press [ Space ] To Close", { size: 24 }),
+    pos(100 + 500-50, 100 + 50+500),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+  ]);
 }
 function createCraftText(craftState, inventoryState, toolState){
   
@@ -279,6 +286,7 @@ function createCraftText(craftState, inventoryState, toolState){
 }
 export function closeCraftWindow(craftState) {
   // Close the craft window after pressing escape
+  // console.log("Pressed closed")
   destroyAll("craft");
 
   setSpeed(300);

@@ -154,7 +154,8 @@ class CharacterMovement {
     onKeyPress("enter", () => {
       openCraftWindow(craftState, inventoryState, toolState);
     });
-    onKeyPress("escape", () => {
+    onKeyDown("space", () => {
+      // console.log("Pressed")
       closeCraftWindow(craftState);
     });
 

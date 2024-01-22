@@ -72,6 +72,21 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w){
         z(11),
         // scale(.5)
       ]);
+      add([
+        "craft",
+        text("Press [ Enter ] To Craft", {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (0, 0, 0),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(500, 500+100),
+        z(11),
+        // scale(.5)
+      ]);
       craftState.craftSelected = true;
 }
 
