@@ -1,7 +1,21 @@
 import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
+let craftPosition = {
+  pos1: false,
+  pos2: false,
+};
+let firstItemPosition = {
+  x: 605,
+  y: 295,
+  used: false,
+};
 
+let secondItemPosition = {
+  x: 605 + 100,
+  y: 295,
+  used: false,
+};
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
   inventoryState.finalCraftCheck = false;
   console.log(
@@ -298,39 +312,82 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Popup is Visible
 
   craftState.popUp = true;
+  // Initialize both crafting spots as unfilled
+  console.log("Pos 1 and Pos 2 set");
+
   onKeyPress("enter", () => {
-    selectItem(craftState, inventoryState);
+    selectItem(craftState, inventoryState, craftPosition);
   });
 }
-export function selectItem(craftState, inventoryState) {
+export function selectItem(craftState, inventoryState, craftPosition) {
+  console.log(craftPosition.pos1, craftPosition.pos2);
   // Craft item selection
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
   if (craftState.popUp && !craftState.firstOpen) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
-    console.log(`Item selected for craft: ${selectedItem}`);
-    addItemToCraftWindow(selectedItem);
+    //  If position 1 is unfilled, use that
+    if (!craftPosition.pos1) {
+      console.log("Added to position 1");
+      addItemToCraftWindow(selectedItem);
+      craftPosition.pos1 = true;
+    } else if (!craftPosition.pos2) {
+      addItemToCraftWindow(selectedItem);
+      craftPosition.pos2 = true;
+    } else if (craftPosition.pos1 && craftPosition.pos2) {
+      // If both are filled, display an alert
+      add([
+        text("Both spaces are filled; craft!", { size: 24 }),
+        pos(100 + 500 - 50, 100 + 50 + 500),
+        color(255, 255, 255),
+        z(500),
+        "craft",
+      ]);
+    }
   }
   // After the first open, set this to true to make a valid item next time they press enter
   craftState.firstOpen = false;
 }
 
-export function addItemToCraftWindow(currentItem) {
-  const craftItem = add([
-    // rect(item.width, item.height) ,
-    pos(500 + 200 - 100+15 -50 + 40, 500 - 200 + 10+35-50),
-    z(12),
-    // color(item.color.r, item.color.g, item.color.b),
-    "craft",
-    sprite(`${currentItem}`),
-    // rect(10,10),
-    // sprite(`${image}`),
-    scale(1.5),
-    z(22),
-    "material",
-    {
-      itemKey: currentItem,
-    },
-  ]);
+export function addItemToCraftWindow(currentItem, craftPosition) {
+  // Add the item to the crafting window
+  if (!firstItemPosition.used) {
+    const craftItem1 = add([
+      // rect(item.width, item.height) ,
+      pos(firstItemPosition.x, firstItemPosition.y),
+      z(12),
+      // color(item.color.r, item.color.g, item.color.b),
+      "craft",
+      sprite(`${currentItem}`),
+      // rect(10,10),
+      // sprite(`${image}`),
+      scale(1.5),
+      z(22),
+      "material",
+      {
+        itemKey: currentItem,
+      },
+    ]);
+    firstItemPosition.used = true;
+  } else if (!secondItemPosition.used) {
+    const craftItem = add([
+      // rect(item.width, item.height) ,
+      pos(secondItemPosition.x, secondItemPosition.y),
+      z(12),
+      // color(item.color.r, item.color.g, item.color.b),
+      "craft",
+      sprite(`${currentItem}`),
+      // rect(10,10),
+      // sprite(`${image}`),
+      scale(1.5),
+      z(22),
+      "material",
+      {
+        itemKey: currentItem,
+      },
+    ]);
+    secondItemPosition.used = true;
+  }
+
 }
 export function closeCraftWindow(craftState) {
   // Close the craft window after pressing escape
