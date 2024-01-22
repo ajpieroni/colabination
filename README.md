@@ -1,4 +1,29 @@
 # Meeting Notes
+## Jan 11th
+Feedback from Michael:
+- The game is really cool, he liked it!
+- The switch between the backpack and the pocket is a little bit tedious. He suggested we remove pocket. Everytime the player interacts with a tool, the backpack shows up and we can drop items directly onto the tool.
+  - let's get rid of the pocket
+  - think about backpack blocking the space
+- Have more items interact with the tools. He made 5 trash in a roll. It would be more fun to create lots of items with tools than making it super realistic.
+  - different materials make the same item
+  - add a tutorial
+  - add a hint with flashing light
+  - limiting the number: look at the item tree
+  - broaden the base item with tools like: glass + hammer = broken glass
+- Anothe suggestion was to use the computer as blueprints. We can go there to view what combinations we have tried and succeeded. 
+  - cool feature but not MVP
+- When we make a final item, make it clear it's going to the documentation station.
+  - redesign the make panel(Alex has ideas)
+- Unlock tools as we go. For example, every 5 items gets created, we unlock a tool.
+- The panel that should controls disappeared.
+  - rethink the keys
+  - tutorial? hint with an image of the key
+Agenda:
+- [x] Discuss the feedback
+- [x] Discuss the possibility on Pi
+- [x] Discuss deploying the website
+- [x] Discuss Alex and Kelvin's goal for growth this semester
 
 ## Nov 17th 
 Agenda:
