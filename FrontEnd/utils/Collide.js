@@ -58,7 +58,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w){
         "interactable",
       ]);
       add([
-        "craft",
+        "craftAlert",
         text("Craft?", {
           // optional object
           size: 36,
@@ -73,7 +73,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w){
         // scale(.5)
       ]);
       add([
-        "craft",
+        "craftAlert",
         text("Press [ Enter ] To Craft", {
           // optional object
           size: 24,
@@ -94,5 +94,6 @@ export function onToolCollideEnd(toolState, inventoryState){
   toolState.toolAccess = false;
   toolState.currentTool = "";
   destroyAll("interactable");
+  destroyAll("craftAlert");
   checkCraftable(toolState, inventoryState);
 }
