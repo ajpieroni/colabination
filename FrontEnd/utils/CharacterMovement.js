@@ -151,8 +151,8 @@ class CharacterMovement {
     let isCraftingVisible = false;
     let tableTemp = inventoryState.tableItems;
     // !NEW CRAFT
+    
     onKeyPress("enter", () => {
-    console.log(craftState.popUp, "here is popup")
     // If pop up is not open and they are colliding with a tool, open the pop up
     if(!craftState.popUp && toolState.toolAccess){
       openCraftWindow(craftState, inventoryState, toolState);

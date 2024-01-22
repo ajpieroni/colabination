@@ -280,15 +280,15 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
-  // onKeyPress("enter", () => {
-  //   if(craftState.popUp){
-  //     console.log("Craft state pop up is open")
-  //     console.log("Pressed enter");
-  //     selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
-  //     addItemToCraftWindow(selectedItem);
-  //   }
+  onKeyPress("", () => {
+    // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
+    if(craftState.popUp){
+      let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+      console.log(`Item selected for craft: ${selectedItem}`)
+      addItemToCraftWindow(selectedItem);
+    }
    
-  // });
+  });
 }
 
 
