@@ -251,24 +251,22 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       "craft",
       color(144, 238, 144),
     ]);
-    // Popup is Visible
-    craftState.popUp = true;
-  //  Add white boxes for selection
+    //  Add white boxes for selection
 
-  const trailCircle1 = add([
-    circle(64),
-    pos(500 +200-100+ 40, 500-200 + 35),
-    z(52),
-    color(228, 228, 228),
-    "craft",
-  ]);
-  const trailCircle2 = add([
-    circle(64),
-    pos(500 +200-100+ 200 +40, 500-200 + 35),
-    z(52),
-    color(228, 228, 228),
-    "craft",
-  ]);
+    const trailCircle1 = add([
+      circle(64),
+      pos(500 + 200 - 100 + 40, 500 - 200 + 35),
+      z(52),
+      color(228, 228, 228),
+      "craft",
+    ]);
+    const trailCircle2 = add([
+      circle(64),
+      pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35),
+      z(52),
+      color(228, 228, 228),
+      "craft",
+    ]);
   }
   setSpeed(0);
   // Open backpack with current contents
@@ -288,7 +286,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     color(255, 255, 255),
     z(500),
     "craftingitem",
-    "craft"
+    "craft",
   ]);
   add([
     text("Press [ Space ] To Close", { size: 24 }),
@@ -297,29 +295,26 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
+  // Popup is Visible
 
-
-  
+  craftState.popUp = true;
+  onKeyPress("enter", () => {
+    selectItem(craftState, inventoryState);
+  });
 }
-export function selectItem(craftState, inventoryState){
-// Craft item selection
-onKeyPress("z", () => {
+export function selectItem(craftState, inventoryState) {
+  // Craft item selection
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
-  if (craftState.popUp) {
-    let selectedItem = getCurrentItemInBackpack(
-      inventoryState,
-      craftState
-    );
+  if (craftState.popUp && !craftState.firstOpen) {
+    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
     console.log(`Item selected for craft: ${selectedItem}`);
     addItemToCraftWindow(selectedItem);
   }
-});
+  // After the first open, set this to true to make a valid item next time they press enter
+  craftState.firstOpen = false;
 }
 
-
-
-
-export function addItemToCraftWindow(currentItem){
+export function addItemToCraftWindow(currentItem) {
   const craftItem = add([
     // rect(item.width, item.height) ,
     pos(100, 100),

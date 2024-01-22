@@ -68,6 +68,8 @@ class CharacterMovement {
       craftSelected: false,
       // Checks if the new craft popup is open
       popUp: false,
+      // Checks if they are opening the window for the first time, selected item is null
+      firstOpen: true,
     };
 
     // Inventory Control
