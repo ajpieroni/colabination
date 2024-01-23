@@ -18,6 +18,7 @@ import {
   handleCollideDocumentationStation,
   onToolCollide,
   onToolCollideEnd,
+  handleCollideDocumentationStationEnd,
 } from "./Collide.js";
 import { checkCraftable, clearTable, dropItem } from "./Craft.js";
 
@@ -721,8 +722,7 @@ class CharacterMovement {
     });
 
     player.onCollideEnd("documentationStation", () => {
-      canAccessDocumentation = false;
-      destroyAll("interactable");
+      handleCollideDocumentationStationEnd(collisionState);
     });
 
     player.onCollide("material", (materialEntity) => {
