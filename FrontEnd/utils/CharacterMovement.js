@@ -8,6 +8,7 @@ import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow } from "./Craft.js";
+import { handleCollideDocumentationStationEnd } from "./Collide.js";
 // Z-Level Tracker:
 // 0: "Walk" background: 0
 // 10: Player
@@ -160,8 +161,6 @@ class CharacterMovement {
       if (!craftState.popUp && toolState.toolAccess) {
         openCraftWindow(craftState, inventoryState, toolState);
       }
-
-     
     });
     onKeyDown("space", () => {
       // console.log("Pressed")
@@ -711,8 +710,7 @@ class CharacterMovement {
     });
 
     player.onCollideEnd("documentationStation", () => {
-      canAccessDocumentation = false;
-      destroyAll("interactable");
+      handleCollideDocumentationStationEnd(collisionState);
     });
 
     player.onCollide("material", (materialEntity) => {
