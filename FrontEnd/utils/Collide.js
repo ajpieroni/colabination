@@ -29,6 +29,12 @@ export function handleCollideDocumentationStation(state, showFinalItems) {
       });
     }
   }
+
+  export function handleCollideDocumentationStationEnd(state) {
+    state.canAccessDocumentation = false;
+    state.isDocVisible = false;
+    destroyAll("interactable");
+  }
   
 export function onToolCollide(toolState, inventoryState, s, w){
   inventoryState.finalCraftCheck = true;
