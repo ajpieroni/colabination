@@ -71,6 +71,7 @@ class CharacterMovement {
       popUp: false,
       // Checks if they are opening the window for the first time, selected item is null
       firstOpen: true,
+      isAddingItem: false,
     };
 
     // Inventory Control
@@ -162,9 +163,9 @@ class CharacterMovement {
         openCraftWindow(craftState, inventoryState, toolState);
       }
     });
-    onKeyDown("space", () => {
+    onKeyDown("escape", () => {
       // console.log("Pressed")
-      closeCraftWindow(craftState);
+      closeCraftWindow(craftState, inventoryState);
     });
 
     // !OLD CRAFT
