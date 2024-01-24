@@ -72,6 +72,8 @@ class CharacterMovement {
       // Checks if they are opening the window for the first time, selected item is null
       firstOpen: true,
       isAddingItem: false,
+      // Checks for enter keypress 
+      isCraftWindowOpen: false,
     };
 
     // Inventory Control
@@ -159,8 +161,9 @@ class CharacterMovement {
 
     onKeyPress("enter", () => {
       // If pop up is not open and they are colliding with a tool, open the pop up
-      if (!craftState.popUp && toolState.toolAccess) {
+      if (!craftState.popUp && toolState.toolAccess && !craftState.isCraftWindowOpen) {
         openCraftWindow(craftState, inventoryState, toolState);
+        craftState.isCraftWindowOpen = true;
       }
     });
     onKeyDown("escape", () => {

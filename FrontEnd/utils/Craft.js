@@ -315,9 +315,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
 
   // Popup is Visible
-
   craftState.popUp = true;
-
   // Initialize both crafting spots as unfilled
   console.log("Pos 1 and Pos 2 set");
   //  Both positions are not used when craft window is open
@@ -328,9 +326,10 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
  
 
   onKeyPress("enter", () => {
-    if(!craftState.isAddingItem){
+    if(craftState.isCraftWindowOpen && craftState.popUp && !craftState.isAddingItem){
       console.log("adding item", !craftState.isAddingItem)
       selectItem(craftState, inventoryState);
+      craftState.isCraftWindowOpen = false;
     
     }
   });
