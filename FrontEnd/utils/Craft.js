@@ -327,7 +327,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   craftState.isAddingItem = false;
  
 
-  onKeyPress("x", () => {
+  onKeyPress("enter", () => {
     if(!craftState.isAddingItem){
       console.log("adding item", !craftState.isAddingItem)
       selectItem(craftState, inventoryState);
