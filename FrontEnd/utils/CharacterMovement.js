@@ -74,6 +74,7 @@ class CharacterMovement {
       isAddingItem: false,
       // Checks for enter keypress 
       isCraftWindowOpen: false,
+      current: "moving",
     };
 
     // Inventory Control
@@ -97,6 +98,7 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
+      
     };
     let tableState = {
       atCraftingTable: false,
@@ -159,15 +161,13 @@ class CharacterMovement {
     let tableTemp = inventoryState.tableItems;
 
     // !NEW CRAFT
-    let currentState = "characterMovement"; 
+
     onKeyPress("enter", () => {
-      if (currentState === "characterMovement" && !craftState.popUp && toolState.toolAccess) {
+      if (craftState.current === "moving" && !craftState.popUp && toolState.toolAccess) {
         openCraftWindow(craftState, inventoryState, toolState);
-        currentState = "craft"; // Change state to craft
-      } else if (currentState === "craft" && !craftState.isAddingItem) {
-        console.log("adding item", !craftState.isAddingItem);
+        craftState.current = "crafting"; // Change state to craft
+      } else if (craftState.current === "crafting" && !craftState.isAddingItem) {
         selectItem(craftState, inventoryState);
-        currentState = "characterMovement"; // Change state back to characterMovement
       }
     });
 
@@ -179,7 +179,6 @@ class CharacterMovement {
     // !OLD CRAFT
 
     async function showContainer(tableTemp) {
-      console.log("Showing container...");
       isCraftingVisible = true;
 
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -236,7 +235,6 @@ class CharacterMovement {
       ]);
       craftingBackend(toolState, ingredients, craftState);
 
-      console.log("craftState.resultReady", craftState.resultReady);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -673,7 +671,6 @@ class CharacterMovement {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
-        console.log(item);
 
         // const itemKey = item.itemKey;
         // starts a new line
@@ -750,7 +747,6 @@ class CharacterMovement {
       }
     });
 
-    console.log("here is inv. state", inventoryState);
     clearTable(inventoryState, tableState);
 
     // Crafting logic:
@@ -758,7 +754,6 @@ class CharacterMovement {
 
     // Dropping item on table
     onKeyPress("q", () => {
-      console.log("here is table state", tableState);
       dropItem(toolState, inventoryState, volumeSetting, tableState);
     });
 

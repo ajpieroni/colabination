@@ -42,7 +42,6 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
   toolState.currToolY = w.pos.y;
   toolState.currentTool = w;
   toolState.toolAccess = true;
-  console.log("here is toolState", toolState);
 
   let toolDisplay = toolState.currentTool.toolKey
     // space
