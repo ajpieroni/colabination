@@ -30,6 +30,7 @@ import {
   handleCollideDocumentationStation,
   onToolCollide,
   onToolCollideEnd,
+  handleCollideDocumentationStationEnd,
 } from "./Collide.js";
 import { checkCraftable, clearTable, dropItem } from "./Craft.js";
 
