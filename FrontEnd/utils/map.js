@@ -16,9 +16,9 @@ export default function map(){
     "==$            *=",
     "==$            *=",
     "==$            *=",
-    "==$                    ",
-    "=9999999999    !99999=",
-    "=9999999999    !99999=",
+    "==$            *=",
+    "=9999999999    *=",
+    "=9999999999    *=",
     "---------------------",
   ];
 
@@ -36,6 +36,7 @@ export default function map(){
         "wall",
         area(),
         body({ isStatic: true }),
+        z(1)
         // z(15)
       ],
       "-": () => [
@@ -45,6 +46,7 @@ export default function map(){
         area(),
         body({ isStatic: true }),
         pos(0, 25),
+        z(1)
         // z(15)
       ],
       $: () => [
@@ -53,6 +55,7 @@ export default function map(){
         area(),
         body({ isStatic: true }),
         pos(0, 25),
+        z(1)
         // z(15)
       ],
 
@@ -62,6 +65,7 @@ export default function map(){
         area(),
         body({ isStatic: true }),
         pos(5, 25),
+        z(1)
         // z(15)
       ],
       9: () => [
@@ -70,6 +74,7 @@ export default function map(){
         area(),
         body({ isStatic: true }),
         pos(0, 15),
+        z(1)
         // z(15)
       ],
       "!": () => [
@@ -78,6 +83,7 @@ export default function map(){
         area(),
         body({ isStatic: true }),
         pos(-35, 0),
+        z(1)
         // z(15)
       ],
 

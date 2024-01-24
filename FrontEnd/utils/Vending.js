@@ -1,9 +1,10 @@
-export function showVendingContents(contents, isPopupVisible) {
-  console.log("vending contents shown");
+// Opens backpack window
+export function openBackpack(contents, craftState) {
+  // craftState.popUp = true;
   const popup = add([
     sprite("backpack"),
-    pos(475 - 190, 125 + 25),
-    z(11),
+    pos(475 - 190 - 100 - 100, 125 + 25),
+    z(19),
     outline(4),
     // scale(0.75),
     "vending",
@@ -30,7 +31,7 @@ export function showVendingContents(contents, isPopupVisible) {
       }),
       area(),
       anchor("center"),
-      pos(500 + 25, 500 + 100 + 25),
+      pos(325, 625),
       z(20),
 
       // scale(.5)
@@ -39,7 +40,7 @@ export function showVendingContents(contents, isPopupVisible) {
     const selected = add([
       rect(70, 70),
       pos(startX, startY),
-      z(11),
+      z(19),
       color(255, 255, 255),
       "selected",
     ]);
@@ -67,7 +68,7 @@ export function showVendingContents(contents, isPopupVisible) {
       // rect(10,10),
       // sprite(`${image}`),
       scale(1.5),
-      z(12),
+      z(20),
       "material",
       {
         itemKey: itemKey,
@@ -79,28 +80,32 @@ export function showVendingContents(contents, isPopupVisible) {
     currentX += item.width + 35;
   }
 
-  isPopupVisible = true;
+  // isPopupVisible = true;
 }
-
-export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents) {
-  console.log("isPopupVisible", isPopupVisible);
-  if (isPopupVisible) {
-    if (vendingSelect > 0) {
-      console.log("vendingSelect", vendingSelect);
-
-      vendingSelect--;
+// Closes backpack window, and text
+export function closeBackpack() {
+  destroyAll("vending");
+  destroyAll("itemText");
+  destroyAll("selected");
+}
+// Left selection in backpack
+export function onKeyPressLeft(inventoryState, craftState) {
+  if (craftState.popUp) {
+    if (inventoryState.vendingSelect > 0) {
+      inventoryState.vendingSelect--;
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -111,35 +116,78 @@ export function onKeyPressLeft(isPopupVisible, vendingSelect, vendingContents) {
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
+        pos(325, 625),
         z(20),
       ]);
-      return vendingSelect;
+      return inventoryState.vendingSelect;
     }
   }
 }
-
-export function onKeyPressRight(
-  isPopupVisible,
-  vendingSelect,
-  vendingContents
+// Right selection in backpack
+export function onKeyPressRight(inventoryState, craftState) {
+  if (craftState.popUp) {
+    if (
+      inventoryState.vendingSelect <
+      inventoryState.vendingContents.length - 1
+    ) {
+      inventoryState.vendingSelect++;
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(70, 70),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        color(255, 255, 255),
+        "selected",
+      ]);
+      destroyAll("itemText");
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+      const selectedText = add([
+        "itemText",
+        text(itemText, {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (0, 0, 0),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(325, 625),
+        z(20),
+        // scale(.5)
+      ]);
+    }
+  }
+}
+// Down selection in backpack
+export function onKeyPressDown(
+  inventoryState,
+  craftState
 ) {
-  if (isPopupVisible) {
-    if (vendingSelect < vendingContents.length - 1) {
-      vendingSelect++;
+  if (craftState.popUp) {
+    if (
+      inventoryState.vendingSelect + 3 <
+      inventoryState.vendingContents.length
+    ) {
+      inventoryState.vendingSelect += 3;
       // console.log(vendingSelect);
       destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
         color(255, 255, 255),
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
@@ -152,94 +200,54 @@ export function onKeyPressRight(
         }),
         area(),
         anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
+        pos(325, 625),
         z(20),
 
         // scale(.5)
       ]);
-      return vendingSelect;
+    }
+  }
+}
+// Up selection in backpack
+export function onKeyPressUp(inventoryState, craftState) {
+  if (craftState.popUp) {
+    if (inventoryState.vendingSelect - 3 >= 0) {
+      inventoryState.vendingSelect -= 3;
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(70, 70),
+        pos(393 -200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        color(255, 255, 255),
+        "selected",
+      ]);
+      destroyAll("itemText");
+      let itemText =
+        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+      const selectedText = add([
+        "itemText",
+        text(itemText, {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (0, 0, 0),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(500 - 200 + 25, 500 + 100 + 25),
+        z(20),
+
+        // scale(.5)
+      ]);
     }
   }
 }
 
-export function onKeyPressDown(isPopupVisible, vendingSelect, vendingContents) {
-  if (isPopupVisible) {
-    if (vendingSelect + 3 < vendingContents.length) {
-      vendingSelect += 3;
-      // console.log(vendingSelect);
-      destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
-      const selected = add([
-        rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
-        color(255, 255, 255),
-        "selected",
-      ]);
-      destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
-        z(20),
-
-        // scale(.5)
-      ]);
-      return vendingSelect;
-    }
-    return vendingSelect;
-
-  }
-}
-
-export function onKeyPressUp(isPopupVisible, vendingSelect, vendingContents) {
-  if (isPopupVisible) {
-    if (vendingSelect - 3 >= 0) {
-      vendingSelect -= 3;
-      // console.log(vendingSelect);
-      destroyAll("selected");
-      let gridX = vendingSelect % 3;
-      let gridY = Math.floor(vendingSelect / 3);
-      const selected = add([
-        rect(70, 70),
-        pos(393 + gridX * 86, 305 + gridY * 100),
-        z(11),
-        color(255, 255, 255),
-        "selected",
-      ]);
-      destroyAll("itemText");
-      let itemText = vendingContents[vendingSelect].itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(500 + 25, 500 + 100 + 25),
-        z(20),
-
-        // scale(.5)
-      ]);
-      return vendingSelect;
-    }
-    return vendingSelect;
-
-  }
+export function getCurrentItemInBackpack(inventoryState, craftState){
+  let currentItem = inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+  return currentItem;
 }

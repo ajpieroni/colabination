@@ -35,7 +35,7 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         items.forEach((item) => {
           const itemName = item[0];
           const isFinal = item[1];
-          console.log(itemName, isFinal);
+          // console.log(itemName, isFinal);
           const savedItem = add([
             // rect(item.width, item.height) ,
             pos(0, 0),
