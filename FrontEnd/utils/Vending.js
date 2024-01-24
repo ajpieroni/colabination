@@ -1,8 +1,6 @@
 // Opens backpack window
 export function openBackpack(contents, craftState) {
   // craftState.popUp = true;
-  console.log("craft state", craftState.popUp);
-  console.log("vending contents shown");
   const popup = add([
     sprite("backpack"),
     pos(475 - 190 - 100 - 100, 125 + 25),

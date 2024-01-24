@@ -317,7 +317,6 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Popup is Visible
   craftState.popUp = true;
   // Initialize both crafting spots as unfilled
-  console.log("Pos 1 and Pos 2 set");
   //  Both positions are not used when craft window is open
   firstItemPosition.used = false;
   secondItemPosition.used = false;
