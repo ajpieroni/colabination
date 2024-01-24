@@ -325,14 +325,13 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   craftState.isAddingItem = false;
  
 
-  onKeyPress("enter", () => {
-    if(craftState.isCraftWindowOpen && craftState.popUp && !craftState.isAddingItem){
-      console.log("adding item", !craftState.isAddingItem)
-      selectItem(craftState, inventoryState);
-      craftState.isCraftWindowOpen = false;
+  // onKeyPress("enter", () => {
+  //   if( craftState.popUp && !craftState.isAddingItem){
+  //     console.log("adding item", !craftState.isAddingItem)
+  //     selectItem(craftState, inventoryState);
     
-    }
-  });
+  //   }
+  // });
 }
 export function selectItem(craftState, inventoryState) {
   // Craft item selection

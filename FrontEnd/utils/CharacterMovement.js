@@ -7,7 +7,7 @@ import { getSpeed, setSpeed } from "./Player.js";
 import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
-import { addItemToCraftWindow } from "./Craft.js";
+import { addItemToCraftWindow, selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd } from "./Collide.js";
 // Z-Level Tracker:
 // 0: "Walk" background: 0
@@ -157,15 +157,20 @@ class CharacterMovement {
 
     let isCraftingVisible = false;
     let tableTemp = inventoryState.tableItems;
-    // !NEW CRAFT
 
+    // !NEW CRAFT
+    let currentState = "characterMovement"; 
     onKeyPress("enter", () => {
-      // If pop up is not open and they are colliding with a tool, open the pop up
-      if (!craftState.popUp && toolState.toolAccess && !craftState.isCraftWindowOpen) {
+      if (currentState === "characterMovement" && !craftState.popUp && toolState.toolAccess) {
         openCraftWindow(craftState, inventoryState, toolState);
-        craftState.isCraftWindowOpen = true;
+        currentState = "craft"; // Change state to craft
+      } else if (currentState === "craft" && !craftState.isAddingItem) {
+        console.log("adding item", !craftState.isAddingItem);
+        selectItem(craftState, inventoryState);
+        currentState = "characterMovement"; // Change state back to characterMovement
       }
     });
+
     onKeyDown("escape", () => {
       // console.log("Pressed")
       closeCraftWindow(craftState, inventoryState);
