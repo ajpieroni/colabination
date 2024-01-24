@@ -339,10 +339,13 @@ export function selectItem(craftState, inventoryState) {
   // Craft item selection
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
   craftState.isAddingItem = true;
+  console.log("Selecting item", craftState.isAddingItem);
+  // If the popup is open and it's not the first time it's opened
   
-  if (craftState.popUp && !craftState.firstOpen) {
+  if (craftState.popUp) {
+
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
-    console.log("Adding item", selectedItem, "because ", craftState.popUp && !craftState.firstOpen);
+    console.log("Adding item", selectedItem, "because ", craftState.popUp);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
       addItemToCraftWindow(selectedItem);
@@ -360,7 +363,6 @@ export function selectItem(craftState, inventoryState) {
     }
   }
   // After the first open, set this to true to make a valid item next time they press enter
-  craftState.firstOpen = false;
   // No longer currently adding an item
   craftState.isAddingItem = false; 
 }
@@ -422,7 +424,6 @@ export function closeCraftWindow(craftState, inventoryState) {
   firstItemPosition.used = false;
   secondItemPosition.used = false;
   inventoryState.vendingSelect = 0;
-  craftState.firstOpen = true;
   craftState.isAddingItem = false;
   
 }
