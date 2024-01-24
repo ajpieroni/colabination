@@ -349,7 +349,7 @@ export function selectItem(craftState, inventoryState) {
     } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
       add([
-        text("Both spaces are filled; craft!", { size: 16 }),
+        text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
         pos(100 + 500 - 50, 100 + 50 + 500-150),
         color(255, 255, 255),
         z(500),
