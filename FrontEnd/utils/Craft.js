@@ -293,7 +293,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Add tool text object
   add([
     text(toolDisplay, { size: 24 }),
-    pos(100 + 500+50, 100 + 50),
+    pos(100 + 500 + 50, 100 + 50),
     color(255, 255, 255),
     z(500),
     "craftingitem",
@@ -308,14 +308,14 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Q ] To Remove Items", { size: 16 }),
-    pos(100 + 500 - 50+50, 100 + 50 + 500-100+50),
+    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
     color(255, 255, 255),
     z(500),
     "craft",
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(100 + 500 - 50+50, 100 + 50 + 500-100+50-50),
+    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50 - 50),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -339,6 +339,12 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // });
 }
 export function selectItem(craftState, inventoryState) {
+  if (
+    !firstItemPosition.used ||
+    (!firstItemPosition.used && !secondItemPosition.used)
+  ) {
+    removeCraftButton();
+  }
   // Craft item selection
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
   craftState.isAddingItem = true;
@@ -369,6 +375,12 @@ export function selectItem(craftState, inventoryState) {
 }
 
 export function addItemToCraftWindow(currentItem) {
+  if (
+    !firstItemPosition.used ||
+    (!firstItemPosition.used && !secondItemPosition.used)
+  ) {
+    removeCraftButton();
+  }
   // Add the item to the crafting window
   if (!firstItemPosition.used) {
     const craftItem1 = add([
@@ -426,6 +438,14 @@ export function closeCraftWindow(craftState, inventoryState) {
   craftState.current = "moving"; // Change state back to characterMovement
 }
 export function removeItemFromCraft() {
+  console.log("should remove button?");
+  if (
+    !firstItemPosition.used ||
+    (firstItemPosition.used && !secondItemPosition.used) ||
+    (!firstItemPosition.used && !secondItemPosition.used)
+  ) {
+    removeCraftButton();
+  }
   // Remove the item from the crafting window
   // console.log(craftItem1.itemKey)
   if (secondItemPosition.used) {
@@ -440,21 +460,28 @@ export function removeItemFromCraft() {
 export function addCraftButton() {
   const craftButton = add([
     rect(150, 50),
-    pos(50+100 + 500 - 50+50+50-25, 100 + 50 + 500-100+50-100-50),
+    pos(
+      50 + 100 + 500 - 50 + 50 + 50 - 25,
+      100 + 50 + 500 - 100 + 50 - 100 - 50
+    ),
     z(52),
     color(228, 228, 228),
     "crafting",
     "craft",
+    "craftButton",
   ]);
-  const craftButtonText =
-  add([
+  const craftButtonText = add([
     text("Make!"),
-    pos(50+100 +10 + 10+500 - 50+50+50-25+25, 100 -5 + 50 + 500-100+50-100-50+25-5), // adjust as necessary to position the text on the button
+    pos(
+      50 + 100 + 10 + 10 + 500 - 50 + 50 + 50 - 25 + 25,
+      100 - 5 + 50 + 500 - 100 + 50 - 100 - 50 + 25 - 5
+    ), // adjust as necessary to position the text on the button
     z(53),
     color(0, 0, 0), // color of the text,
     scale(0.5),
     "crafting",
     "craft",
+    "craftButton",
   ]);
 
   // Craft Button Flash
@@ -467,4 +494,8 @@ export function addCraftButton() {
     }
     isBright = !isBright;
   }, 250); // the button color will toggle every 500ms
+}
+
+export function removeCraftButton() {
+  destroyAll("craftButton");
 }

@@ -176,6 +176,7 @@ class CharacterMovement {
       if (craftState.current === "crafting"){
         removeItemFromCraft();
       }
+      
     });
 
     onKeyDown("escape", () => {
