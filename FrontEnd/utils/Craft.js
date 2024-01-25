@@ -293,7 +293,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Add tool text object
   add([
     text(toolDisplay, { size: 24 }),
-    pos(100 + 500, 100 + 50),
+    pos(100 + 500+50, 100 + 50),
     color(255, 255, 255),
     z(500),
     "craftingitem",
@@ -307,8 +307,15 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "craft",
   ]);
   add([
+    text("Press [ Q ] To Remove Items", { size: 16 }),
+    pos(100 + 500 - 50+50, 100 + 50 + 500-100+50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+  ]);
+  add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(100 + 500, 100 + 50 + 100 - 50),
+    pos(100 + 500 - 50+50, 100 + 50 + 500-100+50-50),
     color(255, 255, 255),
     z(500),
     "craft",
