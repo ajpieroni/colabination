@@ -353,11 +353,12 @@ export function selectItem(craftState, inventoryState) {
 
   if (craftState.popUp) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+    console.log(selectedItem)
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
-      addItemToCraftWindow(selectedItem);
+      addItemToCraftWindow(selectedItem, inventoryState);
     } else if (!secondItemPosition.used) {
-      addItemToCraftWindow(selectedItem);
+      addItemToCraftWindow(selectedItem, inventoryState);
     } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
       addCraftButton();
@@ -375,7 +376,7 @@ export function selectItem(craftState, inventoryState) {
   craftState.isAddingItem = false;
 }
 
-export function addItemToCraftWindow(currentItem) {
+export function addItemToCraftWindow(currentItem, inventoryState) {
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -383,6 +384,7 @@ export function addItemToCraftWindow(currentItem) {
     removeCraftButton();
   }
   // Add the item to the crafting window
+  console.log(currentItem)
   if (!firstItemPosition.used) {
     const craftItem1 = add([
       // rect(item.width, item.height) ,
@@ -402,6 +404,8 @@ export function addItemToCraftWindow(currentItem) {
       },
     ]);
     firstItemPosition.used = true;
+    inventoryState.ingredients.push(currentItem);
+    console.log("ingredients", inventoryState.ingredients)
     addCraftButton();
   } else if (!secondItemPosition.used) {
     const craftItem2 = add([
@@ -421,6 +425,9 @@ export function addItemToCraftWindow(currentItem) {
         itemKey: currentItem,
       },
     ]);
+    inventoryState.ingredients.push(currentItem);
+    console.log("ingredients", inventoryState.ingredients)
+
     secondItemPosition.used = true;
   }
 }
@@ -439,7 +446,7 @@ export function closeCraftWindow(craftState, inventoryState) {
   craftState.isAddingItem = false;
   craftState.current = "moving"; // Change state back to characterMovement
 }
-export function removeItemFromCraft() {
+export function removeItemFromCraft(inventoryState) {
   console.log("should remove button?");
   if (
     !firstItemPosition.used ||
@@ -453,9 +460,11 @@ export function removeItemFromCraft() {
   if (secondItemPosition.used) {
     destroyAll("item2");
     secondItemPosition.used = false;
+    inventoryState.ingredients.remove(inventoryState.ingredients[2]);
   } else if (firstItemPosition.used) {
     destroyAll("item1");
     firstItemPosition.used = false;
+    inventoryState.ingredients.remove(inventoryState.ingredients[1]);
   }
 }
 

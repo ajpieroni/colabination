@@ -4,7 +4,12 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
-import { craftingBackend, openCraftWindow, closeCraftWindow, removeItemFromCraft } from "./Craft.js";
+import {
+  craftingBackend,
+  openCraftWindow,
+  closeCraftWindow,
+  removeItemFromCraft,
+} from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
@@ -72,7 +77,7 @@ class CharacterMovement {
       // Checks if they are opening the window for the first time, selected item is null
       firstOpen: true,
       isAddingItem: false,
-      // Checks for enter keypress 
+      // Checks for enter keypress
       isCraftWindowOpen: false,
       current: "moving",
     };
@@ -98,7 +103,7 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
-      
+      ingredients: [],
     };
     let tableState = {
       atCraftingTable: false,
@@ -163,20 +168,34 @@ class CharacterMovement {
     // !NEW CRAFT
 
     onKeyPress("enter", () => {
-      if (craftState.current === "moving" && !craftState.popUp && toolState.toolAccess) {
+      if (
+        craftState.current === "moving" &&
+        !craftState.popUp &&
+        toolState.toolAccess
+      ) {
         openCraftWindow(craftState, inventoryState, toolState);
         craftState.current = "crafting"; // Change state to craft
-      } else if (craftState.current === "crafting" && !craftState.isAddingItem) {
+      } else if (
+        craftState.current === "crafting" &&
+        !craftState.isAddingItem
+      ) {
         selectItem(craftState, inventoryState);
       }
     });
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
-      if (craftState.current === "crafting"){
-        removeItemFromCraft();
+      if (craftState.current === "crafting") {
+        removeItemFromCraft(inventoryState);
       }
-      
+    });
+    // ON key press space, craft
+    onKeyPress("space", () => {
+      if (craftState.current === "crafting") {
+        console.log("test, ran backend");
+        craftingBackend(toolState, inventoryState.ingredients, craftState);
+        console.log("pressed space");
+      }
     });
 
     onKeyDown("escape", () => {
@@ -242,7 +261,6 @@ class CharacterMovement {
         "crafting",
       ]);
       craftingBackend(toolState, ingredients, craftState);
-
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
