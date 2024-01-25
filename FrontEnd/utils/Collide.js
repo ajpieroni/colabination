@@ -60,37 +60,58 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
     z(11),
     "interactable",
   ]);
-  add([
-    "craftAlert",
-    text("Craft?", {
-      // optional object
-      size: 36,
-      outline: 4,
-      color: (0, 0, 0),
-      // can specify font here,
-    }),
-    area(),
-    anchor("center"),
-    pos(500, 500),
-    z(11),
-    // scale(.5)
-  ]);
-  add([
-    "craftAlert",
-    text("Press [ Enter ] To Craft", {
-      // optional object
-      size: 24,
-      outline: 4,
-      color: (0, 0, 0),
-      // can specify font here,
-    }),
-    area(),
-    anchor("center"),
-    pos(500, 500 + 100),
-    z(11),
-    // scale(.5)
-  ]);
-  craftState.craftSelected = true;
+  if (inventoryState.vendingContents.length > 0) {
+    add([
+      "craftAlert",
+      text("Craft?", {
+        // optional object
+        size: 36,
+        outline: 4,
+        color: (0, 0, 0),
+        // can specify font here,
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500),
+      z(11),
+      // scale(.5)
+    ]);
+    add([
+      "craftAlert",
+      text("Press [ Enter ] To Craft", {
+        // optional object
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+        // can specify font here,
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500 + 100),
+      z(11),
+      // scale(.5)
+    ]);
+    craftState.craftSelected = true;
+  } else {
+    const noItemsAlert = add([
+      "noItems",
+      text("Pick up items to craft!", {
+        // optional object
+        size: 36,
+        outline: 4,
+        color: (0, 0, 0),
+        // can specify font here,
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500),
+      z(11),
+      // scale(.5)
+    ]);
+    setTimeout(() => {
+      destroyAll("noItems");
+    }, 2000);
+  }
 }
 
 export function onToolCollideEnd(toolState, inventoryState) {

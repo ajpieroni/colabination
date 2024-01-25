@@ -230,6 +230,7 @@ function handleCreation(creation, final, item, craftState) {
 
 // !NEW CRAFT, current = "crafting"
 export function openCraftWindow(craftState, inventoryState, toolState) {
+  inventoryState.vendingSelect = 0;
   console.log(toolState);
   // If they pressed enter on the craft prompt, open the craft window
   if (craftState.craftSelected) {
@@ -279,6 +280,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craftingitem",
     "craft",
+    "newCraft",
   ]);
   add([
     text("Press [ Escape ] To Close", { size: 24 }),
@@ -558,6 +560,9 @@ export function addReCraftButton(craftState) {
 export function restartCraft(craftState, inventoryState, toolState){
   destroyAll("executedCraft");
   console.log(toolState)
+  craftState.readyToCraft = false;
+  craftState.resultReady = false;
+  craftState.current = "crafting";
   openCraftWindow(craftState, inventoryState, toolState);
 
   

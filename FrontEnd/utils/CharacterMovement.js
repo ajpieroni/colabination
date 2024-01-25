@@ -175,13 +175,14 @@ class CharacterMovement {
       if (
         craftState.current === "moving" &&
         !craftState.popUp &&
-        toolState.toolAccess
+        toolState.toolAccess &&
+        inventoryState.vendingContents.length > 0
       ) {
         openCraftWindow(craftState, inventoryState, toolState);
         craftState.current = "crafting"; // Change state to craft
       } else if (
         craftState.current === "crafting" &&
-        !craftState.isAddingItem 
+        !craftState.isAddingItem
       ) {
         selectItem(craftState, inventoryState);
       }
@@ -193,12 +194,13 @@ class CharacterMovement {
         removeItemFromCraft(inventoryState);
       }
     });
+
     // ON key press space, craft
     onKeyPress("space", () => {
-      console.log("Current state:", craftState.current)
+      console.log("Current state:", craftState.current);
       if (craftState.current === "crafting" && craftState.readyToCraft) {
         executeCraft(toolState, craftState, inventoryState, tableState);
-      }else if(craftState.current === "executed"){
+      } else if (craftState.current === "executed") {
         restartCraft(craftState, inventoryState, toolState);
       }
     });
