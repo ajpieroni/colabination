@@ -493,7 +493,7 @@ export function updateCraftUI(craftState) {
       itemKey: craftState.result.itemKey,
     },
   ]);
-  craftState.readyToCraft = false;
+  craftState.readyToCraft = true;
   craftState.resultReady = false;
   addReCraftButton(craftState);
 }
