@@ -228,8 +228,9 @@ function handleCreation(creation, final, item, craftState) {
 
 }
 
-// !NEW CRAFT
+// !NEW CRAFT, current = "crafting"
 export function openCraftWindow(craftState, inventoryState, toolState) {
+  console.log(toolState);
   // If they pressed enter on the craft prompt, open the craft window
   if (craftState.craftSelected) {
     add([
@@ -455,7 +456,7 @@ export function addCraftButton(craftState) {
   }, 250); // the button color will toggle every 500ms
 }
 
-// !Execute craft
+// !Execute craft, current = "executed"
 export function executeCraft(
   toolState,
   craftState,
@@ -513,7 +514,7 @@ export function addReCraftButton(craftState) {
     "crafting",
     "craft",
     "craftButton",
-    "newCraft",
+    "executedCraft",
   ]);
   const reCraftText = add([
     text("Craft Again?"),
@@ -553,7 +554,15 @@ export function addReCraftButton(craftState) {
   }, 250); // the button color will toggle every 500ms
 
 }
-// !End craft sequence
+// !Restart sequence, current = "crafting"
+export function restartCraft(craftState, inventoryState, toolState){
+  destroyAll("executedCraft");
+  console.log(toolState)
+  openCraftWindow(craftState, inventoryState, toolState);
+
+  
+}
+// !End craft sequence, current = "moving"
 export function closeCraftWindow(craftState, inventoryState) {
   // Close the craft window after pressing escape
   console.log("Destroying all craft items.");

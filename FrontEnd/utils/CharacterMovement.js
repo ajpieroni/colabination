@@ -10,6 +10,7 @@ import {
   closeCraftWindow,
   removeItemFromCraft,
   executeCraft,
+  restartCraft,
 } from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
@@ -194,11 +195,11 @@ class CharacterMovement {
     });
     // ON key press space, craft
     onKeyPress("space", () => {
+      console.log("Current state:", craftState.current)
       if (craftState.current === "crafting" && craftState.readyToCraft) {
-        console.log("test, ran backend");
-        
         executeCraft(toolState, craftState, inventoryState, tableState);
-        console.log("pressed space");
+      }else if(craftState.current === "executed"){
+        restartCraft(craftState, inventoryState, toolState);
       }
     });
 
