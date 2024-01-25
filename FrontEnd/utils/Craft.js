@@ -401,6 +401,7 @@ export function addItemToCraftWindow(currentItem) {
       },
     ]);
     firstItemPosition.used = true;
+    addCraftButton();
   } else if (!secondItemPosition.used) {
     const craftItem2 = add([
       // rect(item.width, item.height) ,
