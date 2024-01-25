@@ -180,7 +180,7 @@ class CharacterMovement {
         craftState.current = "crafting"; // Change state to craft
       } else if (
         craftState.current === "crafting" &&
-        !craftState.isAddingItem && !craftState.readyToCraft
+        !craftState.isAddingItem 
       ) {
         selectItem(craftState, inventoryState);
       }

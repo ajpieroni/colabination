@@ -462,8 +462,11 @@ export function executeCraft(
   inventoryState,
   tableState
 ) {
+  craftState.current = "executed";
+
   craftingBackend(toolState, inventoryState.ingredients, craftState);
   destroyAll("newCraft");
+  
 }
 export function updateCraftUI(craftState) {
   const resultText = add([
