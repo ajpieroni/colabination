@@ -4,7 +4,7 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
-import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
+import { craftingBackend, openCraftWindow, closeCraftWindow, removeItemFromCraft } from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
@@ -168,6 +168,13 @@ class CharacterMovement {
         craftState.current = "crafting"; // Change state to craft
       } else if (craftState.current === "crafting" && !craftState.isAddingItem) {
         selectItem(craftState, inventoryState);
+      }
+    });
+
+    // ON key press q, remove item from craft window
+    onKeyPress("q", () => {
+      if (craftState.current === "crafting"){
+        removeItemFromCraft(craftState, inventoryState);
       }
     });
 

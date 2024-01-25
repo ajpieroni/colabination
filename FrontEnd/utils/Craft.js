@@ -308,7 +308,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(100 + 500, 100 + 50+100-50),
+    pos(100 + 500, 100 + 50 + 100 - 50),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -322,13 +322,12 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   secondItemPosition.used = false;
   // Currently not adding item
   craftState.isAddingItem = false;
- 
 
   // onKeyPress("enter", () => {
   //   if( craftState.popUp && !craftState.isAddingItem){
   //     console.log("adding item", !craftState.isAddingItem)
   //     selectItem(craftState, inventoryState);
-    
+
   //   }
   // });
 }
@@ -337,9 +336,8 @@ export function selectItem(craftState, inventoryState) {
   // Once craft is open, use enter to select the current item from the backpack and add it to the crafting window
   craftState.isAddingItem = true;
   // If the popup is open and it's not the first time it's opened
-  
-  if (craftState.popUp) {
 
+  if (craftState.popUp) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
@@ -350,7 +348,7 @@ export function selectItem(craftState, inventoryState) {
       // If both are filled, display an alert
       add([
         text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
-        pos(100 + 500 - 50, 100 + 50 + 500-150),
+        pos(100 + 500 - 50, 100 + 50 + 500 - 150),
         color(255, 255, 255),
         z(500),
         "craft",
@@ -359,19 +357,19 @@ export function selectItem(craftState, inventoryState) {
   }
   // After the first open, set this to true to make a valid item next time they press enter
   // No longer currently adding an item
-  craftState.isAddingItem = false; 
+  craftState.isAddingItem = false;
 }
 
 export function addItemToCraftWindow(currentItem) {
   // Add the item to the crafting window
   if (!firstItemPosition.used) {
-
     const craftItem1 = add([
       // rect(item.width, item.height) ,
       pos(firstItemPosition.x, firstItemPosition.y),
       z(12),
       // color(item.color.r, item.color.g, item.color.b),
       "craft",
+      "item1",
       sprite(`${currentItem}`),
       // rect(10,10),
       // sprite(`${image}`),
@@ -384,13 +382,13 @@ export function addItemToCraftWindow(currentItem) {
     ]);
     firstItemPosition.used = true;
   } else if (!secondItemPosition.used) {
-
     const craftItem2 = add([
       // rect(item.width, item.height) ,
       pos(secondItemPosition.x, secondItemPosition.y),
       z(12),
       // color(item.color.r, item.color.g, item.color.b),
       "craft",
+      "item2",
       sprite(`${currentItem}`),
       // rect(10,10),
       // sprite(`${image}`),
@@ -403,12 +401,11 @@ export function addItemToCraftWindow(currentItem) {
     ]);
     secondItemPosition.used = true;
   }
-
 }
 export function closeCraftWindow(craftState, inventoryState) {
   // Close the craft window after pressing escape
   // console.log("Pressed closed")
-  console.log("Destroying all craft items")
+  console.log("Destroying all craft items");
   destroyAll("craft");
 
   setSpeed(300);
@@ -419,6 +416,15 @@ export function closeCraftWindow(craftState, inventoryState) {
   inventoryState.vendingSelect = 0;
   craftState.isAddingItem = false;
   craftState.current = "moving"; // Change state back to characterMovement
-
-  
+}
+export function removeItemFromCraft(craftState, inventoryState) {
+  // Remove the item from the crafting window
+  // console.log(craftItem1.itemKey)
+  if (firstItemPosition.used) {
+    destroyAll("item1");
+    firstItemPosition.used = false;
+  } else if (secondItemPosition.used) {
+    destroyAll("item2");
+    secondItemPosition.used = false;
+  }
 }
