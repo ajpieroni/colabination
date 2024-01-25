@@ -420,11 +420,11 @@ export function closeCraftWindow(craftState, inventoryState) {
 export function removeItemFromCraft(craftState, inventoryState) {
   // Remove the item from the crafting window
   // console.log(craftItem1.itemKey)
-  if (firstItemPosition.used) {
-    destroyAll("item1");
-    firstItemPosition.used = false;
-  } else if (secondItemPosition.used) {
+  if (secondItemPosition.used) {
     destroyAll("item2");
     secondItemPosition.used = false;
+  } else if (firstItemPosition.used) {
+    destroyAll("item1");
+    firstItemPosition.used = false;
   }
 }
