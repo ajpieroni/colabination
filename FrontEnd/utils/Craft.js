@@ -172,8 +172,11 @@ export function craftingBackend(toolState, ingredients, craftState) {
   }
   console.log("Crafting backend...");
   let item1sprite = ingredients[0];
+  console.log(item1sprite)
 
   let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
+  console.log(item2sprite)
+
 
   fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
     .then((response) => response.json())
@@ -193,7 +196,7 @@ export function craftingBackend(toolState, ingredients, craftState) {
           .catch((error) => console.error("Error fetching item 2:", error));
       } else {
         fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
-        console.log("Fetching combination...");
+        console.log("Fetching combination...", toolId, item1data.id, 6, handleCreation, craftState);
       }
     })
     .catch((error) => console.error("Error fetching item 1:", error));
@@ -431,43 +434,6 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
     secondItemPosition.used = true;
   }
 }
-export function closeCraftWindow(craftState, inventoryState) {
-  // Close the craft window after pressing escape
-  // console.log("Pressed closed")
-  console.log("Destroying all craft items");
-  destroyAll("craft");
-
-  setSpeed(300);
-  closeBackpack();
-  craftState.popUp = false;
-  firstItemPosition.used = false;
-  secondItemPosition.used = false;
-  inventoryState.vendingSelect = 0;
-  craftState.isAddingItem = false;
-  craftState.current = "moving"; // Change state back to characterMovement
-}
-export function removeItemFromCraft(inventoryState) {
-  console.log("should remove button?");
-  if (
-    !firstItemPosition.used ||
-    (firstItemPosition.used && !secondItemPosition.used) ||
-    (!firstItemPosition.used && !secondItemPosition.used)
-  ) {
-    removeCraftButton();
-  }
-  // Remove the item from the crafting window
-  // console.log(craftItem1.itemKey)
-  if (secondItemPosition.used) {
-    destroyAll("item2");
-    secondItemPosition.used = false;
-    inventoryState.ingredients.remove(inventoryState.ingredients[2]);
-  } else if (firstItemPosition.used) {
-    destroyAll("item1");
-    firstItemPosition.used = false;
-    inventoryState.ingredients.remove(inventoryState.ingredients[1]);
-  }
-}
-
 export function addCraftButton() {
   const craftButton = add([
     rect(150, 50),
@@ -514,6 +480,56 @@ export function addCraftButton() {
     isBright = !isBright;
   }, 250); // the button color will toggle every 500ms
 }
+
+export function executeCraft(toolState, craftState, inventoryState, tableState) {
+  craftingBackend(toolState, inventoryState.ingredients, craftState);
+  console.log("Crafting backend...");
+  console.log(craftState.resultReady);
+  console.log(craftState.result);
+
+}
+
+// !End craft sequence
+export function closeCraftWindow(craftState, inventoryState) {
+  // Close the craft window after pressing escape
+  // console.log("Pressed closed")
+  console.log("Destroying all craft items");
+  destroyAll("craft");
+  inventoryState.ingredients = [];
+
+  setSpeed(300);
+  closeBackpack();
+  craftState.popUp = false;
+  firstItemPosition.used = false;
+  secondItemPosition.used = false;
+  inventoryState.vendingSelect = 0;
+  craftState.isAddingItem = false;
+  craftState.current = "moving"; // Change state back to characterMovement
+}
+export function removeItemFromCraft(inventoryState) {
+  console.log("should remove button?");
+  if (
+    !firstItemPosition.used ||
+    (firstItemPosition.used && !secondItemPosition.used) ||
+    (!firstItemPosition.used && !secondItemPosition.used)
+  ) {
+    removeCraftButton();
+  }
+  // Remove the item from the crafting window
+  // console.log(craftItem1.itemKey)
+  if (secondItemPosition.used) {
+    destroyAll("item2");
+    secondItemPosition.used = false;
+    inventoryState.ingredients.splice(2, 1);
+    
+  } else if (firstItemPosition.used) {
+    destroyAll("item1");
+    firstItemPosition.used = false;
+    inventoryState.ingredients.splice(1, 1);
+  }
+}
+
+
 
 export function removeCraftButton() {
   destroyAll("craftButton");
