@@ -248,6 +248,7 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
 function handleCreation(creation, final, item, craftState) {
   craftState.result.itemKey = creation;
   craftState.result.isFinal = final;
+  updateCraftUI(craftState);
 
   console.log("Set result...");
 }
@@ -273,6 +274,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(20),
       color(228, 228, 228),
       "craft",
+      "newCraft"
     ]);
     const trailCircle2 = add([
       circle(64),
@@ -280,6 +282,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(20),
       color(228, 228, 228),
       "craft",
+      "newCraft"
     ]);
   }
   setSpeed(0);
@@ -316,6 +319,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     color(255, 255, 255),
     z(500),
     "craft",
+    "newCraft"
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
@@ -323,6 +327,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     color(255, 255, 255),
     z(500),
     "craft",
+    "newCraft"
   ]);
 
   // Popup is Visible
@@ -402,6 +407,7 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
       scale(1.5),
       z(22),
       "material",
+      "newCraft",
       {
         itemKey: currentItem,
       },
@@ -424,6 +430,7 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
       scale(1.5),
       z(22),
       "material",
+      "newCraft",
       {
         itemKey: currentItem,
       },
@@ -446,6 +453,7 @@ export function addCraftButton() {
     "crafting",
     "craft",
     "craftButton",
+    "newCraft",
   ]);
   const craftButtonText = add([
     text("Make!"),
@@ -459,6 +467,7 @@ export function addCraftButton() {
     "crafting",
     "craft",
     "craftButton",
+    "newCraft"
   ]);
 
   add([
@@ -467,6 +476,7 @@ export function addCraftButton() {
     color(255, 255, 255),
     z(500),
     "craft",
+    "newCraft"
   ]);
 
   // Craft Button Flash
@@ -481,14 +491,23 @@ export function addCraftButton() {
   }, 250); // the button color will toggle every 500ms
 }
 
+// !Execute craft
 export function executeCraft(toolState, craftState, inventoryState, tableState) {
   craftingBackend(toolState, inventoryState.ingredients, craftState);
-  console.log("Crafting backend...");
-  console.log(craftState.resultReady);
-  console.log(craftState.result);
+  destroyAll("newCraft");
+
 
 }
-
+export function updateCraftUI(craftState) {
+  add([
+    text(`${craftState.result.itemKey}, { size: 20 }`),
+    pos(100 + 500 + 50-50, 100 + 50+100-25),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft"
+  ]);
+}
 // !End craft sequence
 export function closeCraftWindow(craftState, inventoryState) {
   // Close the craft window after pressing escape
