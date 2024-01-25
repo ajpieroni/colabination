@@ -467,7 +467,7 @@ export function executeCraft(
 }
 export function updateCraftUI(craftState) {
   const resultText = add([
-    text(`${craftState.result.itemKey}, { size: 20 }`),
+    text(`You made ${craftState.result.itemKey}!`),
     pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
     color(255, 255, 255),
     z(500),
@@ -493,6 +493,62 @@ export function updateCraftUI(craftState) {
       itemKey: craftState.result.itemKey,
     },
   ]);
+  craftState.readyToCraft = false;
+  craftState.resultReady = false;
+  addReCraftButton(craftState);
+}
+
+export function addReCraftButton(craftState) {
+  const reCraftButton = add([
+    rect(150, 50),
+    pos(
+      50 + 100 + 500 - 50 + 50 + 50 - 25,
+      100 + 50 + 500 - 100 + 50 - 100 - 50
+    ),
+    z(52),
+    color(228, 228, 228),
+    "crafting",
+    "craft",
+    "craftButton",
+    "newCraft",
+  ]);
+  const reCraftText = add([
+    text("Craft Again?"),
+    pos(
+      50 -5-30+ 100 + 10 + 10 + 500 - 50 + 50 + 50 - 25 + 25,
+      100 - 5 + 50 + 500 - 100 + 50 - 100 - 50 + 25 - 5
+    ), // adjust as necessary to position the text on the button
+    z(53),
+    color(0, 0, 0), // color of the text,
+    scale(0.5),
+    "crafting",
+    "craft",
+    "craftButton",
+    "executedCraft",
+  ]);
+  
+
+  add([
+    text("Press [ Space ] To Craft Again!", { size: 20 }),
+    pos(100 -50 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
+
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+
+  // Craft Button Flash
+  let isBright = true;
+  setInterval(() => {
+    if (isBright) {
+      reCraftButton.color = rgb(228, 228, 228); // less bright color
+    } else {
+      reCraftButton.color = rgb(80, 80, 80); // original color
+    }
+    isBright = !isBright;
+  }, 250); // the button color will toggle every 500ms
+
 }
 // !End craft sequence
 export function closeCraftWindow(craftState, inventoryState) {
