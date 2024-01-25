@@ -15,13 +15,7 @@ let secondItemPosition = {
 };
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
   inventoryState.finalCraftCheck = false;
-  console.log(
-    "CHECK",
-    toolState.toolAccess &&
-      // tableItems.includes("paper") &&
-      inventoryState.tableItems.length >= 1 &&
-      !inventoryState.isPopupVisible
-  );
+
   if (
     toolState.toolAccess &&
     // tableItems.includes("paper") &&
@@ -52,8 +46,6 @@ export function checkCraftable(toolState, inventoryState, volumeSetting) {
 }
 // !Inventory Management
 export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
-  console.log(tableState);
-  console.log("items in pocket on q", inventoryState.itemsInPocket);
   // !TODO: set max items on table
   if (inventoryState.tableItems.length == 0 && toolState.currentTool) {
     tableState.table_x = toolState.currentTool.pos.x;
@@ -97,12 +89,6 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
     }, 2000);
     // checkCraftable();
   } else {
-    console.log(
-      "check",
-      toolState.toolAccess &&
-        inventoryState.itemsInPocket !== 0 &&
-        tableState.onItemsOnTable < 6
-    );
     if (
       toolState.toolAccess &&
       inventoryState.itemsInPocket !== 0 &&
@@ -113,8 +99,6 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
 
       let item = inventoryState.inPocket.shift();
 
-      // console.log("here's item shifted:", item.itemKey);
-      // console.log("here item key", item.itemKey);
       item.use("onTable");
 
       item.moveTo(tableState.table_x, tableState.table_y);
@@ -127,7 +111,6 @@ export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
       tableState.onItemsOnTable++;
       checkCraftable(toolState, inventoryState);
     } else {
-      console.log("hit else");
       checkCraftable(toolState, inventoryState);
       rearrangePocket(inventoryState, volumeSetting);
     }
@@ -151,7 +134,6 @@ export function rearrangePocket(inventoryState, volumeSetting) {
   }
 }
 export function clearTable(inventoryState, tableState) {
-  console.log("hre is inv state inside craft", inventoryState);
   inventoryState.tableItems.length = 0;
   destroyAll("onTable");
   destroyAll("craft");
@@ -163,7 +145,6 @@ export function clearTable(inventoryState, tableState) {
 
 // !CRAFTING
 export function craftingBackend(toolState, ingredients, craftState) {
-  console.log("Ingredients in Craft.js", ingredients);
   let toolId;
   if (toolState.toolAccess) {
     toolId = toolState.currentTool.toolId;
@@ -172,11 +153,8 @@ export function craftingBackend(toolState, ingredients, craftState) {
   }
   console.log("Crafting backend...");
   let item1sprite = ingredients[0];
-  console.log(item1sprite)
 
   let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
-  console.log(item2sprite)
-
 
   fetch(`http://localhost:8081/items/find_by_name/${item1sprite}`)
     .then((response) => response.json())
@@ -196,7 +174,6 @@ export function craftingBackend(toolState, ingredients, craftState) {
           .catch((error) => console.error("Error fetching item 2:", error));
       } else {
         fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
-        console.log("Fetching combination...", toolId, item1data.id, 6, handleCreation, craftState);
       }
     })
     .catch((error) => console.error("Error fetching item 1:", error));
@@ -226,7 +203,6 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
           return response.json();
         })
         .then((additionalData) => {
-          console.log("final state", craftState);
           craftState.resultReady = true;
 
           callback(
@@ -250,12 +226,10 @@ function handleCreation(creation, final, item, craftState) {
   craftState.result.isFinal = final;
   updateCraftUI(craftState);
 
-  console.log("Set result...");
 }
 
 // !NEW CRAFT
 export function openCraftWindow(craftState, inventoryState, toolState) {
-  console.log("craftstate", craftState);
   // If they pressed enter on the craft prompt, open the craft window
   if (craftState.craftSelected) {
     add([
@@ -274,7 +248,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(20),
       color(228, 228, 228),
       "craft",
-      "newCraft"
+      "newCraft",
     ]);
     const trailCircle2 = add([
       circle(64),
@@ -282,7 +256,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(20),
       color(228, 228, 228),
       "craft",
-      "newCraft"
+      "newCraft",
     ]);
   }
   setSpeed(0);
@@ -312,14 +286,14 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     z(500),
     "craft",
   ]);
- 
+
   add([
     text("Press [ Q ] To Remove Items", { size: 16 }),
     pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
     color(255, 255, 255),
     z(500),
     "craft",
-    "newCraft"
+    "newCraft",
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
@@ -327,7 +301,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     color(255, 255, 255),
     z(500),
     "craft",
-    "newCraft"
+    "newCraft",
   ]);
 
   // Popup is Visible
@@ -339,13 +313,6 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Currently not adding item
   craftState.isAddingItem = false;
 
-  // onKeyPress("enter", () => {
-  //   if( craftState.popUp && !craftState.isAddingItem){
-  //     console.log("adding item", !craftState.isAddingItem)
-  //     selectItem(craftState, inventoryState);
-
-  //   }
-  // });
 }
 export function selectItem(craftState, inventoryState) {
   if (
@@ -361,15 +328,14 @@ export function selectItem(craftState, inventoryState) {
 
   if (craftState.popUp) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
-    console.log(selectedItem)
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState);
     } else if (!secondItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState);
     } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
-      addCraftButton();
+      addCraftButton(craftState);
       // add([
       //   text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
       //   pos(100 + 500 - 50, 100 + 50 + 500 - 150),
@@ -384,7 +350,7 @@ export function selectItem(craftState, inventoryState) {
   craftState.isAddingItem = false;
 }
 
-export function addItemToCraftWindow(currentItem, inventoryState) {
+export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -392,7 +358,6 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
     removeCraftButton();
   }
   // Add the item to the crafting window
-  console.log(currentItem)
   if (!firstItemPosition.used) {
     const craftItem1 = add([
       // rect(item.width, item.height) ,
@@ -414,8 +379,7 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
     ]);
     firstItemPosition.used = true;
     inventoryState.ingredients.push(currentItem);
-    console.log("ingredients", inventoryState.ingredients)
-    addCraftButton();
+    addCraftButton(craftState);
   } else if (!secondItemPosition.used) {
     const craftItem2 = add([
       // rect(item.width, item.height) ,
@@ -436,12 +400,12 @@ export function addItemToCraftWindow(currentItem, inventoryState) {
       },
     ]);
     inventoryState.ingredients.push(currentItem);
-    console.log("ingredients", inventoryState.ingredients)
 
     secondItemPosition.used = true;
   }
 }
-export function addCraftButton() {
+export function addCraftButton(craftState) {
+  craftState.readyToCraft = true;
   const craftButton = add([
     rect(150, 50),
     pos(
@@ -467,16 +431,16 @@ export function addCraftButton() {
     "crafting",
     "craft",
     "craftButton",
-    "newCraft"
+    "newCraft",
   ]);
 
   add([
     text("Press [ Space ] To Craft!", { size: 20 }),
-    pos(100 + 500 + 50-50, 100 + 50+100-25),
+    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
     color(255, 255, 255),
     z(500),
     "craft",
-    "newCraft"
+    "newCraft",
   ]);
 
   // Craft Button Flash
@@ -492,27 +456,48 @@ export function addCraftButton() {
 }
 
 // !Execute craft
-export function executeCraft(toolState, craftState, inventoryState, tableState) {
+export function executeCraft(
+  toolState,
+  craftState,
+  inventoryState,
+  tableState
+) {
   craftingBackend(toolState, inventoryState.ingredients, craftState);
   destroyAll("newCraft");
-
-
 }
 export function updateCraftUI(craftState) {
-  add([
+  const resultText = add([
     text(`${craftState.result.itemKey}, { size: 20 }`),
-    pos(100 + 500 + 50-50, 100 + 50+100-25),
+    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
     color(255, 255, 255),
     z(500),
     "craft",
-    "executedCraft"
+    "executedCraft",
+  ]);
+
+  const resultItem = add([
+    // rect(item.width, item.height) ,
+    pos((firstItemPosition.x +secondItemPosition.x)/2, (firstItemPosition.y +secondItemPosition.y)/2),
+    z(12),
+    // color(item.color.r, item.color.g, item.color.b),
+    "craft",
+    "result",
+    sprite(`${craftState.result.itemKey}`),
+    // rect(10,10),
+    // sprite(`${image}`),
+    scale(1.5),
+    z(22),
+    "material",
+    "executedCraft",
+    {
+      itemKey: craftState.result.itemKey,
+    },
   ]);
 }
 // !End craft sequence
 export function closeCraftWindow(craftState, inventoryState) {
   // Close the craft window after pressing escape
-  // console.log("Pressed closed")
-  console.log("Destroying all craft items");
+  console.log("Destroying all craft items.");
   destroyAll("craft");
   inventoryState.ingredients = [];
 
@@ -526,7 +511,6 @@ export function closeCraftWindow(craftState, inventoryState) {
   craftState.current = "moving"; // Change state back to characterMovement
 }
 export function removeItemFromCraft(inventoryState) {
-  console.log("should remove button?");
   if (
     !firstItemPosition.used ||
     (firstItemPosition.used && !secondItemPosition.used) ||
@@ -535,20 +519,16 @@ export function removeItemFromCraft(inventoryState) {
     removeCraftButton();
   }
   // Remove the item from the crafting window
-  // console.log(craftItem1.itemKey)
   if (secondItemPosition.used) {
     destroyAll("item2");
     secondItemPosition.used = false;
     inventoryState.ingredients.splice(2, 1);
-    
   } else if (firstItemPosition.used) {
     destroyAll("item1");
     firstItemPosition.used = false;
     inventoryState.ingredients.splice(1, 1);
   }
 }
-
-
 
 export function removeCraftButton() {
   destroyAll("craftButton");

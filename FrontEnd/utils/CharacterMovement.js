@@ -81,6 +81,8 @@ class CharacterMovement {
       // Checks for enter keypress
       isCraftWindowOpen: false,
       current: "moving",
+      // There is either one or two items placed in the crafting window
+      readyToCraft: false,
     };
 
     // Inventory Control
@@ -192,8 +194,9 @@ class CharacterMovement {
     });
     // ON key press space, craft
     onKeyPress("space", () => {
-      if (craftState.current === "crafting") {
+      if (craftState.current === "crafting" && craftState.readyToCraft) {
         console.log("test, ran backend");
+        
         executeCraft(toolState, craftState, inventoryState, tableState);
         console.log("pressed space");
       }
