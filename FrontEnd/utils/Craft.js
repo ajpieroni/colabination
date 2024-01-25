@@ -346,6 +346,7 @@ export function selectItem(craftState, inventoryState) {
       addItemToCraftWindow(selectedItem);
     } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
+      addCraftButton();
       add([
         text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
         pos(100 + 500 - 50, 100 + 50 + 500 - 150),
@@ -417,7 +418,7 @@ export function closeCraftWindow(craftState, inventoryState) {
   craftState.isAddingItem = false;
   craftState.current = "moving"; // Change state back to characterMovement
 }
-export function removeItemFromCraft(craftState, inventoryState) {
+export function removeItemFromCraft() {
   // Remove the item from the crafting window
   // console.log(craftItem1.itemKey)
   if (secondItemPosition.used) {
@@ -427,4 +428,36 @@ export function removeItemFromCraft(craftState, inventoryState) {
     destroyAll("item1");
     firstItemPosition.used = false;
   }
+}
+
+export function addCraftButton() {
+  const craftButton = add([
+    rect(150, 50),
+    pos(400 + 50, 600),
+    z(52),
+    color(228, 228, 228),
+    "crafting",
+    "craft",
+  ]);
+  const craftButtonText =
+  add([
+    text("Make!"),
+    pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+    z(53),
+    color(0, 0, 0), // color of the text,
+    scale(0.5),
+    "crafting",
+    "craft",
+  ]);
+
+  // Craft Button Flash
+  let isBright = true;
+  setInterval(() => {
+    if (isBright) {
+      craftButton.color = rgb(228, 228, 228); // less bright color
+    } else {
+      craftButton.color = rgb(80, 80, 80); // original color
+    }
+    isBright = !isBright;
+  }, 250); // the button color will toggle every 500ms
 }
