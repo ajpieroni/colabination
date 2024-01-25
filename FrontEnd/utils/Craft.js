@@ -354,13 +354,13 @@ export function selectItem(craftState, inventoryState) {
     } else if (firstItemPosition.used && secondItemPosition.used) {
       // If both are filled, display an alert
       addCraftButton();
-      add([
-        text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
-        pos(100 + 500 - 50, 100 + 50 + 500 - 150),
-        color(255, 255, 255),
-        z(500),
-        "craft",
-      ]);
+      // add([
+      //   text("Both spaces are filled; TBD press space to craft!", { size: 16 }),
+      //   pos(100 + 500 - 50, 100 + 50 + 500 - 150),
+      //   color(255, 255, 255),
+      //   z(500),
+      //   "craft",
+      // ]);
     }
   }
   // After the first open, set this to true to make a valid item next time they press enter
@@ -440,7 +440,7 @@ export function removeItemFromCraft() {
 export function addCraftButton() {
   const craftButton = add([
     rect(150, 50),
-    pos(400 + 50, 600),
+    pos(50+100 + 500 - 50+50+50-25, 100 + 50 + 500-100+50-100-50),
     z(52),
     color(228, 228, 228),
     "crafting",
@@ -449,7 +449,7 @@ export function addCraftButton() {
   const craftButtonText =
   add([
     text("Make!"),
-    pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+    pos(50+100 +10 + 10+500 - 50+50+50-25+25, 100 -5 + 50 + 500-100+50-100-50+25-5), // adjust as necessary to position the text on the button
     z(53),
     color(0, 0, 0), // color of the text,
     scale(0.5),
