@@ -462,7 +462,7 @@ class Settings {
     add([sprite("Dasol"), pos(480, 350), scale(6.5), z(2)]);
     add([sprite("Sophia"), pos(660, 350), scale(6.5), z(2)]);
 
-    add([sprite("Anni"), pos(-60, -5), scale(6.5), z(5)]);
+    add([sprite("Anni"), pos(-20, -5), scale(4), z(5)]);
     add([
       rect(725, 250),
       z(1),
