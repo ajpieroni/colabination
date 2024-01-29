@@ -145,7 +145,6 @@ export function clearTable(inventoryState, tableState) {
 
 // !CRAFTING
 export function craftingBackend(toolState, ingredients, craftState) {
-  console.log(ingredients);
 
   let toolId;
   if (toolState.toolAccess) {
@@ -167,8 +166,6 @@ export function craftingBackend(toolState, ingredients, craftState) {
         fetch(`http://localhost:8081/items/find_by_name/${item2sprite}`)
           .then((response) => response.json())
           .then((item2data) => {
-            console.log(item1sprite,
-              item2sprite)
             fetchCombination(
               toolId,
               item1data.id,
@@ -228,11 +225,8 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
 }
 
 function handleCreation(creation, final, item, craftState) {
-  console.log(creation)
-  
   craftState.result.itemKey = creation;
   craftState.result.isFinal = final;
-  console.log(craftState.result)
   updateCraftUI(craftState);
 
 }
@@ -240,7 +234,6 @@ function handleCreation(creation, final, item, craftState) {
 // !NEW CRAFT, current = "crafting"
 export function openCraftWindow(craftState, inventoryState, toolState) {
   inventoryState.vendingSelect = 0;
-  console.log(toolState);
   // If they pressed enter on the craft prompt, open the craft window
   if (craftState.craftSelected) {
     add([
@@ -481,7 +474,6 @@ export function executeCraft(
   
 }
 export function updateCraftUI(craftState) {
-  console.log(craftState.result)
   const resultText = add([
     text(`You made ${craftState.result.itemKey}!`),
     pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
@@ -569,7 +561,6 @@ export function addReCraftButton(craftState) {
 // !Restart sequence, current = "crafting"
 export function restartCraft(craftState, inventoryState, toolState){
   destroyAll("executedCraft");
-  console.log(toolState)
   craftState.readyToCraft = false;
   craftState.resultReady = false;
   craftState.current = "crafting";
