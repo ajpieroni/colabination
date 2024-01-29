@@ -91,38 +91,39 @@ export function closeBackpack() {
 // Left selection in backpack
 export function onKeyPressLeft(inventoryState, craftState) {
   if (craftState.popUp) {
-    if (inventoryState.vendingSelect > 0) {
-      inventoryState.vendingSelect--;
-      destroyAll("selected");
-      let gridX = inventoryState.vendingSelect % 3;
-      let gridY = Math.floor(inventoryState.vendingSelect / 3);
-      const selected = add([
-        rect(70, 70),
-        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
-        z(19),
-        color(255, 255, 255),
-        "selected",
-      ]);
-      destroyAll("itemText");
-      let itemText =
-        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-        }),
-        area(),
-        anchor("center"),
-        pos(325, 625),
-        z(20),
-      ]);
-      return inventoryState.vendingSelect;
+
+      if (inventoryState.vendingSelect > 0) {
+        inventoryState.vendingSelect--;
+        destroyAll("selected");
+        let gridX = inventoryState.vendingSelect % 3;
+        let gridY = Math.floor(inventoryState.vendingSelect / 3);
+        const selected = add([
+          rect(70, 70),
+          pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+          z(19),
+          color(255, 255, 255),
+          "selected",
+        ]);
+        destroyAll("itemText");
+        let itemText =
+          inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+        ]);
+        return inventoryState.vendingSelect;
+      }
     }
   }
-}
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
   if (craftState.popUp) {
@@ -164,10 +165,7 @@ export function onKeyPressRight(inventoryState, craftState) {
   }
 }
 // Down selection in backpack
-export function onKeyPressDown(
-  inventoryState,
-  craftState
-) {
+export function onKeyPressDown(inventoryState, craftState) {
   if (craftState.popUp) {
     if (
       inventoryState.vendingSelect + 3 <
@@ -218,7 +216,7 @@ export function onKeyPressUp(inventoryState, craftState) {
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
         rect(70, 70),
-        pos(393 -200 + gridX * 86, 305 + gridY * 100),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
         color(255, 255, 255),
         "selected",
@@ -247,7 +245,8 @@ export function onKeyPressUp(inventoryState, craftState) {
   }
 }
 
-export function getCurrentItemInBackpack(inventoryState, craftState){
-  let currentItem = inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+export function getCurrentItemInBackpack(inventoryState, craftState) {
+  let currentItem =
+    inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
   return currentItem;
 }

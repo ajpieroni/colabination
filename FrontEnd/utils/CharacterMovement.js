@@ -594,20 +594,29 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
-      onKeyPressLeft(inventoryState, craftState);
+      console.log(craftState.current);
+      if (craftState.current !== "executed") {
+        onKeyPressLeft(inventoryState, craftState);
+      }
     });
 
     onKeyPress("right", () => {
-      onKeyPressRight(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressRight(inventoryState, craftState);
+      }
     });
 
     onKeyPress("down", () => {
       console.log("down");
-      onKeyPressDown(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressDown(inventoryState, craftState);
+      }
     });
 
     onKeyPress("up", () => {
-      onKeyPressUp(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressUp(inventoryState, craftState);
+      }
     });
 
     onKeyPress("m", () => {
