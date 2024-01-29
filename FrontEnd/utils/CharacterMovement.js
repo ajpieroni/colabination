@@ -122,6 +122,10 @@ class CharacterMovement {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
+    let music = {
+      volume: volumeSetting,
+    }
+    
 
     // Player
     setSpeed(300);
@@ -178,20 +182,20 @@ class CharacterMovement {
         toolState.toolAccess &&
         inventoryState.vendingContents.length > 0
       ) {
-        openCraftWindow(craftState, inventoryState, toolState);
+        openCraftWindow(craftState, inventoryState, toolState, music);
         craftState.current = "crafting"; // Change state to craft
       } else if (
         craftState.current === "crafting" &&
         !craftState.isAddingItem
       ) {
-        selectItem(craftState, inventoryState);
+        selectItem(craftState, inventoryState, music);
       }
     });
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
       if (craftState.current === "crafting") {
-        removeItemFromCraft(inventoryState);
+        removeItemFromCraft(inventoryState, music);
       }
     });
 
@@ -199,7 +203,7 @@ class CharacterMovement {
     onKeyPress("space", () => {
       console.log("Current state:", craftState.current);
       if (craftState.current === "crafting" && craftState.readyToCraft) {
-        executeCraft(toolState, craftState, inventoryState, tableState);
+        executeCraft(toolState, craftState, inventoryState, tableState, music);
       } else if (craftState.current === "executed") {
         restartCraft(craftState, inventoryState, toolState);
       }
@@ -267,7 +271,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState);
+      craftingBackend(toolState, ingredients, craftState, music);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
