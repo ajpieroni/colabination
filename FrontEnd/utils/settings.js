@@ -462,10 +462,54 @@ class Settings {
     add([sprite("Dasol"), pos(480, 350), scale(6.5), z(2)]);
     add([sprite("Sophia"), pos(660, 350), scale(6.5), z(2)]);
 
+    add([sprite("Anni"), pos(-60, -5), scale(6.5), z(5)]);
+    add([
+      rect(725, 250),
+      z(1),
+      pos(250, 100),
+      color(255, 255, 255),
+      opacity(0.5),
+      outline(6, rgb(255, 255, 255)),
+      area(),
+    ])
+
     let devIndex = 0;
     let devIndexX = -60;
     if (devIndex == 0) {
-      add([sprite("AlexGlow"), pos(-60, 350), scale(6.5), z(1), "AlexGlow"]);
+      add([sprite("AlexGlow"), pos(-60, 350), scale(6.5), z(1), "AlexGlow"]),
+      add([sprite("AlexBee"),  pos(650, 100), scale(0.2), z(100), "AlexGlow"]),
+
+      add([
+        text("Alex: How's it hanging!", {
+          size: 28,
+        }),
+        pos(300, 130),
+        color(70, 70, 70),
+        area(),
+        z(2),
+        "AlexGlow",
+      ]), 
+      add([
+        text("Favorite Item: Party ", {
+          size: 28,
+          width: 650
+        }),
+        pos(300, 165),
+        color(70, 70, 70),
+        area(),
+        z(2),
+        "AlexGlow",
+      ]), 
+      add([
+        text(`Fun Fact: I'm a beekeeper`, {
+          size: 28,
+        }),
+        pos(300, 200),
+        color(70, 70, 70),
+        area(),
+        z(2),
+        "AlexGlow",
+      ]);
     }
 
     onKeyPress("right", () => {
@@ -482,7 +526,48 @@ class Settings {
             z(1),
             "OllyGlow",
           ]),
-            destroyAll("AlexGlow");
+          add([
+            text("Hey! I'm Olly :)", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Favorite Item: Scarecrow because", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Halloween vibes", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Fun Fact: I go wild for Buldak Ramen",  {
+              size: 28,
+            }),
+            pos(300, 235),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          destroyAll("AlexGlow");
         } else if (devIndex == 2) {
           add([
             sprite("KelvinGlow"),
@@ -491,6 +576,40 @@ class Settings {
             z(1),
             "KelvinGlow",
           ]),
+          add([sprite("KelvinMeow"),  pos(420, 125), scale(7), z(100), "KelvinGlow"]),
+  
+          add([
+            text("Hi I'm Kelvin", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]), 
+          add([
+            text("Favorite Item: Corgi :)", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]), 
+          add([
+            text("Fun Fact: I have a cat named Boots", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]),
+
             destroyAll("OllyGlow");
         } else if (devIndex == 3) {
           add([
@@ -498,6 +617,47 @@ class Settings {
             pos(480, 350),
             scale(6.5),
             z(1),
+            "DasolGlow",
+          ]),
+          add([
+            text("Hey I'm Dasol! ^-^", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]), 
+          add([
+            text("Favorite Item: Origami, she cute", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]), 
+          add([
+            text("Fun Fact: My current art pursuit is", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]),
+          add([
+            text("embroidering Converse!",  {
+              size: 28,
+            }),
+            pos(300, 235),
+            color(70, 70, 70),
+            area(),
+            z(2),
             "DasolGlow",
           ]),
             destroyAll("KelvinGlow");
@@ -509,6 +669,48 @@ class Settings {
             z(1),
             "SophiaGlow",
           ]),
+          add([
+            text("Hi I'm Sophia", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "SophiaGlow",
+          ]), 
+          add([
+            text("Favorite Item: stained glass <3", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "SophiaGlow",
+          ]), 
+          add([
+            text("Fun Fact: I'm really good at golf", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "SophiaGlow",
+          ]),
+          add([
+            text("and drawing!!",  {
+              size: 28,
+            }),
+            pos(300, 235),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "SophiaGlow",
+          ]),
+
             destroyAll("DasolGlow");
       } else {
         devIndex = devIndexTemp;
@@ -528,6 +730,39 @@ class Settings {
             z(1),
             "AlexGlow",
           ]),
+          add([sprite("AlexBee"),  pos(650, 100), scale(0.2), z(100), "AlexGlow"]),
+
+          add([
+            text("Alex: How's it hanging!", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "AlexGlow",
+          ]), 
+          add([
+            text("Favorite Item: Party ", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "AlexGlow",
+          ]), 
+          add([
+            text(`Fun Fact: I'm a beekeeper`, {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "AlexGlow",
+          ]),
             destroyAll("OllyGlow");
         } else if (devIndex == 1) {
           add([
@@ -537,6 +772,47 @@ class Settings {
             z(1),
             "OllyGlow",
           ]),
+          add([
+            text("Hey! I'm Olly :)", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Favorite Item: Scarecrow because", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Halloween vibes", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
+          add([
+            text("Fun Fact: I go wild for Buldak Ramen",  {
+              size: 28,
+            }),
+            pos(300, 235),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "OllyGlow",
+          ]), 
             destroyAll("KelvinGlow");
         } else if (devIndex == 2) {
           add([
@@ -546,6 +822,39 @@ class Settings {
             z(1),
             "KelvinGlow",
           ]),
+          add([sprite("KelvinMeow"),  pos(420, 125), scale(7), z(100), "KelvinGlow"]),
+        
+          add([
+            text("Hi I'm Kelvin", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]), 
+          add([
+            text("Favorite Item: Corgi :)", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]), 
+          add([
+            text("Fun Fact: I have a cat named Boots", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "KelvinGlow",
+          ]),
             destroyAll("DasolGlow");
         } else {
           add([
@@ -553,6 +862,47 @@ class Settings {
             pos(480, 350),
             scale(6.5),
             z(1),
+            "DasolGlow",
+          ]),
+          add([
+            text("Hey I'm Dasol! ^-^", {
+              size: 28,
+            }),
+            pos(300, 130),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]), 
+          add([
+            text("Favorite Item: Origami, she cute", {
+              size: 28,
+              width: 650
+            }),
+            pos(300, 165),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]), 
+          add([
+            text("Fun Fact: My current art pursuit is", {
+              size: 28,
+            }),
+            pos(300, 200),
+            color(70, 70, 70),
+            area(),
+            z(2),
+            "DasolGlow",
+          ]),
+          add([
+            text("embroidering Converse!",  {
+              size: 28,
+            }),
+            pos(300, 235),
+            color(70, 70, 70),
+            area(),
+            z(2),
             "DasolGlow",
           ]),
             destroyAll("SophiaGlow");
