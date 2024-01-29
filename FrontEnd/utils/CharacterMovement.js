@@ -125,6 +125,7 @@ class CharacterMovement {
     let music = {
       volume: volumeSetting,
     }
+    window.music = music;
     
 
     // Player

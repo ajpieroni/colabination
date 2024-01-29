@@ -478,9 +478,9 @@ export function executeCraft(
   
 }
 export function updateCraftUI(craftState) {
-  // if(music.volume){
-  //   play("craftFX");
-  // }
+  if(music.volume){
+    play("craftFX");
+  }
   const resultText = add([
     text(`You made ${craftState.result.itemKey}!`),
     pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
