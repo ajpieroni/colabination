@@ -341,6 +341,11 @@ class UIManager{
     // kaboom event listeners (key, funciton)
         onKeyPress("enter", () => {
             go("characterMovement");
+            localStorage.setItem("tutorial", "false");
+        });
+        onKeyPress("z", () => {
+            go("characterMovement");
+            localStorage.setItem("tutorial", "true");
         });
 
         message.onStateEnter("flash-up", async () =>{
@@ -395,10 +400,11 @@ class UIManager{
             scale(.75),
         ])
         this.displayBlinkingUIMessage(
-            "Press [ Enter ] to Start Game",
+            "Press [ Enter ] to Start Game or [ Z ] for Tutorial",
             // kaboom, offers ability to make vec2
             vec2(center().x, center().y + 100)
         )
+        
     }
 
     
