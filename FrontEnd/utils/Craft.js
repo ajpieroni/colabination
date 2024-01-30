@@ -145,6 +145,7 @@ export function clearTable(inventoryState, tableState) {
 
 // !CRAFTING
 export function craftingBackend(toolState, ingredients, craftState) {
+
   let toolId;
   if (toolState.toolAccess) {
     toolId = toolState.currentTool.toolId;
@@ -152,7 +153,9 @@ export function craftingBackend(toolState, ingredients, craftState) {
     toolId = 3;
   }
   console.log("Crafting backend...");
+
   let item1sprite = ingredients[0];
+  
 
   let item2sprite = ingredients.length > 1 ? ingredients[1] : "nothing";
 
@@ -231,7 +234,6 @@ function handleCreation(creation, final, item, craftState) {
 // !NEW CRAFT, current = "crafting"
 export function openCraftWindow(craftState, inventoryState, toolState) {
   inventoryState.vendingSelect = 0;
-  console.log(toolState);
   // If they pressed enter on the craft prompt, open the craft window
   if (craftState.craftSelected) {
     add([
@@ -559,11 +561,12 @@ export function addReCraftButton(craftState) {
 // !Restart sequence, current = "crafting"
 export function restartCraft(craftState, inventoryState, toolState){
   destroyAll("executedCraft");
-  console.log(toolState)
   craftState.readyToCraft = false;
   craftState.resultReady = false;
   craftState.current = "crafting";
   openCraftWindow(craftState, inventoryState, toolState);
+  craftState.result = {};
+  inventoryState.ingredients = [];
 
   
 }
