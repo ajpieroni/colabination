@@ -54,7 +54,7 @@ export const load = {
         // !Sounds
         loadSound("bubble", "./assets/bubble.m4a")
         loadSound("soundtrack", "./assets/soundtrack.mp3")
-        loadSound("craftFX", "./assets/crafting.m4a")
+        loadSound("craftFX", "./assets/craftingshortest.m4a")
 
         // !Save Menu
         loadSprite("trees", "./assets/background.jpg")
