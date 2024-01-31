@@ -4,7 +4,14 @@ import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
-import { craftingBackend, openCraftWindow, closeCraftWindow } from "./Craft.js";
+import {
+  craftingBackend,
+  openCraftWindow,
+  closeCraftWindow,
+  removeItemFromCraft,
+  executeCraft,
+  restartCraft,
+} from "./Craft.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
@@ -72,9 +79,11 @@ class CharacterMovement {
       // Checks if they are opening the window for the first time, selected item is null
       firstOpen: true,
       isAddingItem: false,
-      // Checks for enter keypress 
+      // Checks for enter keypress
       isCraftWindowOpen: false,
       current: "moving",
+      // There is either one or two items placed in the crafting window
+      readyToCraft: false,
     };
 
     // Inventory Control
@@ -98,7 +107,7 @@ class CharacterMovement {
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
-      
+      ingredients: [],
     };
     let tableState = {
       atCraftingTable: false,
@@ -113,6 +122,11 @@ class CharacterMovement {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
+    let music = {
+      volume: volumeSetting,
+    }
+    window.music = music;
+    
 
     // Player
     setSpeed(300);
@@ -163,11 +177,36 @@ class CharacterMovement {
     // !NEW CRAFT
 
     onKeyPress("enter", () => {
-      if (craftState.current === "moving" && !craftState.popUp && toolState.toolAccess) {
-        openCraftWindow(craftState, inventoryState, toolState);
+      if (
+        craftState.current === "moving" &&
+        !craftState.popUp &&
+        toolState.toolAccess &&
+        inventoryState.vendingContents.length > 0
+      ) {
+        openCraftWindow(craftState, inventoryState, toolState, music);
         craftState.current = "crafting"; // Change state to craft
-      } else if (craftState.current === "crafting" && !craftState.isAddingItem) {
-        selectItem(craftState, inventoryState);
+      } else if (
+        craftState.current === "crafting" &&
+        !craftState.isAddingItem
+      ) {
+        selectItem(craftState, inventoryState, music);
+      }
+    });
+
+    // ON key press q, remove item from craft window
+    onKeyPress("q", () => {
+      if (craftState.current === "crafting") {
+        removeItemFromCraft(inventoryState, music);
+      }
+    });
+
+    // ON key press space, craft
+    onKeyPress("space", () => {
+      console.log("Current state:", craftState.current);
+      if (craftState.current === "crafting" && craftState.readyToCraft) {
+        executeCraft(toolState, craftState, inventoryState, tableState, music);
+      } else if (craftState.current === "executed") {
+        restartCraft(craftState, inventoryState, toolState);
       }
     });
 
@@ -233,8 +272,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState);
-
+      craftingBackend(toolState, ingredients, craftState, music);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -561,20 +599,29 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
-      onKeyPressLeft(inventoryState, craftState);
+      console.log(craftState.current);
+      if (craftState.current !== "executed") {
+        onKeyPressLeft(inventoryState, craftState);
+      }
     });
 
     onKeyPress("right", () => {
-      onKeyPressRight(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressRight(inventoryState, craftState);
+      }
     });
 
     onKeyPress("down", () => {
       console.log("down");
-      onKeyPressDown(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressDown(inventoryState, craftState);
+      }
     });
 
     onKeyPress("up", () => {
-      onKeyPressUp(inventoryState, craftState);
+      if (craftState.current !== "executed") {
+        onKeyPressUp(inventoryState, craftState);
+      }
     });
 
     onKeyPress("m", () => {
