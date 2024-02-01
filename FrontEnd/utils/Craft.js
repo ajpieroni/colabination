@@ -483,8 +483,18 @@ export function updateCraftUI(craftState) {
   if(music.volume){
     play("craftFX");
   }
+
+
+  let resultDisplay = craftState.result.itemKey
+    // space
+    .replace(/([A-Z])/g, " $1")
+    //trim
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+
   const resultText = add([
-    text(`You made ${craftState.result.itemKey}!`),
+    text(`You made ${resultDisplay}!`, { size: 24 }),
     pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
     color(255, 255, 255),
     z(500),
