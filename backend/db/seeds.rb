@@ -39,7 +39,7 @@ puts 'seeding'
 # Creating glass trail
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
-    brokenglass = Item.create(name: 'brokenglass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
+    brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
     # Creating plastic trail
     vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
     # creating thread trail
@@ -145,7 +145,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Glass combos:
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
-    Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenglass)
+    Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
