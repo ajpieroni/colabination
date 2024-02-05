@@ -641,13 +641,13 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
     !inventoryState.vendingKeys.includes(craftState.result.itemKey) &&
     !craftState.result.isFinal
   ) {
-    console.log("passed", !craftState.result.isFinal);
+    // console.log("passed", !craftState.result.isFinal);
     inventoryState.vendingContents.push(resultItem);
 
     inventoryState.vendingKeys.push(resultItem.itemKey);
   }
   if (craftState.result.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
-    console.log(`${craftState.result.itemKey} pushed to documentation station.`);
+    // console.log(`${craftState.result.itemKey} pushed to documentation station.`);
     inventoryState.areFinal.push(resultItem.itemKey);
   }
 }

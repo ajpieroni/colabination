@@ -30,7 +30,7 @@ export function updatePocketVending(
       { image: material.itemKey },
       { itemKey: material.itemKey },
     ]);
-    console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
+    // console.log(`Pushed item, ${newItem}, ${newItem.itemKey}`);
     inPocket.push(newItem);
     itemsInPocket++;
     let n = true;

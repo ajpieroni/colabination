@@ -612,7 +612,7 @@ class CharacterMovement {
     });
 
     onKeyPress("down", () => {
-      console.log("down");
+      // console.log("down");
       if (craftState.current !== "executed") {
         onKeyPressDown(inventoryState, craftState);
       }

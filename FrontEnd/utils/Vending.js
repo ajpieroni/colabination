@@ -1,6 +1,6 @@
 // Opens backpack window
 export function openBackpack(contents, craftState) {
-  console.log(contents)
+  // console.log(contents)
   // craftState.popUp = true;
   const popup = add([
     sprite("backpack"),
@@ -76,7 +76,7 @@ export function openBackpack(contents, craftState) {
         itemKey: itemKey,
       },
     ]);
-    console.log(`added ${vendingItem.itemKey} to vending machine`);
+    // console.log(`added ${vendingItem.itemKey} to vending machine`);
 
     // console.log(currRow);
     currRow++;
