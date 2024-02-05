@@ -718,6 +718,14 @@ class CharacterMovement {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
+        let resultDisplay = itemText
+        // space
+        .replace(/([A-Z])/g, " $1")
+        //trim
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+    
 
         // const itemKey = item.itemKey;
         // starts a new line
@@ -738,7 +746,7 @@ class CharacterMovement {
 
         const finalItemText = add([
           pos(currentX, currentY + 50),
-          text(itemText, {
+          text(resultDisplay, {
             // optional object
             size: 16,
             color: (255, 255, 255),
