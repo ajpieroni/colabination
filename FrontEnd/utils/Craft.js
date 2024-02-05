@@ -475,7 +475,7 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
-  craftingBackend(toolState, ingredients, craftState, inventoryState, music);
+  craftingBackend(toolState, inventoryState.ingredients, craftState, inventoryState, music);
   destroyAll("newCraft");
 }
 export function updateCraftUI(craftState) {
