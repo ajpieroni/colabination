@@ -227,9 +227,9 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState, invent
 function handleCreation(creation, final, item, craftState, inventoryState) {
   craftState.result.itemKey = creation;
   craftState.result.isFinal = final;
-  updateCraftUI(craftState);
+  updateCraftUI(craftState, inventoryState);
 
-  addItemToBackpack(inventoryState, craftState);
+  // addItemToBackpack(inventoryState, craftState);
 }
 
 // !NEW CRAFT, current = "crafting"
@@ -478,7 +478,7 @@ export function executeCraft(
   craftingBackend(toolState, inventoryState.ingredients, craftState, inventoryState, music);
   destroyAll("newCraft");
 }
-export function updateCraftUI(craftState) {
+export function updateCraftUI(craftState, inventoryState) {
   if (music.volume) {
     play("craftFX");
   }
@@ -521,6 +521,7 @@ export function updateCraftUI(craftState) {
       itemKey: craftState.result.itemKey,
     },
   ]);
+  addItemToBackpack(inventoryState, craftState, resultItem);
   craftState.readyToCraft = true;
   craftState.resultReady = false;
   addReCraftButton(craftState);
@@ -633,20 +634,20 @@ export function removeCraftButton() {
   destroyAll("craftButton");
 }
 
-export function addItemToBackpack(inventoryState, craftState) {
+export function addItemToBackpack(inventoryState, craftState, resultItem) {
   if (
     !inventoryState.vendingContents.includes(craftState.result.itemKey) &&
     !inventoryState.vendingKeys.includes(craftState.result.itemKey) &&
     !craftState.result.isFinal
   ) {
     console.log("passed", !craftState.result.isFinal);
-    inventoryState.vendingContents.push(craftState.result);
+    inventoryState.vendingContents.push(resultItem);
 
-    inventoryState.vendingKeys.push(craftState.result.itemKey);
+    inventoryState.vendingKeys.push(resultItem.itemKey);
   }
 
   if (craftState.result.isFinal.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
     console.log(`${craftState.result.itemKey} pushed to documentation station.`);
-    inventoryState.areFinal.push(craftState.result.itemKey);
+    inventoryState.areFinal.push(resultItem.itemKey);
   }
 }
