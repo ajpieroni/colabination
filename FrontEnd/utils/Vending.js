@@ -1,5 +1,6 @@
 // Opens backpack window
 export function openBackpack(contents, craftState) {
+  console.log(contents)
   // craftState.popUp = true;
   const popup = add([
     sprite("backpack"),
@@ -18,6 +19,7 @@ export function openBackpack(contents, craftState) {
   if (contents.length > 0) {
     // itemText = (vendingContents[vendingSelect].itemKey);
     let itemText = contents[0].itemKey;
+    
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
     const selectedText = add([
