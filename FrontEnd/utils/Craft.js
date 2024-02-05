@@ -645,8 +645,7 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
 
     inventoryState.vendingKeys.push(resultItem.itemKey);
   }
-
-  if (craftState.result.isFinal.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
+  if (craftState.result.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
     console.log(`${craftState.result.itemKey} pushed to documentation station.`);
     inventoryState.areFinal.push(resultItem.itemKey);
   }
