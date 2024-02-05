@@ -583,6 +583,7 @@ export function restartCraft(craftState, inventoryState, toolState) {
   craftState.readyToCraft = false;
   craftState.resultReady = false;
   craftState.current = "crafting";
+  closeBackpack();
   openCraftWindow(craftState, inventoryState, toolState);
   craftState.result = {};
   inventoryState.ingredients = [];
