@@ -639,8 +639,8 @@ export function addItemToBackpack(inventoryState, craftState) {
     !inventoryState.vendingKeys.includes(craftState.result.itemKey) &&
     !craftState.result.isFinal
   ) {
-    console.log("passed",     !craftState.result.isFinal);
-    inventoryState.vendingContents.push(madeItem);
+    console.log("passed", !craftState.result.isFinal);
+    inventoryState.vendingContents.push(craftState.result);
     inventoryState.vendingKeys.push(craftState.result.itemKey);
   }
 
