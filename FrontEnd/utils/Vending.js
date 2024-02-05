@@ -76,6 +76,7 @@ export function openBackpack(contents, craftState) {
         itemKey: itemKey,
       },
     ]);
+    console.log(`added ${vendingItem.itemKey} to vending machine`);
 
     // console.log(currRow);
     currRow++;
