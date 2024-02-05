@@ -15,6 +15,7 @@ export function openBackpack(contents, craftState) {
   let currentX = startX;
   let currentY = startY;
   let currRow = 0;
+  // console.log(inventoryState.vendingContents.length);
   contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
   if (contents.length > 0) {
     // itemText = (vendingContents[vendingSelect].itemKey);
