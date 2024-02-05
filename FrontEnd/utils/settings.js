@@ -292,7 +292,6 @@ class Settings {
     // Exit menu
     onKeyPress("m", () => {
       music.paused = true;
-      this.testValue += 5;
 
       go("characterMovement", { testValue: this.testValue });
     });
@@ -301,7 +300,6 @@ class Settings {
   //for controls page
   displayControls() {
     add([sprite("coolBG"), scale(1.4)]);
-
     add([
       rect(600, 550),
       // z(1),
