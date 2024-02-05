@@ -272,7 +272,7 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState, music);
+      craftingBackend(toolState, ingredients, craftState, inventoryState, music);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));

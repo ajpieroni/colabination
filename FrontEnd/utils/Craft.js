@@ -144,7 +144,7 @@ export function clearTable(inventoryState, tableState) {
 }
 
 // !CRAFTING
-export function craftingBackend(toolState, ingredients, craftState) {
+export function craftingBackend(toolState, ingredients, craftState, inventoryState, music) {
   let toolId;
   if (toolState.toolAccess) {
     toolId = toolState.currentTool.toolId;
@@ -169,12 +169,13 @@ export function craftingBackend(toolState, ingredients, craftState) {
               item1data.id,
               item2data.id,
               handleCreation,
-              craftState
+              craftState,
+              inventoryState
             );
           })
           .catch((error) => console.error("Error fetching item 2:", error));
       } else {
-        fetchCombination(toolId, item1data.id, 6, handleCreation, craftState);
+        fetchCombination(toolId, item1data.id, 6, handleCreation, craftState, inventoryState);
       }
     })
     .catch((error) => console.error("Error fetching item 1:", error));
@@ -185,7 +186,7 @@ export function craftingBackend(toolState, ingredients, craftState) {
   // http://localhost:8081/combinations?tool=1&item1=1&item2=1
 }
 
-function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
+function fetchCombination(toolId, item1Id, item2Id, callback, craftState, inventoryState) {
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -210,7 +211,8 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState) {
             data.creation,
             additionalData.data.isFinal,
             data,
-            craftState
+            craftState,
+            inventoryState
           );
         })
         .catch((error) => {
@@ -473,7 +475,7 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
-  craftingBackend(toolState, inventoryState.ingredients, craftState);
+  craftingBackend(toolState, ingredients, craftState, inventoryState, music);
   destroyAll("newCraft");
 }
 export function updateCraftUI(craftState) {
