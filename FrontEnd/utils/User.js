@@ -13,6 +13,7 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         return response.json();
       })
       .then((data) => {
+        console.log(localStorage.getItem("tutorial"));
         const items = data.items; 
         console.log("items", items);
         if(localStorage.getItem("tutorial") == "true"){
@@ -22,10 +23,13 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
         // );
-        if (items.length == 0 && !localStorage.getItem("tutorial") == "true"){
+        console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
+        if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
           InitialItems(["glass", "thread", "paper", "metal"]);
         }
-        if (items.length !== 0 && !localStorage.getItem("tutorial") == "true"){
+        if (items.length !== 0){
+          // if player has played and wants to do tutorial again
+
           const materials = ["glass", "thread", "paper", "metal"];
 
           materials.forEach((material) => {
