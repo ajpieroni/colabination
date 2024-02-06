@@ -125,21 +125,31 @@ export function onKeyPressLeft(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText =
-        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-        }),
-        area(),
-        anchor("center"),
-        pos(325, 625),
-        z(20),
-      ]);
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      console.log(itemText);
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+          // scale(.5)
+        ]);
+      }
+      console.log(itemText);
       return inventoryState.vendingSelect;
     }
   }
@@ -170,24 +180,26 @@ export function onKeyPressRight(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       console.log(itemText);
-
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(325, 625),
-        z(20),
-        // scale(.5)
-      ]);
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+          // scale(.5)
+        ]);
+      }
+      console.log(itemText);
     }
   }
 }
@@ -211,29 +223,6 @@ export function onKeyPressDown(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
-      const itemsPerPage = 9;
-      const startIndex = inventoryState.page * itemsPerPage;
-      const actualIndex = startIndex + inventoryState.vendingSelect;
-
-      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      console.log(itemText);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(325, 625),
-        z(20),
-
-        // scale(.5)
-      ]);
     }
   }
 }
@@ -258,24 +247,26 @@ export function onKeyPressUp(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-
-      itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-      const selectedText = add([
-        "itemText",
-        text(itemText, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (0, 0, 0),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(500 - 200 + 25, 500 + 100 + 25),
-        z(20),
-
-        // scale(.5)
-      ]);
+      console.log(itemText);
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+          // scale(.5)
+        ]);
+      }
+      console.log(itemText);
     }
   }
 }
