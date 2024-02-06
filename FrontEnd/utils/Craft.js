@@ -362,6 +362,7 @@ export function selectItem(craftState, inventoryState, music) {
 }
 
 export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
+  console.log(`Adding ${currentItem} to the crafting window.`)
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)

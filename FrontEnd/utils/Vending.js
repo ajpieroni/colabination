@@ -1,7 +1,9 @@
 // Opens backpack window
 export function openBackpack(inventoryState, craftState) {
   // contents is an array, index into the array to get the current page, where the page is 9 items long
-  inventoryState.vendingContents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
+  inventoryState.vendingContents.sort((a, b) =>
+    a.itemKey.localeCompare(b.itemKey)
+  );
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
@@ -9,8 +11,10 @@ export function openBackpack(inventoryState, craftState) {
   console.log(inventoryState.vendingContents);
   console.log(totalcontents);
   console.log(currentPage);
-  console.log(contents);
-  
+  console.log("here are contents!!!", contents);
+  contents.forEach((element) => {
+    console.log(element.itemKey);
+  });
 
   // let contents = inventoryState.vendingContents;
   // let currentPage = inventoryState.page;
@@ -51,7 +55,8 @@ export function openBackpack(inventoryState, craftState) {
   let currentY = startY;
   let currRow = 0;
   // console.log(inventoryState.vendingContents.length);
-  contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
+  // Already sorted above
+  // contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
   if (contents.length > 0) {
     // itemText = (vendingContents[vendingSelect].itemKey);
     console.log(contents[0].itemKey);
@@ -123,16 +128,12 @@ export function openBackpack(inventoryState, craftState) {
   // isPopupVisible = true;
 }
 // Get current page of backpack
-export function getCurrentPage(contents, currentPage) {
-  return contents[currentPage - 1];
-  // return inventoryState.page;
-}
 
 export function chunkArray(array, chunkSize) {
   let result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
-      let chunk = array.slice(i, i + chunkSize);
-      result.push(chunk);
+    let chunk = array.slice(i, i + chunkSize);
+    result.push(chunk);
   }
   return result;
 }
@@ -304,8 +305,33 @@ export function onKeyPressUp(inventoryState, craftState) {
 }
 
 export function getCurrentItemInBackpack(inventoryState, craftState) {
-  let currentItem =
-    inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+  const itemsPerPage = 9;
+  // const startIndex = inventoryState.page * itemsPerPage;
+  let startIndex;
+  if (inventoryState.page === 0) {
+    startIndex = 0;
+  } else {
+    startIndex = inventoryState.page * itemsPerPage;
+  }
+
+  // if page = 1, start index = 9
+
+  // Get the actual index in the vendingContents array
+  const actualIndex = startIndex + inventoryState.vendingSelect;
+
+  let currentItem;
+  if (inventoryState.page == 0) {
+    currentItem =
+      inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+  } else {
+    currentItem = inventoryState.vendingContents[actualIndex].itemKey;
+  }
+
+  // Access the item using the actual index and get its itemKey
+  console.log(
+    `Actual index: ${actualIndex} ${inventoryState.vendingContents[actualIndex]}`
+  );
+
   return currentItem;
 }
 
