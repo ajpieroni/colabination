@@ -1,17 +1,28 @@
 // Opens backpack window
 export function openBackpack(inventoryState, craftState) {
-  let contents = inventoryState.vendingContents;
+  // contents is an array, index into the array to get the current page, where the page is 9 items long
+  inventoryState.vendingContents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
+  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
-  console.log(inventoryState.page)
+  let contents = totalcontents[currentPage];
+
+  console.log(inventoryState.vendingContents);
+  console.log(totalcontents);
+  console.log(currentPage);
+  console.log(contents);
+  
+
+  // let contents = inventoryState.vendingContents;
+  // let currentPage = inventoryState.page;
+  // console.log(inventoryState.page)
 
   // paging system:
-    // pages is initially 0
-    // if contents.length > 9, pages = Math.ceil(contents.length / 9)
-    // if pages > 1, contents = contents.slice((currentPage - 1) * 9, currentPage * 9)
-    // if pages > 1, add buttons for next and previous page
-    
-    // if pages > 1, add text for current page
+  // pages is initially 0
+  // if contents.length > 9, pages = Math.ceil(contents.length / 9)
+  // if pages > 1, contents = contents.slice((currentPage - 1) * 9, currentPage * 9)
+  // if pages > 1, add buttons for next and previous page
 
+  // if pages > 1, add text for current page
 
   // if(contents.length > 9){
   //   inventoryState.page = Math.ceil(contents.length / 9);
@@ -23,7 +34,6 @@ export function openBackpack(inventoryState, craftState) {
   //   contents = contents.slice((currentPage - 1) * 9, currentPage * 9);
   // }
   // console.log(contents)
-
 
   // console.log(contents)
   // craftState.popUp = true;
@@ -45,7 +55,7 @@ export function openBackpack(inventoryState, craftState) {
   if (contents.length > 0) {
     // itemText = (vendingContents[vendingSelect].itemKey);
     let itemText = contents[0].itemKey;
-    
+
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
     const selectedText = add([
@@ -111,6 +121,25 @@ export function openBackpack(inventoryState, craftState) {
 
   // isPopupVisible = true;
 }
+// Get current page of backpack
+export function getCurrentPage(contents, currentPage) {
+  return contents[currentPage - 1];
+  // return inventoryState.page;
+}
+
+export function chunkArray(array, chunkSize) {
+  let result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+      let chunk = array.slice(i, i + chunkSize);
+      result.push(chunk);
+  }
+  return result;
+}
+// when at bottom index of contents, if they keep pressing down then it should go to the next page
+// when at top index of contents, if they keep pressing up then it should go to the previous page
+// if they press left or right, it should change the selected item
+// if they press enter, it should select the item
+
 // Closes backpack window, and text
 export function closeBackpack() {
   destroyAll("vending");
