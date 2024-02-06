@@ -3,6 +3,7 @@ import { uiManager } from "./utils/UIManager.js"
 import { load } from "./utils/loader.js"
 import { characterMovement } from "./utils/CharacterMovement.js"
 import { settings } from "./utils/settings.js"
+import { tutorial } from "./utils/tutorial.js"
 
 kaboom({
     width: 2048/2,
@@ -47,6 +48,10 @@ const scenes = {
         characterMovement.play()
         
 
+    },
+    tutorial: () =>{
+        tutorial.display()
+        tutorial.play()
     },
     settings: () =>{
         settings.displaySettingsMenu()

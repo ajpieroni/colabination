@@ -70,7 +70,7 @@ class CharacterMovement {
   play() {
     let craftState = {
       craftCheck: false,
-      resultReady: false,
+      resultReay: false,
       result: { itemKey: "", isFinal: false },
       // Checks if they've pressed enter on the craft prompt
       craftSelected: false,

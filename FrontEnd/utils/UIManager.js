@@ -344,7 +344,7 @@ class UIManager{
             localStorage.setItem("tutorial", "false");
         });
         onKeyPress("z", () => {
-            go("characterMovement");
+            go("tutorial");
             localStorage.setItem("tutorial", "true");
         });
 

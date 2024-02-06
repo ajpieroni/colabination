@@ -40,7 +40,7 @@ import {
 } from "./Collide.js";
 import { checkCraftable, clearTable, dropItem } from "./Craft.js";
 
-class CharacterMovement {
+class Tutorial {
   // This file acts as our main control.
   music = null;
   constructor() {
@@ -122,7 +122,38 @@ class CharacterMovement {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
+      
+    onKeyDown("a", () => {
+      // .move() is provided by pos() component, move by pixels per second
+      player.move(-getSpeed(), 0);
+    });
+    onKeyDown("d", () => {
+      player.move(getSpeed(), 0);
+    });
 
+    onKeyDown("w", () => {
+      player.move(0, -getSpeed());
+    });
+
+    onKeyDown("s", () => {
+      player.move(0, getSpeed());
+    });
+    // Arrow Keys
+    onKeyDown("left", () => {
+      // .move() is provided by pos() component, move by pixels per second
+      player.move(-getSpeed(), 0);
+    });
+    onKeyDown("right", () => {
+      player.move(getSpeed(), 0);
+    });
+
+    onKeyDown("up", () => {
+      player.move(0, -getSpeed());
+    });
+
+    onKeyDown("down", () => {
+      player.move(0, getSpeed());
+    });
     // Player
     setSpeed(300);
     const player = add([
@@ -344,463 +375,132 @@ class CharacterMovement {
         }
         isBright = !isBright;
       }, 250); // the button color will toggle every 500ms
-      // !TODO: dynamic
-      // let craftState.result = "wood";
-
-      // onKeyPress("enter", () => {
-      //   console.log("Result ready: ", craftState.resultReady);
-      //   if (
-      //     inventoryState.tableItems.length >= 1 &&
-      //     !inventoryState.isPopupVisible &&
-      //     !craftState.craftCheck &&
-      //     craftState.resultReady
-      //   ) {
-      //     // !Testing
-
-      //     craftState.craftCheck = !craftState.craftCheck;
-
-      //     console.log("here is popup", inventoryState.isPopupVisible);
-      //     console.log("MADE CRAFT CALLED, enter pressed");
-      //     madeCraft(craftState);
-
-      //     async function madeCraft(craftState) {
-      //       console.log("Here is craft state: ", craftState);
-      //       craftState.resultReady = false;
-      //       handleSavingData(
-      //         inventoryState.vendingKeys,
-      //         inventoryState.hasSavedItems,
-      //         inventoryState.areFinal,
-      //         inventoryState.currItems,
-      //         inventoryState.currTools,
-      //         inventoryState.currFinals,
-      //         inventoryState.hasSavedFinal
-      //       );
-      //       let craftText = `You made ${craftState.result.itemKey}! ${
-      //         craftState.result.isFinal
-      //           ? `You can find ${craftState.result.itemKey} in the documentation station.`
-      //           : ""
-      //       }`;
-
-      //       let textSizeX = craftState.result.isFinal
-      //         ? 350 - 100 - 50 - 10 - 5 - 5 - 5 - 5
-      //         : 440 + 40 + 25 - 50;
-
-      //       destroyAll("crafting");
-      //       add([
-      //         text(craftText),
-      //         pos(textSizeX, 615),
-      //         z(53),
-      //         color(0, 0, 0),
-      //         scale(0.5),
-      //         "crafting",
-      //       ]);
-
-      //       await new Promise((resolve) => setTimeout(resolve, 500));
-      //       if (volumeSetting) {
-      //         play("bubble");
-      //       }
-      //       const trailCircle = add([
-      //         circle(64),
-      //         pos(440 + 40 + 25 + 25, 135 + 100),
-      //         z(52),
-      //         color(152, 251, 152),
-      //         "crafting",
-      //       ]);
-      //       const madeItem = add([
-      //         // rect(item.width, item.height) ,
-      //         pos(
-      //           440 + 40 + 25 + 25 - 25 - 5 - 5 - 5,
-      //           135 + 100 + 25 - 50 - 10
-      //         ),
-      //         z(100),
-      //         // color(item.color.r, item.color.g, item.color.b),
-      //         "crafting",
-      //         sprite(`${craftState.result.itemKey}`),
-      //         // rect(10,10),
-      //         // sprite(`${image}`),
-      //         scale(1.5),
-      //         area(),
-      //         // z(11),
-      //         "madeItem",
-      //         {
-      //           itemKey: craftState.result.itemKey,
-      //           isFinal: craftState.result.isFinal,
-      //         },
-      //       ]);
-
-      //       if (
-      //         !inventoryState.vendingContents.includes(madeItem.itemKey) &&
-      //         !inventoryState.vendingKeys.includes(madeItem.itemKey) &&
-      //         !madeItem.isFinal
-      //       ) {
-      //         console.log("passed", !madeItem.isFinal);
-      //         inventoryState.vendingContents.push(madeItem);
-      //         inventoryState.vendingKeys.push(madeItem.itemKey);
-      //       }
-
-      //       if (
-      //         madeItem.isFinal &&
-      //         !inventoryState.areFinal.includes(madeItem.itemKey)
-      //       ) {
-      //         console.log(`${madeItem.itemKey} pushed to are final`);
-      //         inventoryState.areFinal.push(madeItem.itemKey);
-      //       }
-      //       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      //       exitCraft();
-
-      //       if (volumeSetting) {
-      //         play("bubble");
-      //       }
-      //       let item = inventoryState.vendingContents[length - 1];
-      //       // console.log("here's item", item.itemKey)
-      //       if (!madeItem.isFinal) {
-      //         updatePocketVending(
-      //           craftState.result,
-      //           inventoryState.inPocket,
-      //           inventoryState.itemsInPocket,
-      //           volumeSetting
-      //         );
-      //         // // console.log(craftState.result);
-      //         // console.log(craftState.result.inventoryState.inPocket);
-      //         // // if (craftState.result.n) {
-      //         // //   inventoryState.inPocket = craftState.result.inventoryState.inPocket;
-      //         // //   inventoryState.itemsInPocket =
-      //         // //     craftState.result.inventoryState.itemsInPocket;
-      //         // // }
-
-      //         handleSavingData(
-      //           inventoryState.vendingKeys,
-      //           inventoryState.hasSavedItems,
-      //           inventoryState.areFinal,
-      //           inventoryState.currItems,
-      //           inventoryState.currTools,
-      //           inventoryState.currFinals,
-      //           inventoryState.hasSavedFinal
-      //         );
-      //       }
-      //       // updatePocket(madeItem, inventoryState.inPocket);
-      //       madeItem.use(body({ isStatic: true }));
-      //       // tableState.atCraftingTable = false;
-      //       return craftState.resultReady;
-      //     }
-      //     async function exitCraft() {
-      //       console.log(getSpeed());
-      //       setSpeed(300);
-      //       clearTable(inventoryState, tableState);
-      //       destroyAll("crafting");
-      //       destroyAll("madeItem");
-      //       destroyAll("craftPop");
-      //       isCraftingVisible = false;
-      //       craftState.craftCheck = false;
-      //       add([
-      //         text("Saving..."),
-      //         pos(615 - 100 - 50, 615),
-      //         z(53),
-      //         color(0, 0, 0),
-      //         scale(0.5),
-      //         "crafting",
-      //       ]);
-      //       await new Promise((resolve) => setTimeout(resolve, 1000));
-      //       destroyAll("crafting");
-      //     }
-      //   }
-      // });
-    }
-
-    // onKeyPress("enter", () => {
-    //   if (
-    //     toolState.toolAccess &&
-    //     inventoryState.isCraftable &&
-    //     !isCraftingVisible &&
-    //     inventoryState.tableItems.length >= 1 &&
-    //     !inventoryState.isPopupVisible &&
-    //     craftState.craftCheck == false
-    //   ) {
-    //     setSpeed(0);
-    //     console.log(getSpeed());
-    //     destroyAll("craft");
-    //     add([
-    //       "craft",
-    //       text("Crafting...", {
-    //         // optional object
-    //         size: 36,
-    //         outline: 4,
-    //         color: (0, 0, 0),
-    //         // can specify font here,
-    //       }),
-    //       area(),
-    //       anchor("center"),
-    //       pos(500, 500),
-    //       z(20),
-
-    //       // scale(.5)
-    //     ]);
-    //     if (volumeSetting) {
-    //       play("craftFX");
-    //     }
-    //     showContainer(inventoryState.tableItems);
-    //   }
-    // });
-
-    // onKeyPress("enter", () => {
-    //   setTimeout(() => {
-    //     destroyAll("alert");
-    //   }, 2000);
-    // });
-
-    //! Player Movement
-    // Player search
-    // WASD
-
-    onKeyDown("a", () => {
-      // .move() is provided by pos() component, move by pixels per second
-      player.move(-getSpeed(), 0);
-    });
-    onKeyDown("d", () => {
-      player.move(getSpeed(), 0);
-    });
-
-    onKeyDown("w", () => {
-      player.move(0, -getSpeed());
-    });
-
-    onKeyDown("s", () => {
-      player.move(0, getSpeed());
-    });
-    // Arrow Keys
-    onKeyDown("left", () => {
-      // .move() is provided by pos() component, move by pixels per second
-      player.move(-getSpeed(), 0);
-    });
-    onKeyDown("right", () => {
-      player.move(getSpeed(), 0);
-    });
-
-    onKeyDown("up", () => {
-      player.move(0, -getSpeed());
-    });
-
-    onKeyDown("down", () => {
-      player.move(0, getSpeed());
-    });
-
-    onCollideEnd("player", "craftingTable", () => {
-      tableState.atCraftingTable = false;
-    });
-
-    // !VENDING
-    let itemText = "";
-
-    // *TODO: move
-    onKeyPress("left", () => {
-      onKeyPressLeft(inventoryState, craftState);
-    });
-
-    onKeyPress("right", () => {
-      onKeyPressRight(inventoryState, craftState);
-    });
-
-    onKeyPress("down", () => {
-      console.log("down");
-      onKeyPressDown(inventoryState, craftState);
-    });
-
-    onKeyPress("up", () => {
-      onKeyPressUp(inventoryState, craftState);
-    });
-
-    onKeyPress("m", () => {
-      this.music.paused = true;
-      handleSavingData(
-        inventoryState.vendingKeys,
-        inventoryState.hasSavedItems,
-        inventoryState.areFinal,
-        inventoryState.currItems,
-        inventoryState.currTools,
-        inventoryState.currFinals,
-        inventoryState.hasSavedFinal
-      );
-      go("settings");
-    });
-
-    // onKeyPress("enter", () => {
-    //   if (
-    //     inventoryState.isPopupVisible &&
-    //     inventoryState.vendingContents.length > 0
-    //   ) {
-    //     let item = inventoryState.vendingContents[inventoryState.vendingSelect];
-
-    //     craftState.result = updatePocketVending(
-    //       item,
-    //       inventoryState.inPocket,
-    //       inventoryState.itemsInPocket,
-    //       volumeSetting
-    //     );
-    //     if (craftState.result.n) {
-    //       inventoryState.inPocket = craftState.result.inPocket;
-    //       inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-    //     }
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //   }
-    // });
-
-    // inventoryState.itemsInPocket = 0;
-
-    // backpack functionality
-    // onKeyPress("space", () => {
-    //   if (inventoryState.isPopupVisible) {
-    //     closeBackpack();
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //     inventoryState.isPopupVisible = false;
-    //     console.log(getSpeed());
-    //     setSpeed(300);
-    //   } else {
-    //     if (!collisionState.isDocVisible) {
-    //       openBackpack(
-    //         inventoryState.vendingContents, craftState
-    //       );
-    //       destroyAll("craft");
-    //       inventoryState.isPopupVisible = true;
-    //       console.log(getSpeed());
-    //       setSpeed(0);
-    //       inventoryState.vendingSelect = 0;
-    //     }
-    //   }
-    // });
-    collisionState.isDocVisible = false;
-
-    function showFinalItems() {
-      const docPop = add([
-        rect(500, 600),
-        pos(325, 150),
-        z(11),
-        color(204, 229, 255),
-        outline(4),
-        scale(0.75),
-        "final",
-      ]);
-      const startX = docPop.pos.x + 42.5;
-      const startY = docPop.pos.y + 30;
-      let currentX = startX;
-      let currentY = startY;
-      let currRow = 0;
-      for (let i = 0; i < inventoryState.areFinal.length; i++) {
-        const item = inventoryState.areFinal[i];
-        itemText = item.charAt(0).toUpperCase() + item.slice(1);
-
-        // const itemKey = item.itemKey;
-        // starts a new line
-
-        if (currRow === 3) {
-          currentY += item.height + 50;
-          currentX = startX;
-          currRow = 0;
-        }
-
-        const finalItem = add([
-          pos(currentX, currentY),
-          z(11),
-          sprite(`${item}`),
-          "final",
-          { itemKey: item },
-        ]);
-
-        const finalItemText = add([
-          pos(currentX, currentY + 50),
-          text(itemText, {
-            // optional object
-            size: 16,
-            color: (255, 255, 255),
-            // can specify font here,
-          }),
-          z(11),
-          "final",
-          // { itemKey: item },
-        ]);
-        currRow++;
-        currentX += 100;
-      }
-
-      collisionState.isDocVisible = true;
-    }
-
-    let canAccessDocumentation = false;
-    let eventListenerAttached = false;
-
-    player.onCollide("documentationStation", () => {
-      handleCollideDocumentationStation(collisionState, showFinalItems);
-    });
-
-    player.onCollideEnd("documentationStation", () => {
-      handleCollideDocumentationStationEnd(collisionState);
-    });
-
-    player.onCollide("material", (materialEntity) => {
-      if (inventoryState.tableItems.length == 0) {
-        console.log("Collided with material", materialEntity.itemKey);
-        if (
-          !inventoryState.vendingContents.includes(materialEntity) &&
-          !inventoryState.vendingKeys.includes(materialEntity.itemKey)
-        ) {
-          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
-          inventoryState.vendingContents.push(materialEntity);
-          inventoryState.vendingKeys.push(materialEntity.itemKey);
-        }
-        if (volumeSetting) {
-          play("bubble");
-        }
-
-        console.log("material", materialEntity);
-        console.log("Updating pocket");
-        craftState.result = updatePocket(
-          materialEntity,
-          inventoryState.inPocket,
-          inventoryState.itemsInPocket
-        );
-        inventoryState.inPocket = craftState.result?.inPocket;
-        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-        materialEntity.use(body({ isStatic: true }));
-      }
-    });
-
-    clearTable(inventoryState, tableState);
-
-    // Crafting logic:
-    inventoryState.isCraftable = false;
-
-    // Dropping item on table
-    onKeyPress("q", () => {
-      dropItem(toolState, inventoryState, volumeSetting, tableState);
-    });
-
-    inventoryState.finalCraftCheck = false;
-
-    // Crafting Collisions
-    onCollide("player", "craftingTable", (s, w) => {
-      tableState.atCraftingTable = true;
-      checkCraftable(toolState, inventoryState, volumeSetting);
-    });
-    onCollideEnd("player", "craftingTable", (s, w) => {
-      tableState.atCraftingTable = false;
-      checkCraftable(toolState, inventoryState, volumeSetting);
-    });
+    
   }
-}
-export const characterMovement = new CharacterMovement();
+
+     async function tutorialStart() {
+        // Check if the character has a hammer and two papers in their inventory
+        setSpeed(300);
+        let message = "Welcone to the tutorial! Let's get started."
+            add([
+              text(message),
+              pos(415-100+50-25-25, 175+50),
+              z(51),
+              color(0, 0, 0),
+              scale(0.35),
+              "alert",
+            ]);
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+            destroyAll("alert");
+        setSpeed(300);
+
+        message = "Try picking up the items you see on the floor!";
+        add([
+          text(message),
+          pos(415-100+50-25-25, 175+50),
+          z(51),
+          color(0, 0, 0),
+          scale(0.35),
+          "alert",
+        ]);
+
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        destroyAll("alert");
+        setSpeed(300);
+
+        message = "Now try finding the hammer station!";
+        add([
+          text(message),
+          pos(415-100+50-25-25, 175+50),
+          z(51),
+          color(0, 0, 0),
+          scale(0.35),
+          "alert",
+        ]);
+        setSpeed(300);
+
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        destroyAll("alert");
+        if (inventoryState.currTools.includes("hammer")) {
+          message = "Let us try crafting paper with the hammer and two wood!";
+          add([
+            text(message),
+            pos(415-100+50-25-25, 175+50),
+            z(51),
+            color(0, 0, 0),
+            scale(0.35),
+            "alert",
+          ]);
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+          destroyAll("alert");
+        }
+        setSpeed(300);
+
+        // if (
+        //   inventoryState.currTools.includes("hammer") &&
+        //   inventoryState.currItems.includes("paper") &&
+        //   inventoryState.currItems.filter((item) => item === "paper").length >= 2
+        // ) {
+        //   // Craft the paper using the hammer and two papers
+        //   const craftResult = await craft("hammer", ["paper", "paper"]);
+
+        //   // Check if the crafting was successful
+        //   if (craftResult.success) {
+        //     // Add the crafted paper to the inventory
+        //     inventoryState.currItems.push(craftResult.item);
+
+        //     // Update the inventory UI
+        //     updateInventoryUI();
+
+            
+
+        //     // Continue the tutorial
+        //     continueTutorial();
+        //   } else {
+        //     // Show an error message to the player
+        //     let stepFailure = "Crafting failed. Please make sure you have a hammer and two papers.";
+        //     add([
+        //       text(stepFailure),
+        //       pos(415-100+50-25-25, 175+50),
+        //       z(51),
+        //       color(0, 0, 0),
+        //       scale(0.35),
+        //       "alert",
+        //     ]);
+        //     await new Promise((resolve) => setTimeout(resolve, 1000));
+        //     destroyAll("alert");
+        //   }
+        // } else {
+        //   let stepTip = "To make paper, you need a hammer and two papers.";
+        //     add([
+        //       text(stepTip),
+        //       pos(415-100+50-25-25, 175+50),
+        //       z(51),
+        //       color(0, 0, 0),
+        //       scale(0.35),
+        //       "alert",
+        //     ]);
+        //     await new Promise((resolve) => setTimeout(resolve, 1000));
+        //     destroyAll("alert");
+
+      //     // Show a message to the player indicating the required items
+
+      //     // Stop the tutorial
+      //     stopTutorial();
+      //   }
+
+       }
+
+    
+      function continueTutorial() {
+        // Continue the tutorial logic here...
+      }
+
+      function stopTutorial() {
+      }
+
+      // Call the tutorial function
+      tutorialStart();
+
+  }}
+  export const tutorial = new Tutorial();
