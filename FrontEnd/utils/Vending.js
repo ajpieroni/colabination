@@ -4,43 +4,11 @@ export function openBackpack(inventoryState, craftState) {
   inventoryState.vendingContents.sort((a, b) =>
     a.itemKey.localeCompare(b.itemKey)
   );
+  // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-
-  console.log(inventoryState.vendingContents);
-  console.log(totalcontents);
-  console.log(currentPage);
-  console.log("here are contents!!!", contents);
-  contents.forEach((element) => {
-    console.log(element.itemKey);
-  });
-
-  // let contents = inventoryState.vendingContents;
-  // let currentPage = inventoryState.page;
-  // console.log(inventoryState.page)
-
-  // paging system:
-  // pages is initially 0
-  // if contents.length > 9, pages = Math.ceil(contents.length / 9)
-  // if pages > 1, contents = contents.slice((currentPage - 1) * 9, currentPage * 9)
-  // if pages > 1, add buttons for next and previous page
-
-  // if pages > 1, add text for current page
-
-  // if(contents.length > 9){
-  //   inventoryState.page = Math.ceil(contents.length / 9);
-
-  // }
-  // console.log(inventoryState.page)
-
-  // if(inventoryState.page > 1){
-  //   contents = contents.slice((currentPage - 1) * 9, currentPage * 9);
-  // }
-  // console.log(contents)
-
-  // console.log(contents)
-  // craftState.popUp = true;
+  // Add backpack sprite
   const popup = add([
     sprite("backpack"),
     pos(475 - 190 - 100 - 100, 125 + 25),
@@ -49,36 +17,30 @@ export function openBackpack(inventoryState, craftState) {
     // scale(0.75),
     "vending",
   ]);
+  // Initialize x and y for the first item
   const startX = popup.pos.x + 108;
   const startY = popup.pos.y + 155;
+  // Initialize current x and y
   let currentX = startX;
   let currentY = startY;
   let currRow = 0;
-  // console.log(inventoryState.vendingContents.length);
-  // Already sorted above
-  // contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
-  if (contents.length > 0) {
-    // itemText = (vendingContents[vendingSelect].itemKey);
-    console.log(contents[0].itemKey);
-    let itemText = contents[0].itemKey;
 
+  // Add the items to the backpack
+  if (contents.length > 0) {
+    let itemText = contents[0].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
     const selectedText = add([
       "itemText",
       text(itemText, {
-        // optional object
         size: 24,
         outline: 4,
         color: (0, 0, 0),
-        // can specify font here,
       }),
       area(),
       anchor("center"),
       pos(325, 625),
       z(20),
-
-      // scale(.5)
     ]);
 
     const selected = add([
@@ -89,7 +51,6 @@ export function openBackpack(inventoryState, craftState) {
       "selected",
     ]);
   }
-  contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
 
   for (let i = 0; i < contents.length; i++) {
     const item = contents[i];
@@ -202,9 +163,16 @@ export function onKeyPressRight(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText =
-        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+      console.log(itemText);
+
       const selectedText = add([
         "itemText",
         text(itemText, {
@@ -243,9 +211,13 @@ export function onKeyPressDown(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText =
-        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+      console.log(itemText);
       const selectedText = add([
         "itemText",
         text(itemText, {
@@ -281,8 +253,12 @@ export function onKeyPressUp(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
-      let itemText =
-        inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+
       itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
       const selectedText = add([
         "itemText",
