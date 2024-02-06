@@ -15,13 +15,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       .then((data) => {
         const items = data.items; 
         console.log("items", items);
-        let containsPaper = items.some((subArray) =>
-          subArray.includes("paper")
-        );
-        if (items.length == 0) {
+        if(localStorage.getItem("tutorial") == "true"){
+        console.log("tutorial is true");
+        InitialItems(["paper"]);
+        }
+        // let containsPaper = items.some((subArray) =>
+        //   subArray.includes("paper")
+        // );
+        if (items.length == 0 && !localStorage.getItem("tutorial") == "true"){
           InitialItems(["glass", "thread", "paper", "metal"]);
         }
-        if (items.length !== 0) {
+        if (items.length !== 0 && !localStorage.getItem("tutorial") == "true"){
           const materials = ["glass", "thread", "paper", "metal"];
 
           materials.forEach((material) => {
