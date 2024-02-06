@@ -266,7 +266,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState.vendingContents, craftState);
+  openBackpack(inventoryState, craftState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space

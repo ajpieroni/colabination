@@ -1,5 +1,30 @@
 // Opens backpack window
-export function openBackpack(contents, craftState) {
+export function openBackpack(inventoryState, craftState) {
+  let contents = inventoryState.vendingContents;
+  let currentPage = inventoryState.page;
+  console.log(inventoryState.page)
+
+  // paging system:
+    // pages is initially 0
+    // if contents.length > 9, pages = Math.ceil(contents.length / 9)
+    // if pages > 1, contents = contents.slice((currentPage - 1) * 9, currentPage * 9)
+    // if pages > 1, add buttons for next and previous page
+    
+    // if pages > 1, add text for current page
+
+
+  // if(contents.length > 9){
+  //   inventoryState.page = Math.ceil(contents.length / 9);
+
+  // }
+  // console.log(inventoryState.page)
+
+  // if(inventoryState.page > 1){
+  //   contents = contents.slice((currentPage - 1) * 9, currentPage * 9);
+  // }
+  // console.log(contents)
+
+
   // console.log(contents)
   // craftState.popUp = true;
   const popup = add([

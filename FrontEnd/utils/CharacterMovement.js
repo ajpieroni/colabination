@@ -108,6 +108,8 @@ class CharacterMovement {
       tableItems: [],
       isCraftable: false,
       ingredients: [],
+      // pagination
+      page: 0,
     };
     let tableState = {
       atCraftingTable: false,
