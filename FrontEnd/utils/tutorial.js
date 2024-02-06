@@ -122,7 +122,7 @@ class Tutorial {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-      
+
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
@@ -375,12 +375,175 @@ class Tutorial {
         }
         isBright = !isBright;
       }, 250); // the button color will toggle every 500ms
-    
-  }
+      onCollideEnd("player", "craftingTable", () => {
+        tableState.atCraftingTable = false;
+      });
+  
+      // !VENDING
+      let itemText = "";
+  
+      // *TODO: move
+      onKeyPress("left", () => {
+        console.log(craftState.current);
+        if (craftState.current !== "executed") {
+          onKeyPressLeft(inventoryState, craftState);
+        }
+      });
+  
+      onKeyPress("right", () => {
+        if (craftState.current !== "executed") {
+          onKeyPressRight(inventoryState, craftState);
+        }
+      });
+  
+      onKeyPress("down", () => {
+        console.log("down");
+        if (craftState.current !== "executed") {
+          onKeyPressDown(inventoryState, craftState);
+        }
+      });
+  
+      onKeyPress("up", () => {
+        if (craftState.current !== "executed") {
+          onKeyPressUp(inventoryState, craftState);
+        }
+      });
+  
+      onKeyPress("m", () => {
+        this.music.paused = true;
+        handleSavingData(
+          inventoryState.vendingKeys,
+          inventoryState.hasSavedItems,
+          inventoryState.areFinal,
+          inventoryState.currItems,
+          inventoryState.currTools,
+          inventoryState.currFinals,
+          inventoryState.hasSavedFinal
+        );
+        go("settings");
+      });
+  
+      collisionState.isDocVisible = false;
+  
+      function showFinalItems() {
+        const docPop = add([
+          rect(500, 600),
+          pos(325, 150),
+          z(11),
+          color(204, 229, 255),
+          outline(4),
+          scale(0.75),
+          "final",
+        ]);
+        const startX = docPop.pos.x + 42.5;
+        const startY = docPop.pos.y + 30;
+        let currentX = startX;
+        let currentY = startY;
+        let currRow = 0;
+        for (let i = 0; i < inventoryState.areFinal.length; i++) {
+          const item = inventoryState.areFinal[i];
+          itemText = item.charAt(0).toUpperCase() + item.slice(1);
+  
+          // const itemKey = item.itemKey;
+          // starts a new line
+  
+          if (currRow === 3) {
+            currentY += item.height + 50;
+            currentX = startX;
+            currRow = 0;
+          }
+  
+          const finalItem = add([
+            pos(currentX, currentY),
+            z(11),
+            sprite(`${item}`),
+            "final",
+            { itemKey: item },
+          ]);
+  
+          const finalItemText = add([
+            pos(currentX, currentY + 50),
+            text(itemText, {
+              // optional object
+              size: 16,
+              color: (255, 255, 255),
+              // can specify font here,
+            }),
+            z(11),
+            "final",
+            // { itemKey: item },
+          ]);
+          currRow++;
+          currentX += 100;
+        }
+  
+        collisionState.isDocVisible = true;
+      }
+  
+      let canAccessDocumentation = false;
+      let eventListenerAttached = false;
+  
+      player.onCollide("documentationStation", () => {
+        handleCollideDocumentationStation(collisionState, showFinalItems);
+      });
+  
+      player.onCollideEnd("documentationStation", () => {
+        handleCollideDocumentationStationEnd(collisionState);
+      });
+  
+      player.onCollide("material", (materialEntity) => {
+        if (inventoryState.tableItems.length == 0) {
+          console.log("Collided with material", materialEntity.itemKey);
+          if (
+            !inventoryState.vendingContents.includes(materialEntity) &&
+            !inventoryState.vendingKeys.includes(materialEntity.itemKey)
+          ) {
+            console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+            inventoryState.vendingContents.push(materialEntity);
+            inventoryState.vendingKeys.push(materialEntity.itemKey);
+          }
+          if (volumeSetting) {
+            play("bubble");
+          }
+  
+          console.log("material", materialEntity);
+          console.log("Updating pocket");
+          craftState.result = updatePocket(
+            materialEntity,
+            inventoryState.inPocket,
+            inventoryState.itemsInPocket
+          );
+          inventoryState.inPocket = craftState.result?.inPocket;
+          inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+          materialEntity.use(body({ isStatic: true }));
+        }
+      });
+  
+      clearTable(inventoryState, tableState);
+  
+      // Crafting logic:
+      inventoryState.isCraftable = false;
+  
+      // Dropping item on table
+      onKeyPress("q", () => {
+        dropItem(toolState, inventoryState, volumeSetting, tableState);
+      });
+  
+      inventoryState.finalCraftCheck = false;
+  
+      // Crafting Collisions
+      onCollide("player", "craftingTable", (s, w) => {
+        tableState.atCraftingTable = true;
+        checkCraftable(toolState, inventoryState, volumeSetting);
+      });
+      onCollideEnd("player", "craftingTable", (s, w) => {
+        tableState.atCraftingTable = false;
+        checkCraftable(toolState, inventoryState, volumeSetting);
+      });
+    }
 
      async function tutorialStart() {
         // Check if the character has a hammer and two papers in their inventory
-        setSpeed(300);
         let message = "Welcone to the tutorial! Let's get started."
             add([
               text(message),
@@ -392,7 +555,6 @@ class Tutorial {
             ]);
             await new Promise((resolve) => setTimeout(resolve, 5000));
             destroyAll("alert");
-        setSpeed(300);
 
         message = "Try picking up the items you see on the floor!";
         add([
@@ -406,7 +568,6 @@ class Tutorial {
 
         await new Promise((resolve) => setTimeout(resolve, 5000));
         destroyAll("alert");
-        setSpeed(300);
 
         message = "Now try finding the hammer station!";
         add([
@@ -417,7 +578,6 @@ class Tutorial {
           scale(0.35),
           "alert",
         ]);
-        setSpeed(300);
 
         await new Promise((resolve) => setTimeout(resolve, 5000));
         destroyAll("alert");
@@ -434,60 +594,6 @@ class Tutorial {
           await new Promise((resolve) => setTimeout(resolve, 5000));
           destroyAll("alert");
         }
-        setSpeed(300);
-
-        // if (
-        //   inventoryState.currTools.includes("hammer") &&
-        //   inventoryState.currItems.includes("paper") &&
-        //   inventoryState.currItems.filter((item) => item === "paper").length >= 2
-        // ) {
-        //   // Craft the paper using the hammer and two papers
-        //   const craftResult = await craft("hammer", ["paper", "paper"]);
-
-        //   // Check if the crafting was successful
-        //   if (craftResult.success) {
-        //     // Add the crafted paper to the inventory
-        //     inventoryState.currItems.push(craftResult.item);
-
-        //     // Update the inventory UI
-        //     updateInventoryUI();
-
-            
-
-        //     // Continue the tutorial
-        //     continueTutorial();
-        //   } else {
-        //     // Show an error message to the player
-        //     let stepFailure = "Crafting failed. Please make sure you have a hammer and two papers.";
-        //     add([
-        //       text(stepFailure),
-        //       pos(415-100+50-25-25, 175+50),
-        //       z(51),
-        //       color(0, 0, 0),
-        //       scale(0.35),
-        //       "alert",
-        //     ]);
-        //     await new Promise((resolve) => setTimeout(resolve, 1000));
-        //     destroyAll("alert");
-        //   }
-        // } else {
-        //   let stepTip = "To make paper, you need a hammer and two papers.";
-        //     add([
-        //       text(stepTip),
-        //       pos(415-100+50-25-25, 175+50),
-        //       z(51),
-        //       color(0, 0, 0),
-        //       scale(0.35),
-        //       "alert",
-        //     ]);
-        //     await new Promise((resolve) => setTimeout(resolve, 1000));
-        //     destroyAll("alert");
-
-      //     // Show a message to the player indicating the required items
-
-      //     // Stop the tutorial
-      //     stopTutorial();
-      //   }
 
        }
 
