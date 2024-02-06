@@ -126,9 +126,8 @@ class CharacterMovement {
       : 1;
     let music = {
       volume: volumeSetting,
-    }
+    };
     window.music = music;
-    
 
     // Player
     setSpeed(300);
@@ -173,8 +172,19 @@ class CharacterMovement {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-    let isCraftingVisible = false;
-    let tableTemp = inventoryState.tableItems;
+// !TODO: remove, instead introduce pagination with arrows
+    onKeyPress("2", () => {
+      inventoryState.page = inventoryState.page + 1;
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
+    onKeyPress("1", () => {
+      if(inventoryState.page > 0){
+      inventoryState.page = inventoryState.page - 1;
+      }
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
 
     // !NEW CRAFT
 
@@ -274,7 +284,13 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState, inventoryState, music);
+      craftingBackend(
+        toolState,
+        ingredients,
+        craftState,
+        inventoryState,
+        music
+      );
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -721,13 +737,14 @@ class CharacterMovement {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
         let resultDisplay = itemText
-        // space
-        .replace(/([A-Z])/g, " $1")
-        //trim
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(" ");
-    
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
 
         // const itemKey = item.itemKey;
         // starts a new line

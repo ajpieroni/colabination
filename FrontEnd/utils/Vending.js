@@ -54,6 +54,7 @@ export function openBackpack(inventoryState, craftState) {
   contents.sort((a, b) => a.itemKey.localeCompare(b.itemKey));
   if (contents.length > 0) {
     // itemText = (vendingContents[vendingSelect].itemKey);
+    console.log(contents[0].itemKey);
     let itemText = contents[0].itemKey;
 
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
