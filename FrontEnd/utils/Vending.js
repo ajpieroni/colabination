@@ -64,14 +64,10 @@ export function openBackpack(inventoryState, craftState) {
     }
 
     const vendingItem = add([
-      // rect(item.width, item.height) ,
       pos(currentX, currentY),
       z(11),
-      // color(item.color.r, item.color.g, item.color.b),
       "vending",
       sprite(`${item.itemKey}`),
-      // rect(10,10),
-      // sprite(`${image}`),
       scale(1.5),
       z(20),
       "material",
@@ -79,17 +75,12 @@ export function openBackpack(inventoryState, craftState) {
         itemKey: itemKey,
       },
     ]);
-    // console.log(`added ${vendingItem.itemKey} to vending machine`);
-
-    // console.log(currRow);
     currRow++;
     currentX += item.width + 35;
   }
-
-  // isPopupVisible = true;
 }
-// Get current page of backpack
 
+// Get current page of backpack
 export function chunkArray(array, chunkSize) {
   let result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -98,6 +89,7 @@ export function chunkArray(array, chunkSize) {
   }
   return result;
 }
+
 // when at bottom index of contents, if they keep pressing down then it should go to the next page
 // when at top index of contents, if they keep pressing up then it should go to the previous page
 // if they press left or right, it should change the selected item
