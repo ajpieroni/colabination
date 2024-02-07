@@ -492,32 +492,30 @@ class Tutorial {
       });
   
       player.onCollide("material", (materialEntity) => {
-        // if (inventoryState.tableItems.length == 0) 
-        {
-          console.log("Collided with material", materialEntity.itemKey);
-          if (
-            !inventoryState.vendingContents.includes(materialEntity) &&
-            !inventoryState.vendingKeys.includes(materialEntity.itemKey)
-          ) {
-            console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
-            inventoryState.vendingContents.push(materialEntity);
-            inventoryState.vendingKeys.push(materialEntity.itemKey);
-          }
-          if (volumeSetting) {
-            play("bubble");
-          }
-  
-          console.log("material", materialEntity);
-          console.log("Updating pocket");
-          craftState.result = updatePocket(
-            materialEntity,
-            inventoryState.inPocket,
-            inventoryState.itemsInPocket
-          );
-          inventoryState.inPocket = craftState.result?.inPocket;
-          inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-          materialEntity.use(body({ isStatic: true }));
+        console.log("Collided with material", materialEntity.itemKey);
+        if (
+          !inventoryState.vendingContents.includes(materialEntity) &&
+          !inventoryState.vendingKeys.includes(materialEntity.itemKey)
+        ) {
+          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+          inventoryState.vendingContents.push(materialEntity);
+          inventoryState.vendingKeys.push(materialEntity.itemKey);
         }
+        if (volumeSetting) {
+          play("bubble");
+        }
+
+        console.log("material", materialEntity);
+        console.log("Updating pocket");
+        craftState.result = updatePocket(
+          materialEntity,
+          inventoryState.inPocket,
+          inventoryState.itemsInPocket
+        );
+        inventoryState.inPocket = craftState.result?.inPocket;
+        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+        materialEntity.use(body({ isStatic: true }));
+      
       });
   
       clearTable(inventoryState, tableState);
