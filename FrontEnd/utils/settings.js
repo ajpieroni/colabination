@@ -2,14 +2,16 @@ class Settings {
   constructor() {
     this.testValue = 0;
     // this.soundTog = 1;
-    this.soundTog = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTogg')) : 1;
+    this.soundTog = localStorage.getItem("soundTog")
+      ? parseFloat(localStorage.getItem("soundTogg"))
+      : 1;
   }
-  getGlobalVolume(){
+  getGlobalVolume() {
     return this.soundTog;
   }
-  setGlobalVolume(volume){
+  setGlobalVolume(volume) {
     this.soundTog = volume;
-    localStorage.setItem('soundTogg', volume);
+    localStorage.setItem("soundTogg", volume);
     // console.log(`Sound set to ${volume}`)
     // this.changeSettings();
   }
@@ -18,11 +20,11 @@ class Settings {
   displaySettingsMenu() {
     let soundtext = null;
 
-    if(this.soundTog == 1){
-      soundtext = "Sounds:on"
+    if (this.soundTog == 1) {
+      soundtext = "Sounds:on";
     }
-    if(this.soundTog == 0){
-      soundtext = "Sounds:off"
+    if (this.soundTog == 0) {
+      soundtext = "Sounds:off";
     }
     // this.soundTog = 0.5;
 
@@ -252,7 +254,7 @@ class Settings {
       }
 
       // sounds
-    let volTogg;
+      let volTogg;
       if (index == -3) {
         console.log("here are sounds");
         // overlay.classList.toggle("show"),
@@ -261,12 +263,11 @@ class Settings {
           soundsBtn.text = "Sounds:off";
           soundsBtn.pos = vec2((1024 - 215) / 2, 375);
           this.soundTog = 0;
-            // (this.audio.volume = this.soundTog);
+          // (this.audio.volume = this.soundTog);
           // console.log("sounds: ", this.soundTog);
           // turning sounds off
           this.setGlobalVolume(0);
           this.changeSettings();
-         
         } else {
           soundsBtn.text = "Sounds:on";
           volTogg = 1;
@@ -275,8 +276,8 @@ class Settings {
           // console.log("sounds: ", this.soundTog);
           // turning sounds off
           // volTogg = 1;
-          this.setGlobalVolume(1)
-          // *add back voltogg 
+          this.setGlobalVolume(1);
+          // *add back voltogg
           this.changeSettings();
         }
         // music.volume = this.audio.volume;
@@ -291,7 +292,6 @@ class Settings {
     // Exit menu
     onKeyPress("m", () => {
       music.paused = true;
-      this.testValue += 5;
 
       go("characterMovement", { testValue: this.testValue });
     });
@@ -300,7 +300,6 @@ class Settings {
   //for controls page
   displayControls() {
     add([sprite("coolBG"), scale(1.4)]);
-
     add([
       rect(600, 550),
       // z(1),
@@ -321,8 +320,8 @@ class Settings {
     ]);
 
     add([
-      text("Keyboard",{
-        size: 28
+      text("Keyboard", {
+        size: 28,
       }),
       pos((1024 - 140) / 2, 275),
       color(70, 70, 70),
@@ -380,10 +379,9 @@ class Settings {
       z(2),
     ]);
 
-
     add([
-      text("Game Cabinet",{
-        size: 28
+      text("Game Cabinet", {
+        size: 28,
       }),
       pos((1024 - 160) / 2, 500),
       color(70, 70, 70),
@@ -440,13 +438,12 @@ class Settings {
       area(),
       z(2),
     ]);
-    
+
     // text("Move            WASD/Arrow Keys", {
     //   size: 18, // 48 pixels tall
     //   // width: 320, // it'll wrap to next line when width exceeds this value
     //   // font: "sans-serif", // specify any font you loaded or browser built-in
     // })
-
 
     onKeyPress("m", () => {
       go("settings");
@@ -462,10 +459,53 @@ class Settings {
     add([sprite("Dasol"), pos(480, 350), scale(6.5), z(2)]);
     add([sprite("Sophia"), pos(660, 350), scale(6.5), z(2)]);
 
+    add([sprite("Anni"), pos(-20 + 800, -5), scale(4), z(5)]);
+    add([
+      rect(725, 250),
+      z(1),
+      pos(250-100, 100),
+      color(255, 255, 255),
+      opacity(0.5),
+      outline(6, rgb(255, 255, 255)),
+      area(),
+    ]);
+
     let devIndex = 0;
     let devIndexX = -60;
     if (devIndex == 0) {
-      add([sprite("AlexGlow"), pos(-60, 350), scale(6.5), z(1), "AlexGlow"]);
+      add([sprite("AlexGlow"), pos(-60, 350), scale(6.5), z(1), "AlexGlow"]),
+        add([sprite("AlexBee"), pos(650, 100), scale(0.2), z(100), "AlexGlow"]),
+        add([
+          text("Alex: How's it hanging!", {
+            size: 28,
+          }),
+          pos(300-100, 130),
+          color(70, 70, 70),
+          area(),
+          z(2),
+          "AlexGlow",
+        ]),
+        add([
+          text("Favorite Item: Party ", {
+            size: 28,
+            width: 650,
+          }),
+          pos(300-100, 165),
+          color(70, 70, 70),
+          area(),
+          z(2),
+          "AlexGlow",
+        ]),
+        add([
+          text(`Fun Fact: I'm a beekeeper`, {
+            size: 28,
+          }),
+          pos(300-100, 200),
+          color(70, 70, 70),
+          area(),
+          z(2),
+          "AlexGlow",
+        ]);
     }
 
     onKeyPress("right", () => {
@@ -482,6 +522,47 @@ class Settings {
             z(1),
             "OllyGlow",
           ]),
+            add([
+              text("Hey! I'm Olly :)", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Favorite Item: Scarecrow because", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Halloween vibes", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Fun Fact: I go wild for Buldak Ramen", {
+                size: 28,
+              }),
+              pos(300-100, 235),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
             destroyAll("AlexGlow");
         } else if (devIndex == 2) {
           add([
@@ -491,6 +572,44 @@ class Settings {
             z(1),
             "KelvinGlow",
           ]),
+            add([
+              sprite("KelvinMeow"),
+              pos(420-100, 125),
+              scale(7),
+              z(100),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Hi I'm Kelvin", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Favorite Item: Corgi :)", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Fun Fact: I have a cat named Boots", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
             destroyAll("OllyGlow");
         } else if (devIndex == 3) {
           add([
@@ -500,6 +619,47 @@ class Settings {
             z(1),
             "DasolGlow",
           ]),
+            add([
+              text("Hey I'm Dasol! ^-^", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("Favorite Item: Origami, she cute", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("Fun Fact: My current art pursuit is", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("embroidering Converse!", {
+                size: 28,
+              }),
+              pos(300-100, 235),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
             destroyAll("KelvinGlow");
         } else if (devIndex == 4)
           add([
@@ -509,6 +669,47 @@ class Settings {
             z(1),
             "SophiaGlow",
           ]),
+            add([
+              text("Hi I'm Sophia", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "SophiaGlow",
+            ]),
+            add([
+              text("Favorite Item: stained glass <3", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "SophiaGlow",
+            ]),
+            add([
+              text("Fun Fact: I'm really good at golf", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "SophiaGlow",
+            ]),
+            add([
+              text("and drawing!!", {
+                size: 28,
+              }),
+              pos(300-100, 235),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "SophiaGlow",
+            ]),
             destroyAll("DasolGlow");
       } else {
         devIndex = devIndexTemp;
@@ -528,6 +729,44 @@ class Settings {
             z(1),
             "AlexGlow",
           ]),
+            add([
+              sprite("AlexBee"),
+              pos(650-100, 100),
+              scale(0.2),
+              z(100),
+              "AlexGlow",
+            ]),
+            add([
+              text("Alex: How's it hanging!", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "AlexGlow",
+            ]),
+            add([
+              text("Favorite Item: Party ", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "AlexGlow",
+            ]),
+            add([
+              text(`Fun Fact: I'm a beekeeper`, {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "AlexGlow",
+            ]),
             destroyAll("OllyGlow");
         } else if (devIndex == 1) {
           add([
@@ -537,6 +776,47 @@ class Settings {
             z(1),
             "OllyGlow",
           ]),
+            add([
+              text("Hey! I'm Olly :)", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Favorite Item: Scarecrow because", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Halloween vibes", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
+            add([
+              text("Fun Fact: I go wild for Buldak Ramen", {
+                size: 28,
+              }),
+              pos(300-100, 235),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "OllyGlow",
+            ]),
             destroyAll("KelvinGlow");
         } else if (devIndex == 2) {
           add([
@@ -546,6 +826,44 @@ class Settings {
             z(1),
             "KelvinGlow",
           ]),
+            add([
+              sprite("KelvinMeow"),
+              pos(420-100, 125),
+              scale(7),
+              z(100),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Hi I'm Kelvin", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Favorite Item: Corgi :)", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
+            add([
+              text("Fun Fact: I have a cat named Boots", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "KelvinGlow",
+            ]),
             destroyAll("DasolGlow");
         } else {
           add([
@@ -555,6 +873,47 @@ class Settings {
             z(1),
             "DasolGlow",
           ]),
+            add([
+              text("Hey I'm Dasol! ^-^", {
+                size: 28,
+              }),
+              pos(300-100, 130),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("Favorite Item: Origami, she cute", {
+                size: 28,
+                width: 650,
+              }),
+              pos(300-100, 165),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("Fun Fact: My current art pursuit is", {
+                size: 28,
+              }),
+              pos(300-100, 200),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
+            add([
+              text("embroidering Converse!", {
+                size: 28,
+              }),
+              pos(300-100, 235),
+              color(70, 70, 70),
+              area(),
+              z(2),
+              "DasolGlow",
+            ]),
             destroyAll("SophiaGlow");
         }
       } else {
@@ -569,21 +928,19 @@ class Settings {
   // add back parameter voltogg
   changeSettings = () => {
     // *SHOW IN MEETING
-    let volTogg = this.getGlobalVolume()
+    let volTogg = this.getGlobalVolume();
     // console.log("here is gotten volume", volTogg);
-    localStorage.setItem('soundTogg', volTogg);
-  
+    localStorage.setItem("soundTogg", volTogg);
+
     let music = {
       volume: volTogg,
       loop: true,
-  }
+    };
 
-  // console.log("here's music:", music)
+    // console.log("here's music:", music)
 
-  return music;
-
+    return music;
   };
-
 }
 
 export const settings = new Settings();
