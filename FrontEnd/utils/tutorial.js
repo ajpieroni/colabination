@@ -492,7 +492,8 @@ class Tutorial {
       });
   
       player.onCollide("material", (materialEntity) => {
-        if (inventoryState.tableItems.length == 0) {
+        // if (inventoryState.tableItems.length == 0) 
+        {
           console.log("Collided with material", materialEntity.itemKey);
           if (
             !inventoryState.vendingContents.includes(materialEntity) &&
@@ -543,6 +544,7 @@ class Tutorial {
     }
 
      async function tutorialStart() {
+        setSpeed(0);
         // Check if the character has a hammer and two papers in their inventory
         let message = "Welcone to the tutorial! Let's get started."
             add([
@@ -557,6 +559,7 @@ class Tutorial {
             destroyAll("alert");
 
         message = "Try picking up the items you see on the floor!";
+        setSpeed(300);
         add([
           text(message),
           pos(415-100+50-25-25, 175+50),
