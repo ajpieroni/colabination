@@ -218,7 +218,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
     Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
     Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
-    Combination.create(tool: craftingtable, item1: threadBall, item2: nothing, creation: macrame)
+    Combination.create(tool: hands, item1: threadBall, item2: nothing, creation: macrame)
 
     Combination.create(tool: hands, item1: thread, item2: nothing, creation: embroiderythread)
     Combination.create(tool: hammer, item1: thread, item2: nothing, creation: threadBall)
