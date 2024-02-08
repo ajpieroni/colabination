@@ -20,6 +20,7 @@ export const load = {
     loadSprite("scissorsAlert", "./assets/scissorsAlert.png");
     loadSprite("paperAlert", "./assets/paperAlertBox.png");
     loadSprite("paper", "./assets/paper.png");
+    loadSprite("woodPlank", "./assets/woodplank.png");
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
 
