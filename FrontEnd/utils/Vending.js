@@ -8,7 +8,9 @@ export function openBackpack(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-  inventoryState.vendingSelect = 0;
+  // inventoryState.vendingSelect = 0;
+  // console.log(inventoryState.vendingSelect);
+  
 
   // Arrows
   if (inventoryState.vendingContents.length > 9) {
@@ -21,7 +23,7 @@ export function openBackpack(inventoryState, craftState) {
     ]);
   }
 
-  console.log(contents);
+  // console.log(contents);
   // Add backpack sprite
   const popup = add([
     sprite("backpack"),
@@ -120,10 +122,10 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    console.log(inventoryState.vendingSelect);
-    if (inventoryState.vendingSelect > 0) {
+    // console.log(inventoryState.vendingSelect);
+    if (inventoryState.vendingSelect > 0 && inventoryState.vendingSelect !== 3 && inventoryState.vendingSelect !== 6) {
       inventoryState.vendingSelect--;
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
 
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -141,7 +143,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      console.log(itemText);
+      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
@@ -160,7 +162,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
           // scale(.5)
         ]);
       }
-      console.log(itemText);
+      // console.log(itemText);
       return inventoryState.vendingSelect;
     }
     if (
@@ -168,10 +170,20 @@ export function onKeyPressLeft(inventoryState, craftState) {
       inventoryState.vendingSelect == 3 ||
       inventoryState.vendingSelect == 6
     ) {
-      console.log("HITTT");
-      console.log("Cant go left");
+      // console.log("HITTT");
+      // console.log("Cant go left");
       if (inventoryState.page > 0) {
         inventoryState.page--;
+        if(inventoryState.vendingSelect == 0){
+          inventoryState.vendingSelect = 2;
+        }
+        if(inventoryState.vendingSelect == 3){
+          inventoryState.vendingSelect = 5;
+        }
+        if(inventoryState.vendingSelect == 6){
+          inventoryState.vendingSelect = 8;
+        }
+
         closeBackpack();
         openBackpack(inventoryState, craftState);
       }
@@ -180,7 +192,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
-  console.log(inventoryState.vendingSelect);
+  // // console.log(inventoryState.vendingSelect);
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
@@ -192,7 +204,7 @@ export function onKeyPressRight(inventoryState, craftState) {
       inventoryState.vendingSelect !== 8
     ) {
       inventoryState.vendingSelect++;
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
 
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -212,7 +224,7 @@ export function onKeyPressRight(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      console.log(itemText);
+      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
@@ -231,11 +243,22 @@ export function onKeyPressRight(inventoryState, craftState) {
           // scale(.5)
         ]);
       }
-      console.log(itemText);
+      // console.log(itemText);
     } else {
-      console.log("Cant go right");
+      // console.log("Cant go right");
       if (inventoryState.page * 9 + 9 < inventoryState.vendingContents.length) {
         inventoryState.page++;
+        // if vendingSelect is 2, 5, or 8, then vending select should be 0, 3, or 6
+        if(inventoryState.vendingSelect == 2){
+          inventoryState.vendingSelect = 0;
+        }
+        if(inventoryState.vendingSelect == 5){
+          inventoryState.vendingSelect = 3;
+        }
+        if(inventoryState.vendingSelect == 8){
+          inventoryState.vendingSelect = 6;
+        }
+
         closeBackpack();
         openBackpack(inventoryState, craftState);
       }
@@ -250,7 +273,7 @@ export function onKeyPressDown(inventoryState, craftState) {
   if (craftState.popUp) {
     if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
       destroyAll("itemText");
 
       // Pagination logic
@@ -259,7 +282,7 @@ export function onKeyPressDown(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      console.log(itemText);
+      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
@@ -279,7 +302,7 @@ export function onKeyPressDown(inventoryState, craftState) {
         ]);
       }
 
-      // console.log(vendingSelect);
+      // // console.log(vendingSelect);
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -298,12 +321,12 @@ export function onKeyPressUp(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-  console.log(inventoryState.vendingSelect);
+  // console.log(inventoryState.vendingSelect);
 
   if (craftState.popUp) {
     if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
 
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -321,7 +344,7 @@ export function onKeyPressUp(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      console.log(itemText);
+      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
@@ -340,7 +363,7 @@ export function onKeyPressUp(inventoryState, craftState) {
           // scale(.5)
         ]);
       }
-      console.log(itemText);
+      // console.log(itemText);
     }
   }
 }
@@ -369,20 +392,17 @@ export function getCurrentItemInBackpack(inventoryState, craftState) {
   }
 
   // Access the item using the actual index and get its itemKey
-  console.log(
-    `Actual index: ${actualIndex} ${inventoryState.vendingContents[actualIndex]}`
-  );
 
   return currentItem;
 }
 
 export function addItemToBackpack(inventoryState, resultItem) {
-  console.log("Collided with material", materialEntity.itemKey);
+  // console.log("Collided with material", materialEntity.itemKey);
   if (
     !inventoryState.vendingContents.includes(materialEntity) &&
     !inventoryState.vendingKeys.includes(materialEntity.itemKey)
   ) {
-    console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+    // console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
     inventoryState.vendingContents.push(materialEntity);
     inventoryState.vendingKeys.push(materialEntity.itemKey);
   }
