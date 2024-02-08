@@ -245,14 +245,21 @@ export function onKeyPressRight(inventoryState, craftState) {
       // console.log(itemText);
     } else {
       // console.log("Cant go right");
-      if (inventoryState.page * 9 + 9 < inventoryState.vendingContents.length) {
-        inventoryState.page++;
-        // if vendingSelect is 2, 5, or 8, then vending select should be 0, 3, or 6
-        inventoryState.vendingSelect = inventoryState.vendingSelect - 2;
+      inventoryState.page++;
 
-        closeBackpack();
-        openBackpack(inventoryState, craftState);
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      if (inventoryState.vendingContents[actualIndex + 2]) {
+        inventoryState.vendingSelect = inventoryState.vendingSelect +2;
+      } else {
+        inventoryState.vendingSelect = 0;
+        console.log("setting vendingSelect to 0")
       }
+
+      closeBackpack();
+      openBackpack(inventoryState, craftState);
     }
   }
 }
