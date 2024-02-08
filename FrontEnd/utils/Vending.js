@@ -244,22 +244,24 @@ export function onKeyPressRight(inventoryState, craftState) {
       }
       // console.log(itemText);
     } else {
-      // console.log("Cant go right");
-      inventoryState.page++;
+      console.log("Cant go right");
+      if (inventoryState.page < totalcontents.length - 1) {
+        inventoryState.page++;
 
-      const itemsPerPage = 9;
-      const startIndex = inventoryState.page * itemsPerPage;
-      const actualIndex = startIndex + inventoryState.vendingSelect;
+        const itemsPerPage = 9;
+        const startIndex = inventoryState.page * itemsPerPage;
+        const actualIndex = startIndex + inventoryState.vendingSelect;
 
-      if (inventoryState.vendingContents[actualIndex + 2]) {
-        inventoryState.vendingSelect = inventoryState.vendingSelect +2;
-      } else {
-        inventoryState.vendingSelect = 0;
-        console.log("setting vendingSelect to 0")
+        if (inventoryState.vendingContents[actualIndex + 2]) {
+          inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
+        } else {
+          inventoryState.vendingSelect = 0;
+          console.log("setting vendingSelect to 0");
+        }
+        closeBackpack();
+
+        openBackpack(inventoryState, craftState);
       }
-
-      closeBackpack();
-      openBackpack(inventoryState, craftState);
     }
   }
 }
