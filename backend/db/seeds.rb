@@ -36,10 +36,12 @@ puts 'seeding'
     woodPlank = Item.create(name: 'woodPlank', description: 'A flat piece of wood', item_type: 'material', rarity: 1, isFinal: false)
 
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
-# Creating glass trail
+# Creating 
+
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
+    sand = Item.create(name: 'sand', description: "for making glass", item_type: "material", rarity: 1, isFinal: false)
     # Creating plastic trail
     vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
     # creating thread trail
@@ -94,7 +96,7 @@ lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'm
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
-# Creating 
+# Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
     cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
@@ -125,6 +127,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     user1 = User.create(username: "pandaMan", pin: 1234)
     user2 = User.create(username: "bruin36", pin: 2468)
     user3 = User.create(username: "cats", pin: 1234)
+    user4 = User.create(username: "a", pin: 1234)
+
     
 # Creating item-tools relationships
     ItemTool.create(item: paper, tool: hammer)
@@ -149,6 +153,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
+    Combination.create(tool: hammer, item1: brokenGlass, item2: nothing, creation: sand)
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
