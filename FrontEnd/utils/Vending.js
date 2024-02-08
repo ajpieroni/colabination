@@ -8,6 +8,8 @@ export function openBackpack(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
+  inventoryState.vendingSelect = 0;
+
   console.log(contents);
   // Add backpack sprite
   const popup = add([
@@ -154,6 +156,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
+  console.log(inventoryState.vendingSelect);
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
