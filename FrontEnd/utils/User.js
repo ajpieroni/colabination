@@ -16,13 +16,13 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         const items = data.items; 
         console.log("items", items);
         let containsPaper = items.some((subArray) =>
-          subArray.includes("paper")
+          subArray.includes("wood")
         );
         if (items.length == 0) {
-          InitialItems(["glass", "thread", "paper", "metal"]);
+          InitialItems(["glass", "thread", "wood", "metal"]);
         }
         if (items.length !== 0) {
-          const materials = ["glass", "thread", "paper", "metal"];
+          const materials = ["glass", "thread", "wood", "metal"];
 
           materials.forEach((material) => {
             if (!items.some((subArray) => subArray.includes(material))) {

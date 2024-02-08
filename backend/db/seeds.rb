@@ -132,7 +132,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Creating paper combos
 # !Paper combos: level 1
-    Combination.create(tool: hammer, item1: paper, item2: paper, creation: wood)
+    Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
     Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
     Combination.create(tool: hands, item1: paper, item2: thread, creation: kite)
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
