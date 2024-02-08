@@ -109,7 +109,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    if (inventoryState.vendingSelect > 0) {
+    if (inventoryState.vendingSelect > 0 && inventoryState.page === 0) {
       inventoryState.vendingSelect--;
       console.log(inventoryState.vendingSelect);
 
@@ -150,6 +150,13 @@ export function onKeyPressLeft(inventoryState, craftState) {
       }
       console.log(itemText);
       return inventoryState.vendingSelect;
+    } else {
+      console.log("Cant go left");
+      if (inventoryState.page > 0) {
+        inventoryState.page--;
+        closeBackpack();
+        openBackpack(inventoryState, craftState);
+      }
     }
   }
 }
