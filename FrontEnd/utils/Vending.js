@@ -23,8 +23,6 @@ export function openBackpack(inventoryState, craftState) {
       "vending",
     ]);
   }
-
-  // console.log(contents);
   // Add backpack sprite
   const popup = add([
     sprite("backpack"),
@@ -47,6 +45,7 @@ export function openBackpack(inventoryState, craftState) {
     let itemText = contents[inventoryState.vendingSelect].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
+    // Add the item text
     const selectedText = add([
       "itemText",
       text(itemText, {
@@ -60,6 +59,7 @@ export function openBackpack(inventoryState, craftState) {
       z(20),
     ]);
 
+    // Add the white box
     const selected = add([
       rect(70, 70),
       pos(393 - 200 + gridX * 86, 305 + gridY * 100),
@@ -67,6 +67,7 @@ export function openBackpack(inventoryState, craftState) {
       color(255, 255, 255),
       "selected",
     ]);
+    // Add the items into the backpack
     for (let i = 0; i < contents.length; i++) {
       const item = contents[i];
       const itemKey = item.itemKey;
@@ -77,7 +78,7 @@ export function openBackpack(inventoryState, craftState) {
         currentX = startX;
         currRow = 0;
       }
-
+      // Add the item to the backpack
       const vendingItem = add([
         pos(currentX, currentY),
         z(11),
@@ -106,11 +107,6 @@ export function chunkArray(array, chunkSize) {
   return result;
 }
 
-// when at bottom index of contents, if they keep pressing down then it should go to the next page
-// when at top index of contents, if they keep pressing up then it should go to the previous page
-// if they press left or right, it should change the selected item
-// if they press enter, it should select the item
-
 // Closes backpack window, and text
 export function closeBackpack() {
   destroyAll("vending");
@@ -123,18 +119,15 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    // console.log(inventoryState.vendingSelect);
+    // If the current selection is not the first item in the backpack, decrement the selection
     if (
       inventoryState.vendingSelect > 0 &&
       inventoryState.vendingSelect !== 3 &&
       inventoryState.vendingSelect !== 6
     ) {
       inventoryState.vendingSelect--;
-      console.log(
-        `Decremented inventoryState.vendingSelect to ${inventoryState.vendingSelect}`
-      );
-      // console.log(inventoryState.vendingSelect);
 
+      // Remove the selected box and add a new one
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -146,40 +139,37 @@ export function onKeyPressLeft(inventoryState, craftState) {
         "selected",
       ]);
       destroyAll("itemText");
+
+      // Pagination logic
       const itemsPerPage = 9;
       const startIndex = inventoryState.page * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
-
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      // console.log(itemText);
+
+      // Add the item text
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
           "itemText",
           text(itemText, {
-            // optional object
             size: 24,
             outline: 4,
             color: (0, 0, 0),
-            // can specify font here,
           }),
           area(),
           anchor("center"),
           pos(325, 625),
           z(20),
-          // scale(.5)
         ]);
       }
-      // console.log(itemText);
       return inventoryState.vendingSelect;
     }
+    // If the current selection is the first item in the backpack, decrement the page
     if (
       inventoryState.vendingSelect == 0 ||
       inventoryState.vendingSelect == 3 ||
       inventoryState.vendingSelect == 6
     ) {
-      // console.log("HITTT");
-      // console.log("Cant go left");
       if (inventoryState.page > 0) {
         inventoryState.page--;
         inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
@@ -191,11 +181,12 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
-  // // console.log(inventoryState.vendingSelect);
+  // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
+    // If the current selection is not the last item in the backpack, increment the selection
     if (
       inventoryState.vendingSelect < contents.length - 1 &&
       inventoryState.vendingSelect !== 2 &&
@@ -203,8 +194,8 @@ export function onKeyPressRight(inventoryState, craftState) {
       inventoryState.vendingSelect !== 8
     ) {
       inventoryState.vendingSelect++;
-      // console.log(inventoryState.vendingSelect);
 
+      // Destroy the selected box and add a new one
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -221,45 +212,40 @@ export function onKeyPressRight(inventoryState, craftState) {
       const itemsPerPage = 9;
       const startIndex = inventoryState.page * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
-
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      // console.log(itemText);
+
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
           "itemText",
           text(itemText, {
-            // optional object
             size: 24,
             outline: 4,
             color: (0, 0, 0),
-            // can specify font here,
           }),
           area(),
           anchor("center"),
           pos(325, 625),
           z(20),
-          // scale(.5)
         ]);
       }
-      // console.log(itemText);
     } else {
-      console.log("Cant go right");
+      // If the current selection is the last item in the backpack, increment the page
       if (inventoryState.page < totalcontents.length - 1) {
         inventoryState.page++;
-
+        // Pagination logic
         const itemsPerPage = 9;
         const startIndex = inventoryState.page * itemsPerPage;
         const actualIndex = startIndex + inventoryState.vendingSelect;
 
+        // If there's an item at the index + 2 on the next page, increment the selection by 2
         if (inventoryState.vendingContents[actualIndex + 2]) {
           inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
         } else {
+          // if inventoryState.vendingSelect + 2 is undefined, then set the index to the last item in the page
           inventoryState.vendingSelect = 0;
-          console.log("setting vendingSelect to 0");
         }
         closeBackpack();
-
         openBackpack(inventoryState, craftState);
       }
     }
@@ -271,10 +257,12 @@ export function onKeyPressDown(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
+    // If the current selection is not the last row in the backpack, increment the selection by 3
     if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
-      // console.log(inventoryState.vendingSelect);
+      // Destroy the selected box and add a new one
       destroyAll("itemText");
+      destroyAll("selected");
 
       // Pagination logic
       const itemsPerPage = 9;
@@ -282,28 +270,22 @@ export function onKeyPressDown(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         const selectedText = add([
           "itemText",
           text(itemText, {
-            // optional object
             size: 24,
             outline: 4,
             color: (0, 0, 0),
-            // can specify font here,
           }),
           area(),
           anchor("center"),
           pos(325, 625),
           z(20),
-          // scale(.5)
         ]);
       }
 
-      // // console.log(vendingSelect);
-      destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
@@ -316,6 +298,7 @@ export function onKeyPressDown(inventoryState, craftState) {
     }
   }
 }
+
 // Up selection in backpack
 export function onKeyPressUp(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
@@ -350,36 +333,29 @@ export function onKeyPressUp(inventoryState, craftState) {
         const selectedText = add([
           "itemText",
           text(itemText, {
-            // optional object
             size: 24,
             outline: 4,
             color: (0, 0, 0),
-            // can specify font here,
           }),
           area(),
           anchor("center"),
           pos(325, 625),
           z(20),
-          // scale(.5)
         ]);
       }
-      // console.log(itemText);
     }
   }
 }
 
 export function getCurrentItemInBackpack(inventoryState, craftState) {
   const itemsPerPage = 9;
-  // const startIndex = inventoryState.page * itemsPerPage;
   let startIndex;
   if (inventoryState.page === 0) {
     startIndex = 0;
   } else {
     startIndex = inventoryState.page * itemsPerPage;
   }
-
   // if page = 1, start index = 9
-
   // Get the actual index in the vendingContents array
   const actualIndex = startIndex + inventoryState.vendingSelect;
 
@@ -390,19 +366,15 @@ export function getCurrentItemInBackpack(inventoryState, craftState) {
   } else {
     currentItem = inventoryState.vendingContents[actualIndex].itemKey;
   }
-
   // Access the item using the actual index and get its itemKey
-
   return currentItem;
 }
 
 export function addItemToBackpack(inventoryState, resultItem) {
-  // console.log("Collided with material", materialEntity.itemKey);
   if (
     !inventoryState.vendingContents.includes(materialEntity) &&
     !inventoryState.vendingKeys.includes(materialEntity.itemKey)
   ) {
-    // console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
     inventoryState.vendingContents.push(materialEntity);
     inventoryState.vendingKeys.push(materialEntity.itemKey);
   }
