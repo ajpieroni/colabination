@@ -152,6 +152,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
     Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+    Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
 
     # Metal: level 2
     Combination.create(tool: solder, item1: aluminum, item2: aluminum, creation: CD)
