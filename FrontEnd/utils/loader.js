@@ -4,6 +4,10 @@ export const load = {
   //     // loadFont("")
   // },
   assets: () => {
+
+    // arrows
+    loadSprite("leftArrow", "./assets/leftArrow.png");
+    loadSprite("rightArrow", "./assets/rightArrow.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
     loadSprite("walk", "./assets/walkable2048-1668.png");
     loadSprite("tables", "./assets/avoid1024-834.png");
