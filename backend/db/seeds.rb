@@ -36,8 +36,8 @@ puts 'seeding'
     woodPlank = Item.create(name: 'woodPlank', description: 'A flat piece of wood', item_type: 'material', rarity: 1, isFinal: false)
 
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
-# Creating 
-
+# Creating glass trail
+    hourglass = Item.create(name: 'hourglass', description: "Time is running out!", item_type: 'material', rarity: 1, isFinal: true)
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
@@ -150,6 +150,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 
 # Glass combos:
+    Combination.create(tool: hammer, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
