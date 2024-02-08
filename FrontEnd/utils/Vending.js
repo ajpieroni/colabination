@@ -29,7 +29,7 @@ export function openBackpack(inventoryState, craftState) {
   let currRow = 0;
 
   // Add the items to the backpack
-  if (contents.length > 0) {
+  if (contents && contents.length > 0) {
     let itemText = contents[0].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
@@ -53,33 +53,32 @@ export function openBackpack(inventoryState, craftState) {
       color(255, 255, 255),
       "selected",
     ]);
-  }
+    for (let i = 0; i < contents.length; i++) {
+      const item = contents[i];
+      const itemKey = item.itemKey;
+      // starts a new line
 
-  for (let i = 0; i < contents.length; i++) {
-    const item = contents[i];
-    const itemKey = item.itemKey;
-    // starts a new line
+      if (currRow === 3) {
+        currentY += item.height + 50;
+        currentX = startX;
+        currRow = 0;
+      }
 
-    if (currRow === 3) {
-      currentY += item.height + 50;
-      currentX = startX;
-      currRow = 0;
+      const vendingItem = add([
+        pos(currentX, currentY),
+        z(11),
+        "vending",
+        sprite(`${item.itemKey}`),
+        scale(1.5),
+        z(20),
+        "material",
+        {
+          itemKey: itemKey,
+        },
+      ]);
+      currRow++;
+      currentX += item.width + 35;
     }
-
-    const vendingItem = add([
-      pos(currentX, currentY),
-      z(11),
-      "vending",
-      sprite(`${item.itemKey}`),
-      scale(1.5),
-      z(20),
-      "material",
-      {
-        itemKey: itemKey,
-      },
-    ]);
-    currRow++;
-    currentX += item.width + 35;
   }
 }
 
@@ -161,7 +160,12 @@ export function onKeyPressRight(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    if (inventoryState.vendingSelect < contents.length - 1) {
+    if (
+      inventoryState.vendingSelect < contents.length - 1 &&
+      inventoryState.vendingSelect !== 2 &&
+      inventoryState.vendingSelect !== 5 &&
+      inventoryState.vendingSelect !== 8
+    ) {
       inventoryState.vendingSelect++;
       console.log(inventoryState.vendingSelect);
 
@@ -203,6 +207,13 @@ export function onKeyPressRight(inventoryState, craftState) {
         ]);
       }
       console.log(itemText);
+    } else {
+      console.log("Cant go right");
+      if (inventoryState.page * 9 + 9 < inventoryState.vendingContents.length) {
+        inventoryState.page++;
+        closeBackpack();
+        openBackpack(inventoryState, craftState);
+      }
     }
   }
 }
