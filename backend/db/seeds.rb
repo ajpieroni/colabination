@@ -75,7 +75,7 @@ puts 'seeding'
     vinylCD = Item.create(name:'vinylCD', description: "For music all night long.", item_type: 'material', rarity: 1, isFinal: true)
     jewelry = Item.create(name:'jewelry', description: "For decoration of the self.", item_type: 'material', rarity: 1, isFinal: true)
     crown = Item.create(name:'crown', description: "You're royalty!", item_type: 'material', rarity: 1, isFinal: false)
-
+    aluminumFoil = Item.create(name:'aluminumFoil', description: "For wrapping things!", item_type: 'material', rarity: 1, isFinal: false)
     knight = Item.create(name:'knight', description: "Hero in shining armor!", item_type: 'material', rarity: 1, isFinal: false)
     witch = Item.create(name:'witch', description: "Spooky!", item_type: 'material', rarity: 1, isFinal: true)
     family = Item.create(name:'family', description: "Home is where the fam is!", item_type: 'material', rarity: 1, isFinal: false)
