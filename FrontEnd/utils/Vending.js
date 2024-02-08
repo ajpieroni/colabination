@@ -8,6 +8,7 @@ export function openBackpack(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
+  console.log(contents);
   // Add backpack sprite
   const popup = add([
     sprite("backpack"),
@@ -103,9 +104,14 @@ export function closeBackpack() {
 }
 // Left selection in backpack
 export function onKeyPressLeft(inventoryState, craftState) {
+  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let currentPage = inventoryState.page;
+  let contents = totalcontents[currentPage];
   if (craftState.popUp) {
     if (inventoryState.vendingSelect > 0) {
       inventoryState.vendingSelect--;
+      console.log(inventoryState.vendingSelect);
+
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -148,12 +154,18 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
+  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let currentPage = inventoryState.page;
+  let contents = totalcontents[currentPage];
   if (craftState.popUp) {
     if (
       inventoryState.vendingSelect <
-      inventoryState.vendingContents.length - 1
+      contents.length - 1
     ) {
+      
       inventoryState.vendingSelect++;
+      console.log(inventoryState.vendingSelect);
+
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -197,12 +209,17 @@ export function onKeyPressRight(inventoryState, craftState) {
 }
 // Down selection in backpack
 export function onKeyPressDown(inventoryState, craftState) {
+  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let currentPage = inventoryState.page;
+  let contents = totalcontents[currentPage];
   if (craftState.popUp) {
     if (
       inventoryState.vendingSelect + 3 <
-      inventoryState.vendingContents.length
+      contents.length
     ) {
       inventoryState.vendingSelect += 3;
+      console.log(inventoryState.vendingSelect);
+
       // console.log(vendingSelect);
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -220,9 +237,16 @@ export function onKeyPressDown(inventoryState, craftState) {
 }
 // Up selection in backpack
 export function onKeyPressUp(inventoryState, craftState) {
+  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let currentPage = inventoryState.page;
+  let contents = totalcontents[currentPage];
+  console.log(inventoryState.vendingSelect);
+
   if (craftState.popUp) {
     if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;
+      console.log(inventoryState.vendingSelect);
+
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
