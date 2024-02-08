@@ -158,11 +158,7 @@ export function onKeyPressRight(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    if (
-      inventoryState.vendingSelect <
-      contents.length - 1
-    ) {
-      
+    if (inventoryState.vendingSelect < contents.length - 1) {
       inventoryState.vendingSelect++;
       console.log(inventoryState.vendingSelect);
 
@@ -213,12 +209,36 @@ export function onKeyPressDown(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    if (
-      inventoryState.vendingSelect + 3 <
-      contents.length
-    ) {
+    if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
       console.log(inventoryState.vendingSelect);
+      destroyAll("itemText");
+
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      console.log(itemText);
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+          // scale(.5)
+        ]);
+      }
 
       // console.log(vendingSelect);
       destroyAll("selected");
@@ -231,7 +251,6 @@ export function onKeyPressDown(inventoryState, craftState) {
         color(255, 255, 255),
         "selected",
       ]);
-      destroyAll("itemText");
     }
   }
 }
