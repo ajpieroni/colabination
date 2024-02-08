@@ -94,7 +94,8 @@ lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'm
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
-# Creating Thread trail
+# Creating 
+    threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
     cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
     embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
@@ -212,6 +213,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
 
     Combination.create(tool: hands, item1: thread, item2: nothing, creation: embroiderythread)
+    Combination.create(tool: hammer, item1: thread, item2: nothing, creation: threadBall)
     Combination.create(tool: sewingmachine, item1: embroiderythread, item2: embroiderythread, creation: yarn)
     Combination.create(tool: hands, item1: embroiderythread, item2: nothing, creation:  straw)
     Combination.create(tool: sewingmachine, item1: shirt, item2: skirt, creation: dress)
