@@ -718,6 +718,7 @@ class CharacterMovement {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
+
         let resultDisplay = itemText
         // space
         .replace(/([A-Z])/g, " $1")
