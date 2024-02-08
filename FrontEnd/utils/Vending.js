@@ -9,8 +9,9 @@ export function openBackpack(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
-  // console.log(inventoryState.vendingSelect);
-  
+  console.log(inventoryState.vendingSelect);
+  let gridX = inventoryState.vendingSelect % 3;
+  let gridY = Math.floor(inventoryState.vendingSelect / 3);
 
   // Arrows
   if (inventoryState.vendingContents.length > 9) {
@@ -43,7 +44,7 @@ export function openBackpack(inventoryState, craftState) {
 
   // Add the items to the backpack
   if (contents && contents.length > 0) {
-    let itemText = contents[0].itemKey;
+    let itemText = contents[inventoryState.vendingSelect].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
 
     const selectedText = add([
@@ -61,7 +62,7 @@ export function openBackpack(inventoryState, craftState) {
 
     const selected = add([
       rect(70, 70),
-      pos(startX, startY),
+      pos(393 - 200 + gridX * 86, 305 + gridY * 100),
       z(19),
       color(255, 255, 255),
       "selected",
@@ -123,8 +124,15 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
     // console.log(inventoryState.vendingSelect);
-    if (inventoryState.vendingSelect > 0 && inventoryState.vendingSelect !== 3 && inventoryState.vendingSelect !== 6) {
+    if (
+      inventoryState.vendingSelect > 0 &&
+      inventoryState.vendingSelect !== 3 &&
+      inventoryState.vendingSelect !== 6
+    ) {
       inventoryState.vendingSelect--;
+      console.log(
+        `Decremented inventoryState.vendingSelect to ${inventoryState.vendingSelect}`
+      );
       // console.log(inventoryState.vendingSelect);
 
       destroyAll("selected");
@@ -174,16 +182,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
       // console.log("Cant go left");
       if (inventoryState.page > 0) {
         inventoryState.page--;
-        if(inventoryState.vendingSelect == 0){
-          inventoryState.vendingSelect = 2;
-        }
-        if(inventoryState.vendingSelect == 3){
-          inventoryState.vendingSelect = 5;
-        }
-        if(inventoryState.vendingSelect == 6){
-          inventoryState.vendingSelect = 8;
-        }
-
+        inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
         closeBackpack();
         openBackpack(inventoryState, craftState);
       }
@@ -249,15 +248,7 @@ export function onKeyPressRight(inventoryState, craftState) {
       if (inventoryState.page * 9 + 9 < inventoryState.vendingContents.length) {
         inventoryState.page++;
         // if vendingSelect is 2, 5, or 8, then vending select should be 0, 3, or 6
-        if(inventoryState.vendingSelect == 2){
-          inventoryState.vendingSelect = 0;
-        }
-        if(inventoryState.vendingSelect == 5){
-          inventoryState.vendingSelect = 3;
-        }
-        if(inventoryState.vendingSelect == 8){
-          inventoryState.vendingSelect = 6;
-        }
+        inventoryState.vendingSelect = inventoryState.vendingSelect - 2;
 
         closeBackpack();
         openBackpack(inventoryState, craftState);

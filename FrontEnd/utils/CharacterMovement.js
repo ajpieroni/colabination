@@ -617,10 +617,12 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
+      console.log(inventoryState.vendingSelect);
       console.log(craftState.current);
       if (craftState.current !== "executed") {
         onKeyPressLeft(inventoryState, craftState);
       }
+      console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
