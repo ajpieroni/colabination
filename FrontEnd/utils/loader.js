@@ -41,6 +41,7 @@ export const load = {
     loadSprite("origami", "./assets/origami.png");
     loadSprite("woodsheet", "./assets/benchy.png");
     loadSprite("macrame", "./assets/macrame.png");
+    loadSprite("aluminumHat", "./assets/aluminumHat.png");
 
     // loadSprite("trash", "./assets/dubious_trash.PNG")
     loadSprite("woodAlert", "./assets/colablogo.png");
