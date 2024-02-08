@@ -98,6 +98,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
+    macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
     cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
     embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
@@ -217,6 +218,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
     Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
     Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
+    Combination.create(tool: craftingtable, item1: threadBall, item2: nothing, creation: macrame)
 
     Combination.create(tool: hands, item1: thread, item2: nothing, creation: embroiderythread)
     Combination.create(tool: hammer, item1: thread, item2: nothing, creation: threadBall)
