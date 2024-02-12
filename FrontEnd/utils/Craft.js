@@ -145,7 +145,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(18),
       "craft-container",
       "craft",
-      color(144, 238, 144),
+      color(21, 132, 21),
     ]);
     //  Add white boxes for selection
 
@@ -168,7 +168,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState.vendingContents, craftState);
+  openBackpack(inventoryState, craftState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -264,6 +264,7 @@ export function selectItem(craftState, inventoryState, music) {
 }
 
 export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
+  console.log(`Adding ${currentItem} to the crafting window.`)
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
