@@ -119,8 +119,51 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    // If the current selection is not the first item in the backpack, decrement the selection
+    console.log(inventoryState.vendingSelect);
+    console
     if (
+      inventoryState.vendingSelect > 0
+    ) {
+      inventoryState.vendingSelect--;
+
+      // Remove the selected box and add a new one
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(70, 70),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        color(255, 255, 255),
+        "selected",
+      ]);
+      destroyAll("itemText");
+
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+
+      // Add the item text
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+        ]);
+      }
+    }
+    // If the current selection is not the first item in the backpack, decrement the selection
+    else if (
       inventoryState.vendingSelect > 0 &&
       inventoryState.vendingSelect !== 3 &&
       inventoryState.vendingSelect !== 6
@@ -188,6 +231,46 @@ export function onKeyPressRight(inventoryState, craftState) {
   if (craftState.popUp) {
     // If the current selection is not the last item in the backpack, increment the selection
     if (
+      inventoryState.vendingSelect < contents.length - 1 &&
+      currentPage == totalcontents.length - 1
+    ) {
+      inventoryState.vendingSelect++;
+
+      // Destroy the selected box and add a new one
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(70, 70),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        color(255, 255, 255),
+        "selected",
+      ]);
+      destroyAll("itemText");
+
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        const selectedText = add([
+          "itemText",
+          text(itemText, {
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+        ]);
+      }
+    } else if (
       inventoryState.vendingSelect < contents.length - 1 &&
       inventoryState.vendingSelect !== 2 &&
       inventoryState.vendingSelect !== 5 &&
