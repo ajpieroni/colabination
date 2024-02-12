@@ -1,6 +1,7 @@
 import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
+import { handleSavingData } from "./Save.js";
 
 let firstItemPosition = {
   x: 605,
@@ -425,6 +426,15 @@ export function updateCraftUI(craftState, inventoryState) {
     },
   ]);
   addItemToBackpack(inventoryState, craftState, resultItem);
+  handleSavingData(
+    inventoryState.vendingKeys,
+    inventoryState.hasSavedItems,
+    inventoryState.areFinal,
+    inventoryState.currItems,
+    inventoryState.currTools,
+    inventoryState.currFinals,
+    inventoryState.hasSavedFinal
+  );
   craftState.readyToCraft = true;
   craftState.resultReady = false;
   addReCraftButton(craftState);
