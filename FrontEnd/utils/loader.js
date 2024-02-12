@@ -24,6 +24,12 @@ export const load = {
     loadSprite("scissorsAlert", "./assets/scissorsAlert.png");
     loadSprite("paperAlert", "./assets/paperAlertBox.png");
     loadSprite("paper", "./assets/paper.png");
+    loadSprite("woodPlank", "./assets/woodplank.png");
+    loadSprite("aluminumFoil", "./assets/aluminumFoil.png");
+    loadSprite("threadBall", "./assets/threadBall.png");
+    loadSprite("sand", "./assets/sand.png");
+    loadSprite("hourglass", "./assets/hourglass.png");
+
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
 
@@ -36,8 +42,10 @@ export const load = {
     // !TOBE MADE:
     loadSprite("card", "./assets/card2.png");
     loadSprite("kite", "./assets/benchy.png");
-    loadSprite("origami", "./assets/benchy.png");
+    loadSprite("origami", "./assets/origami.png");
     loadSprite("woodsheet", "./assets/benchy.png");
+    loadSprite("macrame", "./assets/macrame.png");
+    loadSprite("aluminumHat", "./assets/aluminumHat.png");
 
     // loadSprite("trash", "./assets/dubious_trash.PNG")
     loadSprite("woodAlert", "./assets/colablogo.png");

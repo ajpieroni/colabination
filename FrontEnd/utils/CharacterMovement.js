@@ -2,7 +2,6 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -38,7 +37,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable, clearTable, dropItem } from "./Craft.js";
+import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
@@ -96,14 +95,12 @@ class CharacterMovement {
       vendingKeys: [],
       isPopupVisible: false,
       vendingContents: [],
-      inPocket: [],
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
-      itemsInPocket: 0,
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
@@ -658,67 +655,9 @@ class CharacterMovement {
       go("settings");
     });
 
-    // onKeyPress("enter", () => {
-    //   if (
-    //     inventoryState.isPopupVisible &&
-    //     inventoryState.vendingContents.length > 0
-    //   ) {
-    //     let item = inventoryState.vendingContents[inventoryState.vendingSelect];
-
-    //     craftState.result = updatePocketVending(
-    //       item,
-    //       inventoryState.inPocket,
-    //       inventoryState.itemsInPocket,
-    //       volumeSetting
-    //     );
-    //     if (craftState.result.n) {
-    //       inventoryState.inPocket = craftState.result.inPocket;
-    //       inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-    //     }
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //   }
-    // });
-
-    // inventoryState.itemsInPocket = 0;
-
-    // backpack functionality
-    // onKeyPress("space", () => {
-    //   if (inventoryState.isPopupVisible) {
-    //     closeBackpack();
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //     inventoryState.isPopupVisible = false;
-    //     console.log(getSpeed());
-    //     setSpeed(300);
-    //   } else {
-    //     if (!collisionState.isDocVisible) {
-    //       openBackpack(
-    //         inventoryState.vendingContents, craftState
-    //       );
-    //       destroyAll("craft");
-    //       inventoryState.isPopupVisible = true;
-    //       console.log(getSpeed());
-    //       setSpeed(0);
-    //       inventoryState.vendingSelect = 0;
-    //     }
-    //   }
-    // });
     collisionState.isDocVisible = false;
+
+    // !TODO: export to doc statino file
 
     function showFinalItems() {
       const docPop = add([
@@ -738,6 +677,7 @@ class CharacterMovement {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
+
         let resultDisplay = itemText
           // space
           .replace(/([A-Z])/g, " $1")
@@ -811,19 +751,10 @@ class CharacterMovement {
         }
 
         console.log("material", materialEntity);
-        console.log("Updating pocket");
-        craftState.result = updatePocket(
-          materialEntity,
-          inventoryState.inPocket,
-          inventoryState.itemsInPocket
-        );
-        inventoryState.inPocket = craftState.result?.inPocket;
-        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+        destroy(materialEntity);
         materialEntity.use(body({ isStatic: true }));
       }
     });
-
-    clearTable(inventoryState, tableState);
 
     // Crafting logic:
     inventoryState.isCraftable = false;

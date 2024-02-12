@@ -44,6 +44,15 @@ export function openBackpack(inventoryState, craftState) {
   if (contents && contents.length > 0) {
     let itemText = contents[inventoryState.vendingSelect].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+    let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
 
     // Add the item text
     const selectedText = add([
