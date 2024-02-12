@@ -2,7 +2,6 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -38,7 +37,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable, clearTable, dropItem } from "./Craft.js";
+import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
@@ -96,14 +95,12 @@ class CharacterMovement {
       vendingKeys: [],
       isPopupVisible: false,
       vendingContents: [],
-      inPocket: [],
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
-      itemsInPocket: 0,
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
@@ -389,20 +386,11 @@ class CharacterMovement {
         }
 
         console.log("material", materialEntity);
-        console.log("Updating pocket");
         destroy(materialEntity);
-        // craftState.result = updatePocket(
-        //   materialEntity,
-        //   inventoryState.inPocket,
-        //   inventoryState.itemsInPocket
-        // );
-        // inventoryState.inPocket = craftState.result?.inPocket;
-        // inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
       }
     });
 
-    clearTable(inventoryState, tableState);
 
     // Crafting logic:
     inventoryState.isCraftable = false;
