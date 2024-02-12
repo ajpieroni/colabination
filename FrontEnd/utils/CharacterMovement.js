@@ -121,9 +121,8 @@ class CharacterMovement {
       : 1;
     let music = {
       volume: volumeSetting,
-    }
+    };
     window.music = music;
-    
 
     // Player
     setSpeed(300);
@@ -209,7 +208,6 @@ class CharacterMovement {
       closeCraftWindow(craftState, inventoryState);
     });
 
-   
     //! Player Movement
     // Player search
     // WASD
@@ -315,13 +313,14 @@ class CharacterMovement {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
         let resultDisplay = itemText
-        // space
-        .replace(/([A-Z])/g, " $1")
-        //trim
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(" ");
-    
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
 
         // const itemKey = item.itemKey;
         // starts a new line
@@ -390,7 +389,6 @@ class CharacterMovement {
         materialEntity.use(body({ isStatic: true }));
       }
     });
-
 
     // Crafting logic:
     inventoryState.isCraftable = false;
