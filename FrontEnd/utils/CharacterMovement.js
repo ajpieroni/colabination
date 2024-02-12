@@ -784,6 +784,15 @@ class CharacterMovement {
           console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
+          handleSavingData(
+            inventoryState.vendingKeys,
+            inventoryState.hasSavedItems,
+            inventoryState.areFinal,
+            inventoryState.currItems,
+            inventoryState.currTools,
+            inventoryState.currFinals,
+            inventoryState.hasSavedFinal
+          );
         }
         if (volumeSetting) {
           play("bubble");
