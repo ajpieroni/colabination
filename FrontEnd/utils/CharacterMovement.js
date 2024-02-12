@@ -294,6 +294,8 @@ class CharacterMovement {
 
     collisionState.isDocVisible = false;
 
+    // !TODO: export to doc statino file
+
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
