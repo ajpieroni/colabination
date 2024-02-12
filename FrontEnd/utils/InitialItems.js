@@ -8,11 +8,11 @@ export default function InitialItems(itemsToAdd){
         image: "glass",
         itemKey: "glass"
     },
-    paper: {
-        sprite: "paper",
+    wood: {
+        sprite: "wood",
         position: center().x - 100,
-        image: "paper",
-        itemKey: "paper"
+        image: "wood",
+        itemKey: "wood"
     },
     thread: {
         sprite: "thread",
