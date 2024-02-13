@@ -41,6 +41,7 @@ puts 'seeding'
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: true)
+    sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: "material", rarity: 1, isFinal: false)
     # Creating plastic trail
     vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
     # creating thread trail
