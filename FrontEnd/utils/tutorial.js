@@ -15,7 +15,7 @@ import {
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
-import { handleCollideDocumentationStationEnd } from "./Collide.js";
+import { handleCollideDocumentationStationEnd} from "./Collide.js";
 // Z-Level Tracker:
 // 0: "Walk" background: 0
 // 10: Player
@@ -70,7 +70,7 @@ class Tutorial {
   play() {
     let craftState = {
       craftCheck: false,
-      resultReady: false,
+      resultReay: false,
       result: { itemKey: "", isFinal: false },
       // Checks if they've pressed enter on the craft prompt
       craftSelected: false,
@@ -122,38 +122,12 @@ class Tutorial {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
+    let music = {
+      volume: volumeSetting,
+    }
+    window.music = music;
+    
 
-    onKeyDown("a", () => {
-      // .move() is provided by pos() component, move by pixels per second
-      player.move(-getSpeed(), 0);
-    });
-    onKeyDown("d", () => {
-      player.move(getSpeed(), 0);
-    });
-
-    onKeyDown("w", () => {
-      player.move(0, -getSpeed());
-    });
-
-    onKeyDown("s", () => {
-      player.move(0, getSpeed());
-    });
-    // Arrow Keys
-    onKeyDown("left", () => {
-      // .move() is provided by pos() component, move by pixels per second
-      player.move(-getSpeed(), 0);
-    });
-    onKeyDown("right", () => {
-      player.move(getSpeed(), 0);
-    });
-
-    onKeyDown("up", () => {
-      player.move(0, -getSpeed());
-    });
-
-    onKeyDown("down", () => {
-      player.move(0, getSpeed());
-    });
     // Player
     setSpeed(300);
     const player = add([
@@ -209,20 +183,20 @@ class Tutorial {
         toolState.toolAccess &&
         inventoryState.vendingContents.length > 0
       ) {
-        openCraftWindow(craftState, inventoryState, toolState);
+        openCraftWindow(craftState, inventoryState, toolState, music);
         craftState.current = "crafting"; // Change state to craft
       } else if (
         craftState.current === "crafting" &&
         !craftState.isAddingItem
       ) {
-        selectItem(craftState, inventoryState);
+        selectItem(craftState, inventoryState, music);
       }
     });
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
       if (craftState.current === "crafting") {
-        removeItemFromCraft(inventoryState);
+        removeItemFromCraft(inventoryState, music);
       }
     });
 
@@ -230,7 +204,7 @@ class Tutorial {
     onKeyPress("space", () => {
       console.log("Current state:", craftState.current);
       if (craftState.current === "crafting" && craftState.readyToCraft) {
-        executeCraft(toolState, craftState, inventoryState, tableState);
+        executeCraft(toolState, craftState, inventoryState, tableState, music);
       } else if (craftState.current === "executed") {
         restartCraft(craftState, inventoryState, toolState);
       }
@@ -298,7 +272,7 @@ class Tutorial {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState);
+      craftingBackend(toolState, ingredients, craftState, inventoryState, music);
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -374,125 +348,200 @@ class Tutorial {
           craftButton.color = rgb(80, 80, 80); // original color
         }
         isBright = !isBright;
-      }, 250); // the button color will toggle every 500ms
-      onCollideEnd("player", "craftingTable", () => {
-        tableState.atCraftingTable = false;
-      });
-  
-      // !VENDING
-      let itemText = "";
-  
-      // *TODO: move
-      onKeyPress("left", () => {
-        console.log(craftState.current);
-        if (craftState.current !== "executed") {
-          onKeyPressLeft(inventoryState, craftState);
-        }
-      });
-  
-      onKeyPress("right", () => {
-        if (craftState.current !== "executed") {
-          onKeyPressRight(inventoryState, craftState);
-        }
-      });
-  
-      onKeyPress("down", () => {
-        console.log("down");
-        if (craftState.current !== "executed") {
-          onKeyPressDown(inventoryState, craftState);
-        }
-      });
-  
-      onKeyPress("up", () => {
-        if (craftState.current !== "executed") {
-          onKeyPressUp(inventoryState, craftState);
-        }
-      });
-  
-      onKeyPress("m", () => {
-        this.music.paused = true;
-        handleSavingData(
-          inventoryState.vendingKeys,
-          inventoryState.hasSavedItems,
-          inventoryState.areFinal,
-          inventoryState.currItems,
-          inventoryState.currTools,
-          inventoryState.currFinals,
-          inventoryState.hasSavedFinal
-        );
-        go("settings");
-      });
-  
-      collisionState.isDocVisible = false;
-  
-      function showFinalItems() {
-        const docPop = add([
-          rect(500, 600),
-          pos(325, 150),
-          z(11),
-          color(204, 229, 255),
-          outline(4),
-          scale(0.75),
-          "final",
-        ]);
-        const startX = docPop.pos.x + 42.5;
-        const startY = docPop.pos.y + 30;
-        let currentX = startX;
-        let currentY = startY;
-        let currRow = 0;
-        for (let i = 0; i < inventoryState.areFinal.length; i++) {
-          const item = inventoryState.areFinal[i];
-          itemText = item.charAt(0).toUpperCase() + item.slice(1);
-  
-          // const itemKey = item.itemKey;
-          // starts a new line
-  
-          if (currRow === 3) {
-            currentY += item.height + 50;
-            currentX = startX;
-            currRow = 0;
-          }
-  
-          const finalItem = add([
-            pos(currentX, currentY),
-            z(11),
-            sprite(`${item}`),
-            "final",
-            { itemKey: item },
-          ]);
-  
-          const finalItemText = add([
-            pos(currentX, currentY + 50),
-            text(itemText, {
-              // optional object
-              size: 16,
-              color: (255, 255, 255),
-              // can specify font here,
-            }),
-            z(11),
-            "final",
-            // { itemKey: item },
-          ]);
-          currRow++;
-          currentX += 100;
-        }
-  
-        collisionState.isDocVisible = true;
+      }, 250); 
+    }
+
+    onKeyDown("a", () => {
+      // .move() is provided by pos() component, move by pixels per second
+      player.move(-getSpeed(), 0);
+    });
+    onKeyDown("d", () => {
+      player.move(getSpeed(), 0);
+    });
+
+    onKeyDown("w", () => {
+      player.move(0, -getSpeed());
+    });
+
+    onKeyDown("s", () => {
+      player.move(0, getSpeed());
+    });
+    // Arrow Keys
+    onKeyDown("left", () => {
+      // .move() is provided by pos() component, move by pixels per second
+      player.move(-getSpeed(), 0);
+    });
+    onKeyDown("right", () => {
+      player.move(getSpeed(), 0);
+    });
+
+    onKeyDown("up", () => {
+      player.move(0, -getSpeed());
+    });
+
+    onKeyDown("down", () => {
+      player.move(0, getSpeed());
+    });
+
+    onCollideEnd("player", "craftingTable", () => {
+      tableState.atCraftingTable = false;
+    });
+
+    // !VENDING
+    let itemText = "";
+
+    // *TODO: move
+    onKeyPress("left", () => {
+      console.log(craftState.current);
+      if (craftState.current !== "executed") {
+        onKeyPressLeft(inventoryState, craftState);
       }
-  
-      let canAccessDocumentation = false;
-      let eventListenerAttached = false;
-  
-      player.onCollide("documentationStation", () => {
-        handleCollideDocumentationStation(collisionState, showFinalItems);
+    });
+
+    onKeyPress("right", () => {
+      if (craftState.current !== "executed") {
+        onKeyPressRight(inventoryState, craftState);
+      }
+    });
+
+    onKeyPress("down", () => {
+      // console.log("down");
+      if (craftState.current !== "executed") {
+        onKeyPressDown(inventoryState, craftState);
+      }
+    });
+
+    onKeyPress("up", () => {
+      if (craftState.current !== "executed") {
+        onKeyPressUp(inventoryState, craftState);
+      }
+    });
+
+    onKeyPress("m", () => {
+      this.music.paused = true;
+      handleSavingData(
+        inventoryState.vendingKeys,
+        inventoryState.hasSavedItems,
+        inventoryState.areFinal,
+        inventoryState.currItems,
+        inventoryState.currTools,
+        inventoryState.currFinals,
+        inventoryState.hasSavedFinal
+      );
+      go("settings");
+    });
+
+   
+    collisionState.isDocVisible = false;
+
+    function showFinalItems() {
+      const docPop = add([
+        rect(500, 600),
+        pos(325, 150),
+        z(11),
+        color(204, 229, 255),
+        outline(4),
+        scale(0.75),
+        "final",
+      ]);
+      const startX = docPop.pos.x + 42.5;
+      const startY = docPop.pos.y + 30;
+      let currentX = startX;
+      let currentY = startY;
+      let currRow = 0;
+      for (let i = 0; i < inventoryState.areFinal.length; i++) {
+        const item = inventoryState.areFinal[i];
+        itemText = item.charAt(0).toUpperCase() + item.slice(1);
+        let resultDisplay = itemText
+        // space
+        .replace(/([A-Z])/g, " $1")
+        //trim
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+    
+
+        // const itemKey = item.itemKey;
+        // starts a new line
+
+        if (currRow === 3) {
+          currentY += item.height + 50;
+          currentX = startX;
+          currRow = 0;
+        }
+
+        const finalItem = add([
+          pos(currentX, currentY),
+          z(11),
+          sprite(`${item}`),
+          "final",
+          { itemKey: item },
+        ]);
+
+        const finalItemText = add([
+          pos(currentX, currentY + 50),
+          text(resultDisplay, {
+            // optional object
+            size: 16,
+            color: (255, 255, 255),
+            // can specify font here,
+          }),
+          z(11),
+          "final",
+          // { itemKey: item },
+        ]);
+        currRow++;
+        currentX += 100;
+      }
+
+      collisionState.isDocVisible = true;
+    }
+
+    let canAccessDocumentation = false;
+    let eventListenerAttached = false;
+
+    player.onCollide("documentationStation", () => {
+      handleCollideDocumentationStation(collisionState, showFinalItems);
+    });
+
+    player.onCollideEnd("documentationStation", () => {
+      handleCollideDocumentationStationEnd(collisionState);
+    });
+    function waitForCollision() {
+      return new Promise((resolve) => {
+        const checkCollision = () => {
+          if (collidedPaper) {
+            resolve();
+          } else {
+            setTimeout(checkCollision, 100); // Check every 100 milliseconds
+          }
+        };
+        checkCollision();
       });
-  
-      player.onCollideEnd("documentationStation", () => {
-        handleCollideDocumentationStationEnd(collisionState);
+    }
+    // let collidedHammer = false;
+    function waitForHammer() {
+      return new Promise((resolve) => {
+        const checkCollision = () => {
+          if (toolState.currentTool.toolKey === "hammer") {
+            resolve();
+          } else {
+            setTimeout(checkCollision, 100); // Check every 100 milliseconds
+          }
+        };
+        checkCollision();
       });
-  
-      player.onCollide("material", (materialEntity) => {
+    }
+    console.log(toolState.currentTool, "toolstate");
+    
+    let collidedPaper  = false;
+    player.onCollide("material", (materialEntity) => {
+      if (inventoryState.tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
+        if (materialEntity.itemKey === "paper") {
+          collidedPaper = true;
+        }
+
         if (
           !inventoryState.vendingContents.includes(materialEntity) &&
           !inventoryState.vendingKeys.includes(materialEntity.itemKey)
@@ -500,6 +549,7 @@ class Tutorial {
           console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
+
         }
         if (volumeSetting) {
           play("bubble");
@@ -515,93 +565,81 @@ class Tutorial {
         inventoryState.inPocket = craftState.result?.inPocket;
         inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
         materialEntity.use(body({ isStatic: true }));
-      
-      });
+      }
+    });
+
+    clearTable(inventoryState, tableState);
+
+    // Crafting logic:
+    inventoryState.isCraftable = false;
+
+    // Dropping item on table
+    onKeyPress("q", () => {
+      dropItem(toolState, inventoryState, volumeSetting, tableState);
+    });
+
+    inventoryState.finalCraftCheck = false;
+
+    // Crafting Collisions
+    onCollide("player", "craftingTable", (s, w) => {
+      tableState.atCraftingTable = true;
+      checkCraftable(toolState, inventoryState, volumeSetting);
+    });
+    onCollideEnd("player", "craftingTable", (s, w) => {
+      tableState.atCraftingTable = false;
+      checkCraftable(toolState, inventoryState, volumeSetting);
+    });
   
-      clearTable(inventoryState, tableState);
-  
-      // Crafting logic:
-      inventoryState.isCraftable = false;
-  
-      // Dropping item on table
-      onKeyPress("q", () => {
-        dropItem(toolState, inventoryState, volumeSetting, tableState);
-      });
-  
-      inventoryState.finalCraftCheck = false;
-  
-      // Crafting Collisions
-      onCollide("player", "craftingTable", (s, w) => {
-        tableState.atCraftingTable = true;
-        checkCraftable(toolState, inventoryState, volumeSetting);
-      });
-      onCollideEnd("player", "craftingTable", (s, w) => {
-        tableState.atCraftingTable = false;
-        checkCraftable(toolState, inventoryState, volumeSetting);
-      });
+    function messageCreate(message) {
+      add([
+        text(message),
+        pos(415-100+50-25-25, 175+50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.35),
+        "alert",
+      ]);
     }
 
-     async function tutorialStart() {
-        setSpeed(0);
-        // Check if the character has a hammer and two papers in their inventory
-        let message = "Welcone to the tutorial! Let's get started."
-            add([
-              text(message),
-              pos(415-100+50-25-25, 175+50),
-              z(51),
-              color(0, 0, 0),
-              scale(0.35),
-              "alert",
-            ]);
-            await new Promise((resolve) => setTimeout(resolve, 5000));
-            destroyAll("alert");
 
-        message = "Try picking up the items you see on the floor!";
-        setSpeed(300);
-        add([
-          text(message),
-          pos(415-100+50-25-25, 175+50),
-          z(51),
-          color(0, 0, 0),
-          scale(0.35),
-          "alert",
-        ]);
-
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        destroyAll("alert");
-
-        message = "Now try finding the hammer station!";
-        add([
-          text(message),
-          pos(415-100+50-25-25, 175+50),
-          z(51),
-          color(0, 0, 0),
-          scale(0.35),
-          "alert",
-        ]);
-
-        await new Promise((resolve) => setTimeout(resolve, 5000));
-        destroyAll("alert");
-        if (inventoryState.currTools.includes("hammer")) {
-          message = "Let us try crafting paper with the hammer and two wood!";
-          add([
-            text(message),
-            pos(415-100+50-25-25, 175+50),
-            z(51),
-            color(0, 0, 0),
-            scale(0.35),
-            "alert",
-          ]);
-          await new Promise((resolve) => setTimeout(resolve, 5000));
-          destroyAll("alert");
-        }
-
-       }
-
+    async function tutorialStart() {
+      setSpeed(0);
+      let message = "Welcome to the tutorial! Let's get started.";
+      messageCreate(message);
+      await new Promise((resolve) => setTimeout(resolve, 4000));
+      destroyAll("alert");
     
+      message = "Try picking up the items you see on the floor!";
+      messageCreate(message); 
+      setSpeed(300);
+    
+      await waitForCollision();
+    
+      destroyAll("alert");
+      message = "Great! Now, let's head to the hammer station.";
+      messageCreate(message);
+    
+      await waitForHammer();
+      let step1 = false;
+      destroyAll("alert");
+      message = "Nice job! Now, let's begin crafting! Press 'Enter' to open the crafting window.";
+      step1 = true;
+      messageCreate(message);
+
+      if (step1) {
+        onKeyPress("enter", () => {
+          destroyAll("alert");
+      });
+      
+      
+      
+    }
+      
+
+    }
+
       function continueTutorial() {
-        // Continue the tutorial logic here...
-      }
+        }
 
       function stopTutorial() {
       }
