@@ -519,6 +519,19 @@ class Tutorial {
         checkCollision();
       });
     }
+    let readyToCraft = false;
+    function waitForStep2() {
+      return new Promise((resolve) => {
+        const checkCollision = () => {
+          if (readyToCraft) {
+            resolve();
+          } else {
+            setTimeout(checkCollision, 100); 
+          }
+        };
+        checkCollision();
+      });
+    }
     // let collidedHammer = false;
     function waitForHammer() {
       return new Promise((resolve) => {
@@ -594,7 +607,7 @@ class Tutorial {
       add([
         text(message),
         pos(415-100+50-25-25, 175+50),
-        z(51),
+        z(500),
         color(0, 0, 0),
         scale(0.35),
         "alert",
@@ -625,16 +638,19 @@ class Tutorial {
       message = "Nice job! Now, let's begin crafting! Press 'Enter' to open the crafting window.";
       step1 = true;
       messageCreate(message);
-
       if (step1) {
         onKeyPress("enter", () => {
           destroyAll("alert");
-      });
-      
-      
+          message = "Now, try selecting an item by pressing 'Enter' on the item and try to make paper.";
+          messageCreate(message);
+          readyToCraft = true;
+      });      
       
     }
-      
+      await waitForStep2();
+      if (readyToCraft) {
+        console.log("CURR ITEMS", inventoryState.currItems);
+      }
 
     }
 
