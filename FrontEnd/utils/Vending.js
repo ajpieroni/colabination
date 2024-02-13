@@ -57,7 +57,7 @@ export function openBackpack(inventoryState, craftState) {
     // Add the item text
     const selectedText = add([
       "itemText",
-      text(itemText, {
+      text(resultDisplay, {
         size: 24,
         outline: 4,
         color: (0, 0, 0),
@@ -155,11 +155,21 @@ export function onKeyPressLeft(inventoryState, craftState) {
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
 
       // Add the item text
+
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -201,9 +211,18 @@ export function onKeyPressLeft(inventoryState, craftState) {
       // Add the item text
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -266,9 +285,18 @@ export function onKeyPressRight(inventoryState, craftState) {
 
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -308,9 +336,18 @@ export function onKeyPressRight(inventoryState, craftState) {
 
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -364,9 +401,18 @@ export function onKeyPressDown(inventoryState, craftState) {
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -422,9 +468,18 @@ export function onKeyPressUp(inventoryState, craftState) {
       // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
