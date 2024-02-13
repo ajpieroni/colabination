@@ -421,14 +421,26 @@ export function updateCraftUI(craftState, inventoryState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-  const resultText = add([
-    text(`You made ${resultDisplay}!`, { size: 24 }),
-    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
-    color(255, 255, 255),
-    z(500),
-    "craft",
-    "executedCraft",
-  ]);
+    if(craftState.result.itemKey.length < 6){
+      const resultText = add([
+        text(`You made ${resultDisplay}!`, { size: 24 }),
+        pos(100 + 500 + 50 - 50+25, 100 + 50 + 100 - 25),
+        color(255, 255, 255),
+        z(500),
+        "craft",
+        "executedCraft",
+      ]);
+    }else{
+      const resultText = add([
+        text(`You made ${resultDisplay}!`, { size: 24 }),
+        pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+        color(255, 255, 255),
+        z(500),
+        "craft",
+        "executedCraft",
+      ]);
+    }
+  
 
   // If the result is final, add an additional display:
   if (craftState.result.isFinal) {
