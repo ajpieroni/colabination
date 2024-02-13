@@ -423,7 +423,7 @@ export function updateCraftUI(craftState, inventoryState) {
 
   const resultText = add([
     text(`You made ${resultDisplay}!`, { size: 24 }),
-    pos(100 + 500 + 50 - 50+25, 100 + 50 + 100 - 25),
+    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
     color(255, 255, 255),
     z(500),
     "craft",
