@@ -18,19 +18,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         console.log("items", items);
         if(localStorage.getItem("tutorial") == "true"){
         console.log("tutorial is true");
-        InitialItems(["paper"]);
+        InitialItems(["wood"]);
         }
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
         // );
         console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
         if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
-          InitialItems(["glass", "thread", "paper", "metal"]);
+          InitialItems(["glass", "thread", "wood", "metal"]);
         }
-        if (items.length !== 0){
-          // if player has played and wants to do tutorial again
-
-          const materials = ["glass", "thread", "paper", "metal"];
+        if (items.length !== 0) {
+          const materials = ["glass", "thread", "wood", "metal"];
 
           materials.forEach((material) => {
             if (!items.some((subArray) => subArray.includes(material))) {

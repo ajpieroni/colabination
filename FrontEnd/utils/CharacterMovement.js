@@ -2,7 +2,6 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -38,7 +37,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable, clearTable, dropItem } from "./Craft.js";
+import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
@@ -96,18 +95,18 @@ class CharacterMovement {
       vendingKeys: [],
       isPopupVisible: false,
       vendingContents: [],
-      inPocket: [],
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
-      itemsInPocket: 0,
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
       ingredients: [],
+      // pagination
+      page: 0,
     };
     let tableState = {
       atCraftingTable: false,
@@ -124,9 +123,8 @@ class CharacterMovement {
       : 1;
     let music = {
       volume: volumeSetting,
-    }
+    };
     window.music = music;
-    
 
     // Player
     setSpeed(300);
@@ -171,8 +169,19 @@ class CharacterMovement {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-    let isCraftingVisible = false;
-    let tableTemp = inventoryState.tableItems;
+// !TODO: remove, instead introduce pagination with arrows
+    onKeyPress("2", () => {
+      inventoryState.page = inventoryState.page + 1;
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
+    onKeyPress("1", () => {
+      if(inventoryState.page > 0){
+      inventoryState.page = inventoryState.page - 1;
+      }
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
 
     // !NEW CRAFT
 
@@ -272,7 +281,13 @@ class CharacterMovement {
         scale(0.5),
         "crafting",
       ]);
-      craftingBackend(toolState, ingredients, craftState, inventoryState, music);
+      craftingBackend(
+        toolState,
+        ingredients,
+        craftState,
+        inventoryState,
+        music
+      );
 
       for (let index = 0; index < ingredients.length; index++) {
         await new Promise((resolve) => setTimeout(resolve, 750));
@@ -599,10 +614,12 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
+      console.log(inventoryState.vendingSelect);
       console.log(craftState.current);
       if (craftState.current !== "executed") {
         onKeyPressLeft(inventoryState, craftState);
       }
+      console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
@@ -638,67 +655,9 @@ class CharacterMovement {
       go("settings");
     });
 
-    // onKeyPress("enter", () => {
-    //   if (
-    //     inventoryState.isPopupVisible &&
-    //     inventoryState.vendingContents.length > 0
-    //   ) {
-    //     let item = inventoryState.vendingContents[inventoryState.vendingSelect];
-
-    //     craftState.result = updatePocketVending(
-    //       item,
-    //       inventoryState.inPocket,
-    //       inventoryState.itemsInPocket,
-    //       volumeSetting
-    //     );
-    //     if (craftState.result.n) {
-    //       inventoryState.inPocket = craftState.result.inPocket;
-    //       inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
-    //     }
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //   }
-    // });
-
-    // inventoryState.itemsInPocket = 0;
-
-    // backpack functionality
-    // onKeyPress("space", () => {
-    //   if (inventoryState.isPopupVisible) {
-    //     closeBackpack();
-    //     handleSavingData(
-    //       inventoryState.vendingKeys,
-    //       inventoryState.hasSavedItems,
-    //       inventoryState.areFinal,
-    //       inventoryState.currItems,
-    //       inventoryState.currTools,
-    //       inventoryState.currFinals,
-    //       inventoryState.hasSavedFinal
-    //     );
-    //     inventoryState.isPopupVisible = false;
-    //     console.log(getSpeed());
-    //     setSpeed(300);
-    //   } else {
-    //     if (!collisionState.isDocVisible) {
-    //       openBackpack(
-    //         inventoryState.vendingContents, craftState
-    //       );
-    //       destroyAll("craft");
-    //       inventoryState.isPopupVisible = true;
-    //       console.log(getSpeed());
-    //       setSpeed(0);
-    //       inventoryState.vendingSelect = 0;
-    //     }
-    //   }
-    // });
     collisionState.isDocVisible = false;
+
+    // !TODO: export to doc statino file
 
     function showFinalItems() {
       const docPop = add([
@@ -718,14 +677,16 @@ class CharacterMovement {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
+
         let resultDisplay = itemText
-        // space
-        .replace(/([A-Z])/g, " $1")
-        //trim
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(" ");
-    
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
 
         // const itemKey = item.itemKey;
         // starts a new line
@@ -784,25 +745,25 @@ class CharacterMovement {
           console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
+          handleSavingData(
+            inventoryState.vendingKeys,
+            inventoryState.hasSavedItems,
+            inventoryState.areFinal,
+            inventoryState.currItems,
+            inventoryState.currTools,
+            inventoryState.currFinals,
+            inventoryState.hasSavedFinal
+          );
         }
         if (volumeSetting) {
           play("bubble");
         }
 
         console.log("material", materialEntity);
-        console.log("Updating pocket");
-        craftState.result = updatePocket(
-          materialEntity,
-          inventoryState.inPocket,
-          inventoryState.itemsInPocket
-        );
-        inventoryState.inPocket = craftState.result?.inPocket;
-        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+        destroy(materialEntity);
         materialEntity.use(body({ isStatic: true }));
       }
     });
-
-    clearTable(inventoryState, tableState);
 
     // Crafting logic:
     inventoryState.isCraftable = false;

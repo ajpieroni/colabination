@@ -1,6 +1,7 @@
 import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
+import { handleSavingData } from "./Save.js";
 
 let firstItemPosition = {
   x: 605,
@@ -43,104 +44,6 @@ export function checkCraftable(toolState, inventoryState, volumeSetting) {
   if (!toolState.toolAccess || inventoryState.isPopupVisible) {
     destroyAll("craft");
   }
-}
-// !Inventory Management
-export function dropItem(toolState, inventoryState, volumeSetting, tableState) {
-  // !TODO: set max items on table
-  if (inventoryState.tableItems.length == 0 && toolState.currentTool) {
-    tableState.table_x = toolState.currentTool.pos.x;
-    tableState.table_y = toolState.currToolY;
-  }
-
-  if (
-    toolState.toolAccess &&
-    tableState.onItemsOnTable >= 2 &&
-    !inventoryState.isPopupVisible
-  ) {
-    let alertText = "There are too many items on the table; try crafting!";
-
-    add([
-      "alertPop",
-      text(alertText, {
-        // optional object
-        size: 24,
-        outline: 4,
-        color: (0, 0, 0),
-        // can specify font here,
-      }),
-      area(),
-      anchor("center"),
-      pos(500 + 25, 500 - 300),
-      z(20),
-      // scale(.5)
-    ]);
-    add([
-      rect(500 + 200 + 200, 50),
-      area(),
-      anchor("center"),
-      pos(500 + 25, 500 - 300),
-      z(19),
-      color(242, 140, 40),
-      "alertPop",
-    ]);
-
-    setTimeout(() => {
-      destroyAll("alertPop");
-    }, 2000);
-    // checkCraftable();
-  } else {
-    if (
-      toolState.toolAccess &&
-      inventoryState.itemsInPocket !== 0 &&
-      tableState.onItemsOnTable < 6 &&
-      !inventoryState.isPopupVisible
-    ) {
-      inventoryState.itemsInPocket--;
-
-      let item = inventoryState.inPocket.shift();
-
-      item.use("onTable");
-
-      item.moveTo(tableState.table_x, tableState.table_y);
-      if (inventoryState.inPocket.length === 1) {
-        inventoryState.inPocket[0].moveTo(880, 725);
-      }
-      inventoryState.tableItems[tableState.onItemsOnTable] = item.itemKey;
-
-      tableState.table_y += 50;
-      tableState.onItemsOnTable++;
-      checkCraftable(toolState, inventoryState);
-    } else {
-      checkCraftable(toolState, inventoryState);
-      rearrangePocket(inventoryState, volumeSetting);
-    }
-  }
-}
-export function rearrangePocket(inventoryState, volumeSetting) {
-  if (inventoryState.inPocket.length > 0) {
-    if (volumeSetting) {
-      play("bubble");
-    }
-    let item = inventoryState.inPocket.shift(); // Remove the first item from the pocket
-    inventoryState.itemsInPocket--;
-    destroy(item);
-    // Shift remaining items to the first slot if any
-    if (inventoryState.inPocket.length > 0) {
-      inventoryState.inPocket[0].moveTo(880, 725);
-      if (volumeSetting) {
-        play("bubble");
-      }
-    }
-  }
-}
-export function clearTable(inventoryState, tableState) {
-  inventoryState.tableItems.length = 0;
-  destroyAll("onTable");
-  destroyAll("craft");
-  tableState.table_x = 700;
-  tableState.table_y = 550;
-  tableState.onItemsOnTable = 0;
-  inventoryState.tableItems = [];
 }
 
 // !CRAFTING
@@ -243,7 +146,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       z(18),
       "craft-container",
       "craft",
-      color(144, 238, 144),
+      color(21, 132, 21),
     ]);
     //  Add white boxes for selection
 
@@ -266,7 +169,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState.vendingContents, craftState);
+  openBackpack(inventoryState, craftState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -362,6 +265,7 @@ export function selectItem(craftState, inventoryState, music) {
 }
 
 export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
+  console.log(`Adding ${currentItem} to the crafting window.`)
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -522,6 +426,15 @@ export function updateCraftUI(craftState, inventoryState) {
     },
   ]);
   addItemToBackpack(inventoryState, craftState, resultItem);
+  handleSavingData(
+    inventoryState.vendingKeys,
+    inventoryState.hasSavedItems,
+    inventoryState.areFinal,
+    inventoryState.currItems,
+    inventoryState.currTools,
+    inventoryState.currFinals,
+    inventoryState.hasSavedFinal
+  );
   craftState.readyToCraft = true;
   craftState.resultReady = false;
   addReCraftButton(craftState);
