@@ -38,7 +38,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable, clearTable, dropItem } from "./Craft.js";
+import { checkCraftable} from "./Craft.js";
 
 class Tutorial {
   // This file acts as our main control.
@@ -545,13 +545,26 @@ class Tutorial {
         checkCollision();
       });
     }
+    let madePaper = false;
+    function waitForPaper(){  
+      return new Promise((resolve) => {
+        const checkCraft = () => {
+          if (craftState.result.itemKey === "paper") {
+            resolve();
+          } else {
+            setTimeout(checkCraft, 100); // Check every 100 milliseconds
+          }
+        };
+        checkCraft();
+      });
+    }
     console.log(toolState.currentTool, "toolstate");
     
     let collidedPaper  = false;
     player.onCollide("material", (materialEntity) => {
       if (inventoryState.tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
-        if (materialEntity.itemKey === "paper") {
+        if (materialEntity.itemKey === "wood") {
           collidedPaper = true;
         }
 
@@ -581,7 +594,7 @@ class Tutorial {
       }
     });
 
-    clearTable(inventoryState, tableState);
+   
 
     // Crafting logic:
     inventoryState.isCraftable = false;
@@ -664,9 +677,10 @@ class Tutorial {
       });      
       
     }
-      await waitForStep2();
-        
-
+      await waitForPaper();
+      destroyAll("alert");
+      message = "Great job! You've made paper! Exit out of Hammer!";
+      messageCreate(message);
     }
 
       function continueTutorial() {
