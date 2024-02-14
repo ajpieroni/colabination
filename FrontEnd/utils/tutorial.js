@@ -16,14 +16,6 @@ import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd} from "./Collide.js";
-// Z-Level Tracker:
-// 0: "Walk" background: 0
-// 10: Player
-// 11: "Craft" text, Tool Labels
-// 11: Selected Item
-// 19: Backpack
-// 20: Items in backpack
-// 20: "Crafting..." text
 
 import {
   openBackpack,
@@ -215,141 +207,6 @@ class Tutorial {
       closeCraftWindow(craftState, inventoryState);
     });
 
-    // !OLD CRAFT
-
-    async function showContainer(tableTemp) {
-      isCraftingVisible = true;
-
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      let ingredients = tableTemp;
-      add([
-        rect(725, 550),
-        pos(150, 125),
-        z(50),
-        "craft-container",
-        "craftPop",
-      ]);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      let currentx = 400;
-      let currenty = 300;
-      if (ingredients.length == 3) {
-        currentx = currentx - 125;
-      }
-      if (ingredients.length == 1) {
-        currentx = currentx + 100;
-      }
-
-      let possessionText = `You possess ${ingredients.length} item${
-        ingredients.length > 1 ? "s" : ""
-      }:`;
-      let toolname = toolState.currentTool.toolKey
-        // space
-        .replace(/([A-Z])/g, " $1")
-        //trim
-        .split(" ")
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        )
-        .join(" ");
-
-      let toolText = `Let's try crafting with the ${toolname}.`;
-
-      add([
-        text(possessionText),
-        pos(415, 175),
-        z(51),
-        color(0, 0, 0),
-        scale(0.5),
-        "crafting",
-      ]);
-
-      add([
-        text(toolText),
-        pos(415 - 200 + 100, 175 + 50),
-        z(51),
-        color(0, 0, 0),
-        scale(0.5),
-        "crafting",
-      ]);
-      craftingBackend(toolState, ingredients, craftState, inventoryState, music);
-
-      for (let index = 0; index < ingredients.length; index++) {
-        await new Promise((resolve) => setTimeout(resolve, 750));
-
-        const trailCircle = add([
-          circle(64),
-          pos(currentx + 40, currenty + 35),
-          z(52),
-          color(228, 228, 228),
-          "crafting",
-        ]);
-        if (volumeSetting) {
-          play("bubble");
-        }
-        const trailItem = add([
-          // rect(item.width, item.height) ,
-          pos(currentx, currenty),
-          z(100),
-          // color(item.color.r, item.color.g, item.color.b),
-          "crafting",
-          // !TODO: Make sprite image dynamic
-          sprite(`${ingredients[index]}`),
-          // rect(10,10),
-          // sprite(`${image}`),
-          scale(1.5),
-          // z(11),
-          "material",
-          {
-            itemKey: ingredients[index],
-          },
-        ]);
-        currentx += 200;
-      }
-
-      let message;
-      if (craftState.result.itemKey === "trash") {
-        message = "That's definitely creative... let's see what happens!";
-      } else {
-        message = "Congratulations! You can make something with these items.";
-      }
-
-      add([
-        text(`${message}`),
-        pos(215, 525 - 100 + 50),
-        z(51),
-        color(0, 0, 0),
-        scale(0.5),
-        "crafting",
-      ]);
-
-      // *Craft Button
-      const craftButton = add([
-        rect(150, 50),
-        pos(400 + 50, 600),
-        z(52),
-        color(228, 228, 228),
-        "crafting",
-      ]);
-      add([
-        text("Make!"),
-        pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
-        z(53),
-        color(0, 0, 0), // color of the text,
-        scale(0.5),
-        "crafting",
-      ]);
-      // Craft Button Flash
-      let isBright = true;
-      setInterval(() => {
-        if (isBright) {
-          craftButton.color = rgb(228, 228, 228); // less bright color
-        } else {
-          craftButton.color = rgb(80, 80, 80); // original color
-        }
-        isBright = !isBright;
-      }, 250); 
-    }
 
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
@@ -683,13 +540,9 @@ class Tutorial {
       messageCreate(message);
     }
 
-      function continueTutorial() {
-        }
-
       function stopTutorial() {
       }
-
-      // Call the tutorial function
+      
       tutorialStart();
 
   }}
