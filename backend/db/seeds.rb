@@ -37,7 +37,7 @@ puts 'seeding'
 
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
-sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
+    sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
     hourglass = Item.create(name: 'hourglass', description: "Time is running out!", item_type: 'material', rarity: 1, isFinal: true)
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
