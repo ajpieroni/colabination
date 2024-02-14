@@ -605,13 +605,30 @@ class Tutorial {
   
     function messageCreate(message) {
       add([
-        text(message),
-        pos(415-100+50-25-25, 175+50),
-        z(500),
-        color(0, 0, 0),
-        scale(0.35),
         "alert",
+        text(message, {
+          // optional object
+          size: 20,
+          outline: 4,
+          color: (25,25,112),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(525,125),
+        z(500),
+        // scale(.5)
       ]);
+      // add([
+      //   rect(500+200,100),
+      //   area(),
+      //   anchor("center"),
+      //   pos(525, 125),
+      //   z(490),
+      //   color(230,230,250),
+      //   "alert"
+
+      // ])
     }
 
 
@@ -648,9 +665,7 @@ class Tutorial {
       
     }
       await waitForStep2();
-      if (readyToCraft) {
-        console.log("CURR ITEMS", inventoryState.currItems);
-      }
+        
 
     }
 
