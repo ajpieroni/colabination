@@ -15,13 +15,15 @@ export function openBackpack(inventoryState, craftState) {
 
   // Arrows
   if (inventoryState.vendingContents.length > 9) {
-    const rightArrow = add([
+    const downArrow = add([
       sprite("rightArrow"),
-      pos(450, 400),
+      pos(450-100-25+10+5, 400+400-300+100+50),
       z(100),
       outline(4),
+      rotate(90),
       "vending",
-    ]);
+        
+    ]); 
   }
   // Add backpack sprite
   const popup = add([
@@ -240,8 +242,18 @@ export function onKeyPressDown(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
+    // If the current selection is the last row in the backpack, go to the next page
+    if(inventoryState.vendingSelect === 6 || inventoryState.vendingSelect === 7 || inventoryState.vendingSelect === 8){
+    inventoryState.page++;
+    inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+    
+    destroyAll("itemText");
+    destroyAll("selected");
+    closeBackpack();
+    openBackpack(inventoryState, craftState);
+    }
     // If the current selection is not the last row in the backpack, increment the selection by 3
-    if (inventoryState.vendingSelect + 3 < contents.length) {
+    else if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
       // Destroy the selected box and add a new one
       destroyAll("itemText");
