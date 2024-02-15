@@ -350,10 +350,7 @@ export function onKeyPressRight(inventoryState, craftState) {
         ]);
       }
     } else if (
-      inventoryState.vendingSelect < contents.length - 1 &&
-      inventoryState.vendingSelect !== 2 &&
-      inventoryState.vendingSelect !== 5 &&
-      inventoryState.vendingSelect !== 8
+      inventoryState.vendingSelect < contents.length - 1
     ) {
       inventoryState.vendingSelect++;
 
@@ -399,33 +396,6 @@ export function onKeyPressRight(inventoryState, craftState) {
           pos(325, 625),
           z(20),
         ]);
-      }
-    } else {
-      // If the current selection is the last item in the backpack, increment the page
-      if (inventoryState.page < totalcontents.length - 1) {
-        inventoryState.page++;
-        // Pagination logic
-        const itemsPerPage = 9;
-        const startIndex = inventoryState.page * itemsPerPage;
-        const actualIndex = startIndex + inventoryState.vendingSelect;
-
-        // If there's an item at the index + 2 on the next page, increment the selection by 2
-        console.log(
-          "More items:",
-          inventoryState.vendingContents[actualIndex + 2]
-        );
-        if (inventoryState.vendingContents[actualIndex - 2]) {
-          console.log(
-            `Changed selection to: ${inventoryState.vendingSelect - 2}`
-          );
-          inventoryState.vendingSelect = inventoryState.vendingSelect - 2;
-        } else {
-          // if inventoryState.vendingSelect + 2 is undefined, then set the index to the last item in the page
-          console.log(`Changed selection to: ${0}`);
-          inventoryState.vendingSelect = 0;
-        }
-        closeBackpack();
-        openBackpack(inventoryState, craftState);
       }
     }
   }
