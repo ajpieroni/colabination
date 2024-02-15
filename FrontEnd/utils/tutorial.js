@@ -364,56 +364,28 @@ class Tutorial {
     player.onCollideEnd("documentationStation", () => {
       handleCollideDocumentationStationEnd(collisionState);
     });
-    function waitForCollision() {
-      return new Promise((resolve) => {
-        const checkCollision = () => {
-          if (collidedPaper) {
-            resolve();
-          } else {
-            setTimeout(checkCollision, 100); // Check every 100 milliseconds
-          }
-        };
-        checkCollision();
-      });
-    }
     let readyToCraft = false;
-    function waitForStep2() {
+    function waitForCondition(conditionFunc) {
       return new Promise((resolve) => {
-        const checkCollision = () => {
-          if (readyToCraft) {
+        const checkCondition = () => {
+          if (conditionFunc()) {
             resolve();
           } else {
-            setTimeout(checkCollision, 100); 
+            setTimeout(checkCondition, 100); 
           }
         };
-        checkCollision();
+        checkCondition();
       });
     }
-    // let collidedHammer = false;
+    function waitForCollision() {
+      return waitForCondition(() => collidedPaper);
+    }
     function waitForHammer() {
-      return new Promise((resolve) => {
-        const checkCollision = () => {
-          if (toolState.currentTool.toolKey === "hammer") {
-            resolve();
-          } else {
-            setTimeout(checkCollision, 100); // Check every 100 milliseconds
-          }
-        };
-        checkCollision();
-      });
+      return waitForCondition(() => toolState.currentTool.toolKey === "hammer");
     }
-    let madePaper = false;
-    function waitForPaper(){  
-      return new Promise((resolve) => {
-        const checkCraft = () => {
-          if (craftState.result.itemKey === "paper") {
-            resolve();
-          } else {
-            setTimeout(checkCraft, 100); // Check every 100 milliseconds
-          }
-        };
-        checkCraft();
-      });
+    
+    function waitForPaper() {
+      return waitForCondition(() => craftState.result.itemKey === "paper");
     }
     console.log(toolState.currentTool, "toolstate");
     
@@ -450,9 +422,6 @@ class Tutorial {
         materialEntity.use(body({ isStatic: true }));
       }
     });
-
-   
-
     // Crafting logic:
     inventoryState.isCraftable = false;
 
@@ -500,8 +469,6 @@ class Tutorial {
 
       // ])
     }
-
-
     async function tutorialStart() {
       setSpeed(0);
       let message = "Welcome to the tutorial! Let's get started.";
@@ -542,7 +509,6 @@ class Tutorial {
 
       function stopTutorial() {
       }
-      
       tutorialStart();
 
   }}
