@@ -17,13 +17,12 @@ export function openBackpack(inventoryState, craftState) {
   if (inventoryState.vendingContents.length > 9) {
     const downArrow = add([
       sprite("rightArrow"),
-      pos(450-100-25+10+5, 400+400-300+100+50),
+      pos(450 - 100 - 25 + 10 + 5, 400 + 400 - 300 + 100 + 50),
       z(100),
       outline(4),
       rotate(90),
       "vending",
-        
-    ]); 
+    ]);
   }
   // Add backpack sprite
   const popup = add([
@@ -243,14 +242,18 @@ export function onKeyPressDown(inventoryState, craftState) {
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
     // If the current selection is the last row in the backpack, go to the next page
-    if(inventoryState.vendingSelect === 6 || inventoryState.vendingSelect === 7 || inventoryState.vendingSelect === 8){
-    inventoryState.page++;
-    inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
-    
-    destroyAll("itemText");
-    destroyAll("selected");
-    closeBackpack();
-    openBackpack(inventoryState, craftState);
+    if (
+      inventoryState.vendingSelect === 6 ||
+      inventoryState.vendingSelect === 7 ||
+      inventoryState.vendingSelect === 8
+    ) {
+      inventoryState.page++;
+      inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+
+      destroyAll("itemText");
+      destroyAll("selected");
+      closeBackpack();
+      openBackpack(inventoryState, craftState);
     }
     // If the current selection is not the last row in the backpack, increment the selection by 3
     else if (inventoryState.vendingSelect + 3 < contents.length) {
@@ -311,7 +314,24 @@ export function onKeyPressUp(inventoryState, craftState) {
   // console.log(inventoryState.vendingSelect);
 
   if (craftState.popUp) {
-    if (inventoryState.vendingSelect - 3 >= 0) {
+    if (
+      inventoryState.vendingSelect === 0 ||
+      inventoryState.vendingSelect === 1 ||
+      inventoryState.vendingSelect === 2
+    ) {
+      if (inventoryState.page > 0) {
+        console.log("passed page greater than 0")
+        inventoryState.page--;
+        console.log(`inventoryState.vendingSelect before ${inventoryState.vendingSelect}` )
+        inventoryState.vendingSelect = (inventoryState.vendingSelect + 6) % 9;
+        console.log(`inventoryState.vendingSelect after ${inventoryState.vendingSelect}` )
+
+        destroyAll("itemText");
+        destroyAll("selected");
+        closeBackpack();
+        openBackpack(inventoryState, craftState);
+      }
+    } else if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;
       // console.log(inventoryState.vendingSelect);
 
