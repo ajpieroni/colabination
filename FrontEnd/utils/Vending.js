@@ -14,7 +14,25 @@ export function openBackpack(inventoryState, craftState) {
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
 
   // Arrows
-  if (inventoryState.vendingContents.length > 9) {
+  if (totalcontents.length > 1) {
+    const pageText = add([
+      text(`Page ${currentPage + 1}`, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      pos(
+        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
+      ),
+      z(100),
+      "vending",
+    ]);
+  }
+  if (
+    inventoryState.vendingContents.length > 9 &&
+    currentPage < totalcontents.length - 1
+  ) {
     const downArrow = add([
       sprite("rightArrow"),
       pos(450 - 100 - 25 + 10 + 5, 400 + 400 - 300 + 100 + 50),
@@ -23,21 +41,14 @@ export function openBackpack(inventoryState, craftState) {
       rotate(90),
       "vending",
     ]);
-    const pageText = add([
-      text(`Page ${currentPage + 1}`, {
-        size: 24,
-        outline: 4,
-        color: (0, 0, 0),
-      }),
-      pos(450 - 100 - 25 + 10 + 5-10-10-10-25-10, 400 + 400 - 300 + 100 + 50+25+10+15),
-      z(100),
-      "vending",
-    ]);
   }
-  if(currentPage > 0){
+  if (currentPage > 0) {
     const upArrow = add([
       sprite("rightArrow"),
-      pos(450 - 100 - 25 + 10 + 5-50, 400 + 400 - 300 + 100 + 50-100-50-50-50-50-100),
+      pos(
+        450 - 100 - 25 + 10 + 5 - 50,
+        400 + 400 - 300 + 100 + 50 - 100 - 50 - 50 - 50 - 50 - 100
+      ),
       z(100),
       outline(4),
       rotate(-90),
@@ -261,11 +272,13 @@ export function onKeyPressDown(inventoryState, craftState) {
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
-    // If the current selection is the last row in the backpack, go to the next page
-    if (
+    let bottomIndex =
       inventoryState.vendingSelect === 6 ||
       inventoryState.vendingSelect === 7 ||
-      inventoryState.vendingSelect === 8
+      inventoryState.vendingSelect === 8;
+    // If the current selection is the last row in the backpack, go to the next page
+    if (
+      bottomIndex && inventoryState.page < totalcontents.length - 1 
     ) {
       inventoryState.page++;
       inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
@@ -340,11 +353,15 @@ export function onKeyPressUp(inventoryState, craftState) {
       inventoryState.vendingSelect === 2
     ) {
       if (inventoryState.page > 0) {
-        console.log("passed page greater than 0")
+        console.log("passed page greater than 0");
         inventoryState.page--;
-        console.log(`inventoryState.vendingSelect before ${inventoryState.vendingSelect}` )
+        console.log(
+          `inventoryState.vendingSelect before ${inventoryState.vendingSelect}`
+        );
         inventoryState.vendingSelect = (inventoryState.vendingSelect + 6) % 9;
-        console.log(`inventoryState.vendingSelect after ${inventoryState.vendingSelect}` )
+        console.log(
+          `inventoryState.vendingSelect after ${inventoryState.vendingSelect}`
+        );
 
         destroyAll("itemText");
         destroyAll("selected");
