@@ -126,16 +126,16 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-  // Pagination logic
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.page * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.vendingSelect;
-  let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
 
   if (craftState.popUp) {
     console.log(inventoryState.vendingSelect);
     if (inventoryState.vendingSelect > 0) {
       inventoryState.vendingSelect--;
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       // Remove the selected box and add a new one
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -183,15 +183,16 @@ export function onKeyPressRight(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-  // Pagination logic
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.page * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.vendingSelect;
-  let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+
   if (craftState.popUp) {
     // If the current selection is not the last item in the backpack, increment the selection
     if (inventoryState.vendingSelect < contents.length - 1) {
       inventoryState.vendingSelect++;
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
 
       // Destroy the selected box and add a new one
       destroyAll("selected");
