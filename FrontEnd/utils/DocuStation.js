@@ -16,6 +16,8 @@ export function showFinalItems(inventoryState) {
   let currRow = 0;
 
   console.log(inventoryState.areFinal);
+  console.log(inventoryState.vendingContents);
+
   // Add items to documentation station
   for (let i = 0; i < inventoryState.areFinal.length; i++) {
     const item = inventoryState.areFinal[i];

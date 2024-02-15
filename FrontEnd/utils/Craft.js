@@ -109,6 +109,7 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState, invent
         })
         .then((additionalData) => {
           craftState.resultReady = true;
+          console.log(additionalData.data.description);
 
           callback(
             data.creation,
