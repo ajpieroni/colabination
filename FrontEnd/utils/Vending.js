@@ -160,8 +160,17 @@ export function onKeyPressLeft(inventoryState, craftState) {
   let contents = totalcontents[currentPage];
 
   if (craftState.popUp) {
-    console.log(inventoryState.vendingSelect);
-    if (inventoryState.vendingSelect > 0) {
+    // If the current selection is the first item in the backpack, go to the previous page
+    if (inventoryState.vendingSelect === 0 && inventoryState.page > 0) {
+      inventoryState.page--;
+      inventoryState.vendingSelect = 8;
+      destroyAll("itemText");
+      destroyAll("selected");
+      closeBackpack();
+      openBackpack(inventoryState, craftState);
+    }
+    // If the current selection is not the first item in the backpack, decrement the selection
+    else if (inventoryState.vendingSelect > 0) {
       inventoryState.vendingSelect--;
       // Pagination logic
       const itemsPerPage = 9;
@@ -210,17 +219,28 @@ export function onKeyPressLeft(inventoryState, craftState) {
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
-  console.log("PRESSED RIGHT");
   // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
 
   if (craftState.popUp) {
-    // If the current selection is not the last item in the backpack, increment the selection
-    if (inventoryState.vendingSelect < contents.length - 1) {
+    // If the current selection is the last item in the backpack, go to the next page
+    if (
+      inventoryState.vendingSelect === 8 &&
+      inventoryState.page < totalcontents.length - 1
+    ) {
+      inventoryState.page++;
+      inventoryState.vendingSelect = 0;
+      destroyAll("itemText");
+      destroyAll("selected");
+      closeBackpack();
+      openBackpack(inventoryState, craftState);
+      // If the current selection is not the last item in the backpack, increment the selection
+    } else if (inventoryState.vendingSelect < contents.length - 1) {
       inventoryState.vendingSelect++;
-      // Pagination logic
+
+      // Pagination logic, get the actual index in the vendingContents array of the current selection
       const itemsPerPage = 9;
       const startIndex = inventoryState.page * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
@@ -237,6 +257,7 @@ export function onKeyPressRight(inventoryState, craftState) {
         color(255, 255, 255),
         "selected",
       ]);
+      // Destroy the item text and add a new one
       destroyAll("itemText");
 
       if (itemText) {
@@ -277,9 +298,7 @@ export function onKeyPressDown(inventoryState, craftState) {
       inventoryState.vendingSelect === 7 ||
       inventoryState.vendingSelect === 8;
     // If the current selection is the last row in the backpack, go to the next page
-    if (
-      bottomIndex && inventoryState.page < totalcontents.length - 1 
-    ) {
+    if (bottomIndex && inventoryState.page < totalcontents.length - 1) {
       inventoryState.page++;
       inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
 
@@ -295,11 +314,12 @@ export function onKeyPressDown(inventoryState, craftState) {
       destroyAll("itemText");
       destroyAll("selected");
 
-      // Pagination logic
+      // Pagination logic to get the actual index in the vendingContents array of the current selection
       const itemsPerPage = 9;
       const startIndex = inventoryState.page * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
+      // Add item text
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
@@ -325,7 +345,7 @@ export function onKeyPressDown(inventoryState, craftState) {
           z(20),
         ]);
       }
-
+      // Add the selected box
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
@@ -344,8 +364,6 @@ export function onKeyPressUp(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
-  // console.log(inventoryState.vendingSelect);
-
   if (craftState.popUp) {
     if (
       inventoryState.vendingSelect === 0 ||
