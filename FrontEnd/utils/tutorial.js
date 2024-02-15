@@ -2,7 +2,6 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { updatePocket, updatePocketVending } from "./Pocket.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -15,7 +14,15 @@ import {
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
-import { handleCollideDocumentationStationEnd} from "./Collide.js";
+import { handleCollideDocumentationStationEnd } from "./Collide.js";
+// Z-Level Tracker:
+// 0: "Walk" background: 0
+// 10: Player
+// 11: "Craft" text, Tool Labels
+// 11: Selected Item
+// 19: Backpack
+// 20: Items in backpack
+// 20: "Crafting..." text
 
 import {
   openBackpack,
@@ -30,7 +37,7 @@ import {
   onToolCollide,
   onToolCollideEnd,
 } from "./Collide.js";
-import { checkCraftable} from "./Craft.js";
+import { checkCraftable } from "./Craft.js";
 
 class Tutorial {
   // This file acts as our main control.
@@ -88,18 +95,18 @@ class Tutorial {
       vendingKeys: [],
       isPopupVisible: false,
       vendingContents: [],
-      inPocket: [],
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
-      itemsInPocket: 0,
       finalCraftCheck: false,
       tableItems: [],
       isCraftable: false,
       ingredients: [],
+      // pagination
+      page: 0,
     };
     let tableState = {
       atCraftingTable: false,
@@ -116,9 +123,8 @@ class Tutorial {
       : 1;
     let music = {
       volume: volumeSetting,
-    }
+    };
     window.music = music;
-    
 
     // Player
     setSpeed(300);
@@ -163,8 +169,19 @@ class Tutorial {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-    let isCraftingVisible = false;
-    let tableTemp = inventoryState.tableItems;
+// !TODO: remove, instead introduce pagination with arrows
+    onKeyPress("2", () => {
+      inventoryState.page = inventoryState.page + 1;
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
+    onKeyPress("1", () => {
+      if(inventoryState.page > 0){
+      inventoryState.page = inventoryState.page - 1;
+      }
+      closeBackpack();
+      openBackpack(inventoryState,craftState);
+    });
 
     // !NEW CRAFT
 
@@ -208,6 +225,145 @@ class Tutorial {
     });
 
 
+    async function showContainer(tableTemp) {
+      isCraftingVisible = true;
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      let ingredients = tableTemp;
+      add([
+        rect(725, 550),
+        pos(150, 125),
+        z(50),
+        "craft-container",
+        "craftPop",
+      ]);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      let currentx = 400;
+      let currenty = 300;
+      if (ingredients.length == 3) {
+        currentx = currentx - 125;
+      }
+      if (ingredients.length == 1) {
+        currentx = currentx + 100;
+      }
+
+      let possessionText = `You possess ${ingredients.length} item${
+        ingredients.length > 1 ? "s" : ""
+      }:`;
+      let toolname = toolState.currentTool.toolKey
+        // space
+        .replace(/([A-Z])/g, " $1")
+        //trim
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
+
+      let toolText = `Let's try crafting with the ${toolname}.`;
+
+      add([
+        text(possessionText),
+        pos(415, 175),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+
+      add([
+        text(toolText),
+        pos(415 - 200 + 100, 175 + 50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+      craftingBackend(
+        toolState,
+        ingredients,
+        craftState,
+        inventoryState,
+        music
+      );
+
+      for (let index = 0; index < ingredients.length; index++) {
+        await new Promise((resolve) => setTimeout(resolve, 750));
+
+        const trailCircle = add([
+          circle(64),
+          pos(currentx + 40, currenty + 35),
+          z(52),
+          color(228, 228, 228),
+          "crafting",
+        ]);
+        if (volumeSetting) {
+          play("bubble");
+        }
+        const trailItem = add([
+          // rect(item.width, item.height) ,
+          pos(currentx, currenty),
+          z(100),
+          // color(item.color.r, item.color.g, item.color.b),
+          "crafting",
+          // !TODO: Make sprite image dynamic
+          sprite(`${ingredients[index]}`),
+          // rect(10,10),
+          // sprite(`${image}`),
+          scale(1.5),
+          // z(11),
+          "material",
+          {
+            itemKey: ingredients[index],
+          },
+        ]);
+        currentx += 200;
+      }
+
+      let message;
+      if (craftState.result.itemKey === "trash") {
+        message = "That's definitely creative... let's see what happens!";
+      } else {
+        message = "Congratulations! You can make something with these items.";
+      }
+
+      add([
+        text(`${message}`),
+        pos(215, 525 - 100 + 50),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "crafting",
+      ]);
+
+      // *Craft Button
+      const craftButton = add([
+        rect(150, 50),
+        pos(400 + 50, 600),
+        z(52),
+        color(228, 228, 228),
+        "crafting",
+      ]);
+      add([
+        text("Make!"),
+        pos(415 + 15 + 50 + 15, 615), // adjust as necessary to position the text on the button
+        z(53),
+        color(0, 0, 0), // color of the text,
+        scale(0.5),
+        "crafting",
+      ]);
+      // Craft Button Flash
+      let isBright = true;
+      setInterval(() => {
+        if (isBright) {
+          craftButton.color = rgb(228, 228, 228); // less bright color
+        } else {
+          craftButton.color = rgb(80, 80, 80); // original color
+        }
+        isBright = !isBright;
+      }, 250); // the button color will toggle every 500ms
+    }
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
@@ -249,10 +405,12 @@ class Tutorial {
 
     // *TODO: move
     onKeyPress("left", () => {
+      console.log(inventoryState.vendingSelect);
       console.log(craftState.current);
       if (craftState.current !== "executed") {
         onKeyPressLeft(inventoryState, craftState);
       }
+      console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
@@ -288,7 +446,6 @@ class Tutorial {
       go("settings");
     });
 
-   
     collisionState.isDocVisible = false;
 
     function showFinalItems() {
@@ -309,17 +466,17 @@ class Tutorial {
       for (let i = 0; i < inventoryState.areFinal.length; i++) {
         const item = inventoryState.areFinal[i];
         itemText = item.charAt(0).toUpperCase() + item.slice(1);
-        let resultDisplay = itemText
-        // space
-        .replace(/([A-Z])/g, " $1")
-        //trim
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(" ");
-    
 
-        // const itemKey = item.itemKey;
-        // starts a new line
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
+
 
         if (currRow === 3) {
           currentY += item.height + 50;
@@ -364,39 +521,13 @@ class Tutorial {
     player.onCollideEnd("documentationStation", () => {
       handleCollideDocumentationStationEnd(collisionState);
     });
-    let readyToCraft = false;
-    function waitForCondition(conditionFunc) {
-      return new Promise((resolve) => {
-        const checkCondition = () => {
-          if (conditionFunc()) {
-            resolve();
-          } else {
-            setTimeout(checkCondition, 100); 
-          }
-        };
-        checkCondition();
-      });
-    }
-    function waitForCollision() {
-      return waitForCondition(() => collidedPaper);
-    }
-    function waitForHammer() {
-      return waitForCondition(() => toolState.currentTool.toolKey === "hammer");
-    }
-    
-    function waitForPaper() {
-      return waitForCondition(() => craftState.result.itemKey === "paper");
-    }
-    console.log(toolState.currentTool, "toolstate");
-    
-    let collidedPaper  = false;
+    let collidedWood  = false;
     player.onCollide("material", (materialEntity) => {
       if (inventoryState.tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
         if (materialEntity.itemKey === "wood") {
-          collidedPaper = true;
+          collidedWood = true;
         }
-
         if (
           !inventoryState.vendingContents.includes(materialEntity) &&
           !inventoryState.vendingKeys.includes(materialEntity.itemKey)
@@ -404,24 +535,26 @@ class Tutorial {
           console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
-
+          handleSavingData(
+            inventoryState.vendingKeys,
+            inventoryState.hasSavedItems,
+            inventoryState.areFinal,
+            inventoryState.currItems,
+            inventoryState.currTools,
+            inventoryState.currFinals,
+            inventoryState.hasSavedFinal
+          );
         }
         if (volumeSetting) {
           play("bubble");
         }
 
         console.log("material", materialEntity);
-        console.log("Updating pocket");
-        craftState.result = updatePocket(
-          materialEntity,
-          inventoryState.inPocket,
-          inventoryState.itemsInPocket
-        );
-        inventoryState.inPocket = craftState.result?.inPocket;
-        inventoryState.itemsInPocket = craftState.result?.itemsInPocket;
+        destroy(materialEntity);
         materialEntity.use(body({ isStatic: true }));
       }
     });
+
     // Crafting logic:
     inventoryState.isCraftable = false;
 
@@ -440,8 +573,43 @@ class Tutorial {
     onCollideEnd("player", "craftingTable", (s, w) => {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
+
     });
-  
+    let readyToCraft = false;
+    function waitForCondition(conditionFunc) {
+      return new Promise((resolve) => {
+        const checkCondition = () => {
+          if (conditionFunc()) {
+            resolve();
+          } else {
+            setTimeout(checkCondition, 100); 
+          }
+        };
+        checkCondition();
+      });
+    }
+    function waitForCollision() {
+      return waitForCondition(() => collidedWood);
+    }
+    function waitForHammer() {
+      return waitForCondition(() => toolState.currentTool.toolKey === "hammer");
+    }
+    function waitForPaper() {
+      return waitForCondition(() => craftState.result.itemKey === "paper");
+    }
+    function waitForCraftingTable() {
+      return waitForCondition(() => tableState.atCraftingTable === true);
+    }
+    function waitForCard() { 
+      return waitForCondition(() => craftState.result.itemKey === "card");
+    }
+    function waitForOrigami() {
+      return waitForCondition(() => craftState.result.itemKey === "origami");
+    }
+    function waitForBook() {
+      return waitForCondition(() => craftState.result.itemKey === "book");
+    }
+
     function messageCreate(message) {
       add([
         "alert",
@@ -458,17 +626,8 @@ class Tutorial {
         z(500),
         // scale(.5)
       ]);
-      // add([
-      //   rect(500+200,100),
-      //   area(),
-      //   anchor("center"),
-      //   pos(525, 125),
-      //   z(490),
-      //   color(230,230,250),
-      //   "alert"
-
-      // ])
     }
+
     async function tutorialStart() {
       setSpeed(0);
       let message = "Welcome to the tutorial! Let's get started.";
@@ -499,13 +658,47 @@ class Tutorial {
           messageCreate(message);
           readyToCraft = true;
       });      
-      
     }
       await waitForPaper();
       destroyAll("alert");
-      message = "Great job! You've made paper! Exit out of Hammer!";
+      message = "Great job! You've made paper! Close out of Hammer!";
       messageCreate(message);
+      onKeyPress("escape", () => {
+        destroyAll("alert");
+        message = "Awesome! Now, let's head to the Crafting Table!";
+        messageCreate(message);
+      });
+      let step2 = false;
+      await waitForCraftingTable();
+      destroyAll("alert");
+      message = "Press 'Enter' again and lets craft something else!";
+      messageCreate(message);
+      step2 = true;
+      if (step2) {
+        onKeyPress("enter", () => {
+          destroyAll("alert");
+          message = "Nice! Try making a card!";
+          messageCreate(message);
+          readyToCraft = true;
+        });
+      }
+      await waitForCard();
+      destroyAll("alert");
+      message = "Great job! You've made a card! Now do origami!";
+      messageCreate(message);
+      await waitForOrigami();
+      destroyAll("alert");
+      message = "You've made origami! Now let's make a book!";
+      messageCreate(message);
+      await waitForBook();
+      destroyAll("alert");
+      message = "Great job! You've made a book! You've completed the tutorial!";
+      messageCreate(message);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      go("characterMovement");
     }
+    
+
 
       function stopTutorial() {
       }
