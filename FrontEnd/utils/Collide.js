@@ -1,6 +1,7 @@
 import { checkCraftable } from "./Craft.js";
 import { setSpeed } from "./Player.js";
-export function handleCollideDocumentationStation(state, showFinalItems) {
+import { showFinalItems } from "./DocuStation.js";
+export function handleCollideDocumentationStation(state, showFinalItems, inventoryState) {
   state.canAccessDocumentation = true;
 
   add([
@@ -22,7 +23,7 @@ export function handleCollideDocumentationStation(state, showFinalItems) {
         state.isDocVisible = false;
         setSpeed(300);
       } else {
-        showFinalItems();
+        showFinalItems(inventoryState);
         state.isDocVisible = true;
         setSpeed(0);
       }
@@ -30,7 +31,7 @@ export function handleCollideDocumentationStation(state, showFinalItems) {
   }
 }
 
-export function handleCollideDocumentationStationEnd(state) {
+export function handleCollideDocumentationStationEnd(state, inventoryState) {
   state.canAccessDocumentation = false;
   state.isDocVisible = false;
   destroyAll("interactable");

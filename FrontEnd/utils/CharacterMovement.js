@@ -2,6 +2,7 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
+import { showFinalItems } from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -106,8 +107,10 @@ class CharacterMovement {
       tableItems: [],
       isCraftable: false,
       ingredients: [],
-      // pagination
-      page: 0,
+      docuPage: 0,
+      docuSelect: 0,
+      // pagination for vending
+      vendingPage: 0,
     };
     let tableState = {
       atCraftingTable: false,
@@ -172,13 +175,13 @@ class CharacterMovement {
 
 // !TODO: remove, instead introduce pagination with arrows
     onKeyPress("2", () => {
-      inventoryState.page = inventoryState.page + 1;
+      inventoryState.vendingPage = inventoryState.vendingPage + 1;
       closeBackpack();
       openBackpack(inventoryState,craftState);
     });
     onKeyPress("1", () => {
-      if(inventoryState.page > 0){
-      inventoryState.page = inventoryState.page - 1;
+      if(inventoryState.vendingPage > 0){
+      inventoryState.vendingPage = inventoryState.vendingPage - 1;
       }
       closeBackpack();
       openBackpack(inventoryState,craftState);
@@ -659,77 +662,13 @@ class CharacterMovement {
 
     // !TODO: export to doc statino file
 
-    function showFinalItems() {
-      const docPop = add([
-        rect(500, 600),
-        pos(325, 150),
-        z(11),
-        color(204, 229, 255),
-        outline(4),
-        scale(0.75),
-        "final",
-      ]);
-      const startX = docPop.pos.x + 42.5;
-      const startY = docPop.pos.y + 30;
-      let currentX = startX;
-      let currentY = startY;
-      let currRow = 0;
-      for (let i = 0; i < inventoryState.areFinal.length; i++) {
-        const item = inventoryState.areFinal[i];
-        itemText = item.charAt(0).toUpperCase() + item.slice(1);
-
-        let resultDisplay = itemText
-          // space
-          .replace(/([A-Z])/g, " $1")
-          //trim
-          .split(" ")
-          .map(
-            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-          )
-          .join(" ");
-
-        // const itemKey = item.itemKey;
-        // starts a new line
-
-        if (currRow === 3) {
-          currentY += item.height + 50;
-          currentX = startX;
-          currRow = 0;
-        }
-
-        const finalItem = add([
-          pos(currentX, currentY),
-          z(11),
-          sprite(`${item}`),
-          "final",
-          { itemKey: item },
-        ]);
-
-        const finalItemText = add([
-          pos(currentX, currentY + 50),
-          text(resultDisplay, {
-            // optional object
-            size: 16,
-            color: (255, 255, 255),
-            // can specify font here,
-          }),
-          z(11),
-          "final",
-          // { itemKey: item },
-        ]);
-        currRow++;
-        currentX += 100;
-      }
-
-      collisionState.isDocVisible = true;
-    }
 
     player.onCollide("documentationStation", () => {
-      handleCollideDocumentationStation(collisionState, showFinalItems);
+      handleCollideDocumentationStation(collisionState, showFinalItems, inventoryState);
     });
 
     player.onCollideEnd("documentationStation", () => {
-      handleCollideDocumentationStationEnd(collisionState);
+      handleCollideDocumentationStationEnd(collisionState, inventoryState);
     });
 
     player.onCollide("material", (materialEntity) => {
