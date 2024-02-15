@@ -23,6 +23,26 @@ export function openBackpack(inventoryState, craftState) {
       rotate(90),
       "vending",
     ]);
+    const pageText = add([
+      text(`Page ${currentPage + 1}`, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      pos(450 - 100 - 25 + 10 + 5-10-10-10-25-10, 400 + 400 - 300 + 100 + 50+25+10+15),
+      z(100),
+      "vending",
+    ]);
+  }
+  if(currentPage > 0){
+    const upArrow = add([
+      sprite("rightArrow"),
+      pos(450 - 100 - 25 + 10 + 5-50, 400 + 400 - 300 + 100 + 50-100-50-50-50-50-100),
+      z(100),
+      outline(4),
+      rotate(-90),
+      "vending",
+    ]);
   }
   // Add backpack sprite
   const popup = add([
@@ -63,7 +83,7 @@ export function openBackpack(inventoryState, craftState) {
       }),
       area(),
       anchor("center"),
-      pos(325, 625),
+      pos(310, 625),
       z(20),
     ]);
 
@@ -170,7 +190,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
           }),
           area(),
           anchor("center"),
-          pos(325, 625),
+          pos(310, 625),
           z(20),
         ]);
       }
@@ -228,7 +248,7 @@ export function onKeyPressRight(inventoryState, craftState) {
           }),
           area(),
           anchor("center"),
-          pos(325, 625),
+          pos(310, 625),
           z(20),
         ]);
       }
@@ -288,7 +308,7 @@ export function onKeyPressDown(inventoryState, craftState) {
           }),
           area(),
           anchor("center"),
-          pos(325, 625),
+          pos(310, 625),
           z(20),
         ]);
       }
@@ -372,7 +392,7 @@ export function onKeyPressUp(inventoryState, craftState) {
           }),
           area(),
           anchor("center"),
-          pos(325, 625),
+          pos(310, 625),
           z(20),
         ]);
       }
