@@ -41,6 +41,7 @@ import { checkCraftable } from "./Craft.js";
 
 class CharacterMovement {
   // This file acts as our main control.
+  // It initializes the game, and controls the player's movement.
   music = null;
   constructor() {
     this.level = null;
@@ -655,7 +656,6 @@ class CharacterMovement {
       go("settings");
     });
 
-    collisionState.isDocVisible = false;
 
     // !TODO: export to doc statino file
 
@@ -724,9 +724,6 @@ class CharacterMovement {
       collisionState.isDocVisible = true;
     }
 
-    let canAccessDocumentation = false;
-    let eventListenerAttached = false;
-
     player.onCollide("documentationStation", () => {
       handleCollideDocumentationStation(collisionState, showFinalItems);
     });
@@ -764,16 +761,6 @@ class CharacterMovement {
         materialEntity.use(body({ isStatic: true }));
       }
     });
-
-    // Crafting logic:
-    inventoryState.isCraftable = false;
-
-    // Dropping item on table
-    onKeyPress("q", () => {
-      dropItem(toolState, inventoryState, volumeSetting, tableState);
-    });
-
-    inventoryState.finalCraftCheck = false;
 
     // Crafting Collisions
     onCollide("player", "craftingTable", (s, w) => {
