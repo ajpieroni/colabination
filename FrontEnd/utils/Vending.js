@@ -45,19 +45,17 @@ export function openBackpack(inventoryState, craftState) {
     let itemText = contents[inventoryState.vendingSelect].itemKey;
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
     let resultDisplay = itemText
-          // space
-          .replace(/([A-Z])/g, " $1")
-          //trim
-          .split(" ")
-          .map(
-            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-          )
-          .join(" ");
+      // space
+      .replace(/([A-Z])/g, " $1")
+      //trim
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
 
     // Add the item text
     const selectedText = add([
       "itemText",
-      text(itemText, {
+      text(resultDisplay, {
         size: 24,
         outline: 4,
         color: (0, 0, 0),
@@ -124,15 +122,16 @@ export function closeBackpack() {
 }
 // Left selection in backpack
 export function onKeyPressLeft(inventoryState, craftState) {
+  console.log("PRESSED LEFT");
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
   let contents = totalcontents[currentPage];
+  const itemsPerPage = 9;
+  const startIndex = inventoryState.page * itemsPerPage;
+  const actualIndex = startIndex + inventoryState.vendingSelect;
   if (craftState.popUp) {
     console.log(inventoryState.vendingSelect);
-    console
-    if (
-      inventoryState.vendingSelect > 0
-    ) {
+    if (actualIndex == 3 || actualIndex == 6) {
       inventoryState.vendingSelect--;
 
       // Remove the selected box and add a new one
@@ -160,6 +159,68 @@ export function onKeyPressLeft(inventoryState, craftState) {
         const selectedText = add([
           "itemText",
           text(itemText, {
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(325, 625),
+          z(20),
+        ]);
+      }
+    } else if (
+      inventoryState.vendingSelect == 0 ||
+      inventoryState.vendingSelect == 3 ||
+      inventoryState.vendingSelect == 6
+    ) {
+      console.log("HIT 230");
+
+      if (inventoryState.page > 0) {
+        inventoryState.page--;
+        inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
+        closeBackpack();
+        openBackpack(inventoryState, craftState);
+      }
+    } else if (inventoryState.vendingSelect > 0) {
+      console.log("HIT 137");
+      inventoryState.vendingSelect--;
+
+      // Remove the selected box and add a new one
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(70, 70),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        color(255, 255, 255),
+        "selected",
+      ]);
+      destroyAll("itemText");
+
+      // Pagination logic
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.page * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+
+      // Add the item text
+
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
+        const selectedText = add([
+          "itemText",
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -177,6 +238,8 @@ export function onKeyPressLeft(inventoryState, craftState) {
       inventoryState.vendingSelect !== 3 &&
       inventoryState.vendingSelect !== 6
     ) {
+      console.log("HIT 83");
+
       inventoryState.vendingSelect--;
 
       // Remove the selected box and add a new one
@@ -201,9 +264,18 @@ export function onKeyPressLeft(inventoryState, craftState) {
       // Add the item text
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -217,22 +289,11 @@ export function onKeyPressLeft(inventoryState, craftState) {
       return inventoryState.vendingSelect;
     }
     // If the current selection is the first item in the backpack, decrement the page
-    if (
-      inventoryState.vendingSelect == 0 ||
-      inventoryState.vendingSelect == 3 ||
-      inventoryState.vendingSelect == 6
-    ) {
-      if (inventoryState.page > 0) {
-        inventoryState.page--;
-        inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
-        closeBackpack();
-        openBackpack(inventoryState, craftState);
-      }
-    }
   }
 }
 // Right selection in backpack
 export function onKeyPressRight(inventoryState, craftState) {
+  console.log("PRESSED RIGHT");
   // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.page;
@@ -266,9 +327,18 @@ export function onKeyPressRight(inventoryState, craftState) {
 
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -308,9 +378,18 @@ export function onKeyPressRight(inventoryState, craftState) {
 
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -331,10 +410,18 @@ export function onKeyPressRight(inventoryState, craftState) {
         const actualIndex = startIndex + inventoryState.vendingSelect;
 
         // If there's an item at the index + 2 on the next page, increment the selection by 2
-        if (inventoryState.vendingContents[actualIndex + 2]) {
-          inventoryState.vendingSelect = inventoryState.vendingSelect + 2;
+        console.log(
+          "More items:",
+          inventoryState.vendingContents[actualIndex + 2]
+        );
+        if (inventoryState.vendingContents[actualIndex - 2]) {
+          console.log(
+            `Changed selection to: ${inventoryState.vendingSelect - 2}`
+          );
+          inventoryState.vendingSelect = inventoryState.vendingSelect - 2;
         } else {
           // if inventoryState.vendingSelect + 2 is undefined, then set the index to the last item in the page
+          console.log(`Changed selection to: ${0}`);
           inventoryState.vendingSelect = 0;
         }
         closeBackpack();
@@ -364,9 +451,18 @@ export function onKeyPressDown(inventoryState, craftState) {
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
@@ -422,9 +518,18 @@ export function onKeyPressUp(inventoryState, craftState) {
       // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
         const selectedText = add([
           "itemText",
-          text(itemText, {
+          text(resultDisplay, {
             size: 24,
             outline: 4,
             color: (0, 0, 0),
