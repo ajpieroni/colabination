@@ -121,7 +121,7 @@ export function closeBackpack() {
   destroyAll("selected");
 }
 // Left selection in backpack
-export function onKeyPressLeft(inventoryState, craftState) {
+export function vendingLeft(inventoryState, craftState) {
   console.log("PRESSED LEFT");
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
@@ -292,7 +292,7 @@ export function onKeyPressLeft(inventoryState, craftState) {
   }
 }
 // Right selection in backpack
-export function onKeyPressRight(inventoryState, craftState) {
+export function vendingRight(inventoryState, craftState) {
   console.log("PRESSED RIGHT");
   // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
@@ -431,7 +431,7 @@ export function onKeyPressRight(inventoryState, craftState) {
   }
 }
 // Down selection in backpack
-export function onKeyPressDown(inventoryState, craftState) {
+export function vendingDown(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
@@ -488,7 +488,7 @@ export function onKeyPressDown(inventoryState, craftState) {
 }
 
 // Up selection in backpack
-export function onKeyPressUp(inventoryState, craftState) {
+export function vendingUp(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];

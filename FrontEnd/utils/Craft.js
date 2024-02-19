@@ -1,5 +1,5 @@
 import { getSpeed, setSpeed } from "./Player.js";
-import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
+import { closeBackpack, vendingDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { handleSavingData } from "./Save.js";
 

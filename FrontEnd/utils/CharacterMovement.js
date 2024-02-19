@@ -27,10 +27,10 @@ import { handleCollideDocumentationStationEnd } from "./Collide.js";
 
 import {
   openBackpack,
-  onKeyPressLeft,
-  onKeyPressRight,
-  onKeyPressDown,
-  onKeyPressUp,
+  vendingLeft,
+  vendingRight,
+  vendingDown,
+  vendingUp,
 } from "./Vending.js";
 import { fetchUserItems, fetchUserTools, intiailizeUser } from "./User.js";
 import {
@@ -264,28 +264,28 @@ class CharacterMovement {
     onKeyPress("left", () => {
       console.log(inventoryState.vendingSelect);
       console.log(craftState.current);
-      if (craftState.current !== "executed") {
-        onKeyPressLeft(inventoryState, craftState);
+      if (craftState.current !== "executed" ) {
+        vendingLeft(inventoryState, craftState);
       }
       console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
       if (craftState.current !== "executed") {
-        onKeyPressRight(inventoryState, craftState);
+        vendingRight(inventoryState, craftState);
       }
     });
 
     onKeyPress("down", () => {
       // console.log("down");
       if (craftState.current !== "executed") {
-        onKeyPressDown(inventoryState, craftState);
+        vendingDown(inventoryState, craftState);
       }
     });
 
     onKeyPress("up", () => {
       if (craftState.current !== "executed") {
-        onKeyPressUp(inventoryState, craftState);
+        vendingUp(inventoryState, craftState);
       }
     });
 
