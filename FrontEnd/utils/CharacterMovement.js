@@ -309,11 +309,11 @@ class CharacterMovement {
 
 
     player.onCollide("documentationStation", () => {
-      handleCollideDocumentationStation(collisionState, showFinalItems, inventoryState);
+      handleCollideDocumentationStation(collisionState, showFinalItems, inventoryState, craftState);
     });
 
     player.onCollideEnd("documentationStation", () => {
-      handleCollideDocumentationStationEnd(collisionState, inventoryState);
+      handleCollideDocumentationStationEnd(collisionState, inventoryState, craftState);
     });
 
     player.onCollide("material", (materialEntity) => {

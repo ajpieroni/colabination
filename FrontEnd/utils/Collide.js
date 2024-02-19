@@ -1,7 +1,7 @@
 import { checkCraftable } from "./Craft.js";
 import { setSpeed } from "./Player.js";
 import { showFinalItems } from "./DocuStation.js";
-export function handleCollideDocumentationStation(state, showFinalItems, inventoryState) {
+export function handleCollideDocumentationStation(state, showFinalItems, inventoryState, craftState) {
   state.canAccessDocumentation = true;
 
   add([
@@ -24,7 +24,7 @@ export function handleCollideDocumentationStation(state, showFinalItems, invento
         state.isDocVisible = false;
         setSpeed(300);
       } else {
-        showFinalItems(inventoryState);
+        showFinalItems(inventoryState, craftState);
         state.isDocVisible = true;
         setSpeed(0);
       }

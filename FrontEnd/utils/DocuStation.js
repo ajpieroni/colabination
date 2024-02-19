@@ -1,4 +1,4 @@
-export function showFinalItems(inventoryState) {
+export function showFinalItems(inventoryState, craftState) {
   craftState.current = "documentation";
   const docPop = add([
     rect(500, 600),
