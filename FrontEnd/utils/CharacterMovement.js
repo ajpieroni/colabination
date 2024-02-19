@@ -100,6 +100,7 @@ class CharacterMovement {
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
+      finalPage: 0,
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
