@@ -8,6 +8,8 @@ export function showFinalItems(inventoryState) {
     scale(0.75),
     "final",
   ]);
+
+  
   // Grid
   const startX = docPop.pos.x + 42.5;
   const startY = docPop.pos.y + 30;
@@ -33,8 +35,8 @@ export function showFinalItems(inventoryState) {
         )
         .join(" ");
       const selectedText = add([
-        "itemText",
-        text(resultDisplay, {
+        "finalText",
+        text(resultDisplay + "!!!", {
           size: 24,
           outline: 4,
           color: (0, 0, 0),
@@ -62,18 +64,7 @@ export function showFinalItems(inventoryState) {
         { itemKey: item },
       ]);
 
-      const finalItemText = add([
-        pos(currentX, currentY + 50),
-        text(resultDisplay, {
-          // optional object
-          size: 16,
-          color: (255, 255, 255),
-          // can specify font here,
-        }),
-        z(11),
-        "final",
-        // { itemKey: item },
-      ]);
+      
       currRow++;
       currentX += 100;
     }

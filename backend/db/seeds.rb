@@ -15,6 +15,8 @@ puts 'seeding'
 # Tool.destroy_all
 # UserItem.destroy_all
 
+# !Test Final Items
+
 # Creating base items
     paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
     glass = Item.create(name: 'glass', description: 'A clear sheet of melted glass', item_type: 'material', rarity: 1, isFinal: false)
