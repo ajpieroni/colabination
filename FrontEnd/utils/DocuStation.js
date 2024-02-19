@@ -1,4 +1,5 @@
 export function showFinalItems(inventoryState) {
+  craftState.current = "documentation";
   const docPop = add([
     rect(500, 600),
     pos(325, 150),
@@ -179,4 +180,28 @@ export function chunkArray(array, chunkSize) {
     result.push(chunk);
   }
   return result;
+}
+
+// Documentation Station Movement
+// left
+export function docuLeft(inventoryState) {
+  if (inventoryState.docuSelect > 0) {
+    inventoryState.docuSelect--;
+  }
+}
+// right
+export function docuRight(inventoryState) {
+  if (inventoryState.docuSelect < inventoryState.areFinal.length - 1) {
+    inventoryState.docuSelect++;
+  }
+}
+export function docuUp(inventoryState) {
+  if (inventoryState.docuSelect > 2) {
+    inventoryState.docuSelect -= 3;
+  }
+}
+export function docuDown(inventoryState) {
+  if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
+    inventoryState.docuSelect += 3;
+  }
 }
