@@ -105,6 +105,7 @@ export function showFinalItems(inventoryState, craftState) {
         sprite(`${item}`),
         "final",
         { itemKey: item },
+        scale(1.5),
       ]);
 
       currRow++;
