@@ -72,7 +72,7 @@ export function showFinalItems(inventoryState, craftState) {
       }),
       area(),
       anchor("center"),
-      pos(325, 625),
+      pos(325+100+75, 600-25),
       z(20),
     ]);
 
@@ -85,20 +85,19 @@ export function showFinalItems(inventoryState, craftState) {
       "selected",
       "final"
     ]);
-    // Add the items into the backpack
-    console.log(contents);
-    for (let i = 0; i < contents.length; i++) {
-      console.log(`Adding item ${contents[i]} to the documentation station.`)
-      let item = contents[i];
-      let itemKey = item;
-      // starts a new line
 
+    // Add the items into documentation station
+    for (let i = 0; i < contents.length; i++) {
+      let item = contents[i];
+
+      // New Row
       if (currRow === 3) {
         currentY += item.height + 50;
         currentX = startX;
         currRow = 0;
       }
 
+      // Add the item
       const finalItem = add([
         pos(currentX, currentY),
         z(50),
@@ -108,62 +107,12 @@ export function showFinalItems(inventoryState, craftState) {
         scale(1.5),
       ]);
 
+      // Increment the row
       currRow++;
       currentX += 100;
     }
   }
 
-  console.log(inventoryState.areFinal);
-
-  // Add items to documentation station
-  // for (let i = 0; i < inventoryState.areFinal.length; i++) {
-  //   const item = inventoryState.areFinal[i];
-  //   if (item) {
-  //     let itemText = item.charAt(0).toUpperCase() + item.slice(1);
-  //     let resultDisplay = itemText
-  //       // space
-  //       .replace(/([A-Z])/g, " $1")
-  //       //trim
-  //       .split(" ")
-  //       .map(
-  //         (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  //       )
-  //       .join(" ");
-  //     const selectedText = add([
-  //       "finalText",
-  //       text(resultDisplay + "!!!", {
-  //         size: 24,
-  //         outline: 4,
-  //         color: (0, 0, 0),
-  //       }),
-  //       area(),
-  //       anchor("center"),
-  //       pos(325, 625),
-  //       z(20),
-  //       "final",
-  //     ]);
-
-  //     // const itemKey = item.itemKey;
-  //     // starts a new line
-
-  //     if (currRow === 3) {
-  //       currentY += item.height + 50;
-  //       currentX = startX;
-  //       currRow = 0;
-  //     }
-
-  //     const finalItem = add([
-  //       pos(currentX, currentY),
-  //       z(11),
-  //       sprite(`${item}`),
-  //       "final",
-  //       { itemKey: item },
-  //     ]);
-
-  //     currRow++;
-  //     currentX += 100;
-  //   }
-  // }
 }
 
 export function closeDocumentationStation() {
