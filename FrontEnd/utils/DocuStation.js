@@ -83,7 +83,7 @@ export function showFinalItems(inventoryState, craftState) {
       z(20),
       color(255, 255, 255),
       "selected",
-      "final"
+      "final",
     ]);
 
     // Add the items into documentation station
@@ -112,13 +112,11 @@ export function showFinalItems(inventoryState, craftState) {
       currentX += 100;
     }
   }
-
 }
 
 export function closeDocumentationStation() {
   destroyAll("final");
 }
-
 
 export function chunkArray(array, chunkSize) {
   let result = [];
@@ -131,23 +129,57 @@ export function chunkArray(array, chunkSize) {
 
 // Documentation Station Movement
 // left
-export function docuLeft(inventoryState) {
+export function docuLeft(inventoryState, craftState) {
+  // Pagination Logic
+  let totalcontents = chunkArray(inventoryState.areFinal, 9);
+  let currentPage = inventoryState.docuPage;
+  let contents = totalcontents[currentPage];
+  const itemsPerPage = 9;
+  const startIndex = inventoryState.docuPage * itemsPerPage;
+  const actualIndex = startIndex + inventoryState.docuSelect;
+
   if (inventoryState.docuSelect > 0) {
     inventoryState.docuSelect--;
+    
+    closeDocumentationStation();
+    showFinalItems(inventoryState, craftState);
   }
 }
 // right
-export function docuRight(inventoryState) {
+export function docuRight(inventoryState, craftState) {
+  // Pagination Logic
+  let totalcontents = chunkArray(inventoryState.areFinal, 9);
+  let currentPage = inventoryState.docuPage;
+  let contents = totalcontents[currentPage];
+  const itemsPerPage = 9;
+  const startIndex = inventoryState.docuPage * itemsPerPage;
+  const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 1) {
     inventoryState.docuSelect++;
+    closeDocumentationStation();
+    showFinalItems(inventoryState, craftState);
   }
 }
 export function docuUp(inventoryState) {
+  // Pagination Logic
+  let totalcontents = chunkArray(inventoryState.areFinal, 9);
+  let currentPage = inventoryState.docuPage;
+  let contents = totalcontents[currentPage];
+  const itemsPerPage = 9;
+  const startIndex = inventoryState.docuPage * itemsPerPage;
+  const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect > 2) {
     inventoryState.docuSelect -= 3;
   }
 }
 export function docuDown(inventoryState) {
+  // Pagination Logic
+  let totalcontents = chunkArray(inventoryState.areFinal, 9);
+  let currentPage = inventoryState.docuPage;
+  let contents = totalcontents[currentPage];
+  const itemsPerPage = 9;
+  const startIndex = inventoryState.docuPage * itemsPerPage;
+  const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
     inventoryState.docuSelect += 3;
   }

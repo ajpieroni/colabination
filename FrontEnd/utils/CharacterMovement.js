@@ -2,7 +2,7 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { closeDocumentationStation, showFinalItems } from "./DocuStation.js";
+import { closeDocumentationStation, showFinalItems, docuLeft, docuRight, docuUp, docuDown } from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -263,7 +263,7 @@ class CharacterMovement {
     // *TODO: move
     onKeyPress("left", () => {
       if(craftState.current == "documentation"){
-        docuLeft(inventoryState);
+        docuLeft(inventoryState, craftState);
       }
       else if (craftState.current !== "executed" ) {
         vendingLeft(inventoryState, craftState);
@@ -272,7 +272,10 @@ class CharacterMovement {
     });
 
     onKeyPress("right", () => {
-      if (craftState.current !== "executed") {
+      if(craftState.current == "documentation"){
+        docuRight(inventoryState, craftState);
+      }
+      else if (craftState.current !== "executed") {
         vendingRight(inventoryState, craftState);
       }
     });
