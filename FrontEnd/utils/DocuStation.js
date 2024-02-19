@@ -72,7 +72,7 @@ export function showFinalItems(inventoryState, craftState) {
       }),
       area(),
       anchor("center"),
-      pos(325+100+75, 600-25),
+      pos(500, 575),
       z(20),
     ]);
 
