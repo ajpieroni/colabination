@@ -47,7 +47,13 @@ export function checkCraftable(toolState, inventoryState, volumeSetting) {
 }
 
 // !CRAFTING
-export function craftingBackend(toolState, ingredients, craftState, inventoryState, music) {
+export function craftingBackend(
+  toolState,
+  ingredients,
+  craftState,
+  inventoryState,
+  music
+) {
   let toolId;
   if (toolState.toolAccess) {
     toolId = toolState.currentTool.toolId;
@@ -78,7 +84,14 @@ export function craftingBackend(toolState, ingredients, craftState, inventorySta
           })
           .catch((error) => console.error("Error fetching item 2:", error));
       } else {
-        fetchCombination(toolId, item1data.id, 6, handleCreation, craftState, inventoryState);
+        fetchCombination(
+          toolId,
+          item1data.id,
+          6,
+          handleCreation,
+          craftState,
+          inventoryState
+        );
       }
     })
     .catch((error) => console.error("Error fetching item 1:", error));
@@ -89,7 +102,14 @@ export function craftingBackend(toolState, ingredients, craftState, inventorySta
   // http://localhost:8081/combinations?tool=1&item1=1&item2=1
 }
 
-function fetchCombination(toolId, item1Id, item2Id, callback, craftState, inventoryState) {
+function fetchCombination(
+  toolId,
+  item1Id,
+  item2Id,
+  callback,
+  craftState,
+  inventoryState
+) {
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -265,7 +285,7 @@ export function selectItem(craftState, inventoryState, music) {
 }
 
 export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
-  console.log(`Adding ${currentItem} to the crafting window.`)
+  console.log(`Adding ${currentItem} to the crafting window.`);
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -379,7 +399,13 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
-  craftingBackend(toolState, inventoryState.ingredients, craftState, inventoryState, music);
+  craftingBackend(
+    toolState,
+    inventoryState.ingredients,
+    craftState,
+    inventoryState,
+    music
+  );
   destroyAll("newCraft");
 }
 export function updateCraftUI(craftState, inventoryState) {
@@ -395,14 +421,31 @@ export function updateCraftUI(craftState, inventoryState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-  const resultText = add([
-    text(`You made ${resultDisplay}!`, { size: 24 }),
-    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
-    color(255, 255, 255),
-    z(500),
-    "craft",
-    "executedCraft",
-  ]);
+    if(craftState.result.itemKey.length < 6){
+      const resultText = add([
+        text(`You made ${resultDisplay}!`, { size: 24 }),
+        pos(100 + 500 + 50 - 50+25, 100 + 50 + 100 - 25),
+        color(255, 255, 255),
+        z(500),
+        "craft",
+        "executedCraft",
+      ]);
+    }else{
+      const resultText = add([
+        text(`You made ${resultDisplay}!`, { size: 24 }),
+        pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+        color(255, 255, 255),
+        z(500),
+        "craft",
+        "executedCraft",
+      ]);
+    }
+  
+
+  // If the result is final, add an additional display:
+  if (craftState.result.isFinal) {
+    finalItemDisplay(craftState, resultDisplay);
+  }
 
   const resultItem = add([
     // rect(item.width, item.height) ,
@@ -425,6 +468,7 @@ export function updateCraftUI(craftState, inventoryState) {
       itemKey: craftState.result.itemKey,
     },
   ]);
+
   addItemToBackpack(inventoryState, craftState, resultItem);
   handleSavingData(
     inventoryState.vendingKeys,
@@ -559,8 +603,52 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
 
     inventoryState.vendingKeys.push(resultItem.itemKey);
   }
-  if (craftState.result.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
+  if (
+    craftState.result.isFinal &&
+    !inventoryState.areFinal.includes(craftState.result.itemKey)
+  ) {
     // console.log(`${craftState.result.itemKey} pushed to documentation station.`);
     inventoryState.areFinal.push(resultItem.itemKey);
   }
+}
+
+export function finalItemDisplay(craftState, resultDisplay) {
+  add([
+    text(
+      `${resultDisplay} is a final item!`,
+      { size: 16 }
+    ),
+    pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+
+  add([
+    text(
+      "You can find it in the documentation station.",
+      { size: 14 }
+    ),
+    pos(100 + 500-50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+100),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+  
+
+  add([
+    text(
+      "It cannot be combined with another item.",
+      { size: 14 }
+    ),
+    pos(100 + 500 + 50 -50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+115),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+  
+  // return craftState.result.isFinal;
 }
