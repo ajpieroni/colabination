@@ -12,6 +12,7 @@ export function handleCollideDocumentationStation(state, showFinalItems, invento
     "interactable",
   ]);
 
+  // Here, if you press enter, closes docu station
   if (!state.eventListenerAttached) {
     state.eventListenerAttached = true;
 

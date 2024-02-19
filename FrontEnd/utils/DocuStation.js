@@ -9,6 +9,19 @@ export function showFinalItems(inventoryState) {
     "final",
   ]);
 
+  const closeText = add([
+    text("Press [ Escape ] To Close", { size: 24 }),
+    pos(100 + 500 - 50, 100 + 50 + 500),
+    color(255, 255, 255),
+    z(500),
+    "final",
+  ]);
+
+  // Sort items
+  inventoryState.areFinal.sort((a, b) =>
+  a.localeCompare(b)
+);
+
   
   // Grid
   const startX = docPop.pos.x + 42.5;
@@ -45,6 +58,7 @@ export function showFinalItems(inventoryState) {
         anchor("center"),
         pos(325, 625),
         z(20),
+        "final"
       ]);
 
       // const itemKey = item.itemKey;
@@ -69,4 +83,8 @@ export function showFinalItems(inventoryState) {
       currentX += 100;
     }
   }
+}
+
+export function closeDocumentationStation(){
+  destroyAll("final");
 }

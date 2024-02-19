@@ -2,7 +2,7 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { showFinalItems } from "./DocuStation.js";
+import { closeDocumentationStation, showFinalItems } from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -212,6 +212,7 @@ class CharacterMovement {
     onKeyDown("escape", () => {
       // console.log("Pressed")
       closeCraftWindow(craftState, inventoryState);
+      closeDocumentationStation();
     });
 
 
