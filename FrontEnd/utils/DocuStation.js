@@ -76,23 +76,25 @@ export function showFinalItems(inventoryState, craftState) {
       pos(500, 575),
       z(20),
     ]);
-    let itemDescription = fetchItemDescription(itemText);
 
-    // Add the item description
-    const selectedDescription = add([
-      "finalText",
-      "final",
-      text(itemDescription, {
-        size: 24,
-        outline: 4,
-        color: (0, 0, 0),
-      }),
-      area(),
-      anchor("center"),
-      pos(500, 575),
-      z(20),
-    ]);
+    // Fetch the item description
 
+    fetchItemDescription(itemText).then(itemDescription => {
+      // Add the item description
+      const selectedDescription = add([
+        "finalText",
+        "final",
+        text(itemDescription.data, {
+          size: 24,
+          outline: 4,
+          color: (0, 0, 0),
+        }),
+        area(),
+        anchor("center"),
+        pos(500, 575),
+        z(20),
+      ]);
+    });
 
     // Add the white box
     const selected = add([
@@ -204,15 +206,11 @@ export function docuDown(inventoryState) {
 }
 
 export function fetchItemDescription(item) {
-  // Fetch the item description
-  // fetch http://localhost:8081/items/find_description_by_name/{name}
-
-  // Fetch
-  fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
+  return fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      let itemDescription = data.description;
-      return itemDescription;
+      return data;
     });
 }
+
