@@ -609,7 +609,9 @@ class Tutorial {
     function waitForBook() {
       return waitForCondition(() => craftState.result.itemKey === "book");
     }
-
+    onKeyPress("enter", () => {
+      console.log(craftState.result.itemKey);
+    });
     function messageCreate(message) {
       add([
         "alert",
@@ -695,7 +697,7 @@ class Tutorial {
       message = "Great job! You've made a book! You've completed the tutorial!";
       messageCreate(message);
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      go("characterMovement");
+      // go("characterMovement");
     }
     
 
