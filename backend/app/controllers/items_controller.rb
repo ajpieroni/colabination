@@ -65,6 +65,15 @@ class ItemsController < ApplicationController
       render json: { error: "Item not found" }, status: :not_found
     end
   end
+  # GET /items/find_description_by_name/:name
+  def find_description_by_name
+    @item = Item.find_by(name: params[:name])
+    if @item
+      render json: { data: @item.description }
+    else
+      render json: { error: "Item not found" }, status: :not_found
+    end
+  end
 
   private
     def set_item
