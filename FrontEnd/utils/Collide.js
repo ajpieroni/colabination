@@ -12,25 +12,31 @@ export function handleCollideDocumentationStation(state, showFinalItems, invento
     "interactable",
   ]);
 
-  // Here, if you press enter, closes docu station
   if (!state.eventListenerAttached) {
     state.eventListenerAttached = true;
 
+    // Event Listener for 'enter' key
     onKeyPress("enter", () => {
       if (!state.canAccessDocumentation) return;
 
-      if (state.isDocVisible) {
-        destroyAll("final");
-        state.isDocVisible = false;
-        setSpeed(300);
-      } else {
+      if (!state.isDocVisible) {
         showFinalItems(inventoryState, craftState);
         state.isDocVisible = true;
         setSpeed(0);
       }
     });
+
+    // Event Listener for 'escape' key
+    onKeyPress("escape", () => {
+      if (state.isDocVisible) {
+        destroyAll("final");
+        state.isDocVisible = false;
+        setSpeed(300);
+      }
+    });
   }
 }
+
 
 export function handleCollideDocumentationStationEnd(state, inventoryState) {
   state.canAccessDocumentation = false;
