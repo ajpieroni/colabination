@@ -69,7 +69,7 @@ class Tutorial {
   play() {
     let craftState = {
       craftCheck: false,
-      resultReay: false,
+      resultReady: false,
       result: { itemKey: "", isFinal: false },
       // Checks if they've pressed enter on the craft prompt
       craftSelected: false,
@@ -224,6 +224,7 @@ class Tutorial {
       closeCraftWindow(craftState, inventoryState);
     });
 
+    // !OLD CRAFT
 
     async function showContainer(tableTemp) {
       isCraftingVisible = true;
@@ -364,6 +365,7 @@ class Tutorial {
         isBright = !isBright;
       }, 250); // the button color will toggle every 500ms
     }
+
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
@@ -448,6 +450,8 @@ class Tutorial {
 
     collisionState.isDocVisible = false;
 
+    // !TODO: export to doc statino file
+
     function showFinalItems() {
       const docPop = add([
         rect(500, 600),
@@ -477,6 +481,8 @@ class Tutorial {
           )
           .join(" ");
 
+        // const itemKey = item.itemKey;
+        // starts a new line
 
         if (currRow === 3) {
           currentY += item.height + 50;
@@ -573,8 +579,8 @@ class Tutorial {
     onCollideEnd("player", "craftingTable", (s, w) => {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
-
     });
+
     let readyToCraft = false;
     function waitForCondition(conditionFunc) {
       return new Promise((resolve) => {
