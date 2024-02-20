@@ -10,9 +10,10 @@ export function showFinalItems(inventoryState, craftState) {
     "final",
   ]);
 
+  // Add the title
   const closeText = add([
     text("Press [ Escape ] To Close", { size: 24 }),
-    pos(100 + 500 - 50, 100 + 50 + 500),
+    pos(100 + 500 - 50-100, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
     "final",
@@ -79,11 +80,11 @@ export function showFinalItems(inventoryState, craftState) {
     // Add the white box
     const selected = add([
       rect(70, 70),
-      pos(currentX, currentY),
-      z(20),
+      pos(startX + gridX * 100, startY + gridY * 100),
+      z(19),
       color(255, 255, 255),
       "selected",
-      "final",
+      "final"
     ]);
 
     // Add the items into documentation station
