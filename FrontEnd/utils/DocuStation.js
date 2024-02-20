@@ -13,7 +13,7 @@ export function showFinalItems(inventoryState, craftState) {
   // Add the title
   const closeText = add([
     text("Press [ Escape ] To Close", { size: 24 }),
-    pos(100 + 500 - 50-100-100-25, 100 + 50 + 500),
+    pos(100 + 500 - 50 - 100 - 100 - 25, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
     "final",
@@ -76,7 +76,23 @@ export function showFinalItems(inventoryState, craftState) {
       pos(500, 575),
       z(20),
     ]);
-    fetchItemDescription(itemText);
+    let itemDescription = fetchItemDescription(itemText);
+
+    // Add the item description
+    const selectedDescription = add([
+      "finalText",
+      "final",
+      text(itemDescription, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 575),
+      z(20),
+    ]);
+
 
     // Add the white box
     const selected = add([
@@ -85,7 +101,7 @@ export function showFinalItems(inventoryState, craftState) {
       z(19),
       color(255, 255, 255),
       "selected",
-      "final"
+      "final",
     ]);
 
     // Add the items into documentation station
@@ -142,7 +158,7 @@ export function docuLeft(inventoryState, craftState) {
 
   if (inventoryState.docuSelect > 0) {
     inventoryState.docuSelect--;
-    
+
     closeDocumentationStation();
     showFinalItems(inventoryState, craftState);
   }
@@ -187,8 +203,7 @@ export function docuDown(inventoryState) {
   }
 }
 
-
-export function fetchItemDescription(item){
+export function fetchItemDescription(item) {
   // Fetch the item description
   // fetch http://localhost:8081/items/find_description_by_name/{name}
 
@@ -197,7 +212,7 @@ export function fetchItemDescription(item){
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      return data;
+      let itemDescription = data.description;
+      return itemDescription;
     });
-
 }
