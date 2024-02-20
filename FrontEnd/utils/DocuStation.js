@@ -76,6 +76,7 @@ export function showFinalItems(inventoryState, craftState) {
       pos(500, 575),
       z(20),
     ]);
+    fetchItemDescription(itemText);
 
     // Add the white box
     const selected = add([
@@ -184,4 +185,19 @@ export function docuDown(inventoryState) {
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
     inventoryState.docuSelect += 3;
   }
+}
+
+
+export function fetchItemDescription(item){
+  // Fetch the item description
+  // fetch http://localhost:8081/items/find_description_by_name/{name}
+
+  // Fetch
+  fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+
 }

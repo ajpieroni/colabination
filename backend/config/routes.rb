@@ -21,7 +21,6 @@ Rails.application.routes.draw do
     # GET /items/find_description_by_name/:name
     # http://localhost:8081/items/find_description_by_name/trash
       get 'find_description_by_name/:name', to: 'items#find_description_by_name', as: 'find_description_by_name'
-
     end
   end
 
