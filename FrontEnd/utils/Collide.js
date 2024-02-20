@@ -4,6 +4,7 @@ import { showFinalItems } from "./DocuStation.js";
 export function handleCollideDocumentationStation(state, showFinalItems, inventoryState, craftState) {
   state.canAccessDocumentation = true;
 
+  // Add Documentation Station Text
   add([
     text("Documentation Station", { size: 16 }),
     pos(700, 100 - 18),
