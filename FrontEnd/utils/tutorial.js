@@ -15,14 +15,6 @@ import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd } from "./Collide.js";
-// Z-Level Tracker:
-// 0: "Walk" background: 0
-// 10: Player
-// 11: "Craft" text, Tool Labels
-// 11: Selected Item
-// 19: Backpack
-// 20: Items in backpack
-// 20: "Crafting..." text
 
 import {
   openBackpack,
@@ -580,7 +572,6 @@ class Tutorial {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
     });
-
     let readyToCraft = false;
     function waitForCondition(conditionFunc) {
       return new Promise((resolve) => {
@@ -615,9 +606,6 @@ class Tutorial {
     function waitForBook() {
       return waitForCondition(() => craftState.result.itemKey === "book");
     }
-    onKeyPress("enter", () => {
-      console.log(craftState.result.itemKey);
-    });
     function messageCreate(message) {
       add([
         "alert",
@@ -636,81 +624,99 @@ class Tutorial {
       ]);
     }
 
+    let currentStep = 0; // Initialize a step counter
+
     async function tutorialStart() {
       setSpeed(0);
+    
       let message = "Welcome to the tutorial! Let's get started.";
       messageCreate(message);
       await new Promise((resolve) => setTimeout(resolve, 4000));
       destroyAll("alert");
     
+      // Step 1: Picking up items
       message = "Try picking up the items you see on the floor!";
-      messageCreate(message); 
+      messageCreate(message);
       setSpeed(300);
-    
       await waitForCollision();
-    
       destroyAll("alert");
+      currentStep = 1; 
+    
+      // Step 2: Hammer station
       message = "Great! Now, let's head to the hammer station.";
       messageCreate(message);
-    
       await waitForHammer();
-      let step1 = false;
       destroyAll("alert");
+      currentStep = 2; 
+    
+      // Step 3: Begin crafting
       message = "Nice job! Now, let's begin crafting! Press 'Enter' to open the crafting window.";
-      step1 = true;
       messageCreate(message);
-      if (step1) {
-        onKeyPress("enter", () => {
+      onKeyPress("enter", () => {
+        if (currentStep === 2) {
           destroyAll("alert");
           message = "Now, try selecting an item by pressing 'Enter' on the item and try to make paper.";
           messageCreate(message);
           readyToCraft = true;
-      });      
-    }
+          currentStep = 3; 
+        }
+      });
       await waitForPaper();
       destroyAll("alert");
       message = "Great job! You've made paper! Close out of Hammer!";
       messageCreate(message);
+     
+    
+      // Step 4: Crafting table
       onKeyPress("escape", () => {
-        destroyAll("alert");
-        message = "Awesome! Now, let's head to the Crafting Table!";
-        messageCreate(message);
+        if (currentStep === 3) {
+          destroyAll("alert");
+          message = "Awesome! Now, let's head to the Crafting Table!";
+          messageCreate(message);
+          currentStep = 4; 
+        }
       });
-      let step2 = false;
       await waitForCraftingTable();
       destroyAll("alert");
-      message = "Press 'Enter' again and lets craft something else!";
+      message = "Press 'Enter' again and let's craft something else!";
       messageCreate(message);
-      step2 = true;
-      if (step2) {
-        onKeyPress("enter", () => {
+    
+      onKeyPress("enter", () => {
+        if (currentStep === 4) {
           destroyAll("alert");
           message = "Nice! Try making a card!";
           messageCreate(message);
           readyToCraft = true;
-        });
-      }
+          currentStep = 5; 
+        }
+      });
+    
       await waitForCard();
       destroyAll("alert");
       message = "Great job! You've made a card! Now do origami!";
       messageCreate(message);
+      currentStep = 6; 
+    
       await waitForOrigami();
       destroyAll("alert");
       message = "You've made origami! Now let's make a book!";
       messageCreate(message);
+      currentStep = 7; 
+    
       await waitForBook();
       destroyAll("alert");
       message = "Great job! You've made a book! You've completed the tutorial!";
       messageCreate(message);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      // go("characterMovement");
+      currentStep = 8; 
+      await new Promise((resolve) => setTimeout(resolve, 4000));
     }
     
+    tutorialStart();
+    
+  
 
-
-      function stopTutorial() {
-      }
-      tutorialStart();
+    function stopTutorial() {
+    }
 
   }}
   export const tutorial = new Tutorial();
