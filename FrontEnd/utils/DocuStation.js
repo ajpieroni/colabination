@@ -32,10 +32,8 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
-  console.log(totalcontents);
   let currentPage = inventoryState.finalPage;
   let contents = totalcontents[currentPage];
-  console.log(contents);
   // inventoryState.vendingSelect = 0;
   // console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.docuSelect % 3;
@@ -222,7 +220,6 @@ export function fetchItemDescription(item) {
   return fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
 }
