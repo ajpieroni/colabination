@@ -85,13 +85,13 @@ export function showFinalItems(inventoryState, craftState) {
         "finalText",
         "final",
         text(itemDescription.data, {
-          size: 24,
+          size: 16,
           outline: 4,
           color: (0, 0, 0),
         }),
         area(),
         anchor("center"),
-        pos(500, 575),
+        pos(500, 575-50),
         z(20),
       ]);
     });
