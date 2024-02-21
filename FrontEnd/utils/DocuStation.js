@@ -9,6 +9,14 @@ export function showFinalItems(inventoryState, craftState) {
     scale(0.75),
     "final",
   ]);
+  let count = inventoryState.areFinal.length;
+  const achievement = add([
+    text(`Final Items: ${count}/17`, { size: 16 }),
+    pos(425, 625),
+    color(255, 255, 255),
+    z(500),
+    "final",
+  ]);
 
   // Add the title
   const closeText = add([
