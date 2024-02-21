@@ -187,7 +187,7 @@ export function docuRight(inventoryState, craftState) {
     showFinalItems(inventoryState, craftState);
   }
 }
-export function docuUp(inventoryState) {
+export function docuUp(inventoryState, craftState) {
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
@@ -201,7 +201,7 @@ export function docuUp(inventoryState) {
     showFinalItems(inventoryState, craftState);
   }
 }
-export function docuDown(inventoryState) {
+export function docuDown(inventoryState, craftState) {
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;

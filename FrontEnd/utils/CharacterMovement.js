@@ -2,7 +2,14 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
-import { closeDocumentationStation, showFinalItems, docuLeft, docuRight, docuUp, docuDown } from "./DocuStation.js";
+import {
+  closeDocumentationStation,
+  showFinalItems,
+  docuLeft,
+  docuRight,
+  docuUp,
+  docuDown,
+} from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -216,7 +223,6 @@ class CharacterMovement {
       closeDocumentationStation();
     });
 
-
     //! Player Movement
     // Player search
     // WASD
@@ -262,33 +268,35 @@ class CharacterMovement {
 
     // *TODO: move
     onKeyPress("left", () => {
-      if(craftState.current == "documentation"){
+      if (craftState.current == "documentation") {
         docuLeft(inventoryState, craftState);
-      }
-      else if (craftState.current !== "executed" ) {
+      } else if (craftState.current !== "executed") {
         vendingLeft(inventoryState, craftState);
       }
       console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
-      if(craftState.current == "documentation"){
+      if (craftState.current == "documentation") {
         docuRight(inventoryState, craftState);
-      }
-      else if (craftState.current !== "executed") {
+      } else if (craftState.current !== "executed") {
         vendingRight(inventoryState, craftState);
       }
     });
 
     onKeyPress("down", () => {
       // console.log("down");
-      if (craftState.current !== "executed") {
+      if (craftState.current == "documentation") {
+        docuDown(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
         vendingDown(inventoryState, craftState);
       }
     });
 
     onKeyPress("up", () => {
-      if (craftState.current !== "executed") {
+      if (craftState.current == "documentation") {
+        docuUp(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
         vendingUp(inventoryState, craftState);
       }
     });
@@ -307,16 +315,23 @@ class CharacterMovement {
       go("settings");
     });
 
-
     // !TODO: export to doc statino file
 
-
     player.onCollide("documentationStation", () => {
-      handleCollideDocumentationStation(collisionState, showFinalItems, inventoryState, craftState);
+      handleCollideDocumentationStation(
+        collisionState,
+        showFinalItems,
+        inventoryState,
+        craftState
+      );
     });
 
     player.onCollideEnd("documentationStation", () => {
-      handleCollideDocumentationStationEnd(collisionState, inventoryState, craftState);
+      handleCollideDocumentationStationEnd(
+        collisionState,
+        inventoryState,
+        craftState
+      );
     });
 
     player.onCollide("material", (materialEntity) => {
