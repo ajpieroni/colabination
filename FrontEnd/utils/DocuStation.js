@@ -24,6 +24,7 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
+  console.log(totalcontents);
   let currentPage = inventoryState.finalPage;
   let contents = totalcontents[currentPage];
   console.log(contents);
@@ -52,7 +53,7 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Add items to documentation station
   if (contents) {
-    let itemText = contents[inventoryState.docuSelect];
+    let itemText = inventoryState.areFinal[inventoryState.docuSelect];
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
     let resultDisplay = itemText
       // space
@@ -79,7 +80,7 @@ export function showFinalItems(inventoryState, craftState) {
 
     // Fetch the item description
 
-    fetchItemDescription(itemText).then(itemDescription => {
+    fetchItemDescription(itemText).then((itemDescription) => {
       // Add the item description
       const selectedDescription = add([
         "finalText",
@@ -91,7 +92,7 @@ export function showFinalItems(inventoryState, craftState) {
         }),
         area(),
         anchor("center"),
-        pos(500, 575-50),
+        pos(500, 575 - 50),
         z(20),
       ]);
     });
@@ -108,11 +109,11 @@ export function showFinalItems(inventoryState, craftState) {
 
     // Add the items into documentation station
     for (let i = 0; i < contents.length; i++) {
-      let item = contents[i];
+      let item = inventoryState.areFinal[i];
 
       // New Row
       if (currRow === 3) {
-        currentY += item.height + 50;
+        currentY += 50 + 50;
         currentX = startX;
         currRow = 0;
       }
@@ -190,6 +191,8 @@ export function docuUp(inventoryState) {
   const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect > 2) {
     inventoryState.docuSelect -= 3;
+    closeDocumentationStation();
+    showFinalItems(inventoryState, craftState);
   }
 }
 export function docuDown(inventoryState) {
@@ -202,6 +205,8 @@ export function docuDown(inventoryState) {
   const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
     inventoryState.docuSelect += 3;
+    closeDocumentationStation();
+    showFinalItems(inventoryState, craftState);
   }
 }
 
@@ -213,4 +218,3 @@ export function fetchItemDescription(item) {
       return data;
     });
 }
-
