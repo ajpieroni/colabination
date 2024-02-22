@@ -298,9 +298,18 @@ export function onKeyPressDown(inventoryState, craftState) {
       inventoryState.vendingSelect === 7 ||
       inventoryState.vendingSelect === 8;
     // If the current selection is the last row in the backpack, go to the next page
-    if (bottomIndex && inventoryState.page < totalcontents.length - 1) {
+    // only if there is an item at the index below on the next page
+    
+    if (bottomIndex && inventoryState.page < totalcontents.length - 1 ) {
       inventoryState.page++;
-      inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+
+      if(inventoryState.vendingContents[inventoryState.vendingSelect + 3] !== undefined){
+        inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+
+      }else{
+        inventoryState.vendingSelect = 0;
+      }
+      
 
       destroyAll("itemText");
       destroyAll("selected");
