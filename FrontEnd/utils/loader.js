@@ -95,7 +95,7 @@ export const load = {
     loadSprite("lamp", "./assets/lamp.png");
     loadSprite("chains", "./assets/chains.png");
     loadSprite("bowl", "./assets/bowl.png");
-    loadSprite("car", "./assets/benchy.png");
+    loadSprite("car", "./assets/car.png");
 
     loadSprite("prison", "./assets/benchy.png");
     loadSprite("armor", "./assets/benchy.png");
