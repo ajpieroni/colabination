@@ -102,5 +102,5 @@ const scenes = {
 for (const key in scenes){
     scene(key, scenes[key])
 }
-
+localStorage.setItem("inProgress", "false")
 go("login")

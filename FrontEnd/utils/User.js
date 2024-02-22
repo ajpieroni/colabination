@@ -16,9 +16,11 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         console.log(localStorage.getItem("tutorial"));
         const items = data.items; 
         console.log("items", items);
-        if(localStorage.getItem("tutorial") == "true"){
+        if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
         console.log("tutorial is true");
         InitialItems(["wood"]);
+        }else{
+          InitialItems([]);
         }
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
