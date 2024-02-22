@@ -93,7 +93,7 @@ export const load = {
 
     // TO BE MADE
     loadSprite("lamp", "./assets/lamp.png");
-    loadSprite("chains", "./assets/benchy.png");
+    loadSprite("chains", "./assets/chains.png");
     loadSprite("bowl", "./assets/benchy.png");
     loadSprite("car", "./assets/benchy.png");
 
