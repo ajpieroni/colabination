@@ -255,8 +255,11 @@ export function addNewTool(toolState) {
 
   // add the first tool that hasn't been added yet to the game
   for (let i = 0; i < tools.length; i++) {
-    if (!toolState.hasDiscovered.includes(tools[i])) {
+    if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
+      toolState.hasDiscovered.add(tools[i].toolKey);
+      console.log(toolState.hasDiscovered)
       addToolToGame(tools[i]);
+      console.log(`Adding ${tools[i].name} to the game`)
       break;
     }
   }

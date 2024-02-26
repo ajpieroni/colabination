@@ -159,7 +159,8 @@ class CharacterMovement {
       currToolY: 0,
       currentTool: "",
       toolAccess: false,
-      hasDiscovered: [],
+      // hasDiscovered: hashset
+      hasDiscovered: new Set(),
     };
 
     onCollide("player", "tool", (s, w) => {
