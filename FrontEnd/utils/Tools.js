@@ -257,9 +257,7 @@ export function addNewTool(toolState) {
   for (let i = 0; i < tools.length; i++) {
     if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
       toolState.hasDiscovered.add(tools[i].toolKey);
-      console.log(toolState.hasDiscovered)
       addToolToGame(tools[i]);
-      console.log(`Adding ${tools[i].name} to the game`)
       break;
     }
   }
