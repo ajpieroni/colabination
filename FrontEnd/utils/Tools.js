@@ -282,3 +282,11 @@ export function addToolToGame(newTool) {
     { toolId: 2 },
   ]);
 }
+
+export function checkForToolAddition(inventoryState){
+  // whenever a user discovers items, in increments of 10, add a new tool
+  if (inventoryState.vendingContents.length % 10 === 0) {
+    console.log("adding new tool");
+    addNewTool(inventoryState);
+  }
+}

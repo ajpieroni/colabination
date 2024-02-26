@@ -115,7 +115,8 @@ class CharacterMovement {
       onItemsOnTable: 0,
     };
 
-    intiailizeUser(inventoryState);
+    
+   
 
     // Music
     let volumeSetting = localStorage.getItem("soundTogg")
@@ -163,6 +164,9 @@ class CharacterMovement {
       hasDiscovered: new Set(),
     };
 
+    intiailizeUser(inventoryState, toolState);
+    console.log(inventoryState.vendingContents)
+    
     onCollide("player", "tool", (s, w) => {
       onToolCollide(craftState, toolState, inventoryState, s, w);
     });

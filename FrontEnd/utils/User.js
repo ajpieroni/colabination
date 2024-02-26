@@ -1,6 +1,8 @@
 
 import InitialItems from "./InitialItems.js";
-export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal) {
+import { addNewTool } from "./Tools.js";
+
+export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal, toolState) {
     let curr_user = localStorage.getItem("username");
 
   console.log(`Fetching for ${username}`);
@@ -57,11 +59,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
           if (!savedItem.isFinal) {
             hasSavedItems.push(itemName);
             vendingKeys.push(savedItem.itemKey);
+            
             vendingContents.push(savedItem);
           } else {
             if (!areFinal.includes(itemName)) {
               areFinal.push(itemName);
             }
+          }
+          if(vendingContents.length % 10 == 0){
+            console.log(vendingContents.length);
+            console.log(vendingContents);
+            addNewTool(toolState);
           }
         });
         // resolve(itemNames);
@@ -71,13 +79,13 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       });
   });
 }
-export function intiailizeUser(inventoryState){
+export function intiailizeUser(inventoryState, toolState){
   fetchUserItems(
     inventoryState.curr_user,
     inventoryState.hasSavedItems,
     inventoryState.vendingKeys,
     inventoryState.vendingContents,
-    inventoryState.areFinal
+    inventoryState.areFinal, toolState
   )
     .then((itemNames) => {
       console.log(itemNames);

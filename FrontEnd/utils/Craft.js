@@ -470,6 +470,7 @@ export function updateCraftUI(craftState, inventoryState) {
   ]);
 
   addItemToBackpack(inventoryState, craftState, resultItem);
+  checkForToolAddition(inventoryState);
   handleSavingData(
     inventoryState.vendingKeys,
     inventoryState.hasSavedItems,
