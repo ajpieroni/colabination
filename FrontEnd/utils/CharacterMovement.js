@@ -1,5 +1,5 @@
 import InitialItems from "./InitialItems.js";
-import Tools from "./Tools.js";
+import Tools, { addToolToGame, addNewTool } from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { getSpeed, setSpeed } from "./Player.js";
@@ -159,6 +159,7 @@ class CharacterMovement {
       currToolY: 0,
       currentTool: "",
       toolAccess: false,
+      hasDiscovered: [],
     };
 
     onCollide("player", "tool", (s, w) => {
@@ -170,19 +171,24 @@ class CharacterMovement {
     });
 
 // !TODO: remove, instead introduce pagination with arrows
-    onKeyPress("2", () => {
-      inventoryState.page = inventoryState.page + 1;
-      closeBackpack();
-      openBackpack(inventoryState,craftState);
-    });
-    onKeyPress("1", () => {
-      if(inventoryState.page > 0){
-      inventoryState.page = inventoryState.page - 1;
-      }
-      closeBackpack();
-      openBackpack(inventoryState,craftState);
-    });
+    // onKeyPress("2", () => {
+    //   inventoryState.page = inventoryState.page + 1;
+    //   closeBackpack();
+    //   openBackpack(inventoryState,craftState);
+    // });
+    // onKeyPress("1", () => {
+    //   if(inventoryState.page > 0){
+    //   inventoryState.page = inventoryState.page - 1;
+    //   }
+    //   closeBackpack();
+    //   openBackpack(inventoryState,craftState);
+    // });
 
+
+    // Add tool to scene when 1 is pressed
+    onKeyPress("1", () => {
+      addNewTool(toolState);
+    });
     // !NEW CRAFT
 
     onKeyPress("enter", () => {
