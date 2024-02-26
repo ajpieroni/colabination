@@ -70,7 +70,7 @@ puts 'seeding'
     prison = Item.create(name:'prison', description: "Uh oh.", item_type: 'material', rarity: 1, isFinal: true)
     armor = Item.create(name:'armor', description: "For protection.", item_type: 'material', rarity: 1, isFinal: false)
     cauldron = Item.create(name:'cauldron', description: "For brewing!", item_type: 'material', rarity: 1, isFinal: false)
-    diningtable = Item.create(name:'diningtable', description: "For family meals!", item_type: 'material', rarity: 1, isFinal: false)
+    diningTable = Item.create(name:'diningTable', description: "For family meals!", item_type: 'material', rarity: 1, isFinal: false)
     stoplight = Item.create(name:'stoplight', description: "Stop on red!", item_type: 'material', rarity: 1, isFinal: false)
 
 
@@ -183,7 +183,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
     Combination.create(tool: solder, item1: bowl, item2: bowl, creation: cauldron)
-    Combination.create(tool: hands, item1: bowl, item2: table, creation: diningtable)
+    Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
 
 
@@ -195,7 +195,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     # Witch
     Combination.create(tool: hands, item1: cauldron, item2: doll, creation: witch)
     # Family
-    Combination.create(tool: hands, item1: diningtable, item2: doll, creation: family)
+    Combination.create(tool: hands, item1: diningTable, item2: doll, creation: family)
     # Street
     Combination.create(tool: hands, item1: stoplight, item2: car, creation: street)
 
