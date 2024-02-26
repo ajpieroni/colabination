@@ -101,7 +101,7 @@ export const load = {
     loadSprite("armor", "./assets/armor.png");
     loadSprite("cauldron", "./assets/cauldron.png");
     loadSprite("diningTable", "./assets/diningTable.png");
-    loadSprite("stoplight", "./assets/benchy.png");
+    loadSprite("stoplight", "./assets/stoplight.png");
 
     loadSprite("vinylCD", "./assets/benchy.png");
     loadSprite("crown", "./assets/benchy.png");
