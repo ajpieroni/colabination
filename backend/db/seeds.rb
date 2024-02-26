@@ -114,15 +114,26 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
-    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
-    sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
-    saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
-    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
-    cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
-    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
-    screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
     mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+
+
+# Hat press is only used for one item: bowl
+    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+# Laser Cutter is only used for one item: musicCD
+    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+    
+# Sandpaper is not used
+    # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
+# Saw is not used
+    # saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
+# Cricut is not used
+    # cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
+
+# Screwdriver is not used
+    # screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
+   
 
 
 # seed some users
