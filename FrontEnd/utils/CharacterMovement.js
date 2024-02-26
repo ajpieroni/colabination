@@ -62,7 +62,7 @@ class CharacterMovement {
 
     // Map Sprites
     add([sprite("walk"), pos(-50, -50), z(0), scale(0.65)]);
-    add([sprite("tables"), pos(0, 0), z(6)]);
+    // add([sprite("tables"), pos(0, 0), z(6)]);
     map();
   }
 

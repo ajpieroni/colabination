@@ -258,6 +258,10 @@ export function addNewTool(toolState) {
     if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
+      // if added printer 1, also add printer 2
+      if (tools[i].toolKey === "printer1") {
+        addToolToGame(tools[i + 1]);
+      }
       break;
     }
   }
