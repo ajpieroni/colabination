@@ -101,7 +101,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
-    cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
+    cutCloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
     embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
     yarn = Item.create(name: 'yarn', description: "Thick, warm string", item_type: "material", rarity: 1, isFinal: false)
     skirt = Item.create(name: 'skirt', description: "Flowy, covers some part of your legs", item_type: "material", rarity: 1, isFinal: false)
@@ -218,7 +218,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Thread combos
     Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
-    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
+    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutCloth)
     Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
     Combination.create(tool: hands, item1: threadBall, item2: nothing, creation: macrame)
 
@@ -227,7 +227,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: sewingmachine, item1: embroiderythread, item2: embroiderythread, creation: yarn)
     Combination.create(tool: hands, item1: embroiderythread, item2: nothing, creation:  straw)
     Combination.create(tool: sewingmachine, item1: shirt, item2: skirt, creation: dress)
-    Combination.create(tool: sewingmachine, item1: cutcloth, item2: nothing, creation: shirt)
+    Combination.create(tool: sewingmachine, item1: cutCloth, item2: nothing, creation: shirt)
     Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
     Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
 

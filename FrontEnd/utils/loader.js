@@ -113,18 +113,18 @@ export const load = {
     loadSprite("monarchDoll", "./assets/monarchDoll.png");
     loadSprite("kingdom", "./assets/kingdom.png");
     loadSprite("home", "./assets/home.png");
-    loadSprite("city", "./assets/benchy.png");
+    loadSprite("city", "./assets/city.png");
 
-    loadSprite("fairytale", "./assets/benchy.png");
+    loadSprite("fairytale", "./assets/fairytale.png");
 
     loadSprite("plastic", "./assets/benchy.png");
 
     // Thread trail
     loadSprite("cloth", "./assets/cloth.png");
-    loadSprite("cut cloth", "./assets/cutcloth.png");
+    loadSprite("cutCloth", "./assets/cutCloth.png");
     loadSprite("skirt", "./assets/skirt.png");
-    loadSprite("jacket", "./assets/benchy.png");
-    loadSprite("shirt", "./assets/benchy.png");
+    loadSprite("jacket", "./assets/jacket.png");
+    loadSprite("shirt", "./assets/shirt.png");
 
     loadSprite("embroidery thread", "./assets/embroiderythread.png");
     loadSprite("dress", "./assets/dress.png");
