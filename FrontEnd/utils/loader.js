@@ -110,8 +110,8 @@ export const load = {
     loadSprite("family", "./assets/family.png");
     loadSprite("street", "./assets/street.png");
 
-    loadSprite("monarchdoll", "./assets/benchy.png");
-    loadSprite("kingdom", "./assets/benchy.png");
+    loadSprite("monarchDoll", "./assets/monarchDoll.png");
+    loadSprite("kingdom", "./assets/kingdom.png");
     loadSprite("home", "./assets/benchy.png");
     loadSprite("city", "./assets/benchy.png");
 

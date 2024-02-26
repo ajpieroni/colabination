@@ -85,7 +85,7 @@ puts 'seeding'
     street = Item.create(name:'street', description: "To ride on!", item_type: 'material', rarity: 1, isFinal: false)
     
 #    level 4
-    monarchdoll = Item.create(name:'monarchdoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
+    monarchDoll = Item.create(name:'monarchDoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
     kingdom = Item.create(name:'kingdom', description: "I used to rule the world...", item_type: 'material', rarity: 1, isFinal: false)
     home = Item.create(name:'home', description: "Humble abode!", item_type: 'material', rarity: 1, isFinal: true)
     city = Item.create(name:'city', description: "Big apple!", item_type: 'material', rarity: 1, isFinal: true)
@@ -202,9 +202,9 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
     # Metal: level 5
     # Monarch doll
-    Combination.create(tool: hands, item1: crown, item2: doll, creation: monarchdoll)
+    Combination.create(tool: hands, item1: crown, item2: doll, creation: monarchDoll)
     # Kingdom
-    Combination.create(tool: hands, item1: knight, item2: monarchdoll, creation: kingdom)
+    Combination.create(tool: hands, item1: knight, item2: monarchDoll, creation: kingdom)
     # Home
     Combination.create(tool: hammer, item1: family, item2: building, creation: home)
 
