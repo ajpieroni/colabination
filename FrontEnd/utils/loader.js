@@ -117,7 +117,7 @@ export const load = {
 
     loadSprite("fairytale", "./assets/fairytale.png");
 
-    loadSprite("plastic", "./assets/benchy.png");
+    loadSprite("plastic", "./assets/plastic.png");
 
     // Thread trail
     loadSprite("cloth", "./assets/cloth.png");
@@ -133,7 +133,7 @@ export const load = {
     loadSprite("scarecrow", "./assets/scarecrow.png");
 
     // Unknown
-    loadSprite("lightbulb", "./assets/benchy.png");
+    loadSprite("lightbulb", "./assets/lightbulb.png");
     loadSprite("wagon", "./assets/benchy.png");
 
     //Developer sprites
