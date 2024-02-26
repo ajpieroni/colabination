@@ -106,7 +106,7 @@ export const load = {
     loadSprite("vinylCD", "./assets/vinylCD.png");
     loadSprite("crown", "./assets/crown.png");
     loadSprite("knight", "./assets/knight.png");
-    loadSprite("witch", "./assets/benchy.png");
+    loadSprite("witch", "./assets/witch.png");
     loadSprite("family", "./assets/benchy.png");
     loadSprite("street", "./assets/benchy.png");
 
