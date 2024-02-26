@@ -6,34 +6,37 @@ export default function Tools(){
   const block_size = 64;
 
   const handTools = add([
-    rect(block_size * 1.65, block_size * 4),
+    rect(block_size * 1.65, block_size * 1),
     color(256, 0, 0),
     area(),
     body({ isStatic: true }),
     pos(260, 260),
+    z(1),
+   
+    "handTools",
+    "tool",
+    { toolKey: "scissors" },
+    { access: false },
+    { toolId: 2 },
+    
+  ]);
+    
+  const scissors = add([
+    rect(block_size * 1.65, block_size * 2),
+    // make the color green
+    color(0, 256, 0),
+    area(),
+    body({ isStatic: true }),
+    pos(260, 260+200-75+15),
     z(1),
     "handTools",
     "tool",
     { toolKey: "hammer" },
     { access: false },
     { toolId: 1 },
-    
+   
   ]);
-  
-  const scissors = add([
-    rect(block_size * 1.65, block_size * 1.15),
-    // make the color green
-    color(0, 256, 0),
-    area(),
-    body({ isStatic: true }),
-    pos(140+300, 40-20+10),
-    z(1),
-    "handTools",
-    "tool",
-    { toolKey: "scissors" },
-    { access: false },
-    { toolId: 2 },
-  ]);
+
   // const leatherTools = add([
   //   rect(block_size * 1.65, block_size * 4),
   //   color(256, 0, 0),
