@@ -313,9 +313,10 @@ export function checkForToolAddition(inventoryState) {
 }
 
 export function addToolAlert(showAlert, addedTool) {
+  let toolName = parseRegexString(addedTool);
   const toolAlert = add([
     "toolAlert",
-    text(`You've discovered a new tool, the ${addedTool}!`, {
+    text(`You've discovered a new tool, the ${toolName}!`, {
       size: 24,
       outline: 4,
       color: (0, 0, 0),
@@ -351,3 +352,13 @@ export function addToolAlert(showAlert, addedTool) {
     destroyAll("toolAlert");
   });
 }
+
+export function parseRegexString(str) {
+  let resultDisplay = str
+    .replace(/([A-Z])/g, " $1")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+  return resultDisplay;
+}
+
