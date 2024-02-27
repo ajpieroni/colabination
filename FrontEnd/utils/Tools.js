@@ -254,22 +254,32 @@ export function addNewTool(toolState, showAlert) {
     },
   ];
 
+  let noMoreTools = false;
   // add the first tool that hasn't been added yet to the game
   for (let i = 0; i < tools.length; i++) {
+    // if there are no more tools to add, break
+    if (i === tools.length - 1) {
+      console.log("No more tools to add");
+      noMoreTools = true;
+      break;
+    }
+    // if the tool hasn't been discovered yet, add it to the game
+
     if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
+
       // if added printer 1, also add printer 2
       if (tools[i].toolKey === "printer1") {
         addToolToGame(tools[i + 1]);
       }
+
       break;
     }
   }
-  if(showAlert){
+  // show an alert if the user has discovered a new tool
+  if (showAlert && !noMoreTools) {
     alert("You have discovered a new tool!");
-  }else{
-    console.log("You have discovered a new tool!");
   }
 }
 
@@ -292,10 +302,20 @@ export function addToolToGame(newTool) {
 
 // Checks if a new tool should be added to the game, and if so, adds it
 
-export function checkForToolAddition(inventoryState){
+export function checkForToolAddition(inventoryState) {
   // whenever a user discovers items, in increments of 10, add a new tool
   if (inventoryState.vendingContents.length % 10 === 0) {
     console.log("adding new tool");
     addNewTool(inventoryState, true);
   }
+}
+
+export function addToolAlert(showAlert) {
+  const toolAlert = add([
+    text("You have discovered a new tool!"),
+    pos(20, 20),
+    {
+      value: 0,
+    },
+  ]);
 }
