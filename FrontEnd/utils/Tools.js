@@ -158,7 +158,7 @@ export default function Tools() {
 }
 
 // Checks if a new tool should be added to the game, and if so, adds it
-export function addNewTool(toolState, showAlert) {
+export function addNewTool(toolState, showAlert, inventoryState) {
   const block_size = 64;
   // list of tools
   let tools = [
@@ -281,7 +281,7 @@ export function addNewTool(toolState, showAlert) {
   }
   // show an alert if the user has discovered a new tool
   if (showAlert && !noMoreTools) {
-    addToolAlert(true, currentToolToBeAdded);
+    addToolAlert(true, currentToolToBeAdded, inventoryState);
   }
 }
 
@@ -308,12 +308,25 @@ export function checkForToolAddition(inventoryState) {
   // whenever a user discovers items, in increments of 10, add a new tool
   if (inventoryState.vendingContents.length % 10 === 0) {
     console.log("adding new tool");
-    addNewTool(inventoryState, true);
+    addNewTool(inventoryState, true, inventoryState);
   }
 }
 
-export function addToolAlert(showAlert, addedTool) {
+export function addToolAlert(showAlert, addedTool, inventoryState) {
+  destroyAll("toolAlert");
   let toolName = parseRegexString(addedTool);
+  const itemAlert = add([
+    "toolAlert",
+    text(`Since you've discovered ${inventoryState.vendingContents.length} items...`, {
+      size: 18,
+      outline: 4,
+      color: (0, 0, 0),
+    }),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100 - 500-50),
+    z(11),
+  ]);
   const toolAlert = add([
     "toolAlert",
     text(`You've discovered a new tool, the ${toolName}!`, {
