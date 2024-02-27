@@ -255,6 +255,7 @@ export function addNewTool(toolState, showAlert) {
   ];
 
   let noMoreTools = false;
+  let currentToolToBeAdded = null;
   // add the first tool that hasn't been added yet to the game
   for (let i = 0; i < tools.length; i++) {
     // if there are no more tools to add, break
@@ -268,18 +269,19 @@ export function addNewTool(toolState, showAlert) {
     if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
+      currentToolToBeAdded = tools[i].toolKey;
 
       // if added printer 1, also add printer 2
       if (tools[i].toolKey === "printer1") {
         addToolToGame(tools[i + 1]);
+        currentToolToBeAdded = "3d Printers";
       }
-
       break;
     }
   }
   // show an alert if the user has discovered a new tool
   if (showAlert && !noMoreTools) {
-    alert("You have discovered a new tool!");
+    addToolAlert(true, currentToolToBeAdded);
   }
 }
 
@@ -310,12 +312,42 @@ export function checkForToolAddition(inventoryState) {
   }
 }
 
-export function addToolAlert(showAlert) {
+export function addToolAlert(showAlert, addedTool) {
   const toolAlert = add([
-    text("You have discovered a new tool!"),
-    pos(20, 20),
-    {
-      value: 0,
-    },
+    "toolAlert",
+    text(`You've discovered a new tool, the ${addedTool}!`, {
+      size: 24,
+      outline: 4,
+      color: (0, 0, 0),
+    }),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100 - 500),
+    z(11),
   ]);
+  const toolAlertBox = add([
+    rect(500 + 200 + 200, 50),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100 - 500),
+    z(5),
+    color(242, 140, 40),
+    "toolAlert",
+  ]);
+  const exitAlert = add([
+    "toolAlert",
+    text("Press [ Enter ] To Dismiss", {
+      size: 16,
+      outline: 4,
+      color: (0, 0, 0),
+    }),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100 + 50 - 500),
+    z(11),
+  ]);
+  // after pressing enter, destroy the alert
+  onKeyPress("enter", () => {
+    destroyAll("toolAlert");
+  });
 }
