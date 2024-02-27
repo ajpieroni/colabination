@@ -192,7 +192,7 @@ class CharacterMovement {
 
     // Add tool to scene when 1 is pressed
     onKeyPress("1", () => {
-      addNewTool(toolState);
+      addNewTool(toolState, true);
     });
     // !NEW CRAFT
 

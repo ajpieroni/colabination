@@ -157,7 +157,8 @@ export default function Tools() {
   // ]);
 }
 
-export function addNewTool(toolState) {
+// Checks if a new tool should be added to the game, and if so, adds it
+export function addNewTool(toolState, showAlert) {
   const block_size = 64;
   // list of tools
   let tools = [
@@ -265,8 +266,14 @@ export function addNewTool(toolState) {
       break;
     }
   }
+  if(showAlert){
+    alert("You have discovered a new tool!");
+  }else{
+    console.log("You have discovered a new tool!");
+  }
 }
 
+// Adds a new tool to the game
 export function addToolToGame(newTool) {
   const tool = add([
     rect(newTool.x, newTool.y),
@@ -283,10 +290,12 @@ export function addToolToGame(newTool) {
   ]);
 }
 
+// Checks if a new tool should be added to the game, and if so, adds it
+
 export function checkForToolAddition(inventoryState){
   // whenever a user discovers items, in increments of 10, add a new tool
   if (inventoryState.vendingContents.length % 10 === 0) {
     console.log("adding new tool");
-    addNewTool(inventoryState);
+    addNewTool(inventoryState, true);
   }
 }

@@ -66,10 +66,10 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
               areFinal.push(itemName);
             }
           }
+          // Add a new tool if the user has discovered 10 new items
           if(vendingContents.length % 10 == 0){
-            console.log(vendingContents.length);
-            console.log(vendingContents);
-            addNewTool(toolState);
+            // addNewTool(toolState, showAlert);
+            addNewTool(toolState, false);
           }
         });
         // resolve(itemNames);
