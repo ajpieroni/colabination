@@ -23,6 +23,7 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         if (items.length == 0) {
           InitialItems(["glass", "thread", "wood", "metal"]);
         }
+
         if (items.length !== 0) {
           const materials = ["glass", "thread", "wood", "metal"];
 
@@ -34,22 +35,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
           });
         }
 
+        // Add the items to the game
         items.forEach((item) => {
           const itemName = item[0];
           const isFinal = item[1];
-          // console.log(itemName, isFinal);
           const savedItem = add([
-            // rect(item.width, item.height) ,
             pos(0, 0),
             pos(0, 0),
             z(0),
-            // color(item.color.r, item.color.g, item.color.b),
             sprite(`${itemName}`),
-            // rect(10,10),
-            // sprite(`${image}`),
             scale(1.5),
             area(),
-            // z(11),
             "material",
             {
               itemKey: itemName,
