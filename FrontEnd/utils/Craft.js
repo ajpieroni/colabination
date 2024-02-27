@@ -2,7 +2,7 @@ import { getSpeed, setSpeed } from "./Player.js";
 import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { handleSavingData } from "./Save.js";
-
+import { checkForToolAddition } from "./Tools.js";
 let firstItemPosition = {
   x: 605,
   y: 295,
@@ -482,10 +482,12 @@ export function updateCraftUI(craftState, inventoryState) {
   );
   craftState.readyToCraft = true;
   craftState.resultReady = false;
+  console.log("Crafting complete!");
   addReCraftButton(craftState);
 }
 
 export function addReCraftButton(craftState) {
+  console.log("Adding recraft button...")
   const reCraftButton = add([
     rect(150, 50),
     pos(
