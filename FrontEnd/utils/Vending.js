@@ -223,7 +223,7 @@ export function vendingLeft(inventoryState, craftState) {
   }
 }
 // Right selection in backpack
-export function onKeyPressRight(inventoryState, craftState) {
+export function vendingRight(inventoryState, craftState) {
   // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
