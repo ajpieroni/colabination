@@ -50,6 +50,7 @@ puts 'seeding'
     hat = Item.create(name:'hat', description: "M'lady.", item_type: 'material', rarity: 1, isFinal: false)
     doll = Item.create(name:'doll', description: "How cute.", item_type: 'material', rarity: 1, isFinal: false)
     jacket = Item.create(name:'jacket', description: "For keeping warm.", item_type: 'material', rarity: 1, isFinal: false)
+    box = Item.create(name:'box', description: "For storage.", item_type: 'material', rarity: 1, isFinal: false)
 
 # Creating metal trail
     aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)

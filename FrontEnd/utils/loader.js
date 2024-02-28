@@ -32,6 +32,8 @@ export const load = {
 
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
+    loadSprite("sandpaper", "./assets/sandpaper.png");
+    loadSprite("wheel", "./assets/wheel.png");
 
     loadSprite("stainedglass", "./assets/stainedglass.png");
     loadSprite("window", "./assets/window.png");
