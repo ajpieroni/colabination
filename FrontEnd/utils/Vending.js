@@ -1,4 +1,10 @@
 // Opens backpack window
+/**
+ * Opens the backpack and displays the contents on the vending machine.
+ * 
+ * @param {object} inventoryState - The state of the inventory.
+ * @param {object} craftState - The state of the crafting system.
+ */
 export function openBackpack(inventoryState, craftState) {
   // contents is an array, index into the array to get the current vendingPage, where the vendingPage is 9 items long
   inventoryState.vendingContents.sort((a, b) =>
@@ -9,7 +15,6 @@ export function openBackpack(inventoryState, craftState) {
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
-  console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
 
@@ -292,15 +297,29 @@ export function vendingDown(inventoryState, craftState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
+  // If the popUp is open
   if (craftState.popUp) {
+    // If the current selection is the last row in the backpack
     let bottomIndex =
       inventoryState.vendingSelect === 6 ||
       inventoryState.vendingSelect === 7 ||
       inventoryState.vendingSelect === 8;
+
     // If the current selection is the last row in the backpack, go to the next page
-    if (bottomIndex && inventoryState.page < totalcontents.length - 1) {
+    // only if there is an item at the index below on the next page
+    
+    if (bottomIndex && inventoryState.page < totalcontents.length - 1 ) {
       inventoryState.page++;
-      inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+
+      // If there is an item at the index below on the next page, go to the next page
+      if(inventoryState.vendingContents[inventoryState.vendingSelect + 3] !== undefined){
+        inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
+
+      }else{
+        // If there is no item at the index below on the next page, go to the first item on the next page
+        inventoryState.vendingSelect = 0;
+      }
+      
 
       destroyAll("itemText");
       destroyAll("selected");
@@ -371,15 +390,8 @@ export function vendingUp(inventoryState, craftState) {
       inventoryState.vendingSelect === 2
     ) {
       if (inventoryState.page > 0) {
-        console.log("passed page greater than 0");
         inventoryState.page--;
-        console.log(
-          `inventoryState.vendingSelect before ${inventoryState.vendingSelect}`
-        );
         inventoryState.vendingSelect = (inventoryState.vendingSelect + 6) % 9;
-        console.log(
-          `inventoryState.vendingSelect after ${inventoryState.vendingSelect}`
-        );
 
         destroyAll("itemText");
         destroyAll("selected");
@@ -388,7 +400,6 @@ export function vendingUp(inventoryState, craftState) {
       }
     } else if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;
-      // console.log(inventoryState.vendingSelect);
 
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -406,7 +417,6 @@ export function vendingUp(inventoryState, craftState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
-      // console.log(itemText);
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         let resultDisplay = itemText

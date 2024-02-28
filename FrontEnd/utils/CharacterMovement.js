@@ -23,14 +23,6 @@ import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd } from "./Collide.js";
-// Z-Level Tracker:
-// 0: "Walk" background: 0
-// 10: Player
-// 11: "Craft" text, Tool Labels
-// 11: Selected Item
-// 19: Backpack
-// 20: Items in backpack
-// 20: "Crafting..." text
 
 import {
   openBackpack,
@@ -47,6 +39,10 @@ import {
 } from "./Collide.js";
 import { checkCraftable } from "./Craft.js";
 
+/**
+ * Represents the character movement class.
+ * This class acts as the main control for character movement and interactions.
+ */
 class CharacterMovement {
   // This file acts as our main control.
   // It initializes the game, and controls the player's movement.
@@ -65,16 +61,16 @@ class CharacterMovement {
       volume: volumeSetting,
       loop: true,
     });
-
     // Initialize Tools
     Tools();
-
     // Map Sprites
     add([sprite("walk"), pos(-50, -50), z(0), scale(0.65)]);
     // add([sprite("tables"), pos(0, 0), z(6)]);
     map();
   }
-
+  /**
+   * Represents the play function.
+   */
   play() {
     let craftState = {
       craftCheck: false,
@@ -172,7 +168,6 @@ class CharacterMovement {
       currentTool: "",
       toolAccess: false,
     };
-
     onCollide("player", "tool", (s, w) => {
       onToolCollide(craftState, toolState, inventoryState, s, w);
     });
@@ -182,7 +177,6 @@ class CharacterMovement {
     });
 
     // !NEW CRAFT
-
     onKeyPress("enter", () => {
       if (
         craftState.current === "moving" &&
@@ -266,7 +260,7 @@ class CharacterMovement {
     // !VENDING
     let itemText = "";
 
-    // *TODO: move
+    // Backpack Movement
     onKeyPress("left", () => {
       if (craftState.current == "documentation") {
         docuLeft(inventoryState, craftState);
@@ -301,6 +295,7 @@ class CharacterMovement {
       }
     });
 
+    // Open Menu
     onKeyPress("m", () => {
       this.music.paused = true;
       handleSavingData(
@@ -334,6 +329,7 @@ class CharacterMovement {
       );
     });
 
+    // Collide with Material
     player.onCollide("material", (materialEntity) => {
       if (inventoryState.tableItems.length == 0) {
         console.log("Collided with material", materialEntity.itemKey);
@@ -357,8 +353,6 @@ class CharacterMovement {
         if (volumeSetting) {
           play("bubble");
         }
-
-        console.log("material", materialEntity);
         destroy(materialEntity);
         materialEntity.use(body({ isStatic: true }));
       }
