@@ -38,10 +38,12 @@ puts 'seeding'
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
     sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
+    sandpaper = Item.create(name: 'sandpaper', description: "For smoothing things out", item_type: 'material', rarity: 1, isFinal: false)
     hourglass = Item.create(name: 'hourglass', description: "Time is running out!", item_type: 'material', rarity: 1, isFinal: true)
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
+    wheel = Item.create(name: 'wheel', description: "For rolling!", item_type: "material", rarity: 1, isFinal: false)
     # Creating plastic trail
     vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
     # creating thread trail
@@ -115,7 +117,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
-    sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
+    # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
     saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
     solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
@@ -157,6 +159,15 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: nothing, creation: sand)
+    # hands & sand + paper  = sandpaper
+    Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
+    # hands & sandpaper + woodPlank = wheel
+    Combination.create(tool: hands, item1: sandpaper, item2: woodPlank, creation: wheel)
+    # hammer & box + wheel = wagon
+    Combination.create(tool: hammer, item1: wheel, item2: box, creation: wagon)
+    # box = hammer & woodPlank + woodPlank
+    Combination.create(tool: hammer, item1: woodPlank, item2: woodPlank, creation: box)
+
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)

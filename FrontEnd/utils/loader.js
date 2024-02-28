@@ -39,6 +39,7 @@ export const load = {
     loadSprite("cut paper", "./assets/cutpaper3.png");
     loadSprite("confetti", "./assets/confetti.png");
     loadSprite("party", "./assets/party.png");
+    loadSprite("box", "./assets/box.png");
     // !TOBE MADE:
     loadSprite("card", "./assets/card2.png");
     loadSprite("kite", "./assets/benchy.png");
