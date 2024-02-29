@@ -9,8 +9,9 @@ export const load = {
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
-    loadSprite("walk", "./assets/walkable2048-1668.png");
-    loadSprite("tables", "./assets/avoid1024-834.png");
+    // loadSprite("walk", "./assets/walkable2048-1668.png");
+    loadSprite("walk", "./assets/walkable2048-1668spring.png");
+    loadSprite("tables", "./assets/tables.png");
     loadSprite("colabdoors", "./assets/colabsdoorsmall.jpeg");
     loadSprite("colablogo", "./assets/colablogo.png");
     loadSprite("characterSprite", "./assets/sprite.png");
