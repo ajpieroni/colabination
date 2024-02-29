@@ -78,7 +78,6 @@ export default function Tools() {
     { toolId: 3 },
   ]);
 
-  // // !Machines
   // const printer1 = add([
   //   rect(block_size, block_size * 2),
   //   color(0, 0, 255),
@@ -112,49 +111,6 @@ export default function Tools() {
     "documentationStation",
     { access: false },
   ]);
-  // // !TODO: tools to add
-  // const cricut = add([
-  //   rect(block_size * 2.25, block_size),
-  //   "tool",
-  //   "cricut vinyl cutter",
-  //   // sprite("cricut"),
-  //   area(),
-  //   color(0, 0, 255),
-  //   pos(330-100, 710),
-  //   z(1),
-  //   body({ isStatic: true }),
-  //   { buildNoBlueprint: false },
-  //   { toolKey: "cricut vinyl cutter" },
-  //   { access: false },
-  //   { toolId: 8 },
-  // ]);
-  // const sewingMachine = add([
-  //   rect(block_size * 2.5, block_size),
-  //   color(255, 0, 0),
-  //   area(),
-  //   body({ isStatic: true }),
-  //   pos(500, 710),
-  //   z(1),
-  //   "printer",
-  //   "tool",
-  //   { toolKey: "sewing machine" },
-  //   { access: false },
-  //   { toolId: 11 },
-  // ]);
-  // const solderingStation = add([
-  //   rect(block_size * 2.25, block_size),
-  //   color(255, 0, 0),
-  //   area(),
-  //   body({ isStatic: true }),
-  //   pos(140, 40),
-  //   z(1),
-  //   "printer",
-  //   "tool",
-  //   { toolKey: "solderingStation" },
-  //   { access: false },
-  //   { toolId: 7 },
-
-  // ]);
 }
 
 // Checks if a new tool should be added to the game, and if so, adds it
@@ -183,7 +139,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "red",
       area: true,
       body: { isStatic: true },
-      pos: { x: 140, y: 40 },
+      pos: { x: 140, y: 35 },
       z: 1,
       tool: true,
       toolKey: "solderingStation",
@@ -198,7 +154,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "red",
       area: true,
       body: { isStatic: true },
-      pos: { x: 500, y: 710 },
+      pos: { x: 500, y: 710-15 },
       z: 1,
       tool: true,
       toolKey: "sewingMachine",
@@ -229,7 +185,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       area: true,
       body: { isStatic: true },
       pos: { x: 65, y: 200 },
-      z: 10,
+      z: 1,
       tool: true,
       toolKey: "printer1",
       access: false,
@@ -244,7 +200,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       area: true,
       body: { isStatic: true },
       pos: { x: 65, y: 365 },
-      z: 10,
+      z: 1,
       tool: true,
       toolKey: "printer2",
       access: false,
@@ -293,12 +249,11 @@ export function addToolToGame(newTool) {
     area(),
     body({ isStatic: true }),
     pos(newTool.pos.x, newTool.pos.y),
-    z(newTool.z),
-    "handTools",
+    z(1),
     "tool",
     { toolKey: `${newTool.toolKey}` },
     { access: false },
-    { toolId: 2 },
+    { toolId: newTool.toolId },
   ]);
 }
 
@@ -343,10 +298,10 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     z(11),
   ]);
   const toolAlertBox = add([
-    rect(500 + 200 + 200, 50*2),
+    rect(500 + 200 + 200, 50 * 2),
     area(),
     anchor("center"),
-    pos(500, 500 + 100 - 500-25),
+    pos(500, 500 + 100 - 500 - 25),
     z(5),
     color(242, 140, 40),
     "toolAlert",
@@ -366,10 +321,8 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
   ]);
 
   const exitButton = add([
-    rect(300,40),
-    pos(
-      500-25-100-25, 500 + 100 + 50 - 500 -25+5
-    ),
+    rect(300, 40),
+    pos(500 - 25 - 100 - 25, 500 + 100 + 50 - 500 - 25 + 5),
     z(5),
     color(228, 228, 228),
     "toolAlert",
