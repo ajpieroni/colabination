@@ -151,16 +151,17 @@ export function addNewTool(toolState, showAlert, inventoryState) {
     {
       name: "sewingMachine",
       sprite: "sewingMachine",
-      color: "red",
+      // make the color transparent
+      color: rgb(0, 0, 0, 0),
       area: true,
       body: { isStatic: true },
-      pos: { x: 500, y: 710-15 },
+      pos: { x: 500+15, y: 710+3},
       z: 1,
       tool: true,
       toolKey: "sewingMachine",
       access: false,
       toolId: 11,
-      x: block_size * 2.5,
+      x: block_size * 1.5,
       y: block_size,
     },
     {
@@ -169,13 +170,13 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "red",
       area: true,
       body: { isStatic: true },
-      pos: { x: 230, y: 710 },
+      pos: { x: 230+50+100, y: 710+3 },
       z: 1,
       tool: true,
       toolKey: "cricut",
       access: false,
       toolId: 8,
-      x: block_size * 2.25,
+      x: block_size ,
       y: block_size,
     },
     {
@@ -245,7 +246,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
 export function addToolToGame(newTool) {
   const tool = add([
     rect(newTool.x, newTool.y),
-    color(256, 0, 0),
+    color(40, 124, 196),
     area(),
     body({ isStatic: true }),
     pos(newTool.pos.x, newTool.pos.y),
