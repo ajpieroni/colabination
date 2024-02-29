@@ -209,7 +209,7 @@ class CharacterMovement {
         craftState.current === "crafting" &&
         !craftState.isAddingItem
       ) {
-        selectItem(craftState, inventoryState, music);
+        selectItem(craftState, inventoryState, music, toolState);
       }
     });
 

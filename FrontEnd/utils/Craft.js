@@ -242,7 +242,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Currently not adding item
   craftState.isAddingItem = false;
 }
-export function selectItem(craftState, inventoryState, music) {
+export function selectItem(craftState, inventoryState, music, toolState) {
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -258,12 +258,12 @@ export function selectItem(craftState, inventoryState, music) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState, craftState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
       if (music.volume) {
         play("bubble");
       }
     } else if (!secondItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState, craftState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
       if (music.volume) {
         play("bubble");
       }
@@ -284,7 +284,7 @@ export function selectItem(craftState, inventoryState, music) {
   craftState.isAddingItem = false;
 }
 
-export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
+export function addItemToCraftWindow(currentItem, inventoryState, craftState, toolState) {
   console.log(`Adding ${currentItem} to the crafting window.`);
   if (
     !firstItemPosition.used ||
@@ -335,6 +335,7 @@ export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
       },
     ]);
     inventoryState.ingredients.push(currentItem);
+    addNewTool(toolState, true, inventoryState);
 
     secondItemPosition.used = true;
   }
