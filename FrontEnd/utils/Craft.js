@@ -79,7 +79,8 @@ export function craftingBackend(
               item2data.id,
               handleCreation,
               craftState,
-              inventoryState
+              inventoryState,
+              toolState
             );
           })
           .catch((error) => console.error("Error fetching item 2:", error));
@@ -90,7 +91,8 @@ export function craftingBackend(
           6,
           handleCreation,
           craftState,
-          inventoryState
+          inventoryState,
+          toolState
         );
       }
     })
@@ -147,10 +149,17 @@ function fetchCombination(
     });
 }
 
-function handleCreation(creation, final, item, craftState, inventoryState) {
+function handleCreation(
+  creation,
+  final,
+  item,
+  craftState,
+  inventoryState,
+  toolState
+) {
   craftState.result.itemKey = creation;
   craftState.result.isFinal = final;
-  updateCraftUI(craftState, inventoryState);
+  updateCraftUI(craftState, inventoryState, toolState);
 
   // addItemToBackpack(inventoryState, craftState);
 }
@@ -284,7 +293,12 @@ export function selectItem(craftState, inventoryState, music, toolState) {
   craftState.isAddingItem = false;
 }
 
-export function addItemToCraftWindow(currentItem, inventoryState, craftState, toolState) {
+export function addItemToCraftWindow(
+  currentItem,
+  inventoryState,
+  craftState,
+  toolState
+) {
   console.log(`Adding ${currentItem} to the crafting window.`);
   if (
     !firstItemPosition.used ||
@@ -335,7 +349,7 @@ export function addItemToCraftWindow(currentItem, inventoryState, craftState, to
       },
     ]);
     inventoryState.ingredients.push(currentItem);
-    addNewTool(toolState, true, inventoryState);
+   
 
     secondItemPosition.used = true;
   }
@@ -400,6 +414,7 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
+
   craftingBackend(
     toolState,
     inventoryState.ingredients,
@@ -408,8 +423,10 @@ export function executeCraft(
     music
   );
   destroyAll("newCraft");
+  checkForToolAddition(inventoryState, toolState);
+  console.log("should be checking for tool ");
 }
-export function updateCraftUI(craftState, inventoryState) {
+export function updateCraftUI(craftState, inventoryState, toolState) {
   if (music.volume) {
     play("craftFX");
   }
@@ -422,26 +439,25 @@ export function updateCraftUI(craftState, inventoryState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-    if(craftState.result.itemKey.length < 6){
-      const resultText = add([
-        text(`You made ${resultDisplay}!`, { size: 24 }),
-        pos(100 + 500 + 50 - 50+25, 100 + 50 + 100 - 25),
-        color(255, 255, 255),
-        z(500),
-        "craft",
-        "executedCraft",
-      ]);
-    }else{
-      const resultText = add([
-        text(`You made ${resultDisplay}!`, { size: 24 }),
-        pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
-        color(255, 255, 255),
-        z(500),
-        "craft",
-        "executedCraft",
-      ]);
-    }
-  
+  if (craftState.result.itemKey.length < 6) {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  } else {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  }
 
   // If the result is final, add an additional display:
   if (craftState.result.isFinal) {
@@ -471,7 +487,6 @@ export function updateCraftUI(craftState, inventoryState) {
   ]);
 
   addItemToBackpack(inventoryState, craftState, resultItem);
-  checkForToolAddition(inventoryState);
   handleSavingData(
     inventoryState.vendingKeys,
     inventoryState.hasSavedItems,
@@ -488,7 +503,7 @@ export function updateCraftUI(craftState, inventoryState) {
 }
 
 export function addReCraftButton(craftState) {
-  console.log("Adding recraft button...")
+  console.log("Adding recraft button...");
   const reCraftButton = add([
     rect(150, 50),
     pos(
@@ -618,10 +633,7 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
 
 export function finalItemDisplay(craftState, resultDisplay) {
   add([
-    text(
-      `${resultDisplay} is a final item!`,
-      { size: 16 }
-    ),
+    text(`${resultDisplay} is a final item!`, { size: 16 }),
     pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50),
     color(255, 255, 255),
     z(500),
@@ -630,29 +642,22 @@ export function finalItemDisplay(craftState, resultDisplay) {
   ]);
 
   add([
-    text(
-      "You can find it in the documentation station.",
-      { size: 14 }
-    ),
-    pos(100 + 500-50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+100),
+    text("You can find it in the documentation station.", { size: 14 }),
+    pos(100 + 500 - 50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 100),
     color(255, 255, 255),
     z(500),
     "craft",
     "executedCraft",
   ]);
-  
 
   add([
-    text(
-      "It cannot be combined with another item.",
-      { size: 14 }
-    ),
-    pos(100 + 500 + 50 -50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+115),
+    text("It cannot be combined with another item.", { size: 14 }),
+    pos(100 + 500 + 50 - 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 115),
     color(255, 255, 255),
     z(500),
     "craft",
     "executedCraft",
   ]);
-  
+
   // return craftState.result.isFinal;
 }

@@ -260,11 +260,11 @@ export function addToolToGame(newTool) {
 
 // Checks if a new tool should be added to the game, and if so, adds it
 
-export function checkForToolAddition(inventoryState) {
+export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
   if (inventoryState.vendingContents.length % 10 === 0) {
     console.log("adding new tool");
-    addNewTool(inventoryState, true, inventoryState);
+    addNewTool(toolState, true, inventoryState);
   }
 }
 
