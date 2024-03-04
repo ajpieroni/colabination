@@ -184,6 +184,7 @@ class CharacterMovement {
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
+      console.log(`Current ingredient: ${inventoryState.ingredients}`)
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
