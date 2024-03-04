@@ -156,7 +156,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
-    Combination.create(tool: hammer, item1: brokenGlass, item2: nothing, creation: sand)
+    Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
