@@ -8,6 +8,7 @@ export const load = {
     // arrows
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
+    loadSprite("scissorstable", "./assets/scissorstable.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
     // loadSprite("walk", "./assets/walkable2048-1668.png");
     loadSprite("walk", "./assets/walkable2048-1668spring.png");

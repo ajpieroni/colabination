@@ -258,15 +258,24 @@ export function addToolToGame(newTool) {
     { access: false },
     { toolId: newTool.toolId },
   ]);
+  console.log(`${newTool.toolKey}table`);
+  const toolSprite = add([
+    sprite(`${newTool.toolKey}table`),
+    pos(0, 0),
+    z(2),
+    scale(0.5),
+  ]);
 }
 
 // Checks if a new tool should be added to the game, and if so, adds it
 
 export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
- 
+
   if (toolState.lastStored.size < inventoryState.vendingContents.length) {
-    console.log(`Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`);
+    console.log(
+      `Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`
+    );
     if (inventoryState.vendingContents.length % 10 === 0) {
       console.log("adding new tool");
       addNewTool(toolState, true, inventoryState);
