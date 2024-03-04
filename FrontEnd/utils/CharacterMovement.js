@@ -1,5 +1,5 @@
 import InitialItems from "./InitialItems.js";
-import Tools, { addToolToGame, addNewTool } from "./Tools.js";
+import Tools, { addToolToGame, addNewTool, checkForToolAddition } from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import { getSpeed, setSpeed } from "./Player.js";
@@ -162,6 +162,7 @@ class CharacterMovement {
       toolAccess: false,
       // hasDiscovered: hashset
       hasDiscovered: new Set(),
+      lastStored: new Set(),
     };
 
     intiailizeUser(inventoryState, toolState);
@@ -203,6 +204,7 @@ class CharacterMovement {
         toolState.toolAccess &&
         inventoryState.vendingContents.length > 0
       ) {
+        toolState.lastStored = new Set(inventoryState.vendingKeys);
         openCraftWindow(craftState, inventoryState, toolState, music);
         craftState.current = "crafting"; // Change state to craft
       } else if (

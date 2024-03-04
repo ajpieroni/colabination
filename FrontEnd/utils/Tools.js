@@ -155,7 +155,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: rgb(0, 0, 0, 0),
       area: true,
       body: { isStatic: true },
-      pos: { x: 500+15, y: 710+3},
+      pos: { x: 500 + 15, y: 710 + 3 },
       z: 1,
       tool: true,
       toolKey: "sewingMachine",
@@ -170,13 +170,13 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "red",
       area: true,
       body: { isStatic: true },
-      pos: { x: 230+50+100, y: 710+3 },
+      pos: { x: 230 + 50 + 100, y: 710 + 3 },
       z: 1,
       tool: true,
       toolKey: "cricut",
       access: false,
       toolId: 8,
-      x: block_size ,
+      x: block_size,
       y: block_size,
     },
     {
@@ -213,6 +213,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
 
   let noMoreTools = false;
   let currentToolToBeAdded = null;
+
   // add the first tool that hasn't been added yet to the game
   for (let i = 0; i < tools.length; i++) {
     // if there are no more tools to add, break
@@ -236,6 +237,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       break;
     }
   }
+
   // show an alert if the user has discovered a new tool
   if (showAlert && !noMoreTools) {
     addToolAlert(true, currentToolToBeAdded, inventoryState);
@@ -262,9 +264,16 @@ export function addToolToGame(newTool) {
 
 export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
-  if (inventoryState.vendingContents.length % 10 === 0) {
-    console.log("adding new tool");
-    addNewTool(toolState, true, inventoryState);
+  console.log(
+    "inventoryState.vendingContents.length",
+    inventoryState.vendingKeys.length
+  );
+  console.log(toolState.lastStored.size);
+  if (toolState.lastStored.size < inventoryState.vendingContents.length) {
+    if (inventoryState.vendingContents.length % 10 === 0) {
+      console.log("adding new tool");
+      addNewTool(toolState, true, inventoryState);
+    }
   }
 }
 
