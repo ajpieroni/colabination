@@ -230,9 +230,12 @@ class CharacterMovement {
       }
     });
 
-    onKeyDown("escape", () => {
-      // console.log("Pressed")
+    onKeyPress("Escape", () => {
+      
+      console.log("Pressed")
       closeCraftWindow(craftState, inventoryState);
+      checkForToolAddition(inventoryState, toolState);
+      console.log("should be checking for tool ");
     });
 
     // !OLD CRAFT

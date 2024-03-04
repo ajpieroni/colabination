@@ -423,8 +423,7 @@ export function executeCraft(
     music
   );
   destroyAll("newCraft");
-  checkForToolAddition(inventoryState, toolState);
-  console.log("should be checking for tool ");
+  
 }
 export function updateCraftUI(craftState, inventoryState, toolState) {
   if (music.volume) {
