@@ -35,7 +35,7 @@ export default function Tools() {
   // }
 
   const hammer = add([
-    rect(block_size * 1.65, block_size * 2),
+    rect(block_size * 1.65, block_size * 1.95),
     // make the color green
     color(0, 256, 0),
     area(),
