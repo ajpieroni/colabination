@@ -220,6 +220,64 @@ export function addNewTool(toolState, showAlert, inventoryState) {
     if (i === tools.length - 1) {
       console.log("No more tools to add");
       noMoreTools = true;
+      const toolAlert = add([
+        "toolAlert",
+        text(`Kudos to you! You've discovered all tools, for now...`, {
+          size: 24,
+          outline: 4,
+          color: (0, 0, 0),
+        }),
+        area(),
+        anchor("center"),
+        pos(500, 500 + 100 - 500-25),
+        z(11),
+      ]);
+      const toolAlertBox = add([
+        rect(500 + 200 + 200, 50 * 2),
+        area(),
+        anchor("center"),
+        pos(500, 500 + 100 - 500 - 25),
+        z(5),
+        color(242, 140, 40),
+        "toolAlert",
+      ]);
+      const exitAlert = add([
+        "toolAlert",
+        // rgb for black is (0, 0, 0)
+        text("Press [ Enter ] To Dismiss", {
+          size: 16,
+          outline: 4,
+          color: (0, 0, 0),
+        }),
+        area(),
+        anchor("center"),
+        pos(500, 500 + 100 + 50 - 500),
+        z(11),
+      ]);
+
+      const exitButton = add([
+        rect(300, 40),
+        pos(500 - 25 - 100 - 25, 500 + 100 + 50 - 500 - 25 + 5),
+        z(5),
+        color(228, 228, 228),
+        "toolAlert",
+      ]);
+
+      // key press flash
+      // Craft Button Flash
+      let isBright = true;
+      setInterval(() => {
+        if (isBright) {
+          exitButton.color = rgb(228, 228, 228); // less bright color
+        } else {
+          exitButton.color = rgb(80, 80, 80); // original color
+        }
+        isBright = !isBright;
+      }, 250); // the button color will toggle every 500ms
+      // after pressing enter, destroy the alert
+      onKeyPress("enter", () => {
+        destroyAll("toolAlert");
+      });
       break;
     }
     // if the tool hasn't been discovered yet, add it to the game

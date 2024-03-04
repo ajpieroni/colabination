@@ -9,6 +9,16 @@ export const load = {
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
     loadSprite("scissorstable", "./assets/scissorstable.png");
+    // solderingStationtable
+    loadSprite("solderingStationtable", "./assets/solderingStationtable.png");
+    // sewingMachinetable
+    loadSprite("sewingMachinetable", "./assets/sewingMachinetable.png");
+    // cricuttable
+    loadSprite("cricuttable", "./assets/cricuttable.png");
+    //printer1table
+    loadSprite("printer1table", "./assets/printer1table.png");
+    //printer2table
+    loadSprite("printer2table", "./assets/printer2table.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
     // loadSprite("walk", "./assets/walkable2048-1668.png");
     loadSprite("walk", "./assets/walkable2048-1668spring.png");
