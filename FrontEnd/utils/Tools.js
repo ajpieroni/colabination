@@ -65,7 +65,7 @@ export default function Tools() {
   // ]);
 
   const craftingTable = add([
-    rect(block_size * 1.65, block_size * 4),
+    rect(block_size * 1.5, block_size * 4),
     color(256, 0, 0),
     area(),
     body({ isStatic: true }),
