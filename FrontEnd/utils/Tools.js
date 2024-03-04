@@ -264,12 +264,9 @@ export function addToolToGame(newTool) {
 
 export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
-  console.log(
-    "inventoryState.vendingContents.length",
-    inventoryState.vendingKeys.length
-  );
-  console.log(toolState.lastStored.size);
+ 
   if (toolState.lastStored.size < inventoryState.vendingContents.length) {
+    console.log(`Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`);
     if (inventoryState.vendingContents.length % 10 === 0) {
       console.log("adding new tool");
       addNewTool(toolState, true, inventoryState);

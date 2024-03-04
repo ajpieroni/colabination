@@ -565,7 +565,7 @@ export function restartCraft(craftState, inventoryState, toolState) {
 }
 // !End craft sequence, current = "moving"
 export function closeCraftWindow(craftState, inventoryState) {
-  // Close the craft window after pressing escape
+  // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
   inventoryState.ingredients = [];
