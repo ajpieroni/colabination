@@ -230,7 +230,7 @@ class CharacterMovement {
       }
     });
 
-    onKeyPress("Escape", () => {
+    onKeyPress("backspace", () => {
       
       console.log("Pressed")
       closeCraftWindow(craftState, inventoryState);

@@ -218,7 +218,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "newCraft",
   ]);
   add([
-    text("Press [ Escape ] To Close", { size: 24 }),
+    text("Press [ Backspace ] To Close", { size: 20 }),
     pos(100 + 500 - 50, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
