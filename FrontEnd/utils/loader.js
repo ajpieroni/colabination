@@ -32,6 +32,8 @@ export const load = {
 
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
+    loadSprite("sandpaper", "./assets/sandpaper.png");
+    loadSprite("wheel", "./assets/wheel.png");
 
     loadSprite("stainedglass", "./assets/stainedglass.png");
     loadSprite("window", "./assets/window.png");
@@ -39,6 +41,7 @@ export const load = {
     loadSprite("cut paper", "./assets/cutpaper3.png");
     loadSprite("confetti", "./assets/confetti.png");
     loadSprite("party", "./assets/party.png");
+    loadSprite("box", "./assets/box.png");
     // !TOBE MADE:
     loadSprite("card", "./assets/card2.png");
     loadSprite("kite", "./assets/benchy.png");

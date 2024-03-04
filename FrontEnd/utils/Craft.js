@@ -60,6 +60,7 @@ export function craftingBackend(
   } else {
     toolId = 3;
   }
+  
   console.log("Crafting backend...");
 
   let item1sprite = ingredients[0];
@@ -110,6 +111,7 @@ function fetchCombination(
   craftState,
   inventoryState
 ) {
+  console.log(`Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`)
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
