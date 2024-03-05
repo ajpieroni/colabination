@@ -150,7 +150,7 @@ export const load = {
 
     // Unknown
     loadSprite("lightbulb", "./assets/lightbulb.png");
-    loadSprite("wagon", "./assets/benchy.png");
+    loadSprite("wagon", "./assets/wagon.png");
 
     //Developer sprites
     loadSprite("Alex", "./assets/1Alex.png");
