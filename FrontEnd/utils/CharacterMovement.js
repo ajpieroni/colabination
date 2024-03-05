@@ -1,5 +1,9 @@
 import InitialItems from "./InitialItems.js";
-import Tools, { addToolToGame, addNewTool, checkForToolAddition } from "./Tools.js";
+import Tools, {
+  addToolToGame,
+  addNewTool,
+  checkForToolAddition,
+} from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
 import {
@@ -63,8 +67,20 @@ class CharacterMovement {
     });
     // Initialize Tools
     Tools();
+    const block_size = 64;
     // Map Sprites
-    add([sprite("walk"), pos(0,0), z(0), scale(0.5)]);
+    add([sprite("walk"), pos(0, 0), z(0), scale(0.5)]);
+    const tableBlock = add([
+      rect(block_size * 1.65, block_size * 1.95),
+      // make the color green
+      color(0, 256, 0),
+      area(),
+      body({ isStatic: true }),
+      pos(260, 260 + 200 - 75 + 15-140),
+      z(1),
+      // note that this block will be destroyed after scissors
+      "temp"
+    ]);
     add([sprite("tables"), pos(0, 0), z(2), scale(0.5)]);
     map();
   }
@@ -123,8 +139,6 @@ class CharacterMovement {
       onItemsOnTable: 0,
     };
 
-   
-
     // Music
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
@@ -182,7 +196,7 @@ class CharacterMovement {
       onToolCollideEnd(toolState, inventoryState);
     });
 
-// !TODO: remove, instead introduce pagination with arrows
+    // !TODO: remove, instead introduce pagination with arrows
     // onKeyPress("2", () => {
     //   inventoryState.page = inventoryState.page + 1;
     //   closeBackpack();
@@ -195,7 +209,6 @@ class CharacterMovement {
     //   closeBackpack();
     //   openBackpack(inventoryState,craftState);
     // });
-
 
     // Add tool to scene when 1 is pressed
     onKeyPress("1", () => {
@@ -223,7 +236,7 @@ class CharacterMovement {
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
-      console.log(`Current ingredient: ${inventoryState.ingredients}`)
+      console.log(`Current ingredient: ${inventoryState.ingredients}`);
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
@@ -240,21 +253,18 @@ class CharacterMovement {
     });
 
     onKeyPress("backspace", () => {
-      
-      console.log("Pressed")
+      console.log("Pressed");
       closeCraftWindow(craftState, inventoryState, toolState);
 
       console.log("should be checking for tool ");
-      if(craftState.current === "documentation"){
+      if (craftState.current === "documentation") {
         closeDocumentationStation(craftState, inventoryState);
       }
     });
 
-
     //! Player Movement
     // Player search
     // WASD
-
 
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second

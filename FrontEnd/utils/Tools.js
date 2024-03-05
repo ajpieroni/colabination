@@ -185,7 +185,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "blue",
       area: true,
       body: { isStatic: true },
-      pos: { x: 65-2, y: 200 },
+      pos: { x: 65 - 2, y: 200 },
       z: 1,
       tool: true,
       toolKey: "printer1",
@@ -200,7 +200,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       color: "blue",
       area: true,
       body: { isStatic: true },
-      pos: { x: 65-2, y: 365 },
+      pos: { x: 65 - 2, y: 365 },
       z: 1,
       tool: true,
       toolKey: "printer2",
@@ -229,7 +229,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
         }),
         area(),
         anchor("center"),
-        pos(500, 500 + 100 - 500-25),
+        pos(500, 500 + 100 - 500 - 25),
         z(11),
       ]);
       const toolAlertBox = add([
@@ -285,6 +285,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
     if (!toolState.hasDiscovered.has(tools[i].toolKey)) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
+      destroyAll("temp");
       currentToolToBeAdded = tools[i].toolKey;
 
       // if added printer 1, also add printer 2
