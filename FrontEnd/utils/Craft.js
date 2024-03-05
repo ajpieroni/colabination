@@ -567,7 +567,7 @@ export function restartCraft(craftState, inventoryState, toolState) {
   inventoryState.ingredients = [];
 }
 // !End craft sequence, current = "moving"
-export function closeCraftWindow(craftState, inventoryState) {
+export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
@@ -581,6 +581,8 @@ export function closeCraftWindow(craftState, inventoryState) {
   inventoryState.vendingSelect = 0;
   craftState.isAddingItem = false;
   craftState.current = "moving"; // Change state back to characterMovement
+  checkForToolAddition(inventoryState, toolState);
+
 }
 export function removeItemFromCraft(inventoryState, music) {
   if (

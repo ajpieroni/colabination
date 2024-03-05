@@ -243,7 +243,7 @@ class CharacterMovement {
       
       console.log("Pressed")
       if(craftState.current === "crafting"){
-      closeCraftWindow(craftState, inventoryState);
+      closeCraftWindow(craftState, inventoryState, toolState);
       checkForToolAddition(inventoryState, toolState);
       }
       console.log("should be checking for tool ");
