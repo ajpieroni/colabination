@@ -571,7 +571,7 @@ class Tutorial {
       messageCreate(message);
       currentStep = 8;
       
-      onKeyPress("escape", () => {
+      onKeyPress("backspace", () => {
        if (currentStep === 8) {
           destroyAll("alert");
           message = "Congrats! You've completed the tutorial!";
@@ -583,7 +583,6 @@ class Tutorial {
       });
       await waitForCondition(() => readyToComplete);
       destroyAll("alert");
-
       message = "Congrats! You've completed the tutorial!";
       playBubble();
       messageCreate(message);
@@ -598,7 +597,7 @@ class Tutorial {
       message = "Press 'Enter' to continue to the main game!";
       playBubble();
       messageCreate(message);
-      onKeyPress("backspace", () => {
+      onKeyPress("enter", () => {
         if (isTutorialDone) {
           // this.music.paused = true;
           destroyAll("alert");
