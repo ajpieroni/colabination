@@ -2,6 +2,14 @@ import InitialItems from "./InitialItems.js";
 import Tools from "./Tools.js";
 import map from "./map.js";
 import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
+import {
+  closeDocumentationStation,
+  showFinalItems,
+  docuLeft,
+  docuRight,
+  docuUp,
+  docuDown,
+} from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
   craftingBackend,
@@ -18,10 +26,10 @@ import { handleCollideDocumentationStationEnd } from "./Collide.js";
 
 import {
   openBackpack,
-  onKeyPressLeft,
-  onKeyPressRight,
-  onKeyPressDown,
-  onKeyPressUp,
+  vendingLeft,
+  vendingRight,
+  vendingDown,
+  vendingUp,
 } from "./Vending.js";
 import { fetchUserItems, fetchUserTools, intiailizeUser } from "./User.js";
 import {
@@ -37,6 +45,7 @@ import { checkCraftable } from "./Craft.js";
  */
 class CharacterMovement {
   // This file acts as our main control.
+  // It initializes the game, and controls the player's movement.
   music = null;
   constructor() {
     this.level = null;
@@ -94,6 +103,7 @@ class CharacterMovement {
       vendingSelect: 0,
       // Documentation Station
       areFinal: [],
+      finalPage: 0,
       curr_user: localStorage.getItem("username"),
       hasSavedItems: [],
       hasSavedFinal: [],
@@ -101,8 +111,10 @@ class CharacterMovement {
       tableItems: [],
       isCraftable: false,
       ingredients: [],
-      // pagination
-      page: 0,
+      docuPage: 0,
+      docuSelect: 0,
+      // pagination for vending
+      vendingPage: 0,
     };
     let tableState = {
       atCraftingTable: false,
@@ -184,6 +196,7 @@ class CharacterMovement {
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
+      console.log(`Current ingredient: ${inventoryState.ingredients}`)
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
@@ -202,9 +215,13 @@ class CharacterMovement {
     onKeyDown("escape", () => {
       // console.log("Pressed")
       closeCraftWindow(craftState, inventoryState);
+      closeDocumentationStation();
     });
 
-    // !MOVEMENT
+    //! Player Movement
+    // Player search
+    // WASD
+
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
@@ -246,30 +263,36 @@ class CharacterMovement {
 
     // Backpack Movement
     onKeyPress("left", () => {
-      console.log(inventoryState.vendingSelect);
-      console.log(craftState.current);
-      if (craftState.current !== "executed") {
-        onKeyPressLeft(inventoryState, craftState);
+      if (craftState.current == "documentation") {
+        docuLeft(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
+        vendingLeft(inventoryState, craftState);
       }
       console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
-      if (craftState.current !== "executed") {
-        onKeyPressRight(inventoryState, craftState);
+      if (craftState.current == "documentation") {
+        docuRight(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
+        vendingRight(inventoryState, craftState);
       }
     });
 
     onKeyPress("down", () => {
       // console.log("down");
-      if (craftState.current !== "executed") {
-        onKeyPressDown(inventoryState, craftState);
+      if (craftState.current == "documentation") {
+        docuDown(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
+        vendingDown(inventoryState, craftState);
       }
     });
 
     onKeyPress("up", () => {
-      if (craftState.current !== "executed") {
-        onKeyPressUp(inventoryState, craftState);
+      if (craftState.current == "documentation") {
+        docuUp(inventoryState, craftState);
+      } else if (craftState.current !== "executed") {
+        vendingUp(inventoryState, craftState);
       }
     });
 
@@ -288,13 +311,23 @@ class CharacterMovement {
       go("settings");
     });
 
-    // Documentation Station
+    // !TODO: export to doc statino file
+
     player.onCollide("documentationStation", () => {
-      handleCollideDocumentationStation(collisionState, showFinalItems);
+      handleCollideDocumentationStation(
+        collisionState,
+        showFinalItems,
+        inventoryState,
+        craftState
+      );
     });
 
     player.onCollideEnd("documentationStation", () => {
-      handleCollideDocumentationStationEnd(collisionState);
+      handleCollideDocumentationStationEnd(
+        collisionState,
+        inventoryState,
+        craftState
+      );
     });
 
     // Collide with Material
@@ -324,6 +357,16 @@ class CharacterMovement {
         destroy(materialEntity);
         materialEntity.use(body({ isStatic: true }));
       }
+    });
+
+    // Crafting Collisions
+    onCollide("player", "craftingTable", (s, w) => {
+      tableState.atCraftingTable = true;
+      checkCraftable(toolState, inventoryState, volumeSetting);
+    });
+    onCollideEnd("player", "craftingTable", (s, w) => {
+      tableState.atCraftingTable = false;
+      checkCraftable(toolState, inventoryState, volumeSetting);
     });
   }
 }

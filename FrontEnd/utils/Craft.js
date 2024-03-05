@@ -1,5 +1,5 @@
 import { getSpeed, setSpeed } from "./Player.js";
-import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
+import { closeBackpack, vendingDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { handleSavingData } from "./Save.js";
 
@@ -60,6 +60,7 @@ export function craftingBackend(
   } else {
     toolId = 3;
   }
+  
   console.log("Crafting backend...");
 
   let item1sprite = ingredients[0];
@@ -110,6 +111,7 @@ function fetchCombination(
   craftState,
   inventoryState
 ) {
+  console.log(`Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`)
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -129,6 +131,7 @@ function fetchCombination(
         })
         .then((additionalData) => {
           craftState.resultReady = true;
+          console.log(additionalData.data.description);
 
           callback(
             data.creation,
@@ -421,26 +424,25 @@ export function updateCraftUI(craftState, inventoryState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-    if(craftState.result.itemKey.length < 6){
-      const resultText = add([
-        text(`You made ${resultDisplay}!`, { size: 24 }),
-        pos(100 + 500 + 50 - 50+25, 100 + 50 + 100 - 25),
-        color(255, 255, 255),
-        z(500),
-        "craft",
-        "executedCraft",
-      ]);
-    }else{
-      const resultText = add([
-        text(`You made ${resultDisplay}!`, { size: 24 }),
-        pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
-        color(255, 255, 255),
-        z(500),
-        "craft",
-        "executedCraft",
-      ]);
-    }
-  
+  if (craftState.result.itemKey.length < 6) {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  } else {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  }
 
   // If the result is final, add an additional display:
   if (craftState.result.isFinal) {
@@ -576,15 +578,19 @@ export function removeItemFromCraft(inventoryState, music) {
       play("bubble");
     }
     secondItemPosition.used = false;
-    inventoryState.ingredients.splice(2, 1);
+    console.log(inventoryState.ingredients);
+    inventoryState.ingredients.splice(1, 1);
+    console.log(inventoryState.ingredients);
   } else if (firstItemPosition.used) {
     destroyAll("item1");
     firstItemPosition.used = false;
     if (music.volume) {
       play("bubble");
     }
+    console.log(inventoryState.ingredients);
 
-    inventoryState.ingredients.splice(1, 1);
+    inventoryState.ingredients = [];
+    console.log(inventoryState.ingredients);
   }
 }
 
@@ -614,10 +620,7 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
 
 export function finalItemDisplay(craftState, resultDisplay) {
   add([
-    text(
-      `${resultDisplay} is a final item!`,
-      { size: 16 }
-    ),
+    text(`${resultDisplay} is a final item!`, { size: 16 }),
     pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50),
     color(255, 255, 255),
     z(500),
@@ -626,29 +629,22 @@ export function finalItemDisplay(craftState, resultDisplay) {
   ]);
 
   add([
-    text(
-      "You can find it in the documentation station.",
-      { size: 14 }
-    ),
-    pos(100 + 500-50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+100),
+    text("You can find it in the documentation station.", { size: 14 }),
+    pos(100 + 500 - 50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 100),
     color(255, 255, 255),
     z(500),
     "craft",
     "executedCraft",
   ]);
-  
 
   add([
-    text(
-      "It cannot be combined with another item.",
-      { size: 14 }
-    ),
-    pos(100 + 500 + 50 -50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25+115),
+    text("It cannot be combined with another item.", { size: 14 }),
+    pos(100 + 500 + 50 - 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 115),
     color(255, 255, 255),
     z(500),
     "craft",
     "executedCraft",
   ]);
-  
+
   // return craftState.result.isFinal;
 }
