@@ -1,7 +1,7 @@
 // Opens backpack window
 /**
  * Opens the backpack and displays the contents on the vending machine.
- * 
+ *
  * @param {object} inventoryState - The state of the inventory.
  * @param {object} craftState - The state of the crafting system.
  */
@@ -294,6 +294,7 @@ export function vendingRight(inventoryState, craftState) {
 }
 // Down selection in backpack
 export function vendingDown(inventoryState, craftState) {
+  console.log("pressed down");
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
@@ -307,19 +308,31 @@ export function vendingDown(inventoryState, craftState) {
 
     // If the current selection is the last row in the backpack, go to the next vendingPage
     // only if there is an item at the index below on the next vendingPage
-    
-    if (bottomIndex && inventoryState.vendingPage < totalcontents.length - 1 ) {
-      inventoryState.vendingPage++;
 
-      // If there is an item at the index below on the next vendingPage, go to the next vendingPage
-      if(inventoryState.vendingContents[inventoryState.vendingSelect + 3] !== undefined){
-        inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
-
-      }else{
-        // If there is no item at the index below on the next vendingPage, go to the first item on the next vendingPage
-        inventoryState.vendingSelect = 0;
+    if (bottomIndex && inventoryState.vendingPage < totalcontents.length - 1) {
+      inventoryState.vendingPage++; 
+      // Calculate index for next page
+      let nextPageIndex = inventoryState.vendingSelect + 3; 
+      // Get contents of next page
+      let nextPageContents = totalcontents[inventoryState.vendingPage]; 
+      // Check if the item at the corresponding index exists on the next page
+      if (nextPageContents[nextPageIndex % 9] !== undefined) {
+        // If item exists, set selection to the corresponding index
+        inventoryState.vendingSelect = nextPageIndex % 9; 
+        console.log("hit if");
+      } else {
+        // Find first available index on the next page if no item at corresponding index
+        let nextAvailableIndex = nextPageContents.findIndex(
+          (item) => item !== undefined
+        );
+        if (nextAvailableIndex !== -1) {
+          inventoryState.vendingSelect = nextAvailableIndex;
+        } else {
+          // If no available index on the next page, set selection to 0
+          inventoryState.vendingSelect = 0; 
+        }
+        console.log("hit else");
       }
-      
 
       destroyAll("itemText");
       destroyAll("selected");
@@ -329,6 +342,7 @@ export function vendingDown(inventoryState, craftState) {
     // If the current selection is not the last row in the backpack, increment the selection by 3
     else if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
+      console.log("hit else if");
       // Destroy the selected box and add a new one
       destroyAll("itemText");
       destroyAll("selected");
