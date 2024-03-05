@@ -242,10 +242,8 @@ class CharacterMovement {
     onKeyPress("backspace", () => {
       
       console.log("Pressed")
-      if(craftState.current === "crafting"){
       closeCraftWindow(craftState, inventoryState, toolState);
-      checkForToolAddition(inventoryState, toolState);
-      }
+
       console.log("should be checking for tool ");
       if(craftState.current === "documentation"){
         closeDocumentationStation(craftState, inventoryState);
