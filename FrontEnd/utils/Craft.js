@@ -1,8 +1,8 @@
 import { getSpeed, setSpeed } from "./Player.js";
-import { closeBackpack, onKeyPressDown, openBackpack } from "./Vending.js";
+import { closeBackpack, vendingDown, openBackpack } from "./Vending.js";
 import { getCurrentItemInBackpack } from "./Vending.js";
 import { handleSavingData } from "./Save.js";
-
+import { checkForToolAddition } from "./Tools.js";
 let firstItemPosition = {
   x: 605,
   y: 295,
@@ -47,13 +47,20 @@ export function checkCraftable(toolState, inventoryState, volumeSetting) {
 }
 
 // !CRAFTING
-export function craftingBackend(toolState, ingredients, craftState, inventoryState, music) {
+export function craftingBackend(
+  toolState,
+  ingredients,
+  craftState,
+  inventoryState,
+  music
+) {
   let toolId;
   if (toolState.toolAccess) {
     toolId = toolState.currentTool.toolId;
   } else {
     toolId = 3;
   }
+  
   console.log("Crafting backend...");
 
   let item1sprite = ingredients[0];
@@ -73,12 +80,21 @@ export function craftingBackend(toolState, ingredients, craftState, inventorySta
               item2data.id,
               handleCreation,
               craftState,
-              inventoryState
+              inventoryState,
+              toolState
             );
           })
           .catch((error) => console.error("Error fetching item 2:", error));
       } else {
-        fetchCombination(toolId, item1data.id, 6, handleCreation, craftState, inventoryState);
+        fetchCombination(
+          toolId,
+          item1data.id,
+          6,
+          handleCreation,
+          craftState,
+          inventoryState,
+          toolState
+        );
       }
     })
     .catch((error) => console.error("Error fetching item 1:", error));
@@ -89,7 +105,15 @@ export function craftingBackend(toolState, ingredients, craftState, inventorySta
   // http://localhost:8081/combinations?tool=1&item1=1&item2=1
 }
 
-function fetchCombination(toolId, item1Id, item2Id, callback, craftState, inventoryState) {
+function fetchCombination(
+  toolId,
+  item1Id,
+  item2Id,
+  callback,
+  craftState,
+  inventoryState
+) {
+  console.log(`Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`)
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -109,6 +133,7 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState, invent
         })
         .then((additionalData) => {
           craftState.resultReady = true;
+          console.log(additionalData.data.description);
 
           callback(
             data.creation,
@@ -127,10 +152,17 @@ function fetchCombination(toolId, item1Id, item2Id, callback, craftState, invent
     });
 }
 
-function handleCreation(creation, final, item, craftState, inventoryState) {
+function handleCreation(
+  creation,
+  final,
+  item,
+  craftState,
+  inventoryState,
+  toolState
+) {
   craftState.result.itemKey = creation;
   craftState.result.isFinal = final;
-  updateCraftUI(craftState, inventoryState);
+  updateCraftUI(craftState, inventoryState, toolState);
 
   // addItemToBackpack(inventoryState, craftState);
 }
@@ -189,7 +221,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "newCraft",
   ]);
   add([
-    text("Press [ Escape ] To Close", { size: 24 }),
+    text("Press [ Backspace ] To Close", { size: 20 }),
     pos(100 + 500 - 50, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
@@ -222,7 +254,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // Currently not adding item
   craftState.isAddingItem = false;
 }
-export function selectItem(craftState, inventoryState, music) {
+export function selectItem(craftState, inventoryState, music, toolState) {
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -238,12 +270,12 @@ export function selectItem(craftState, inventoryState, music) {
     let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState, craftState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
       if (music.volume) {
         play("bubble");
       }
     } else if (!secondItemPosition.used) {
-      addItemToCraftWindow(selectedItem, inventoryState, craftState);
+      addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
       if (music.volume) {
         play("bubble");
       }
@@ -264,8 +296,13 @@ export function selectItem(craftState, inventoryState, music) {
   craftState.isAddingItem = false;
 }
 
-export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
-  console.log(`Adding ${currentItem} to the crafting window.`)
+export function addItemToCraftWindow(
+  currentItem,
+  inventoryState,
+  craftState,
+  toolState
+) {
+  console.log(`Adding ${currentItem} to the crafting window.`);
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -315,6 +352,7 @@ export function addItemToCraftWindow(currentItem, inventoryState, craftState) {
       },
     ]);
     inventoryState.ingredients.push(currentItem);
+   
 
     secondItemPosition.used = true;
   }
@@ -379,10 +417,18 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
-  craftingBackend(toolState, inventoryState.ingredients, craftState, inventoryState, music);
+
+  craftingBackend(
+    toolState,
+    inventoryState.ingredients,
+    craftState,
+    inventoryState,
+    music
+  );
   destroyAll("newCraft");
+  
 }
-export function updateCraftUI(craftState, inventoryState) {
+export function updateCraftUI(craftState, inventoryState, toolState) {
   if (music.volume) {
     play("craftFX");
   }
@@ -395,14 +441,30 @@ export function updateCraftUI(craftState, inventoryState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-  const resultText = add([
-    text(`You made ${resultDisplay}!`, { size: 24 }),
-    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
-    color(255, 255, 255),
-    z(500),
-    "craft",
-    "executedCraft",
-  ]);
+  if (craftState.result.itemKey.length < 6) {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  } else {
+    const resultText = add([
+      text(`You made ${resultDisplay}!`, { size: 24 }),
+      pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "executedCraft",
+    ]);
+  }
+
+  // If the result is final, add an additional display:
+  if (craftState.result.isFinal) {
+    finalItemDisplay(craftState, resultDisplay);
+  }
 
   const resultItem = add([
     // rect(item.width, item.height) ,
@@ -425,6 +487,7 @@ export function updateCraftUI(craftState, inventoryState) {
       itemKey: craftState.result.itemKey,
     },
   ]);
+
   addItemToBackpack(inventoryState, craftState, resultItem);
   handleSavingData(
     inventoryState.vendingKeys,
@@ -437,10 +500,12 @@ export function updateCraftUI(craftState, inventoryState) {
   );
   craftState.readyToCraft = true;
   craftState.resultReady = false;
+  console.log("Crafting complete!");
   addReCraftButton(craftState);
 }
 
 export function addReCraftButton(craftState) {
+  console.log("Adding recraft button...");
   const reCraftButton = add([
     rect(150, 50),
     pos(
@@ -503,7 +568,7 @@ export function restartCraft(craftState, inventoryState, toolState) {
 }
 // !End craft sequence, current = "moving"
 export function closeCraftWindow(craftState, inventoryState) {
-  // Close the craft window after pressing escape
+  // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
   inventoryState.ingredients = [];
@@ -532,15 +597,19 @@ export function removeItemFromCraft(inventoryState, music) {
       play("bubble");
     }
     secondItemPosition.used = false;
-    inventoryState.ingredients.splice(2, 1);
+    console.log(inventoryState.ingredients);
+    inventoryState.ingredients.splice(1, 1);
+    console.log(inventoryState.ingredients);
   } else if (firstItemPosition.used) {
     destroyAll("item1");
     firstItemPosition.used = false;
     if (music.volume) {
       play("bubble");
     }
+    console.log(inventoryState.ingredients);
 
-    inventoryState.ingredients.splice(1, 1);
+    inventoryState.ingredients = [];
+    console.log(inventoryState.ingredients);
   }
 }
 
@@ -559,8 +628,42 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
 
     inventoryState.vendingKeys.push(resultItem.itemKey);
   }
-  if (craftState.result.isFinal && !inventoryState.areFinal.includes(craftState.result.itemKey)) {
+  if (
+    craftState.result.isFinal &&
+    !inventoryState.areFinal.includes(craftState.result.itemKey)
+  ) {
     // console.log(`${craftState.result.itemKey} pushed to documentation station.`);
     inventoryState.areFinal.push(resultItem.itemKey);
   }
+}
+
+export function finalItemDisplay(craftState, resultDisplay) {
+  add([
+    text(`${resultDisplay} is a final item!`, { size: 16 }),
+    pos(100 + 500 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+
+  add([
+    text("You can find it in the documentation station.", { size: 14 }),
+    pos(100 + 500 - 50 + 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 100),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+
+  add([
+    text("It cannot be combined with another item.", { size: 14 }),
+    pos(100 + 500 + 50 - 50 - 50 + 25, 100 + 50 + 100 - 25 + 50 + 25 + 115),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "executedCraft",
+  ]);
+
+  // return craftState.result.isFinal;
 }

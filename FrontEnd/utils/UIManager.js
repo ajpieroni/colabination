@@ -138,10 +138,6 @@ class UIManager{
                     scale(0.5),
                     "alert",
                   ]);
-
-   
-
-                
             }
         }
         

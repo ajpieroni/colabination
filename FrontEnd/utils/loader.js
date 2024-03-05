@@ -8,9 +8,21 @@ export const load = {
     // arrows
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
+    loadSprite("scissorstable", "./assets/scissorstable.png");
+    // solderingStationtable
+    loadSprite("solderingStationtable", "./assets/solderingStationtable.png");
+    // sewingMachinetable
+    loadSprite("sewingMachinetable", "./assets/sewingMachinetable.png");
+    // cricuttable
+    loadSprite("cricuttable", "./assets/cricuttable.png");
+    //printer1table
+    loadSprite("printer1table", "./assets/printer1table.png");
+    //printer2table
+    loadSprite("printer2table", "./assets/printer2table.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
-    loadSprite("walk", "./assets/walkable2048-1668.png");
-    loadSprite("tables", "./assets/avoid1024-834.png");
+    // loadSprite("walk", "./assets/walkable2048-1668.png");
+    loadSprite("walk", "./assets/walkable2048-1668spring.png");
+    loadSprite("tables", "./assets/startingtables.png");
     loadSprite("colabdoors", "./assets/colabsdoorsmall.jpeg");
     loadSprite("colablogo", "./assets/colablogo.png");
     loadSprite("characterSprite", "./assets/sprite.png");
@@ -33,6 +45,8 @@ export const load = {
 
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
+    loadSprite("sandpaper", "./assets/sandpaper.png");
+    loadSprite("wheel", "./assets/wheel.png");
 
     loadSprite("stainedglass", "./assets/stainedglass.png");
     loadSprite("window", "./assets/window.png");
@@ -40,6 +54,7 @@ export const load = {
     loadSprite("cut paper", "./assets/cutpaper3.png");
     loadSprite("confetti", "./assets/confetti.png");
     loadSprite("party", "./assets/party.png");
+    loadSprite("box", "./assets/box.png");
     // !TOBE MADE:
     loadSprite("card", "./assets/card2.png");
     loadSprite("kite", "./assets/benchy.png");
