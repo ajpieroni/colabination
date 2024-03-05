@@ -111,7 +111,6 @@ class CharacterMovement {
       onItemsOnTable: 0,
     };
 
-    
    
 
     // Music
@@ -160,6 +159,9 @@ class CharacterMovement {
       hasDiscovered: new Set(),
       lastStored: new Set(),
     };
+
+    intiailizeUser(inventoryState, toolState);
+
     onCollide("player", "tool", (s, w) => {
       onToolCollide(craftState, toolState, inventoryState, s, w);
     });
