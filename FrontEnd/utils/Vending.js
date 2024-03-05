@@ -21,7 +21,7 @@ export function openBackpack(inventoryState, craftState) {
   // Arrows
   if (totalcontents.length > 1) {
     const pageText = add([
-      text(`Page ${currentPage + 1}`, {
+      text(`vendingPage ${currentPage + 1}`, {
         size: 24,
         outline: 4,
         color: (0, 0, 0),
@@ -165,9 +165,9 @@ export function vendingLeft(inventoryState, craftState) {
   let contents = totalcontents[currentPage];
 
   if (craftState.popUp) {
-    // If the current selection is the first item in the backpack, go to the previous page
-    if (inventoryState.vendingSelect === 0 && inventoryState.page > 0) {
-      inventoryState.page--;
+    // If the current selection is the first item in the backpack, go to the previous vendingPage
+    if (inventoryState.vendingSelect === 0 && inventoryState.vendingPage > 0) {
+      inventoryState.vendingPage--;
       inventoryState.vendingSelect = 8;
       destroyAll("itemText");
       destroyAll("selected");
@@ -230,12 +230,12 @@ export function vendingRight(inventoryState, craftState) {
   let contents = totalcontents[currentPage];
 
   if (craftState.popUp) {
-    // If the current selection is the last item in the backpack, go to the next page
+    // If the current selection is the last item in the backpack, go to the next vendingPage
     if (
       inventoryState.vendingSelect === 8 &&
-      inventoryState.page < totalcontents.length - 1
+      inventoryState.vendingPage < totalcontents.length - 1
     ) {
-      inventoryState.page++;
+      inventoryState.vendingPage++;
       inventoryState.vendingSelect = 0;
       destroyAll("itemText");
       destroyAll("selected");
@@ -305,18 +305,18 @@ export function vendingDown(inventoryState, craftState) {
       inventoryState.vendingSelect === 7 ||
       inventoryState.vendingSelect === 8;
 
-    // If the current selection is the last row in the backpack, go to the next page
-    // only if there is an item at the index below on the next page
+    // If the current selection is the last row in the backpack, go to the next vendingPage
+    // only if there is an item at the index below on the next vendingPage
     
-    if (bottomIndex && inventoryState.page < totalcontents.length - 1 ) {
-      inventoryState.page++;
+    if (bottomIndex && inventoryState.vendingPage < totalcontents.length - 1 ) {
+      inventoryState.vendingPage++;
 
-      // If there is an item at the index below on the next page, go to the next page
+      // If there is an item at the index below on the next vendingPage, go to the next vendingPage
       if(inventoryState.vendingContents[inventoryState.vendingSelect + 3] !== undefined){
         inventoryState.vendingSelect = (inventoryState.vendingSelect + 3) % 9;
 
       }else{
-        // If there is no item at the index below on the next page, go to the first item on the next page
+        // If there is no item at the index below on the next vendingPage, go to the first item on the next vendingPage
         inventoryState.vendingSelect = 0;
       }
       
@@ -389,8 +389,8 @@ export function vendingUp(inventoryState, craftState) {
       inventoryState.vendingSelect === 1 ||
       inventoryState.vendingSelect === 2
     ) {
-      if (inventoryState.page > 0) {
-        inventoryState.page--;
+      if (inventoryState.vendingPage > 0) {
+        inventoryState.vendingPage--;
         inventoryState.vendingSelect = (inventoryState.vendingSelect + 6) % 9;
 
         destroyAll("itemText");
