@@ -15,6 +15,8 @@ puts 'seeding'
 # Tool.destroy_all
 # UserItem.destroy_all
 
+# !Test Final Items
+
 # Creating base items
     paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
     glass = Item.create(name: 'glass', description: 'A clear sheet of melted glass', item_type: 'material', rarity: 1, isFinal: false)
@@ -152,8 +154,6 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
     
-
-
 # Glass combos:
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
