@@ -429,19 +429,19 @@ class Tutorial {
       }
     });
 
-    onKeyPress("m", () => {
-      this.music.paused = true;
-      handleSavingData(
-        inventoryState.vendingKeys,
-        inventoryState.hasSavedItems,
-        inventoryState.areFinal,
-        inventoryState.currItems,
-        inventoryState.currTools,
-        inventoryState.currFinals,
-        inventoryState.hasSavedFinal
-      );
-      go("settings");
-    });
+    // onKeyPress("m", () => {
+    //   this.music.paused = true;
+    //   handleSavingData(
+    //     inventoryState.vendingKeys,
+    //     inventoryState.hasSavedItems,
+    //     inventoryState.areFinal,
+    //     inventoryState.currItems,
+    //     inventoryState.currTools,
+    //     inventoryState.currFinals,
+    //     inventoryState.hasSavedFinal
+    //   );
+    //   go("settings");
+    // });
 
     collisionState.isDocVisible = false;
 
@@ -606,6 +606,7 @@ class Tutorial {
     function waitForBook() {
       return waitForCondition(() => craftState.result.itemKey === "book");
     }
+
     function messageCreate(message) {
       add([
         "alert",
@@ -632,8 +633,14 @@ class Tutorial {
         "alert"
       ]);
     }
+    function playBubble() {
+      if (volumeSetting) {
+        play("bubble");
+      }
+    }
 
     let currentStep = 0; // Initialize a step counter
+    let readyToComplete = false;
 
 
     async function tutorialStart() {
@@ -641,12 +648,14 @@ class Tutorial {
       setSpeed(0);
     
       let message = "Welcome to the tutorial! Let's get started.";
+      playBubble();
       messageCreate(message);
       await new Promise((resolve) => setTimeout(resolve, 3000));
       destroyAll("alert");
     
       // Step 1: Picking up items
       message = "Try picking up the items you see on the floor!";
+      playBubble();
       messageCreate(message);
       setSpeed(300);
       await waitForCollision();
@@ -655,6 +664,7 @@ class Tutorial {
     
       // Step 2: Hammer station
       message = "Great! Now, let's head to the hammer station.";
+      playBubble();
       messageCreate(message);
       await waitForHammer();
       destroyAll("alert");
@@ -662,6 +672,7 @@ class Tutorial {
     
       // Step 3: Begin crafting
       message = "Nice job! Press 'Enter' to open the crafting window.";
+      playBubble();
       messageCreate(message);
       onKeyPress("enter", () => {
         if (currentStep === 2) {
@@ -675,14 +686,15 @@ class Tutorial {
       await waitForPaper();
       destroyAll("alert");
       message = "Great job! You've made paper! Close out of Hammer!";
+      playBubble();
       messageCreate(message);
      
     
-      // Step 4: Crafting table
       onKeyPress("escape", () => {
         if (currentStep === 3) {
           destroyAll("alert");
           message = "Awesome! Now, let's head to the Crafting Table!";
+          playBubble();
           messageCreate(message);
           currentStep = 4; 
         }
@@ -690,12 +702,14 @@ class Tutorial {
       await waitForCraftingTable();
       destroyAll("alert");
       message = "Press 'Enter' and let's craft something else!";
+      playBubble();
       messageCreate(message);
     
       onKeyPress("enter", () => {
         if (currentStep === 4) {
           destroyAll("alert");
           message = "Nice! Try making a card!";
+          playBubble();
           messageCreate(message);
           readyToCraft = true;
           currentStep = 5; 
@@ -705,37 +719,57 @@ class Tutorial {
       await waitForCard();
       destroyAll("alert");
       message = "Great job! You've made a card! Now do origami!";
+      playBubble();
       messageCreate(message);
       currentStep = 6; 
     
       await waitForOrigami();
       destroyAll("alert");
       message = "You've made origami! Now let's make a book!";
+      playBubble();
       messageCreate(message);
       currentStep = 7; 
     
       await waitForBook();
       destroyAll("alert");
       message = "Great job! You've made a book! Close out of Crafting Table!";
+      playBubble();
       messageCreate(message);
-      currentStep = 8; 
+      currentStep = 8;
       
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
+      onKeyPress("escape", () => {
+       if (currentStep === 8) {
+          destroyAll("alert");
+          message = "Congrats! You've completed the tutorial!";
+          playBubble();
+          messageCreate(message);
+          currentStep = 9;
+          readyToComplete = true;
+        }
+      });
+      await waitForCondition(() => readyToComplete);
+      destroyAll("alert");
 
       message = "Congrats! You've completed the tutorial!";
+      playBubble();
       messageCreate(message);
+      currentStep = 9; 
+
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      isTutorialDone = true;
       destroyAll("alert");
+
+      isTutorialDone = true;
       currentStep = 10;
 
       message = "Press 'Enter' to continue to the main game!";
+      playBubble();
       messageCreate(message);
       onKeyPress("enter", () => {
         if (isTutorialDone) {
+          // this.music.paused = true;
           destroyAll("alert");
           go("characterMovement");
+
         }
       });
     }

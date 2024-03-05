@@ -116,7 +116,39 @@ class CharacterMovement {
     };
 
     intiailizeUser(inventoryState);
+    function messageCreate(message) {
+      const alertMessage = add([
+        "alert",
+        text(message, {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (25,25,112),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(525,100),
+        z(500),
+        // scale(.5)
+      ]);
+      const blueBox = add([
+        rect(500+200+200,100),
+        area(),
+        anchor("center"),
+        pos(525, 100),
+        z(19),
+        color(1, 33, 105),
+        "alert"
+      ]);
+    }
 
+    if (localStorage.getItem("tutorial") === "true") {
+      messageCreate("Welcome to the main game!");
+    }
+    onKeyPress(() => {
+      destroyAll("alert");
+    });
     // Music
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
