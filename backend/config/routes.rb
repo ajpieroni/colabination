@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     collection do
       get 'find_by_name/:name', to: 'items#find_by_name', as: 'find_by_name'
       get 'find_by_name_craft/:name', to: 'items#find_by_name_craft', as: 'find_by_name_craft'
+    # GET /items/find_description_by_name/:name
+    # http://localhost:8081/items/find_description_by_name/trash
+      get 'find_description_by_name/:name', to: 'items#find_description_by_name', as: 'find_description_by_name'
     end
   end
 
