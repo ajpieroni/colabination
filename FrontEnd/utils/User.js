@@ -15,12 +15,20 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         return response.json();
       })
       .then((data) => {
+        console.log(localStorage.getItem("tutorial"));
         const items = data.items; 
         console.log("items", items);
-        let containsPaper = items.some((subArray) =>
-          subArray.includes("wood")
-        );
-        if (items.length == 0) {
+        if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
+        console.log("tutorial is true");
+        InitialItems(["wood"]);
+        }else{
+          InitialItems([]);
+        }
+        // let containsPaper = items.some((subArray) =>
+        //   subArray.includes("paper")
+        // );
+        console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
+        if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
           InitialItems(["glass", "thread", "wood", "metal"]);
         }
 

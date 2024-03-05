@@ -36,6 +36,7 @@ puts 'seeding'
     confetti = Item.create(name: 'confetti', description: 'Colorful shreds of paper', item_type: 'material', rarity: 1, isFinal: false)
     party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1, isFinal: true)
     woodPlank = Item.create(name: 'woodPlank', description: 'A flat piece of wood', item_type: 'material', rarity: 1, isFinal: false)
+    book = Item.create(name: 'book', description: 'A collection of paper', item_type: 'material', rarity: 1, isFinal: true)
 
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
@@ -171,6 +172,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1:card, item2: nothing, creation: origami)
     Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
+    Combination.create(tool: hands, item1: card, item2: wood, creation: book)
     
 # Glass combos:
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
