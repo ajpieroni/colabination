@@ -239,15 +239,15 @@ class Tutorial {
         restartCraft(craftState, inventoryState, toolState);
       }
     });
-
     onKeyPress("backspace", () => {
-      console.log("Pressed");
-      console.log(craftState.current);
-      if (craftState.current === "crafting") {
-        closeCraftWindow(craftState, inventoryState);
+      
+      console.log("Pressed")
+      if(craftState.current === "crafting"){
+      closeCraftWindow(craftState, inventoryState, toolState);
+      checkForToolAddition(inventoryState, toolState);
       }
       console.log("should be checking for tool ");
-      if (craftState.current === "documentation") {
+      if(craftState.current === "documentation"){
         closeDocumentationStation(craftState, inventoryState);
       }
     });
