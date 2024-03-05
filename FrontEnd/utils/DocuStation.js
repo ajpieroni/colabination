@@ -20,7 +20,7 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Add the title
   const closeText = add([
-    text("Press [ Escape ] To Close", { size: 24 }),
+    text("Press [ Backspace ] To Close", { size: 24 }),
     pos(100 + 500 - 50 - 100 - 100 - 25, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
