@@ -21,7 +21,7 @@ export function openBackpack(inventoryState, craftState) {
   // Arrows
   if (totalcontents.length > 1) {
     const pageText = add([
-      text(`vendingPage ${currentPage + 1}`, {
+      text(`Page ${currentPage + 1}`, {
         size: 24,
         outline: 4,
         color: (0, 0, 0),
