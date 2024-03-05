@@ -242,8 +242,8 @@ class Tutorial {
 
     onKeyPress("backspace", () => {
       console.log("Pressed");
+      closeCraftWindow(craftState, inventoryState);
       if (craftState.current === "crafting") {
-        closeCraftWindow(craftState, inventoryState);
         checkForToolAddition(inventoryState, toolState);
       }
       console.log("should be checking for tool ");
