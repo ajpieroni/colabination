@@ -213,9 +213,36 @@ class CharacterMovement {
         "alert"
       ]);
     }
+    function messageCreateMenu(message) {
+      const alertMessage = add([
+        "alert",
+        text(message, {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (25,25,112),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(475, 775),
+        z(500),
+        // scale(.5)
+      ]);
+      const blueBox = add([
+        rect(450,100),
+        area(),
+        anchor("center"),
+        pos(475, 775),
+        z(19),
+        color(1, 33, 105),
+        "alert"
+      ]);
+    }
 
     if (localStorage.getItem("tutorial") === "true") {
       messageCreate("Welcome to the main game!");
+      messageCreateMenu("Press M to open the menu");
     }
     onKeyPress(() => {
       destroyAll("alert");
