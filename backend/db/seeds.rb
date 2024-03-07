@@ -15,6 +15,8 @@ puts 'seeding'
 # Tool.destroy_all
 # UserItem.destroy_all
 
+# !Test Final Items
+
 # Creating base items
     paper = Item.create(name: 'paper', description: 'A sheet of paper', item_type: 'material', rarity: 1, isFinal: false)
     glass = Item.create(name: 'glass', description: 'A clear sheet of melted glass', item_type: 'material', rarity: 1, isFinal: false)
@@ -39,16 +41,19 @@ puts 'seeding'
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
     sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
+    sandpaper = Item.create(name: 'sandpaper', description: "For smoothing things out", item_type: 'material', rarity: 1, isFinal: false)
     hourglass = Item.create(name: 'hourglass', description: "Time is running out!", item_type: 'material', rarity: 1, isFinal: true)
     stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
+    wheel = Item.create(name: 'wheel', description: "For rolling!", item_type: "material", rarity: 1, isFinal: false)
     # Creating plastic trail
     vinyl = Item.create(name:'vinyl', description: "Shiny.", item_type: 'material', rarity: 1, isFinal: false)
     # creating thread trail
     hat = Item.create(name:'hat', description: "M'lady.", item_type: 'material', rarity: 1, isFinal: false)
     doll = Item.create(name:'doll', description: "How cute.", item_type: 'material', rarity: 1, isFinal: false)
     jacket = Item.create(name:'jacket', description: "For keeping warm.", item_type: 'material', rarity: 1, isFinal: false)
+    box = Item.create(name:'box', description: "For storage.", item_type: 'material', rarity: 1, isFinal: false)
 
 # Creating metal trail
     aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)
@@ -71,7 +76,7 @@ puts 'seeding'
     prison = Item.create(name:'prison', description: "Uh oh.", item_type: 'material', rarity: 1, isFinal: true)
     armor = Item.create(name:'armor', description: "For protection.", item_type: 'material', rarity: 1, isFinal: false)
     cauldron = Item.create(name:'cauldron', description: "For brewing!", item_type: 'material', rarity: 1, isFinal: false)
-    diningtable = Item.create(name:'diningtable', description: "For family meals!", item_type: 'material', rarity: 1, isFinal: false)
+    diningTable = Item.create(name:'diningTable', description: "For family meals!", item_type: 'material', rarity: 1, isFinal: false)
     stoplight = Item.create(name:'stoplight', description: "Stop on red!", item_type: 'material', rarity: 1, isFinal: false)
 
 
@@ -86,7 +91,7 @@ puts 'seeding'
     street = Item.create(name:'street', description: "To ride on!", item_type: 'material', rarity: 1, isFinal: false)
     
 #    level 4
-    monarchdoll = Item.create(name:'monarchdoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
+    monarchDoll = Item.create(name:'monarchDoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
     kingdom = Item.create(name:'kingdom', description: "I used to rule the world...", item_type: 'material', rarity: 1, isFinal: false)
     home = Item.create(name:'home', description: "Humble abode!", item_type: 'material', rarity: 1, isFinal: true)
     city = Item.create(name:'city', description: "Big apple!", item_type: 'material', rarity: 1, isFinal: true)
@@ -102,7 +107,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
-    cutcloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
+    cutCloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
     embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
     yarn = Item.create(name: 'yarn', description: "Thick, warm string", item_type: "material", rarity: 1, isFinal: false)
     skirt = Item.create(name: 'skirt', description: "Flowy, covers some part of your legs", item_type: "material", rarity: 1, isFinal: false)
@@ -116,7 +121,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
-    sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
+    # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
     saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
     solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
@@ -124,6 +129,24 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
     mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+
+
+# Hat press is only used for one item: bowl
+    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+# Laser Cutter is only used for one item: musicCD
+    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+    
+# Sandpaper is not used
+    # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
+# Saw is not used
+    # saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
+# Cricut is not used
+    # cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
+
+# Screwdriver is not used
+    # screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
+   
 
 
 # seed some users
@@ -151,14 +174,21 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
     Combination.create(tool: hands, item1: card, item2: wood, creation: book)
     
-
-
 # Glass combos:
-    Combination.create(tool: hammer, item1: sand, item2: glass, creation: hourglass)
+    Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
-    Combination.create(tool: hammer, item1: brokenGlass, item2: nothing, creation: sand)
+    Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
+    # hands & sand + paper  = sandpaper
+    Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
+    # hands & sandpaper + woodPlank = wheel
+    Combination.create(tool: hands, item1: sandpaper, item2: woodPlank, creation: wheel)
+    # hammer & box + wheel = wagon
+    Combination.create(tool: hammer, item1: wheel, item2: box, creation: wagon)
+    # box = hammer & woodPlank + woodPlank
+    Combination.create(tool: hammer, item1: woodPlank, item2: woodPlank, creation: box)
+
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
@@ -185,7 +215,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
     Combination.create(tool: solder, item1: bowl, item2: bowl, creation: cauldron)
-    Combination.create(tool: hands, item1: bowl, item2: table, creation: diningtable)
+    Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
 
 
@@ -197,16 +227,16 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     # Witch
     Combination.create(tool: hands, item1: cauldron, item2: doll, creation: witch)
     # Family
-    Combination.create(tool: hands, item1: diningtable, item2: doll, creation: family)
+    Combination.create(tool: hands, item1: diningTable, item2: doll, creation: family)
     # Street
     Combination.create(tool: hands, item1: stoplight, item2: car, creation: street)
 
 
     # Metal: level 5
     # Monarch doll
-    Combination.create(tool: hands, item1: crown, item2: doll, creation: monarchdoll)
+    Combination.create(tool: hands, item1: crown, item2: doll, creation: monarchDoll)
     # Kingdom
-    Combination.create(tool: hands, item1: knight, item2: monarchdoll, creation: kingdom)
+    Combination.create(tool: hands, item1: knight, item2: monarchDoll, creation: kingdom)
     # Home
     Combination.create(tool: hammer, item1: family, item2: building, creation: home)
 
@@ -220,7 +250,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Thread combos
     Combination.create(tool: sewingmachine, item1: thread, item2: thread, creation: cloth)
-    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutcloth)
+    Combination.create(tool: scissors, item1: cloth, item2: nothing, creation: cutCloth)
     Combination.create(tool: sewingmachine, item1:cloth, item2: nothing, creation: skirt)
     Combination.create(tool: hands, item1: threadBall, item2: nothing, creation: macrame)
 
@@ -229,7 +259,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: sewingmachine, item1: embroiderythread, item2: embroiderythread, creation: yarn)
     Combination.create(tool: hands, item1: embroiderythread, item2: nothing, creation:  straw)
     Combination.create(tool: sewingmachine, item1: shirt, item2: skirt, creation: dress)
-    Combination.create(tool: sewingmachine, item1: cutcloth, item2: nothing, creation: shirt)
+    Combination.create(tool: sewingmachine, item1: cutCloth, item2: nothing, creation: shirt)
     Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
     Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
 

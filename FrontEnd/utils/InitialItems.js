@@ -24,6 +24,7 @@ export default function InitialItems(itemsToAdd) {
       image: "metal",
       itemKey: "metal",
     },
+
   };
 
   itemsToAdd.forEach((itemKey) => {

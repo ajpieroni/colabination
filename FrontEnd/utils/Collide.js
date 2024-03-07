@@ -1,8 +1,10 @@
 import { checkCraftable } from "./Craft.js";
 import { setSpeed } from "./Player.js";
-export function handleCollideDocumentationStation(state, showFinalItems) {
+import { showFinalItems } from "./DocuStation.js";
+export function handleCollideDocumentationStation(state, showFinalItems, inventoryState, craftState) {
   state.canAccessDocumentation = true;
 
+  // Add Documentation Station Text
   add([
     text("Documentation Station", { size: 16 }),
     pos(700, 100 - 18),
@@ -14,23 +16,30 @@ export function handleCollideDocumentationStation(state, showFinalItems) {
   if (!state.eventListenerAttached) {
     state.eventListenerAttached = true;
 
+    // Event Listener for 'enter' key
     onKeyPress("enter", () => {
       if (!state.canAccessDocumentation) return;
 
+      if (!state.isDocVisible) {
+        showFinalItems(inventoryState, craftState);
+        state.isDocVisible = true;
+        setSpeed(0);
+      }
+    });
+
+    // Event Listener for 'escape' key
+    onKeyPress("backspace", () => {
       if (state.isDocVisible) {
         destroyAll("final");
         state.isDocVisible = false;
         setSpeed(300);
-      } else {
-        showFinalItems();
-        state.isDocVisible = true;
-        setSpeed(0);
       }
     });
   }
 }
 
-export function handleCollideDocumentationStationEnd(state) {
+
+export function handleCollideDocumentationStationEnd(state, inventoryState) {
   state.canAccessDocumentation = false;
   state.isDocVisible = false;
   destroyAll("interactable");
@@ -51,6 +60,9 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
+  if(toolDisplay === "Printer1" || toolDisplay === "Printer2"){
+    toolDisplay = "3D Printer";
+  }
   // checkCraftable(toolState, inventoryState);
 
   add([

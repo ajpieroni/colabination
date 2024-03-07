@@ -8,9 +8,21 @@ export const load = {
     // arrows
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
+    loadSprite("scissorstable", "./assets/scissorstable.png");
+    // solderingStationtable
+    loadSprite("solderingStationtable", "./assets/solderingStationtable.png");
+    // sewingMachinetable
+    loadSprite("sewingMachinetable", "./assets/sewingMachinetable.png");
+    // cricuttable
+    loadSprite("cricuttable", "./assets/cricuttable.png");
+    //printer1table
+    loadSprite("printer1table", "./assets/printer1table.png");
+    //printer2table
+    loadSprite("printer2table", "./assets/printer2table.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
-    loadSprite("walk", "./assets/walkable2048-1668.png");
-    loadSprite("tables", "./assets/avoid1024-834.png");
+    // loadSprite("walk", "./assets/walkable2048-1668.png");
+    loadSprite("walk", "./assets/walkable2048-1668spring.png");
+    loadSprite("tables", "./assets/startingtables.png");
     loadSprite("colabdoors", "./assets/colabsdoorsmall.jpeg");
     loadSprite("colablogo", "./assets/colablogo.png");
     loadSprite("characterSprite", "./assets/sprite.png");
@@ -33,6 +45,8 @@ export const load = {
 
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
+    loadSprite("sandpaper", "./assets/sandpaper.png");
+    loadSprite("wheel", "./assets/wheel.png");
 
     loadSprite("stainedglass", "./assets/stainedglass.png");
     loadSprite("window", "./assets/window.png");
@@ -40,9 +54,10 @@ export const load = {
     loadSprite("cut paper", "./assets/cutpaper3.png");
     loadSprite("confetti", "./assets/confetti.png");
     loadSprite("party", "./assets/party.png");
+    loadSprite("box", "./assets/box.png");
     // !TOBE MADE:
     loadSprite("card", "./assets/card2.png");
-    loadSprite("kite", "./assets/benchy.png");
+    loadSprite("kite", "./assets/kite.png");
     loadSprite("origami", "./assets/origami.png");
     loadSprite("woodsheet", "./assets/benchy.png");
     loadSprite("macrame", "./assets/macrame.png");
@@ -93,39 +108,39 @@ export const load = {
     loadSprite("CD", "./assets/CD.png");
 
     // TO BE MADE
-    loadSprite("lamp", "./assets/benchy.png");
-    loadSprite("chains", "./assets/benchy.png");
-    loadSprite("bowl", "./assets/benchy.png");
-    loadSprite("car", "./assets/benchy.png");
+    loadSprite("lamp", "./assets/lamp.png");
+    loadSprite("chains", "./assets/chains.png");
+    loadSprite("bowl", "./assets/bowl.png");
+    loadSprite("car", "./assets/car.png");
 
-    loadSprite("prison", "./assets/benchy.png");
-    loadSprite("armor", "./assets/benchy.png");
-    loadSprite("cauldron", "./assets/benchy.png");
-    loadSprite("dining table", "./assets/benchy.png");
-    loadSprite("stoplight", "./assets/benchy.png");
+    loadSprite("prison", "./assets/prison.png");
+    loadSprite("armor", "./assets/armor.png");
+    loadSprite("cauldron", "./assets/cauldron.png");
+    loadSprite("diningTable", "./assets/diningTable.png");
+    loadSprite("stoplight", "./assets/stoplight.png");
 
-    loadSprite("vinylCD", "./assets/benchy.png");
-    loadSprite("crown", "./assets/benchy.png");
-    loadSprite("knight", "./assets/benchy.png");
-    loadSprite("witch", "./assets/benchy.png");
-    loadSprite("family", "./assets/benchy.png");
-    loadSprite("street", "./assets/benchy.png");
+    loadSprite("vinylCD", "./assets/vinylCD.png");
+    loadSprite("crown", "./assets/crown.png");
+    loadSprite("knight", "./assets/knight.png");
+    loadSprite("witch", "./assets/witch.png");
+    loadSprite("family", "./assets/family.png");
+    loadSprite("street", "./assets/street.png");
 
-    loadSprite("monarchdoll", "./assets/benchy.png");
-    loadSprite("kingdom", "./assets/benchy.png");
-    loadSprite("home", "./assets/benchy.png");
-    loadSprite("city", "./assets/benchy.png");
+    loadSprite("monarchDoll", "./assets/monarchDoll.png");
+    loadSprite("kingdom", "./assets/kingdom.png");
+    loadSprite("home", "./assets/home.png");
+    loadSprite("city", "./assets/city.png");
 
-    loadSprite("fairytale", "./assets/benchy.png");
+    loadSprite("fairytale", "./assets/fairytale.png");
 
-    loadSprite("plastic", "./assets/benchy.png");
+    loadSprite("plastic", "./assets/plastic.png");
 
     // Thread trail
     loadSprite("cloth", "./assets/cloth.png");
-    loadSprite("cut cloth", "./assets/cutcloth.png");
+    loadSprite("cutCloth", "./assets/cutCloth.png");
     loadSprite("skirt", "./assets/skirt.png");
-    loadSprite("jacket", "./assets/benchy.png");
-    loadSprite("shirt", "./assets/benchy.png");
+    loadSprite("jacket", "./assets/jacket.png");
+    loadSprite("shirt", "./assets/shirt.png");
 
     loadSprite("embroidery thread", "./assets/embroiderythread.png");
     loadSprite("dress", "./assets/dress.png");
@@ -134,8 +149,8 @@ export const load = {
     loadSprite("scarecrow", "./assets/scarecrow.png");
 
     // Unknown
-    loadSprite("lightbulb", "./assets/benchy.png");
-    loadSprite("wagon", "./assets/benchy.png");
+    loadSprite("lightbulb", "./assets/lightbulb.png");
+    loadSprite("wagon", "./assets/wagon.png");
 
     //Developer sprites
     loadSprite("Alex", "./assets/1Alex.png");
