@@ -31,6 +31,7 @@ export const load = {
     loadSprite("PLAalert", "./assets/PLAalert.png");
     loadSprite("noItems", "./assets/noItems.png");
     loadSprite("cricutAlertBox", "./assets/machine1AlertBox.png");
+    loadSprite("brokenScissors", "./assets/brokenScissors.png");
     loadSprite("cricut", "./assets/cricut-transparent.png");
     loadSprite("scissors", "./assets/scissor-pixel.png");
     loadSprite("scissorsAlert", "./assets/scissorsAlert.png");

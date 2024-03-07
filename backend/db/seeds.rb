@@ -100,6 +100,7 @@ fairytale = Item.create(name:'fairytale', description: "Dreams come true!", item
 
 # !UNKNOWN
 lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
+brokenScissors = Item.create(name:'brokenScissors', description: "Not useful anymore.", item_type: 'material', rarity: 1, isFinal: true)
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
@@ -164,6 +165,12 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 # Creating paper combos
 # !Paper combos: level 1
     Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
+    Combination.create(tool: scissors, item1: metal, item2: nothing, creation: brokenScissors)
+    # also make broken scissors for 2 metal
+    Combination.create(tool: hammer, item1: metal, item2: metal, creation: brokenScissors)
+    # also for metalSheet
+    Combination.create(tool: hammer, item1: metalSheet, item2: nothing, creation: brokenScissors)
+    Combination.create(tool: hammer, item1: metalSheet, item2: metalSheet, creation: brokenScissors)
     Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
     Combination.create(tool: hands, item1: paper, item2: thread, creation: kite)
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
