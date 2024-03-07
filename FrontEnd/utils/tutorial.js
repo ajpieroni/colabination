@@ -447,7 +447,7 @@ class Tutorial {
           // optional object
           size: 24,
           outline: 4,
-          color: (25,25,112),
+          color: (46,139,87),
           // can specify font here,
         }),
         area(),
@@ -462,7 +462,7 @@ class Tutorial {
         anchor("center"),
         pos(525, 100),
         z(19),
-        color(1, 33, 105),
+        color(46,139,87),
         "alert"
       ]);
     }
