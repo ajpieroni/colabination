@@ -99,7 +99,7 @@ export const load = {
 
     // !Metal Trail
     loadSprite("metal", "./assets/metal.png");
-    loadSprite("metalsheet", "./assets/metalsheet.png");
+    loadSprite("metalSheet", "./assets/metalSheet.png");
     loadSprite("aluminum", "./assets/aluminum.png");
     loadSprite("copper", "./assets/copper.png");
     loadSprite("gold", "./assets/gold.png");
