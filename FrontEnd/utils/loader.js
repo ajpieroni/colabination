@@ -9,8 +9,8 @@ export const load = {
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
     loadSprite("scissorstable", "./assets/scissorstable.png");
-    // solderingStationingStationtable
-    loadSprite("solderingStationingStationtable", "./assets/solderingStationingStationtable.png");
+    // solderingStationtable
+    loadSprite("solderingStationtable", "./assets/solderingStationtable.png");
     // sewingMachinetable
     loadSprite("sewingMachinetable", "./assets/sewingMachinetable.png");
     // cricuttable
@@ -76,7 +76,7 @@ export const load = {
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
 
-    loadSprite("solderingStation", "./assets/solderingStation.PNG");
+    loadSprite("solder", "./assets/solder.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
     loadSprite("backpack", "./assets/backpack.png");
     // !Sounds
