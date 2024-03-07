@@ -27,7 +27,6 @@ import { getCurrentItemInBackpack } from "./Vending.js";
 import { closeBackpack } from "./Vending.js";
 import { addItemToCraftWindow, selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd } from "./Collide.js";
-
 import {
   openBackpack,
   vendingLeft,
@@ -69,7 +68,7 @@ class Tutorial {
     Tools();
     // Map Sprites
     add([sprite("walk"), pos(0, 0), z(0), scale(0.5)]);
-    add([sprite("tables"), pos(0, 0), z(2), scale(0.5)]);
+    add([sprite("tables"), pos(0, 0), z(11), scale(0.5)]);
     map();
   }
   /**
@@ -403,6 +402,160 @@ class Tutorial {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
     });
+    function displayControlsOnPress(){
+      add([
+        rect(600, 550),
+        pos((1024 - 600) / 2, 175),
+        color(255, 255, 255),
+        opacity(0.5),
+        outline(6, rgb(255, 255, 255)),
+        "box",
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Controls"),
+        pos((1024 - 170) / 2, 210),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Keyboard", {
+          size: 28,
+        }),
+        pos((1024 - 140) / 2, 275),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Move ---------- WASD/Arrow Keys", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 310),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Select ------------------ Enter", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 345),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Back Pack --------------- Space", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 380),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Drop ------------------------ Q", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 415),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Menu ------------------------ M", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 450),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Game Cabinet", {
+          size: 28,
+        }),
+        pos((1024 - 160) / 2, 500),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Move ----------------- Joystick", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 535),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Select ---------------------- A", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 570),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Back Pack ------------------- A", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 605),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Drop ------------------------ B", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 640),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Menu --------------------- Menu", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 675),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+    }
     let readyToCraft = false;
     let isTutorialDone = false;
     
@@ -471,6 +624,12 @@ class Tutorial {
         play("bubble");
       }
     }
+    onKeyDown("m", () => {
+      displayControlsOnPress();
+    });
+    onKeyRelease("m", () => {
+      destroyAll("controls");
+    });
 
     let currentStep = 0; // Initialize a step counter
     let readyToComplete = false;
