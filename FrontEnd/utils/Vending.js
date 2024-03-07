@@ -108,7 +108,9 @@ export function openBackpack(inventoryState, craftState) {
       rect(70, 70),
       pos(393 - 200 + gridX * 86, 305 + gridY * 100),
       z(19),
-      color(255, 255, 255),
+      // color(255, 255, 255),
+      // outline(width?: number, color?: Color) => OutlineComp
+      outline(4, color(255, 255, 255)),
       "selected",
     ]);
     // Add the items into the backpack
