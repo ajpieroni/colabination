@@ -124,13 +124,13 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
     saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
-    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+    solderingStation = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
     mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
-    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+    solderingStation = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
 
 
 # Hat press is only used for one item: bowl
@@ -185,7 +185,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
-    Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
+    Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedglass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
@@ -204,11 +204,11 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
 
     # Metal: level 2
-    Combination.create(tool: solder, item1: aluminum, item2: aluminum, creation: CD)
+    Combination.create(tool: solderingStation, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
     Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
-    Combination.create(tool: solder, item1: metalbars, item2: thread, creation: chains)
+    Combination.create(tool: solderingStation, item1: metalbars, item2: thread, creation: chains)
 
     Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
     Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
@@ -219,15 +219,15 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
 
-    Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
+    Combination.create(tool: solderingStation, item1: chains, item2: metalbars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
-    Combination.create(tool: solder, item1: bowl, item2: bowl, creation: cauldron)
+    Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
     Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
 
 
     # Metal: level 4
-    Combination.create(tool: solder, item1: musicCD, item2: vinyl, creation: vinylCD)
+    Combination.create(tool: solderingStation, item1: musicCD, item2: vinyl, creation: vinylCD)
     Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
     Combination.create(tool: hammer, item1: gold, item2: hat, creation: crown)
     Combination.create(tool: hands, item1: armor, item2: doll, creation: knight)
