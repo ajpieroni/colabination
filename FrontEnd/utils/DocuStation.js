@@ -20,7 +20,7 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Add the title
   const closeText = add([
-    text("Press [ Escape ] To Close", { size: 24 }),
+    text("Press [ Backspace ] To Close", { size: 24 }),
     pos(100 + 500 - 50 - 100 - 100 - 25, 100 + 50 + 500),
     color(255, 255, 255),
     z(500),
@@ -141,8 +141,9 @@ export function showFinalItems(inventoryState, craftState) {
   }
 }
 
-export function closeDocumentationStation() {
+export function closeDocumentationStation(craftState, inventoryState) {
   destroyAll("final");
+  craftState.current = "moving";
 }
 
 export function chunkArray(array, chunkSize) {
@@ -168,7 +169,7 @@ export function docuLeft(inventoryState, craftState) {
   if (inventoryState.docuSelect > 0) {
     inventoryState.docuSelect--;
 
-    closeDocumentationStation();
+    closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }
@@ -183,7 +184,7 @@ export function docuRight(inventoryState, craftState) {
   const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 1) {
     inventoryState.docuSelect++;
-    closeDocumentationStation();
+    closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }
@@ -197,7 +198,7 @@ export function docuUp(inventoryState, craftState) {
   const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect > 2) {
     inventoryState.docuSelect -= 3;
-    closeDocumentationStation();
+    closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }
@@ -211,7 +212,7 @@ export function docuDown(inventoryState, craftState) {
   const actualIndex = startIndex + inventoryState.docuSelect;
   if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
     inventoryState.docuSelect += 3;
-    closeDocumentationStation();
+    closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }

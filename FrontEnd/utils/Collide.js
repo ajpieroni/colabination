@@ -28,7 +28,7 @@ export function handleCollideDocumentationStation(state, showFinalItems, invento
     });
 
     // Event Listener for 'escape' key
-    onKeyPress("escape", () => {
+    onKeyPress("backspace", () => {
       if (state.isDocVisible) {
         destroyAll("final");
         state.isDocVisible = false;
@@ -60,6 +60,9 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
+  if(toolDisplay === "Printer1" || toolDisplay === "Printer2"){
+    toolDisplay = "3D Printer";
+  }
   // checkCraftable(toolState, inventoryState);
 
   add([

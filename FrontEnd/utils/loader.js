@@ -8,9 +8,21 @@ export const load = {
     // arrows
     loadSprite("leftArrow", "./assets/leftArrow.png");
     loadSprite("rightArrow", "./assets/rightArrow.png");
+    loadSprite("scissorstable", "./assets/scissorstable.png");
+    // solderingStationtable
+    loadSprite("solderingStationtable", "./assets/solderingStationtable.png");
+    // sewingMachinetable
+    loadSprite("sewingMachinetable", "./assets/sewingMachinetable.png");
+    // cricuttable
+    loadSprite("cricuttable", "./assets/cricuttable.png");
+    //printer1table
+    loadSprite("printer1table", "./assets/printer1table.png");
+    //printer2table
+    loadSprite("printer2table", "./assets/printer2table.png");
     // loadSprite("walkable", "./assets/walkablelayer2.png")
-    loadSprite("walk", "./assets/walkable2048-1668.png");
-    loadSprite("tables", "./assets/avoid1024-834.png");
+    // loadSprite("walk", "./assets/walkable2048-1668.png");
+    loadSprite("walk", "./assets/walkable2048-1668spring.png");
+    loadSprite("tables", "./assets/startingtables.png");
     loadSprite("colabdoors", "./assets/colabsdoorsmall.jpeg");
     loadSprite("colablogo", "./assets/colablogo.png");
     loadSprite("characterSprite", "./assets/sprite.png");
@@ -29,6 +41,7 @@ export const load = {
     loadSprite("threadBall", "./assets/threadBall.png");
     loadSprite("sand", "./assets/sand.png");
     loadSprite("hourglass", "./assets/hourglass.png");
+    loadSprite("book", "./assets/book.png");
 
     loadSprite("glass", "./assets/glass.png");
     loadSprite("brokenGlass", "./assets/brokenGlass.png");
@@ -137,7 +150,7 @@ export const load = {
 
     // Unknown
     loadSprite("lightbulb", "./assets/lightbulb.png");
-    loadSprite("wagon", "./assets/benchy.png");
+    loadSprite("wagon", "./assets/wagon.png");
 
     //Developer sprites
     loadSprite("Alex", "./assets/1Alex.png");
