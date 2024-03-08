@@ -29,6 +29,7 @@ puts 'seeding'
 
 #Creating paper trail
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
+    cardboard = Item.create(name: 'cardboard', description: "Thick paper", item_type: 'material', rarity: 1, isFinal: false)
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1, isFinal: false)
     card = Item.create(name: 'card', description: 'Paper folded in half', item_type: 'material', rarity:1, isFinal: false)
     kite = Item.create(name: 'kite', description: 'Fly high!', item_type: 'material', rarity:1, isFinal: true)
@@ -164,6 +165,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 # Creating paper combos
 # !Paper combos: level 1
     Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
+    # cardboard
+    Combination.create(tool: hammer, item1: paper, item2: paper, creation: cardboard)
     Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
     Combination.create(tool: hands, item1: paper, item2: thread, creation: kite)
     Combination.create(tool: hands, item1:paper, item2: nothing, creation: card)
