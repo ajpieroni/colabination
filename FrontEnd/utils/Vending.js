@@ -105,10 +105,12 @@ export function openBackpack(inventoryState, craftState) {
 
     // Add the white box
     const selected = add([
-      rect(70, 70),
+      rect(75, 75),
       pos(393 - 200 + gridX * 86, 305 + gridY * 100),
       z(19),
-      color(255, 255, 255),
+      opacity(0.75),
+      color(WHITE),
+      outline(4, BLACK),
       "selected",
     ]);
     // Add the items into the backpack
@@ -187,10 +189,12 @@ export function vendingLeft(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       destroyAll("itemText");
@@ -256,10 +260,12 @@ export function vendingRight(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       // Destroy the item text and add a new one
@@ -382,10 +388,12 @@ export function vendingDown(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
     }
@@ -419,10 +427,12 @@ export function vendingUp(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       destroyAll("itemText");
