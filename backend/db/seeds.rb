@@ -59,7 +59,7 @@ puts 'seeding'
 # Creating metal trail
     aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)
     aluminumHat = Item.create(name:'aluminumHat', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: true)
-    metalsheet = Item.create(name:'metalsheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
+    metalSheet = Item.create(name:'metalSheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
     metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
@@ -101,6 +101,7 @@ fairytale = Item.create(name:'fairytale', description: "Dreams come true!", item
 
 # !UNKNOWN
 lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
+brokenScissors = Item.create(name:'brokenScissors', description: "Not useful anymore.", item_type: 'material', rarity: 1, isFinal: true)
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 
@@ -165,6 +166,12 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 # Creating paper combos
 # !Paper combos: level 1
     Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
+    Combination.create(tool: scissors, item1: metal, item2: nothing, creation: brokenScissors)
+    # also make broken scissors for 2 metal
+    Combination.create(tool: scissors, item1: metal, item2: metal, creation: brokenScissors)
+    # also for metalSheet
+    Combination.create(tool: scissors, item1: metalSheet, item2: nothing, creation: brokenScissors)
+    Combination.create(tool: scissors, item1: metalSheet, item2: metalSheet, creation: brokenScissors)
     # cardboard
     Combination.create(tool: hammer, item1: paper, item2: paper, creation: cardboard)
     Combination.create(tool: scissors, item1: paper, item2: nothing, creation: cutpaper)
@@ -194,7 +201,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
-    Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalsheet)
+    Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalSheet)
     Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
     Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
@@ -206,8 +213,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
     Combination.create(tool: solder, item1: metalbars, item2: thread, creation: chains)
 
-    Combination.create(tool: hatpress, item1: metalsheet, item2: nothing, creation: bowl)
-    Combination.create(tool: mill, item1: metalsheet, item2: wagon, creation: car)
+    Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
+    Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
 
 
     # Metal: level 3
