@@ -165,7 +165,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       y: block_size,
     },
     {
-      name: "cricutVinylCutter",
+      name: "cricut",
       sprite: "cricut",
       color: "red",
       area: true,
@@ -173,7 +173,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       pos: { x: 230 + 50 + 100, y: 710 + 3 },
       z: 1,
       tool: true,
-      toolKey: "cricutVinylCutter",
+      toolKey: "cricut",
       access: false,
       toolId: 4,
       x: block_size,
