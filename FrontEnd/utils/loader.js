@@ -75,6 +75,7 @@ export const load = {
     loadSprite("thread", "./assets/thread.png");
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
+    loadSprite("patch", "./assets/patch.png");
 
     loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");

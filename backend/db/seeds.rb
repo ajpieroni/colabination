@@ -116,6 +116,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     straw = Item.create(name: 'straw', description: "Dried grain, made out of string in this game...", item_type: "material", rarity: 1, isFinal: false)
     scarecrow = Item.create(name: 'scarecrow', description: "Almost human... scares the crows!", item_type: "material", rarity: 1, isFinal: true)
     shirt = Item.create(name: 'shirt', description: "Garment that covers your torso", item_type: "material", rarity: 1, isFinal: false)
+    patch = Item.create(name: 'patch', description: "Fixes holes in clothes", item_type: "material", rarity: 1, isFinal: true)
 
     # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
@@ -184,6 +185,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1: card, item2: wood, creation: book)
     # combination for cut paper + cricut = sticker
     Combination.create(tool: cricut, item1: cutpaper, item2: nothing, creation: sticker)
+    # cutcloth + cricut = patch
+    Combination.create(tool: cricut, item1: cutCloth, item2: nothing, creation: patch)
     
 # Glass combos:
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
