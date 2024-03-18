@@ -124,13 +124,12 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
     saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
-    solderingStation = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
     mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
-    solderingStation = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+    solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
 
 
 # Hat press is only used for one item: bowl
