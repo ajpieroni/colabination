@@ -205,7 +205,16 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     # Metal: level 2
     # solderingStation is id 7
     # aluminum is id 30
-    # http://localhost:8081/combinations?tool=7item1=30&item2=30
+    # http://localhost:8081/combinations?tool=11&item1=30&item2=30
+
+    # id: 28,
+    # is seeded correctly!! ugh
+#   tool_id: 11,
+#   item1_id: 30,
+#   item2_id: 30,
+#   creation_id: 38,
+#   created_at: Mon, 18 Mar 2024 14:56:10.049626000 UTC +00:00,
+#   updated_at: Mon, 18 Mar 2024 14:56:10.049626000 UTC +00:00>,
     Combination.create(tool: solderingStation, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
