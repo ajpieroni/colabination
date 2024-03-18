@@ -121,21 +121,24 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
-    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+    # hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
-    saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
+    # saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
-    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
-    screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
+    # lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+    # screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
-    mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+    # mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
     solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
+    printer1 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
 
 
-# Hat press is only used for one item: bowl
-    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
-# Laser Cutter is only used for one item: musicCD
-    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+
+# # Hat press is only used for one item: bowl
+#     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+# # Laser Cutter is only used for one item: musicCD
+#     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     
 # Sandpaper is not used
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
