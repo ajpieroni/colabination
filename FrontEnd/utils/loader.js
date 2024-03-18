@@ -79,6 +79,7 @@ export const load = {
     loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
     loadSprite("backpack", "./assets/backpack.png");
+    loadSprite("cutCloth", "./assets/benchy.png");
     // !Sounds
     loadSound("bubble", "./assets/bubble.m4a");
     loadSound("soundtrack", "./assets/soundtrack.mp3");
