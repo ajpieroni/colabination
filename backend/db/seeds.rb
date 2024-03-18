@@ -130,8 +130,8 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
     # mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
     solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
-    printer1 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
-    printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
 
 
 
@@ -201,7 +201,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalSheet)
-    Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+    # Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
     Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
 
@@ -224,12 +224,12 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
     Combination.create(tool: solderingStation, item1: metalbars, item2: thread, creation: chains)
 
-    Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
-    Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
+    # Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
+    # Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
 
 
     # Metal: level 3
-    Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
+    # Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
 
