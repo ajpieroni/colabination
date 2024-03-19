@@ -30,7 +30,6 @@ export const load = {
     loadSprite("blackpixelborder", "./assets/blackpixelborder.png");
     loadSprite("PLAalert", "./assets/PLAalert.png");
     loadSprite("noItems", "./assets/noItems.png");
-    loadSprite("cricutAlertBox", "./assets/machine1AlertBox.png");
     loadSprite("brokenScissors", "./assets/brokenScissors.png");
     loadSprite("cardboard", "./assets/cardboard.png");
     loadSprite("cricut", "./assets/cricut-transparent.png");
@@ -64,6 +63,7 @@ export const load = {
     loadSprite("woodsheet", "./assets/benchy.png");
     loadSprite("macrame", "./assets/macrame.png");
     loadSprite("aluminumHat", "./assets/aluminumHat.png");
+    loadSprite("sticker", "./assets/sticker.png");
 
     // loadSprite("trash", "./assets/dubious_trash.PNG")
     loadSprite("woodAlert", "./assets/colablogo.png");
@@ -76,10 +76,12 @@ export const load = {
     loadSprite("thread", "./assets/thread.png");
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
+    loadSprite("patch", "./assets/patch.png");
 
-    loadSprite("solder", "./assets/solder.PNG");
+    loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
     loadSprite("backpack", "./assets/backpack.png");
+    loadSprite("cutCloth", "./assets/benchy.png");
     // !Sounds
     loadSound("bubble", "./assets/bubble.m4a");
     loadSound("soundtrack", "./assets/soundtrack.mp3");
