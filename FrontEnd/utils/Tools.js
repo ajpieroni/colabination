@@ -132,6 +132,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 2,
       x: block_size * 1.65,
       y: block_size * 1,
+      info: "Besides scissors, you'll find wrenches, pliers, screwdrivers, hammers, and measuring tapes in the TEC!",
     },
     {
       name: "solderingStation",
@@ -316,6 +317,7 @@ export function addToolToGame(newTool) {
     { toolKey: `${newTool.toolKey}` },
     { access: false },
     { toolId: newTool.toolId },
+    { info: newTool.info },
   ]);
   console.log(`${newTool.toolKey}table`);
   const toolSprite = add([
@@ -363,6 +365,18 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
   const toolAlert = add([
     "toolAlert",
     text(`You've discovered a new tool, the ${toolName}!`, {
+      size: 24,
+      outline: 4,
+      color: (0, 0, 0),
+    }),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100 - 500),
+    z(11),
+  ]);
+  const toolInfo = add([ 
+    "toolAlert",
+    text(`${newTool.info}`, {
       size: 24,
       outline: 4,
       color: (0, 0, 0),
