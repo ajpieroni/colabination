@@ -165,6 +165,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 11,
       x: block_size * 1.5,
       y: block_size,
+      info: "The Singer Heavy Duty 4423 excels with tough materials like leather, while the Brother CS7000X offers versatility for various fabrics."
     },
     {
       name: "cricut",
