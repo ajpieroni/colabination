@@ -148,6 +148,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 7,
       x: block_size * 2.25,
       y: block_size,
+      info: "The soldering iron is also useful for embedding threaded inserts in 3D prints."
     },
     {
       name: "sewingMachine",
