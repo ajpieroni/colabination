@@ -132,7 +132,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 2,
       x: block_size * 1.65,
       y: block_size * 1,
-      info: "You can find wrenches, pliers, screwdrivers, hammers, and measuring tapes at the TEC!",
+      info: "You can find wrenches, pliers, screwdrivers, hammers, and measuring   tapes at the TEC!",
     },
     {
       name: "solderingStation",
@@ -165,7 +165,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 11,
       x: block_size * 1.5,
       y: block_size,
-      info: "The Singer Heavy Duty 4423 excels with tough materials like leather, while the Brother CS7000X offers versatility for various fabrics."
+      info: "The Singer Heavy Duty 4423 excels with tough materials like leather,  while the Brother CS7000X offers versatility for various fabrics."
     },
     {
       name: "cricut",
@@ -241,9 +241,10 @@ export function addNewTool(toolState, showAlert, inventoryState) {
         anchor("center"),
         pos(500, 500 + 100 - 500 - 25),
         z(5),
-        color(242, 140, 40),
+        color(242, 140, 30),
         "toolAlert",
       ]);
+      
       const exitAlert = add([
         "toolAlert",
         // rgb for black is (0, 0, 0)
@@ -352,7 +353,9 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
   let toolName = parseRegexString(addedTool.toolKey);
   console.log(addedTool.info.length)
   let toolInfo = addedTool.info;
+  let toolInfoExtend = null;
   // if the tool info is too long, add it to another text vairable adn add another block
+  
   if(toolInfo.length > 50){
     toolInfo = toolInfo.substring(0, 70)
     toolInfoExtend = addedTool.info.substring(70, addedTool.info.length)
