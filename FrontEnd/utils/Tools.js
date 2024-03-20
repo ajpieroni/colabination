@@ -132,7 +132,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 2,
       x: block_size * 1.65,
       y: block_size * 1,
-      info: "Besides scissors, you'll find wrenches, pliers, screwdrivers, hammers, and measuring tapes in the TEC!",
+      info: "You can find wrenches, pliers, screwdrivers, hammers, and measuring tapes at the TEC!",
     },
     {
       name: "solderingStation",
@@ -348,7 +348,7 @@ export function checkForToolAddition(inventoryState, toolState) {
 export function addToolAlert(showAlert, addedTool, inventoryState) {
   destroyAll("toolAlert");
   let toolName = parseRegexString(addedTool.toolKey);
-  let toolInfo = parseRegexString(addedTool.info);
+  let toolInfo = addedTool.info;
   // if (tools[i].toolKey === "printer1") {
   //   addToolToGame(tools[i + 1]);
   //   currentToolToBeAdded = "3d Printers";
@@ -380,17 +380,26 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     pos(500, 500 + 100 - 500),
     z(11),
   ]);
-  const toolInfoText = add([ 
+  const toolInfoText = add([
     "toolAlert",
     text(`${toolInfo}`, {
-      size: 24,
+      size: 16,
       outline: 4,
       color: (0, 0, 0),
     }),
     area(),
     anchor("center"),
-    pos(500, 500 + 100 - 500),
+    pos(500, 500 + 100),
     z(11),
+  ]);
+  const toolInfoBlock = add([
+    rect(500 + 200 + 200, 50 * 2),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100),
+    z(10),
+    color(242, 140, 40),
+    "toolAlert",
   ]);
   const toolAlertBox = add([
     rect(500 + 200 + 200, 50 * 2),
