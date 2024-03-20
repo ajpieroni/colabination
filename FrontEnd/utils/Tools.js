@@ -287,12 +287,13 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
       destroyAll("temp");
-      currentToolToBeAdded = tools[i].toolKey;
+      let currentToolNameToBeAdded = tools[i].toolKey;
+      currentToolToBeAdded = tools[i];
 
       // if added printer 1, also add printer 2
       if (tools[i].toolKey === "printer1") {
         addToolToGame(tools[i + 1]);
-        currentToolToBeAdded = "3d Printers";
+        currentToolNameToBeAdded = "3d Printers";
       }
       break;
     }
@@ -346,7 +347,12 @@ export function checkForToolAddition(inventoryState, toolState) {
 
 export function addToolAlert(showAlert, addedTool, inventoryState) {
   destroyAll("toolAlert");
-  let toolName = parseRegexString(addedTool);
+  let toolName = parseRegexString(addedTool.toolKey);
+  let toolInfo = parseRegexString(addedTool.info);
+  // if (tools[i].toolKey === "printer1") {
+  //   addToolToGame(tools[i + 1]);
+  //   currentToolToBeAdded = "3d Printers";
+  // }
   const itemAlert = add([
     "toolAlert",
     text(
@@ -374,9 +380,9 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     pos(500, 500 + 100 - 500),
     z(11),
   ]);
-  const toolInfo = add([ 
+  const toolInfoText = add([ 
     "toolAlert",
-    text(`${newTool.info}`, {
+    text(`${toolInfo}`, {
       size: 24,
       outline: 4,
       color: (0, 0, 0),
