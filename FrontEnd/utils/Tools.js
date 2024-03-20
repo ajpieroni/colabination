@@ -419,10 +419,10 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     ]);
   }
   const toolInfoBlock = add([
-    rect(500 + 200 + 200, 50 * 2),
+    rect(500 + 200 + 200, 60 * 2),
     area(),
     anchor("center"),
-    pos(500, 500 + 100),
+    pos(500, 500 + 100+25),
     z(10),
     color(242, 140, 40),
     "toolAlert",
