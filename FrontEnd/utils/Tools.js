@@ -181,6 +181,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 8,
       x: block_size,
       y: block_size,
+      info: "Craft effortlessly with the Cricut Cutter: cut vinyl, paper, fabric.  Save settings, add offsets, laminate for durability. Bring your laptop and materials!",
     },
     {
       name: "printer1",
@@ -196,6 +197,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 4,
       x: block_size,
       y: block_size * 2,
+      info: "Use the Ultimaker S3 for 3D printing with free PLA, available 24/7 at TEC. For diverse materials, try Ultimaker S5 at TEC."
     },
     {
       name: "printer2",
@@ -351,6 +353,7 @@ export function checkForToolAddition(inventoryState, toolState) {
 export function addToolAlert(showAlert, addedTool, inventoryState) {
   destroyAll("toolAlert");
   let toolName = parseRegexString(addedTool.toolKey);
+  console.log(toolName)
   console.log(addedTool.info.length)
   let toolInfo = addedTool.info;
   let toolInfoExtend = null;
