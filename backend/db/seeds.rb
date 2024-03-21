@@ -107,6 +107,9 @@ brokenScissors = Item.create(name:'brokenScissors', description: "Not useful any
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
+metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
+birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 'material', rarity: 1, isFinal: true)
+
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
@@ -246,7 +249,7 @@ envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 
     # Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
-
+    Combination.create(tool: hammer, item1: woodPlank, item2: nail, creation: table)
     Combination.create(tool: solderingStation, item1: chains, item2: metalbars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
     Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
