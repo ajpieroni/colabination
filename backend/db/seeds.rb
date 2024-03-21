@@ -38,7 +38,7 @@ puts 'seeding'
     party = Item.create(name: 'party', description: 'Fun gathering for celebration', item_type: 'material', rarity: 1, isFinal: true)
     woodPlank = Item.create(name: 'woodPlank', description: 'A flat piece of wood', item_type: 'material', rarity: 1, isFinal: false)
     book = Item.create(name: 'book', description: 'A collection of paper', item_type: 'material', rarity: 1, isFinal: true)
-
+    sticker = Item.create(name: 'sticker', description: 'Adhesive paper', item_type: 'material', rarity: 1, isFinal: true)
     table = Item.create(name:'table', description: "For coffee!", item_type: 'material', rarity: 1, isFinal: false)
 # Creating glass trail
     sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
@@ -109,7 +109,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
     cloth = Item.create(name:'cloth', description: "Makes clothes!", item_type: "material", rarity: 1, isFinal: false)
-    cutCloth = Item.create(name: 'cut cloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
+    cutCloth = Item.create(name: 'cutCloth', description: "Cloth, but cut...", item_type: "material", rarity: 1, isFinal: false)
     embroiderythread = Item.create(name: 'embroidery thread', description: 'Thread, but fancier', item_type: "material", rarity: 1, isFinal: false)
     yarn = Item.create(name: 'yarn', description: "Thick, warm string", item_type: "material", rarity: 1, isFinal: false)
     skirt = Item.create(name: 'skirt', description: "Flowy, covers some part of your legs", item_type: "material", rarity: 1, isFinal: false)
@@ -117,27 +117,30 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     straw = Item.create(name: 'straw', description: "Dried grain, made out of string in this game...", item_type: "material", rarity: 1, isFinal: false)
     scarecrow = Item.create(name: 'scarecrow', description: "Almost human... scares the crows!", item_type: "material", rarity: 1, isFinal: true)
     shirt = Item.create(name: 'shirt', description: "Garment that covers your torso", item_type: "material", rarity: 1, isFinal: false)
+    patch = Item.create(name: 'patch', description: "Fixes holes in clothes", item_type: "material", rarity: 1, isFinal: true)
 
     # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
     hands = Tool.create(name: 'hands', description: 'Use your hands to craft things', globalCount: 100)
-    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+    # hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
-    saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
-    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+    # saw = Tool.create(name: "saw", description: "Useful for bigger cuts", globalCount: 1)
     cricut = Tool.create(name: "cricut vinyl cutter", description: "Makes stickers", globalCount: 1)
-    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
-    screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
+    # lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+    # screwdriver = Tool.create(name: "screwdriver", description: "Useful for securing materials together", globalCount: 1)
     sewingmachine = Tool.create(name: "sewing machine", description: "Useful for sewing", globalCount: 1)
-    mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
-    solder = Tool.create(name: "soldering rod", description: "Melts things together", globalCount: 1)
+    # mill = Tool.create(name: "mill", description: "Mills and such.", globalCount: 1)
+    solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
+    printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
 
 
-# Hat press is only used for one item: bowl
-    hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
-# Laser Cutter is only used for one item: musicCD
-    lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
+
+# # Hat press is only used for one item: bowl
+#     hatpress = Tool.create(name: 'hat press', description: "Useful for making things round", globalCount: 1)
+# # Laser Cutter is only used for one item: musicCD
+#     lasercutter = Tool.create(name: "laser cutter", description: "Extremely precise cuts", globalCount: 1)
     
 # Sandpaper is not used
     # sandpaper = Tool.create(name: "sandpaper", description: "Useful for smoothing things out", globalCount: 1)
@@ -183,12 +186,16 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: scissors, item1: cutpaper, item2: nothing, creation: confetti)
     Combination.create(tool: hands, item1: confetti, item2: card, creation: party)
     Combination.create(tool: hands, item1: card, item2: wood, creation: book)
+    # combination for cut paper + cricut = sticker
+    Combination.create(tool: cricut, item1: cutpaper, item2: nothing, creation: sticker)
+    # cutcloth + cricut = patch
+    Combination.create(tool: cricut, item1: cutCloth, item2: nothing, creation: patch)
     
 # Glass combos:
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
-    Combination.create(tool: solder, item1: window, item2: nothing, creation: stainedglass)
+    Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedglass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
@@ -202,35 +209,47 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalSheet)
-    Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+    # Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
     Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
 
     # Metal: level 2
-    Combination.create(tool: solder, item1: aluminum, item2: aluminum, creation: CD)
+    # solderingStation is id 7
+    # aluminum is id 30
+    # http://localhost:8081/combinations?tool=11&item1=30&item2=30
+
+    # id: 28,
+    # is seeded correctly!! ugh
+#   tool_id: 11,
+#   item1_id: 30,
+#   item2_id: 30,
+#   creation_id: 38,
+#   created_at: Mon, 18 Mar 2024 14:56:10.049626000 UTC +00:00,
+#   updated_at: Mon, 18 Mar 2024 14:56:10.049626000 UTC +00:00>,
+    Combination.create(tool: solderingStation, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
     Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
-    Combination.create(tool: solder, item1: metalbars, item2: thread, creation: chains)
+    Combination.create(tool: solderingStation, item1: metalbars, item2: thread, creation: chains)
 
-    Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
-    Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
+    # Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
+    # Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
 
 
     # Metal: level 3
-    Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
+    # Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
 
-    Combination.create(tool: solder, item1: chains, item2: metalbars, creation: prison)
+    Combination.create(tool: solderingStation, item1: chains, item2: metalbars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
-    Combination.create(tool: solder, item1: bowl, item2: bowl, creation: cauldron)
+    Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
     Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
 
 
     # Metal: level 4
-    Combination.create(tool: solder, item1: musicCD, item2: vinyl, creation: vinylCD)
+    Combination.create(tool: solderingStation, item1: musicCD, item2: vinyl, creation: vinylCD)
     Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
     Combination.create(tool: hammer, item1: gold, item2: hat, creation: crown)
     Combination.create(tool: hands, item1: armor, item2: doll, creation: knight)
