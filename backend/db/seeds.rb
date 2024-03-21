@@ -268,6 +268,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: hands, item1: diningTable, item2: doll, creation: family)
     # Street
     Combination.create(tool: hands, item1: stoplight, item2: car, creation: street)
+    Combination.create(tool: hammer, item1: metalSheet, item2: nail, creation: metalSculpture)
+    Combination.create(tool: hammer, item1: wood, item2: nail, creation: birdhouse)
 
 
     # Metal: level 5
