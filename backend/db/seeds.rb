@@ -44,7 +44,7 @@ puts 'seeding'
     sand = Item.create(name: 'sand', description: "Tiny rocks!", item_type: 'material', rarity: 1, isFinal: false)
     sandpaper = Item.create(name: 'sandpaper', description: "For smoothing things out", item_type: 'material', rarity: 1, isFinal: false)
     hourglass = Item.create(name: 'hourglass', description: "Time is running out!", item_type: 'material', rarity: 1, isFinal: true)
-    stainedglass = Item.create(name:'stainedglass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
+    stainedGlass = Item.create(name:'stainedGlass', description: "colorful window! looks good in sunlight", item_type: 'material', rarity: 1)
     window = Item.create(name: 'window', description: "helps you look outside from inside", item_type: "material", rarity: 1)
     brokenGlass = Item.create(name: 'brokenGlass', description: "ouch!", item_type: "material", rarity: 1, isFinal: false)
     wheel = Item.create(name: 'wheel', description: "For rolling!", item_type: "material", rarity: 1, isFinal: false)
@@ -195,7 +195,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hands, item1: sand, item2: glass, creation: hourglass)
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
-    Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedglass)
+    Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedGlass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)

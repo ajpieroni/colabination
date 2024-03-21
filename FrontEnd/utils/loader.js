@@ -49,7 +49,7 @@ export const load = {
     loadSprite("sandpaper", "./assets/sandpaper.png");
     loadSprite("wheel", "./assets/wheel.png");
 
-    loadSprite("stainedglass", "./assets/stainedglass.png");
+    loadSprite("stainedGlass", "./assets/stainedGlass.png");
     loadSprite("window", "./assets/window.png");
     loadSprite("trash", "./assets/dubious_trash.PNG");
     loadSprite("cut paper", "./assets/cutpaper3.png");
