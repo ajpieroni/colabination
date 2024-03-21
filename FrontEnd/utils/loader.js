@@ -77,6 +77,11 @@ export const load = {
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
     loadSprite("patch", "./assets/patch.png");
+    
+    loadSprite("notebook, notebook.png");
+    loadSprite("magnifyingGlass", "./assets/magnifyingGlass.png");
+    loadSprite("nail", "./assets/nail.png");
+    loadSprite("envelope", "./assets/envelope.png");  
 
     loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");

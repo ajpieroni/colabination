@@ -28,6 +28,7 @@ puts 'seeding'
 
 
 #Creating paper trail
+    notebook = Item.create(name: 'notebook', description: 'For writing!', item_type: 'material', rarity: 1, isFinal: true)
     wood = Item.create(name: 'wood', description: "It comes from trees", item_type:"material", rarity:1, isFinal: false)
     cardboard = Item.create(name: 'cardboard', description: "Thick paper", item_type: 'material', rarity: 1, isFinal: false)
     cutpaper = Item.create(name: 'cut paper', description: 'Sheet of paper, but cut', item_type: 'material', rarity: 1, isFinal: false)
@@ -55,11 +56,12 @@ puts 'seeding'
     doll = Item.create(name:'doll', description: "How cute.", item_type: 'material', rarity: 1, isFinal: false)
     jacket = Item.create(name:'jacket', description: "For keeping warm.", item_type: 'material', rarity: 1, isFinal: false)
     box = Item.create(name:'box', description: "For storage.", item_type: 'material', rarity: 1, isFinal: false)
-
+    magnifyingGlass = Item.create(name:'magnifyingGlass', description: "For seeing small things.", item_type: 'material', rarity: 1, isFinal: true)
 # Creating metal trail
     aluminum = Item.create(name:'aluminum', description: "Bendy!", item_type: 'material', rarity: 1, isFinal: false)
     aluminumHat = Item.create(name:'aluminumHat', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: true)
     metalSheet = Item.create(name:'metalSheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
+    nail = Item.create(name:'nail', description: "For hammering!", item_type: 'material', rarity: 1, isFinal: false)
     metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
@@ -104,7 +106,7 @@ lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'm
 brokenScissors = Item.create(name:'brokenScissors', description: "Not useful anymore.", item_type: 'material', rarity: 1, isFinal: true)
 wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
-
+envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
@@ -168,8 +170,11 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 
 # Creating paper combos
 # !Paper combos: level 1
+    Combination.create(tool: hands, item1: paper, item2: paper, creation: envelope)
+    Combination.create(tool: hammer, item1: metalSheet, item2: nothing, creation: nail)
     Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
     Combination.create(tool: scissors, item1: metal, item2: nothing, creation: brokenScissors)
+    Combination.create(tool: sewingmachine, item1:paper, item2: thread, creation: notebook )
     # also make broken scissors for 2 metal
     Combination.create(tool: scissors, item1: metal, item2: metal, creation: brokenScissors)
     # also for metalSheet
@@ -196,6 +201,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
     Combination.create(tool: hammer, item1: glass, item2: wood, creation: window)
     Combination.create(tool: hammer, item1: glass, item2: nothing, creation: brokenGlass)
     Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedGlass)
+    Combination.create(tool: solderingStation, item1: glass, item2: metal, creation: magnifyingGlass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
