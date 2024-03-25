@@ -218,6 +218,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalSheet)
+    Combination.create(tool: hammer, item1: metalSheet, item2: metalSheet, creation: metalbars)
+
     # Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
     Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
