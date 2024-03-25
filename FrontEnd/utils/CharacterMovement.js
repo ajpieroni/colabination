@@ -184,6 +184,7 @@ class CharacterMovement {
       // hasDiscovered: hashset
       hasDiscovered: new Set(),
       lastStored: new Set(),
+      adding: false,
     };
 
     intiailizeUser(inventoryState, toolState);
@@ -317,6 +318,7 @@ class CharacterMovement {
       closeCraftWindow(craftState, inventoryState, toolState);
 
       console.log("should be checking for tool ");
+      console.log(inventoryState.vendingContents.length)
       if (craftState.current === "documentation") {
         closeDocumentationStation(craftState, inventoryState);
       }
