@@ -110,6 +110,8 @@ export const load = {
 
     // !Metal Trail
     loadSprite("metalBars", "./assets/metalBars.png")
+    loadSprite("hat","./assets/hat.png")
+    loadSprite("lightbulb","./assets/lightbulb.png")
     loadSprite("metal", "./assets/metal.png");
     loadSprite("metalSheet", "./assets/metalSheet.png");
     loadSprite("aluminum", "./assets/aluminum.png");

@@ -264,6 +264,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: solderingStation, item1: musicCD, item2: vinyl, creation: vinylCD)
     Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
     Combination.create(tool: hammer, item1: gold, item2: hat, creation: crown)
+    Combination.create(tool: hammer, item1: bowl, item2: cloth, creation: hat)
     Combination.create(tool: hands, item1: armor, item2: doll, creation: knight)
     # Witch
     Combination.create(tool: hands, item1: cauldron, item2: doll, creation: witch)
