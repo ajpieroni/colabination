@@ -239,6 +239,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
 #   updated_at: Mon, 18 Mar 2024 14:56:10.049626000 UTC +00:00>,
     Combination.create(tool: solderingStation, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
+    Combination.create(tool: solder, item1: wire, item2: glass, creation: lightbulb)
 
     Combination.create(tool: hammer, item1: metalBars, item2: lightbulb, creation: lamp)
     Combination.create(tool: solderingStation, item1: metalBars, item2: thread, creation: chains)
