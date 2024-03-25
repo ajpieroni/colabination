@@ -62,7 +62,7 @@ puts 'seeding'
     aluminumHat = Item.create(name:'aluminumHat', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: true)
     metalSheet = Item.create(name:'metalSheet', description: "Metal, but a sheet of it.", item_type: 'material', rarity: 1, isFinal: false)
     nail = Item.create(name:'nail', description: "For hammering!", item_type: 'material', rarity: 1, isFinal: false)
-    metalbars = Item.create(name:'metalbars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
+    metalBars = Item.create(name:'metalBars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
     wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
@@ -218,9 +218,9 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
     Combination.create(tool: hammer, item1: metal, item2: nothing, creation: metalSheet)
-    Combination.create(tool: hammer, item1: metalSheet, item2: metalSheet, creation: metalbars)
+    Combination.create(tool: hammer, item1: metalSheet, item2: metalSheet, creation: metalBars)
 
-    # Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalbars)
+    # Combination.create(tool: mill, item1: metal, item2: nothing, creation: metalBars)
     Combination.create(tool: hammer, item1: aluminum, item2: nothing, creation: aluminumFoil)
     Combination.create(tool: hands, item1: aluminumFoil, item2: nothing, creation: aluminumHat)
 
@@ -240,8 +240,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: solderingStation, item1: aluminum, item2: aluminum, creation: CD)
     Combination.create(tool: hammer, item1: aluminum, item2: aluminum, creation: copper)
 
-    Combination.create(tool: hammer, item1: metalbars, item2: lightbulb, creation: lamp)
-    Combination.create(tool: solderingStation, item1: metalbars, item2: thread, creation: chains)
+    Combination.create(tool: hammer, item1: metalBars, item2: lightbulb, creation: lamp)
+    Combination.create(tool: solderingStation, item1: metalBars, item2: thread, creation: chains)
 
     # Combination.create(tool: hatpress, item1: metalSheet, item2: nothing, creation: bowl)
     # Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
@@ -252,7 +252,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
     Combination.create(tool: hammer, item1: woodPlank, item2: nail, creation: table)
-    Combination.create(tool: solderingStation, item1: chains, item2: metalbars, creation: prison)
+    Combination.create(tool: solderingStation, item1: chains, item2: metalBars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
     Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
     Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)

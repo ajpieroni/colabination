@@ -109,6 +109,7 @@ export const load = {
     loadSprite("mountains", "./assets/pixelbg2.jpeg");
 
     // !Metal Trail
+    loadSprite("metalBars", "./assets/metalBars.png")
     loadSprite("metal", "./assets/metal.png");
     loadSprite("metalSheet", "./assets/metalSheet.png");
     loadSprite("aluminum", "./assets/aluminum.png");
