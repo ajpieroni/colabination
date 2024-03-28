@@ -23,11 +23,15 @@ class ToolsController < ApplicationController
   def edit
   end
  # GET /tools/:id/creations
-  def show_creations
-    puts(@tool)
-    @creations = Item.creations_by_tool(@tool)
-    render json: @creations
+ def show_creations
+  creations = Item.creations_by_tool(params[:id])
+  if creations.any?
+    render json: creations
+  else
+    render json: { message: "No creations found for this tool." }, status: :not_found
   end
+end
+
 
 
   # POST /tools or /tools.json
