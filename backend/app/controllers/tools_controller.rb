@@ -24,7 +24,8 @@ class ToolsController < ApplicationController
   end
  # GET /tools/:id/creations
   def show_creations
-    @creations = Item.creations_by_tool(@tool.id)
+    puts(@tool)
+    @creations = Item.creations_by_tool(@tool)
     render json: @creations
   end
 
@@ -69,6 +70,7 @@ class ToolsController < ApplicationController
   end
 
   def find_by_name
+
 @tool = Tool.find_by(name: params[:name])
     
     if @tool

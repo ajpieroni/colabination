@@ -10,7 +10,8 @@ class Item < ApplicationRecord
     has_many :creations, :class_name => 'Combination', :foreign_key => 'creation_id'
     
     scope :creations_by_tool, ->(tool_id) {
-    joins(item1s: :tool).where(combinations: {tool_id: tool_id})
-    .or(joins(item2s: :tool).where(combinations: {tool_id: tool_id}))
+    where(id: 
+      Combination.where(tool_id: tool_id).select(:creation_id)
+    )
   }
 end
