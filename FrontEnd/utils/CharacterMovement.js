@@ -105,6 +105,7 @@ class CharacterMovement {
       // There is either one or two items placed in the crafting window
       readyToCraft: false,
       hint: false,
+      hintId: "",
     };
 
     // Inventory Control
@@ -278,7 +279,12 @@ class CharacterMovement {
     });
     onKeyPress("h", () => {
       craftState.hint = true;
-      console.log(toolState)
+      console.log(toolState.currentTool.id)
+      let hintId = toolState.currentTool.id;
+      craftState.hintId = hintId;
+
+
+
     });
     // !NEW CRAFT
     onKeyPress("enter", () => {

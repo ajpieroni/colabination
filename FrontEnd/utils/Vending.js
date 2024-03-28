@@ -529,20 +529,21 @@ export function addItemToBackpack(inventoryState, resultItem) {
 
 export function getBackpackItems(inventoryState, craftState, toolState) {
   // console.log("here is tool state!!!", toolState)
-  // if (craftState.hint) {
-  //   // getCombinableItemKeys(toolState.currentTool.toolId, (data) => {
-  //   //   let combinableItems = data;
-  //   //   let backpackItems = inventoryState.vendingContents;
-  //   //   let filteredContents = backpackItems.filter((item) =>
-  //   //     combinableItems.includes(item.itemKey)
-  //   //   );
-  //   //   return filteredContents;
-  //   // });
-  // } else {
+  if (craftState.hint) {
+    console.log(craftState.hintId);
+    getCombinableItemKeys(craftState.hintId, (data) => {
+      let combinableItems = data;
+      let backpackItems = inventoryState.vendingContents;
+      let filteredContents = backpackItems.filter((item) =>
+        combinableItems.includes(item.itemKey)
+      );
+      return filteredContents;
+    });
+  } else {
     let backpackItems = inventoryState.vendingContents;
     // console.log(backpackItems);
     return backpackItems;
-  
+  }
 }
 
 export function getCombinableItemKeys(toolId, callback) {
