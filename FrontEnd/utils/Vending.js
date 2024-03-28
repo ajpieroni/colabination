@@ -537,6 +537,8 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
       let filteredContents = backpackItems.filter((item) =>
         combinableItems.includes(item.itemKey)
       );
+      console.log(filteredContents);
+      console.log(backpackItems);
       return filteredContents;
     });
   } else {
