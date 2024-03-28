@@ -278,6 +278,7 @@ class CharacterMovement {
     });
     onKeyPress("h", () => {
       craftState.hint = true;
+      console.log(toolState)
     });
     // !NEW CRAFT
     onKeyPress("enter", () => {

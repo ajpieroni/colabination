@@ -179,6 +179,7 @@ export function closeBackpack() {
 }
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState, toolState) {
+  // console.log(toolState.currentTool)
   console.log("PRESSED LEFT");
   let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
   let totalcontents = chunkArray(backpackItems, 9);
@@ -527,29 +528,28 @@ export function addItemToBackpack(inventoryState, resultItem) {
 }
 
 export function getBackpackItems(inventoryState, craftState, toolState) {
-  if (craftState.hint){
-    getCombinableItemKeys(toolState.toolId, (data) => {
-      let combinableItems = data;
-      let backpackItems = inventoryState.vendingContents;
-      let filteredContents = backpackItems.filter((item) =>
-        combinableItems.includes(item.itemKey)
-      );
-      return filteredContents;
-    }
-  }else{
+  // console.log("here is tool state!!!", toolState)
+  // if (craftState.hint) {
+  //   // getCombinableItemKeys(toolState.currentTool.toolId, (data) => {
+  //   //   let combinableItems = data;
+  //   //   let backpackItems = inventoryState.vendingContents;
+  //   //   let filteredContents = backpackItems.filter((item) =>
+  //   //     combinableItems.includes(item.itemKey)
+  //   //   );
+  //   //   return filteredContents;
+  //   // });
+  // } else {
     let backpackItems = inventoryState.vendingContents;
-    console.log(backpackItems)
+    // console.log(backpackItems);
     return backpackItems;
-  }
   
 }
 
-export function getCombinableItemKeys(toolId, callback){
-    fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
-      .then(response => response.json())
-      .then(data => {
-        callback(data);
-      })
-      .catch(error => console.error('Error fetching combinable items:', error));
-  
+export function getCombinableItemKeys(toolId, callback) {
+  fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
+    .then((response) => response.json())
+    .then((data) => {
+      callback(data);
+    })
+    .catch((error) => console.error("Error fetching combinable items:", error));
 }
