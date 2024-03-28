@@ -11,8 +11,15 @@ export function openBackpack(inventoryState, craftState, toolState) {
   inventoryState.vendingContents.sort((a, b) =>
     a.itemKey.localeCompare(b.itemKey)
   );
+
+  let backpackItems = inventoryState.vendingContents;
+  // let filteredContents =
+  // if (craftState.hint){
+  //   let 
+  // } 
+
   // Pagination logic
-  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
@@ -21,7 +28,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
 
   // Arrows
   if (totalcontents.length > 1) {
-    let total_items = inventoryState.vendingContents.length;
+    let total_items = backpackItems.length;
     // 55 total items
 
     const pageText = add([
@@ -49,7 +56,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
     ]);
   }
   if (
-    inventoryState.vendingContents.length > 9 &&
+    backpackItems.length > 9 &&
     currentPage < totalcontents.length - 1
   ) {
     const downArrow = add([
@@ -176,7 +183,8 @@ export function closeBackpack() {
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState, toolState) {
   console.log("PRESSED LEFT");
-  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
+  let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
 
@@ -197,7 +205,7 @@ export function vendingLeft(inventoryState, craftState, toolState) {
       const itemsPerPage = 9;
       const startIndex = inventoryState.vendingPage * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
-      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      let itemText = backpackItems[actualIndex]?.itemKey;
       // Remove the selected box and add a new one
       destroyAll("selected");
       let gridX = inventoryState.vendingSelect % 3;
@@ -243,7 +251,8 @@ export function vendingLeft(inventoryState, craftState, toolState) {
 // Right selection in backpack
 export function vendingRight(inventoryState, craftState, toolState) {
   // Pagination logic
-  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
+  let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
 
@@ -267,7 +276,7 @@ export function vendingRight(inventoryState, craftState, toolState) {
       const itemsPerPage = 9;
       const startIndex = inventoryState.vendingPage * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
-      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      let itemText = backpackItems[actualIndex]?.itemKey;
 
       // Destroy the selected box and add a new one
       destroyAll("selected");
@@ -315,7 +324,9 @@ export function vendingRight(inventoryState, craftState, toolState) {
 // Down selection in backpack
 export function vendingDown(inventoryState, craftState, toolState) {
   console.log("pressed down");
-  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
+
+  let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
   // If the popUp is open
@@ -373,7 +384,7 @@ export function vendingDown(inventoryState, craftState, toolState) {
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
       // Add item text
-      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      let itemText = backpackItems[actualIndex]?.itemKey;
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         let resultDisplay = itemText
@@ -416,7 +427,9 @@ export function vendingDown(inventoryState, craftState, toolState) {
 
 // Up selection in backpack
 export function vendingUp(inventoryState, craftState, toolState) {
-  let totalcontents = chunkArray(inventoryState.vendingContents, 9);
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
+
+  let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
   if (craftState.popUp) {
@@ -454,7 +467,7 @@ export function vendingUp(inventoryState, craftState, toolState) {
       const startIndex = inventoryState.vendingPage * itemsPerPage;
       const actualIndex = startIndex + inventoryState.vendingSelect;
 
-      let itemText = inventoryState.vendingContents[actualIndex]?.itemKey;
+      let itemText = backpackItems[actualIndex]?.itemKey;
       if (itemText) {
         itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
         let resultDisplay = itemText
@@ -484,6 +497,7 @@ export function vendingUp(inventoryState, craftState, toolState) {
 }
 
 export function getCurrentItemInBackpack(inventoryState, craftState) {
+  let backpackItems =  getBackpackItems(inventoryState, craftState)
   const itemsPerPage = 9;
   let startIndex;
   if (inventoryState.vendingPage === 0) {
@@ -498,9 +512,9 @@ export function getCurrentItemInBackpack(inventoryState, craftState) {
   let currentItem;
   if (inventoryState.vendingPage == 0) {
     currentItem =
-      inventoryState.vendingContents[inventoryState.vendingSelect].itemKey;
+      backpackItems[inventoryState.vendingSelect].itemKey;
   } else {
-    currentItem = inventoryState.vendingContents[actualIndex].itemKey;
+    currentItem = backpackItems[actualIndex].itemKey;
   }
   // Access the item using the actual index and get its itemKey
   return currentItem;
@@ -514,4 +528,9 @@ export function addItemToBackpack(inventoryState, resultItem) {
     inventoryState.vendingContents.push(materialEntity);
     inventoryState.vendingKeys.push(materialEntity.itemKey);
   }
+}
+
+export function getBackpackItems(inventoryState, craftState, toolState){
+  let backpackItems = inventoryState.vendingContents;
+  return backpackItems;
 }
