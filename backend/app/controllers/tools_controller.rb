@@ -19,6 +19,21 @@ class ToolsController < ApplicationController
     @tool = Tool.new
   end
 
+  def combinable_items
+  combinable_item_ids = Combination
+    .where(tool_id: params[:id])
+    .distinct
+    .pluck(:item1_id, :item2_id)
+    .flatten
+    .uniq
+  combinable_items = Item.where(id: combinable_item_ids).select(:name, :isFinal).map do |item|
+    { itemKey: item.name, isFinal: item.isFinal }
+  end
+
+  render json: combinable_items
+end
+
+
   # GET /tools/1/edit
   def edit
   end

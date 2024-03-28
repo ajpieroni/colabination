@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'creations', to: 'tools#show_creations'
+      get 'combinable_items', to: 'tools#combinable_items'
     end
     resources :items, only: [:create, :update]
   end

@@ -527,6 +527,29 @@ export function addItemToBackpack(inventoryState, resultItem) {
 }
 
 export function getBackpackItems(inventoryState, craftState, toolState) {
-  let backpackItems = inventoryState.vendingContents;
-  return backpackItems;
+  if (craftState.hint){
+    getCombinableItemKeys(toolState.toolId, (data) => {
+      let combinableItems = data;
+      let backpackItems = inventoryState.vendingContents;
+      let filteredContents = backpackItems.filter((item) =>
+        combinableItems.includes(item.itemKey)
+      );
+      return filteredContents;
+    }
+  }else{
+    let backpackItems = inventoryState.vendingContents;
+    console.log(backpackItems)
+    return backpackItems;
+  }
+  
+}
+
+export function getCombinableItemKeys(toolId, callback){
+    fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
+      .then(response => response.json())
+      .then(data => {
+        callback(data);
+      })
+      .catch(error => console.error('Error fetching combinable items:', error));
+  
 }
