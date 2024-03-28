@@ -278,11 +278,15 @@ class CharacterMovement {
       addNewTool(toolState, true, inventoryState);
     });
     onKeyPress("h", () => {
+      if(craftState.current === "crafting"){
+
       craftState.hint = true;
       console.log(toolState.currentTool.id)
       let hintId = toolState.currentTool.id;
       craftState.hintId = hintId;
-
+      closeBackpack();
+      openBackpack(inventoryState, craftState);
+      }
 
 
     });

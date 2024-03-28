@@ -163,6 +163,11 @@ export function openBackpack(inventoryState, craftState, toolState) {
 
 // Get current vendingPage of backpack
 export function chunkArray(array, chunkSize) {
+  if (!Array.isArray(array)) {
+    console.error('Invalid array:', array);
+    return [];
+  }
+    console.log(array.length, chunkSize);
   let result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
     let chunk = array.slice(i, i + chunkSize);
@@ -532,14 +537,15 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   if (craftState.hint) {
     console.log(craftState.hintId);
     getCombinableItemKeys(craftState.hintId, (combinableItems) => {
-      let backpackItems = inventoryState.vendingContents;
-      let filteredContents = backpackItems.filter((backpackItem) =>
+      let currItems = inventoryState.vendingContents;
+      let filteredContents = currItems.filter((backpackItem) =>
         combinableItems.some(
           (combinableItem) => combinableItem.itemKey === backpackItem.itemKey
         )
       );
       console.log(filteredContents);
-      console.log(backpackItems);
+      let backpackItems = filteredContents;
+      return backpackItems;
     });
   } else {
     let backpackItems = inventoryState.vendingContents;
