@@ -104,6 +104,7 @@ class CharacterMovement {
       current: "moving",
       // There is either one or two items placed in the crafting window
       readyToCraft: false,
+      hint: false,
     };
 
     // Inventory Control
@@ -274,6 +275,9 @@ class CharacterMovement {
     onKeyPress("1", () => {
       destroyAll("toolAlert");
       addNewTool(toolState, true, inventoryState);
+    });
+    onKeyPress("h", () => {
+      craftState.hint = true;
     });
     // !NEW CRAFT
     onKeyPress("enter", () => {

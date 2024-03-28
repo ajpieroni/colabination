@@ -6,6 +6,7 @@
  * @param {object} craftState - The state of the crafting system.
  */
 export function openBackpack(inventoryState, craftState, toolState) {
+  console.log("hint state:", craftState.hint);
   // contents is an array, index into the array to get the current vendingPage, where the vendingPage is 9 items long
   inventoryState.vendingContents.sort((a, b) =>
     a.itemKey.localeCompare(b.itemKey)
