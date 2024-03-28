@@ -5,7 +5,7 @@
  * @param {object} inventoryState - The state of the inventory.
  * @param {object} craftState - The state of the crafting system.
  */
-export function openBackpack(inventoryState, craftState) {
+export function openBackpack(inventoryState, craftState, toolState) {
   // contents is an array, index into the array to get the current vendingPage, where the vendingPage is 9 items long
   inventoryState.vendingContents.sort((a, b) =>
     a.itemKey.localeCompare(b.itemKey)
@@ -173,7 +173,7 @@ export function closeBackpack() {
   destroyAll("selected");
 }
 // Left selection in backpack
-export function vendingLeft(inventoryState, craftState) {
+export function vendingLeft(inventoryState, craftState, toolState) {
   console.log("PRESSED LEFT");
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
@@ -187,7 +187,7 @@ export function vendingLeft(inventoryState, craftState) {
       destroyAll("itemText");
       destroyAll("selected");
       closeBackpack();
-      openBackpack(inventoryState, craftState);
+      openBackpack(inventoryState, craftState, toolState);
     }
     // If the current selection is not the first item in the backpack, decrement the selection
     else if (inventoryState.vendingSelect > 0) {
@@ -240,7 +240,7 @@ export function vendingLeft(inventoryState, craftState) {
   }
 }
 // Right selection in backpack
-export function vendingRight(inventoryState, craftState) {
+export function vendingRight(inventoryState, craftState, toolState) {
   // Pagination logic
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
@@ -257,7 +257,7 @@ export function vendingRight(inventoryState, craftState) {
       destroyAll("itemText");
       destroyAll("selected");
       closeBackpack();
-      openBackpack(inventoryState, craftState);
+      openBackpack(inventoryState, craftState, toolState);
       // If the current selection is not the last item in the backpack, increment the selection
     } else if (inventoryState.vendingSelect < contents.length - 1) {
       inventoryState.vendingSelect++;
@@ -312,7 +312,7 @@ export function vendingRight(inventoryState, craftState) {
   }
 }
 // Down selection in backpack
-export function vendingDown(inventoryState, craftState) {
+export function vendingDown(inventoryState, craftState, toolState) {
   console.log("pressed down");
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
@@ -356,7 +356,7 @@ export function vendingDown(inventoryState, craftState) {
       destroyAll("itemText");
       destroyAll("selected");
       closeBackpack();
-      openBackpack(inventoryState, craftState);
+      openBackpack(inventoryState, craftState, toolState);
     }
     // If the current selection is not the last row in the backpack, increment the selection by 3
     else if (inventoryState.vendingSelect + 3 < contents.length) {
@@ -414,7 +414,7 @@ export function vendingDown(inventoryState, craftState) {
 }
 
 // Up selection in backpack
-export function vendingUp(inventoryState, craftState) {
+export function vendingUp(inventoryState, craftState, toolState) {
   let totalcontents = chunkArray(inventoryState.vendingContents, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
@@ -431,7 +431,7 @@ export function vendingUp(inventoryState, craftState) {
         destroyAll("itemText");
         destroyAll("selected");
         closeBackpack();
-        openBackpack(inventoryState, craftState);
+        openBackpack(inventoryState, craftState, toolState);
       }
     } else if (inventoryState.vendingSelect - 3 >= 0) {
       inventoryState.vendingSelect -= 3;

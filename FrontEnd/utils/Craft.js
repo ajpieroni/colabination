@@ -201,7 +201,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState, craftState);
+  openBackpack(inventoryState, craftState, toolState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -211,6 +211,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
   // Add tool text object
+  console.log("current tool id is ", toolState.currentTool.toolId);
   add([
     text(toolDisplay, { size: 24 }),
     pos(100 + 500 + 50, 100 + 50),
