@@ -531,15 +531,15 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   // console.log("here is tool state!!!", toolState)
   if (craftState.hint) {
     console.log(craftState.hintId);
-    getCombinableItemKeys(craftState.hintId, (data) => {
-      let combinableItems = data;
+    getCombinableItemKeys(craftState.hintId, (combinableItems) => {
       let backpackItems = inventoryState.vendingContents;
-      let filteredContents = backpackItems.filter((item) =>
-        combinableItems.includes(item.itemKey)
+      let filteredContents = backpackItems.filter((backpackItem) =>
+        combinableItems.some(
+          (combinableItem) => combinableItem.itemKey === backpackItem.itemKey
+        )
       );
       console.log(filteredContents);
       console.log(backpackItems);
-      return filteredContents;
     });
   } else {
     let backpackItems = inventoryState.vendingContents;
