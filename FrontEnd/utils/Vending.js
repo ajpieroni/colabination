@@ -15,8 +15,8 @@ export function openBackpack(inventoryState, craftState, toolState) {
   let backpackItems = inventoryState.vendingContents;
   // let filteredContents =
   // if (craftState.hint){
-  //   let 
-  // } 
+  //   let
+  // }
 
   // Pagination logic
   let totalcontents = chunkArray(backpackItems, 9);
@@ -48,17 +48,14 @@ export function openBackpack(inventoryState, craftState, toolState) {
     const itemTotal = add([
       text(`Items: ${total_items}/55`, { size: 16 }),
       pos(
-        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10-50+20+10,
-        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15-500-100+20+5
+        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10 - 50 + 20 + 10,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15 - 500 - 100 + 20 + 5
       ),
       z(100),
       "vending",
     ]);
   }
-  if (
-    backpackItems.length > 9 &&
-    currentPage < totalcontents.length - 1
-  ) {
+  if (backpackItems.length > 9 && currentPage < totalcontents.length - 1) {
     const downArrow = add([
       sprite("rightArrow"),
       pos(450 - 100 - 25 + 10 + 5, 400 + 400 - 300 + 100 + 50),
@@ -341,15 +338,15 @@ export function vendingDown(inventoryState, craftState, toolState) {
     // only if there is an item at the index below on the next vendingPage
 
     if (bottomIndex && inventoryState.vendingPage < totalcontents.length - 1) {
-      inventoryState.vendingPage++; 
+      inventoryState.vendingPage++;
       // Calculate index for next page
-      let nextPageIndex = inventoryState.vendingSelect + 3; 
+      let nextPageIndex = inventoryState.vendingSelect + 3;
       // Get contents of next page
-      let nextPageContents = totalcontents[inventoryState.vendingPage]; 
+      let nextPageContents = totalcontents[inventoryState.vendingPage];
       // Check if the item at the corresponding index exists on the next page
       if (nextPageContents[nextPageIndex % 9] !== undefined) {
         // If item exists, set selection to the corresponding index
-        inventoryState.vendingSelect = nextPageIndex % 9; 
+        inventoryState.vendingSelect = nextPageIndex % 9;
         console.log("hit if");
       } else {
         // Find first available index on the next page if no item at corresponding index
@@ -360,7 +357,7 @@ export function vendingDown(inventoryState, craftState, toolState) {
           inventoryState.vendingSelect = nextAvailableIndex;
         } else {
           // If no available index on the next page, set selection to 0
-          inventoryState.vendingSelect = 0; 
+          inventoryState.vendingSelect = 0;
         }
         console.log("hit else");
       }
@@ -497,7 +494,7 @@ export function vendingUp(inventoryState, craftState, toolState) {
 }
 
 export function getCurrentItemInBackpack(inventoryState, craftState) {
-  let backpackItems =  getBackpackItems(inventoryState, craftState)
+  let backpackItems = getBackpackItems(inventoryState, craftState);
   const itemsPerPage = 9;
   let startIndex;
   if (inventoryState.vendingPage === 0) {
@@ -511,8 +508,7 @@ export function getCurrentItemInBackpack(inventoryState, craftState) {
 
   let currentItem;
   if (inventoryState.vendingPage == 0) {
-    currentItem =
-      backpackItems[inventoryState.vendingSelect].itemKey;
+    currentItem = backpackItems[inventoryState.vendingSelect].itemKey;
   } else {
     currentItem = backpackItems[actualIndex].itemKey;
   }
@@ -530,7 +526,7 @@ export function addItemToBackpack(inventoryState, resultItem) {
   }
 }
 
-export function getBackpackItems(inventoryState, craftState, toolState){
+export function getBackpackItems(inventoryState, craftState, toolState) {
   let backpackItems = inventoryState.vendingContents;
   return backpackItems;
 }
