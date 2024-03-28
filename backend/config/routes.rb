@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create', defaults: { format: :json }
   delete '/logout', to: 'sessions#destroy', defaults: {format: :json}
 
-  
+
   resources :tools do
     collection do
       get 'find_by_name/:name', to: 'tools#find_by_name', as: 'find_by_name'
+    end
+    member do
+      get 'creations', to: 'tools#show_creations'
     end
     resources :items, only: [:create, :update]
   end

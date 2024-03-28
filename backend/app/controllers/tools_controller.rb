@@ -22,6 +22,12 @@ class ToolsController < ApplicationController
   # GET /tools/1/edit
   def edit
   end
+ # GET /tools/:id/creations
+  def show_creations
+    @creations = Item.creations_by_tool(@tool.id)
+    render json: @creations
+  end
+
 
   # POST /tools or /tools.json
   def create
@@ -75,9 +81,12 @@ class ToolsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tool
-      @tool = Tool.find(params[:id])
+      @tool = Tool.find_by(id: params[:id])
+      if @tool.nil?
+        render json: { error: "Tool not found" }, status: :not_found
+        return
+      end
     end
-
     # Only allow a list of trusted parameters through.
     def tool_params
       params.require(:tool).permit(:name, :description, :spriteLocation, :globalCount, :sprite)
