@@ -286,7 +286,7 @@ class CharacterMovement {
       let hintId = toolState.currentTool.id;
       craftState.hintId = hintId;
       closeBackpack();
-      openBackpack(inventoryState, craftState);
+      openBackpack(inventoryState, craftState, toolState);
       }
 
 

@@ -12,11 +12,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
     a.itemKey.localeCompare(b.itemKey)
   );
 
-  let backpackItems = inventoryState.vendingContents;
-  // let filteredContents =
-  // if (craftState.hint){
-  //   let
-  // }
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
 
   // Pagination logic
   let totalcontents = chunkArray(backpackItems, 9);
