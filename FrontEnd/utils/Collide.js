@@ -62,6 +62,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
   toolState.currentTool = w;
   toolState.toolAccess = true;
   console.log(toolState.currentTool.toolId);
+  console.log(craftState.combinable)
   getCombinableItemKeys(toolState.currentTool.toolId, craftState).then((data) => {
     if (!craftState.combinable) {
       craftState.combinable = {};
