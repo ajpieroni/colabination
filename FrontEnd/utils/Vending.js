@@ -50,6 +50,18 @@ export function openBackpack(inventoryState, craftState, toolState) {
     z(100),
     "vending",
   ]);
+  if(craftState.hint){
+    console.log("hint mode is on")
+    add([
+      text("Hint Mode", { size: 16 }),
+      pos(100 + 500 - 50 + 50-50+100+25+25, 100 + 50 + 500 - 100 + 50 - 50-50-300),
+      color(255, 255, 255),
+      z(500),
+      "craft",
+      "newCraft",
+      "hint"
+    ]);
+  }
   if (backpackItems.length > 9 && currentPage < totalcontents.length - 1) {
     const downArrow = add([
       sprite("rightArrow"),

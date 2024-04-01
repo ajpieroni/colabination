@@ -282,11 +282,15 @@ class CharacterMovement {
       if (craftState.current === "crafting") {
         // toggle true and false
         craftState.hint = !craftState.hint;
+        
         console.log(toolState.currentTool.id);
         let hintId = toolState.currentTool.id;
         craftState.hintId = hintId;
         closeBackpack();
         openBackpack(inventoryState, craftState, toolState);
+        if(!craftState.hint){
+          destroyAll("hint"); 
+        }
       }
     });
     // !NEW CRAFT

@@ -253,6 +253,8 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "craft",
     "newCraft",
   ]);
+  
+  
 
   // Popup is Visible
   craftState.popUp = true;
