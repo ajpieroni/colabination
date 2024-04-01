@@ -542,14 +542,20 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
     console.log("current tool id is ", toolState.currentTool.toolId);
 
     // filter backpack items by if combinable item key is in backpack items
-    let combinableItems = craftState.combinable[toolId];
+    let combinableItemKeys = craftState.combinable[toolId].map(item => item.itemKey);
+    console.log("combinable items: ", combinableItemKeys);
+    console.log("backpack items: ", backpackItems);
+    for (let i = 0; i < backpackItems.length; i++) {
+      console.log(backpackItems[i].itemKey);
+    }
     // console.log(combinableItems);
     let filteredContents = backpackItems.filter((item) =>
-      combinableItems.includes(item.itemKey)
-    );
+    combinableItemKeys.includes(item.itemKey)
+  );
     filteredContents.forEach((element) => {
       console.log(element.itemKey);
     });
+    console.log("filtered contents: ", filteredContents);
     return filteredContents;
 
     // Ensure that combinable items for the current tool are loaded
