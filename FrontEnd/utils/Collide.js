@@ -1,7 +1,12 @@
 import { checkCraftable } from "./Craft.js";
 import { setSpeed } from "./Player.js";
 import { showFinalItems } from "./DocuStation.js";
-export function handleCollideDocumentationStation(state, showFinalItems, inventoryState, craftState) {
+export function handleCollideDocumentationStation(
+  state,
+  showFinalItems,
+  inventoryState,
+  craftState
+) {
   state.canAccessDocumentation = true;
 
   // Add Documentation Station Text
@@ -38,11 +43,16 @@ export function handleCollideDocumentationStation(state, showFinalItems, invento
   }
 }
 
-
 export function handleCollideDocumentationStationEnd(state, inventoryState) {
   state.canAccessDocumentation = false;
   state.isDocVisible = false;
   destroyAll("interactable");
+}
+
+function getCombinableItemKeys(toolId, craftState) {
+  return fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
+    .then((response) => response.json())
+    .catch((error) => console.error("Error fetching combinable items:", error));
 }
 
 export function onToolCollide(craftState, toolState, inventoryState, s, w) {
@@ -51,6 +61,13 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
   toolState.currToolY = w.pos.y;
   toolState.currentTool = w;
   toolState.toolAccess = true;
+  console.log(toolState.currentTool.toolId);
+  getCombinableItemKeys(toolState.currentTool.toolId, craftState).then((data) => {
+    if (!craftState.combinable) {
+      craftState.combinable = {};
+    }
+    craftState.combinable[toolState.currentTool.toolId] = data;
+  });
 
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -60,7 +77,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
-  if(toolDisplay === "Printer1" || toolDisplay === "Printer2"){
+  if (toolDisplay === "Printer1" || toolDisplay === "Printer2") {
     toolDisplay = "3D Printer";
   }
   // checkCraftable(toolState, inventoryState);

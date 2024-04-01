@@ -106,6 +106,7 @@ class CharacterMovement {
       readyToCraft: false,
       hint: false,
       hintId: "",
+      combinable: {},
     };
 
     // Inventory Control
@@ -469,6 +470,7 @@ class CharacterMovement {
             inventoryState.currFinals,
             inventoryState.hasSavedFinal
           );
+          
         }
         if (volumeSetting) {
           play("bubble");

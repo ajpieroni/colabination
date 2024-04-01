@@ -536,20 +536,11 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   // console.log("here is tool state!!!", toolState);
   console.log("here is craft state!!!", craftState.current);
   if (craftState.hint) {
-
     console.log(craftState.hintId);
-    getCombinableItemKeys(craftState.hintId, (combinableItems) => {
-      let currItems = inventoryState.vendingContents;
-      let filteredContents = currItems.filter((backpackItem) =>
-        combinableItems.some(
-          (combinableItem) => combinableItem.itemKey === backpackItem.itemKey
-        )
-      );
-      
-      console.log(filteredContents);
-      let backpackItems = filteredContents;
-      return backpackItems;
-    });
+    // let filteredContents = getCombinableItemKeys(craftState.hintId, craftState);
+
+    return backpackItems;
+    // });
   } else {
     let backpackItems = inventoryState.vendingContents;
     // console.log(backpackItems);
@@ -557,11 +548,3 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   }
 }
 
-export function getCombinableItemKeys(toolId, callback) {
-  fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
-    .then((response) => response.json())
-    .then((data) => {
-      callback(data);
-    })
-    .catch((error) => console.error("Error fetching combinable items:", error));
-}
