@@ -158,6 +158,7 @@ export function closeBackpack() {
   destroyAll("vending");
   destroyAll("itemText");
   destroyAll("selected");
+  
 }
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState) {

@@ -1,4 +1,5 @@
 export default function Tools() {
+  
   // !Tables
   const block_size = 64;
 
@@ -145,7 +146,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       tool: true,
       toolKey: "solderingStation",
       access: false,
-      toolId: 7,
+      toolId: 6,
       x: block_size * 2.25,
       y: block_size,
       info: "The soldering iron is also useful for embedding threaded inserts in 3D prints."
@@ -162,7 +163,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       tool: true,
       toolKey: "sewingMachine",
       access: false,
-      toolId: 11,
+      toolId: 5,
       x: block_size * 1.5,
       y: block_size,
       info: "The Singer Heavy Duty 4423 excels with tough materials like leather,  while the Brother CS7000X offers versatility for various fabrics."
@@ -178,7 +179,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       tool: true,
       toolKey: "cricut",
       access: false,
-      toolId: 8,
+      toolId: 4,
       x: block_size,
       y: block_size,
       info: "Craft effortlessly with the Cricut Cutter: cut vinyl, paper, fabric.  Save settings, add offsets, laminate for durability. Bring your laptop and materials!",
@@ -194,7 +195,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       tool: true,
       toolKey: "printer1",
       access: false,
-      toolId: 4,
+      toolId: 7,
       x: block_size,
       y: block_size * 2,
       info: "Use the Ultimaker S3 for 3D printing with free PLA, available 24/7 at TEC. For diverse materials, try Ultimaker S5 at TEC."
@@ -210,7 +211,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       tool: true,
       toolKey: "printer2",
       access: false,
-      toolId: 5,
+      toolId: 7,
       x: block_size,
       y: block_size * 2,
     },
@@ -340,10 +341,12 @@ export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
 
   if (toolState.lastStored.size < inventoryState.vendingContents.length) {
+    console.log(inventoryState.vendingContents.length);
     console.log(
       `Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`
     );
     if (inventoryState.vendingContents.length % 10 === 0) {
+      toolState.adding = true;
       console.log("adding new tool");
       addNewTool(toolState, true, inventoryState);
     }
@@ -381,7 +384,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500 - 50),
-    z(11),
+    z(50),
   ]);
   const toolAlert = add([
     "toolAlert",
@@ -393,7 +396,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500),
-    z(11),
+    z(50),
   ]);
   const toolInfoText = add([
     "toolAlert",
@@ -435,14 +438,14 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500 - 25),
-    z(5),
+    z(49),
     color(242, 140, 40),
     "toolAlert",
   ]);
   const exitAlert = add([
     "toolAlert",
     // rgb for black is (0, 0, 0)
-    text("Press [ Enter ] To Dismiss", {
+    text("Press [ Q ] To Dismiss", {
       size: 16,
       outline: 4,
       color: (0, 0, 0),
@@ -450,7 +453,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 + 50 - 500),
-    z(11),
+    z(49),
   ]);
 
   const exitButton = add([
@@ -473,7 +476,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     isBright = !isBright;
   }, 250); // the button color will toggle every 500ms
   // after pressing enter, destroy the alert
-  onKeyPress("enter", () => {
+  onKeyPress("q", () => {
     destroyAll("toolAlert");
   });
 }

@@ -30,7 +30,6 @@ export const load = {
     loadSprite("blackpixelborder", "./assets/blackpixelborder.png");
     loadSprite("PLAalert", "./assets/PLAalert.png");
     loadSprite("noItems", "./assets/noItems.png");
-    loadSprite("cricutAlertBox", "./assets/machine1AlertBox.png");
     loadSprite("brokenScissors", "./assets/brokenScissors.png");
     loadSprite("cardboard", "./assets/cardboard.png");
     loadSprite("cricut", "./assets/cricut-transparent.png");
@@ -50,7 +49,7 @@ export const load = {
     loadSprite("sandpaper", "./assets/sandpaper.png");
     loadSprite("wheel", "./assets/wheel.png");
 
-    loadSprite("stainedglass", "./assets/stainedglass.png");
+    loadSprite("stainedGlass", "./assets/stainedGlass.png");
     loadSprite("window", "./assets/window.png");
     loadSprite("trash", "./assets/dubious_trash.PNG");
     loadSprite("cut paper", "./assets/cutpaper3.png");
@@ -64,6 +63,7 @@ export const load = {
     loadSprite("woodsheet", "./assets/benchy.png");
     loadSprite("macrame", "./assets/macrame.png");
     loadSprite("aluminumHat", "./assets/aluminumHat.png");
+    loadSprite("sticker", "./assets/sticker.png");
 
     // loadSprite("trash", "./assets/dubious_trash.PNG")
     loadSprite("woodAlert", "./assets/colablogo.png");
@@ -76,10 +76,20 @@ export const load = {
     loadSprite("thread", "./assets/thread.png");
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
+    loadSprite("patch", "./assets/patch.png");
 
-    loadSprite("solder", "./assets/solder.PNG");
+    loadSprite("notebook", "./assets/notebook.png");
+    loadSprite("magnifyingGlass", "./assets/magnifyingGlass.png");
+    loadSprite("nail", "./assets/nail.png");
+    loadSprite("envelope", "./assets/envelope.png");  
+    loadSprite("metalSculpture", "./assets/metalSculpture.png");
+    loadSprite("birdhouse", "./assets/birdhouse.png");
+    loadSprite("table", "./assets/table.png");
+
+    loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
     loadSprite("backpack", "./assets/backpack.png");
+    loadSprite("cutCloth", "./assets/benchy.png");
     // !Sounds
     loadSound("bubble", "./assets/bubble.m4a");
     loadSound("soundtrack", "./assets/soundtrack.mp3");
@@ -99,6 +109,9 @@ export const load = {
     loadSprite("mountains", "./assets/pixelbg2.jpeg");
 
     // !Metal Trail
+    loadSprite("metalBars", "./assets/metalBars.png")
+    loadSprite("hat","./assets/hat.png")
+    loadSprite("lightbulb","./assets/lightbulb.png")
     loadSprite("metal", "./assets/metal.png");
     loadSprite("metalSheet", "./assets/metalSheet.png");
     loadSprite("aluminum", "./assets/aluminum.png");
