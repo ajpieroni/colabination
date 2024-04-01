@@ -499,8 +499,9 @@ export function vendingUp(inventoryState, craftState, toolState) {
   }
 }
 
-export function getCurrentItemInBackpack(inventoryState, craftState) {
-  let backpackItems = getBackpackItems(inventoryState, craftState);
+export function getCurrentItemInBackpack(inventoryState, craftState, toolState) {
+  console.log("current tool id is ", toolState.currentTool.toolId);
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
   const itemsPerPage = 9;
   let startIndex;
   if (inventoryState.vendingPage === 0) {
@@ -538,6 +539,8 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
     console.log("Hint ID: ", craftState.hintId);
     // TOOL IS UNDEFINEDDD
     const toolId = toolState.currentTool.toolId;
+    console.log("current tool id is ", toolState.currentTool.toolId);
+
     // filter backpack items by if combinable item key is in backpack items
     let combinableItems = craftState.combinable[toolId];
     // console.log(combinableItems);

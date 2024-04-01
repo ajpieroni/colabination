@@ -386,7 +386,7 @@ class CharacterMovement {
       if (craftState.current == "documentation") {
         docuLeft(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingLeft(inventoryState, craftState);
+        vendingLeft(inventoryState, craftState, toolState);
       }
       console.log(inventoryState.vendingSelect);
     });
@@ -395,7 +395,7 @@ class CharacterMovement {
       if (craftState.current == "documentation") {
         docuRight(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingRight(inventoryState, craftState);
+        vendingRight(inventoryState, craftState, toolState);
       }
     });
 
@@ -404,7 +404,7 @@ class CharacterMovement {
       if (craftState.current == "documentation") {
         docuDown(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingDown(inventoryState, craftState);
+        vendingDown(inventoryState, craftState, toolState);
       }
     });
 
@@ -412,7 +412,7 @@ class CharacterMovement {
       if (craftState.current == "documentation") {
         docuUp(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingUp(inventoryState, craftState);
+        vendingUp(inventoryState, craftState, toolState);
       }
     });
 

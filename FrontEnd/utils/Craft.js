@@ -268,7 +268,8 @@ export function selectItem(craftState, inventoryState, music, toolState) {
   // If the popup is open and it's not the first time it's opened
 
   if (craftState.popUp) {
-    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+    console.log("current tool id is ", toolState.currentTool.toolId);
+    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState, toolState);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
       addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
