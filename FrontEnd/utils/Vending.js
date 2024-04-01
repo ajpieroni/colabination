@@ -20,6 +20,9 @@ export function openBackpack(inventoryState, craftState) {
 
   // Arrows
   if (totalcontents.length > 1) {
+    let total_items = inventoryState.vendingContents.length;
+    // 55 total items
+
     const pageText = add([
       text(`Page ${currentPage + 1}`, {
         size: 24,
@@ -29,6 +32,16 @@ export function openBackpack(inventoryState, craftState) {
       pos(
         450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10,
         400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
+      ),
+      z(100),
+      "vending",
+    ]);
+
+    const itemTotal = add([
+      text(`Items: ${total_items}/55`, { size: 16 }),
+      pos(
+        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10-50+20+10,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15-500-100+20+5
       ),
       z(100),
       "vending",
