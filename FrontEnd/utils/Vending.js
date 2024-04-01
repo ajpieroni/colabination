@@ -21,10 +21,10 @@ export function openBackpack(inventoryState, craftState, toolState) {
   // inventoryState.vendingSelect = 0;
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
+  let total_items = backpackItems.length;
 
   // Arrows
   if (totalcontents.length > 1) {
-    let total_items = backpackItems.length;
     // 55 total items
 
     const pageText = add([
@@ -40,17 +40,16 @@ export function openBackpack(inventoryState, craftState, toolState) {
       z(100),
       "vending",
     ]);
-
-    const itemTotal = add([
-      text(`Items: ${total_items}/55`, { size: 16 }),
-      pos(
-        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10 - 50 + 20 + 10,
-        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15 - 500 - 100 + 20 + 5
-      ),
-      z(100),
-      "vending",
-    ]);
   }
+  const itemTotal = add([
+    text(`Items: ${total_items}/55`, { size: 16 }),
+    pos(
+      450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10 - 50 + 20 + 10,
+      400 + 400 - 300 + 100 + 50 + 25 + 10 + 15 - 500 - 100 + 20 + 5
+    ),
+    z(100),
+    "vending",
+  ]);
   if (backpackItems.length > 9 && currentPage < totalcontents.length - 1) {
     const downArrow = add([
       sprite("rightArrow"),
@@ -537,7 +536,9 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   let backpackItems = inventoryState.vendingContents;
   if (craftState.hint) {
     if (!toolState.currentTool) {
-      console.error("Current tool is undefined, not at a station. Hint system unavailable.");
+      console.error(
+        "Current tool is undefined, not at a station. Hint system unavailable."
+      );
       return [];
     }
 
