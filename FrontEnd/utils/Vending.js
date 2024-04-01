@@ -537,7 +537,7 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
   let backpackItems = inventoryState.vendingContents;
   if (craftState.hint) {
     if (!toolState.currentTool) {
-      console.error("Current tool is undefined.");
+      console.error("Current tool is undefined, not at a station. Hint system unavailable.");
       return [];
     }
 
