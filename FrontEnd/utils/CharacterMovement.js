@@ -271,11 +271,6 @@ class CharacterMovement {
     //   openBackpack(inventoryState,craftState);
     // });
 
-    // Add tool to scene when 1 is pressed
-    onKeyPress("1", () => {
-      destroyAll("toolAlert");
-      addNewTool(toolState, true, inventoryState);
-    });
     // !NEW CRAFT
     onKeyPress("enter", () => {
       if (
