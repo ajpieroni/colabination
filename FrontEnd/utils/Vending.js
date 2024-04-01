@@ -533,18 +533,28 @@ export function addItemToBackpack(inventoryState, resultItem) {
 }
 
 export function getBackpackItems(inventoryState, craftState, toolState) {
-  // console.log("here is tool state!!!", toolState);
-  console.log("here is craft state!!!", craftState.current);
+  let backpackItems = inventoryState.vendingContents;
   if (craftState.hint) {
-    console.log(craftState.hintId);
-    // let filteredContents = getCombinableItemKeys(craftState.hintId, craftState);
+    console.log("Hint ID: ", craftState.hintId);
+    // TOOL IS UNDEFINEDDD
+    const toolId = toolState.currentTool.toolId;
+    // filter backpack items by if combinable item key is in backpack items
+    let combinableItems = craftState.combinable[toolId];
+    // console.log(combinableItems);
+    let filteredContents = backpackItems.filter((item) =>
+      combinableItems.includes(item.itemKey)
+    );
+    filteredContents.forEach((element) => {
+      console.log(element.itemKey);
+    });
+    return filteredContents;
 
-    return backpackItems;
-    // });
+    // Ensure that combinable items for the current tool are loaded
+    // if (craftState.combinable && craftState.combinable[toolId]) {
+    // Get the itemKey from craftState.combinable at hintId
   } else {
     let backpackItems = inventoryState.vendingContents;
     // console.log(backpackItems);
     return backpackItems;
   }
 }
-
