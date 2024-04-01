@@ -164,10 +164,10 @@ export function openBackpack(inventoryState, craftState, toolState) {
 // Get current vendingPage of backpack
 export function chunkArray(array, chunkSize) {
   if (!Array.isArray(array)) {
-    console.error('Invalid array:', array);
+    console.error("Invalid array:", array);
     return [];
   }
-    console.log(array.length, chunkSize);
+  console.log(array.length, chunkSize);
   let result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
     let chunk = array.slice(i, i + chunkSize);
@@ -533,8 +533,10 @@ export function addItemToBackpack(inventoryState, resultItem) {
 }
 
 export function getBackpackItems(inventoryState, craftState, toolState) {
-  // console.log("here is tool state!!!", toolState)
+  // console.log("here is tool state!!!", toolState);
+  console.log("here is craft state!!!", craftState.current);
   if (craftState.hint) {
+
     console.log(craftState.hintId);
     getCombinableItemKeys(craftState.hintId, (combinableItems) => {
       let currItems = inventoryState.vendingContents;
@@ -543,6 +545,11 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
           (combinableItem) => combinableItem.itemKey === backpackItem.itemKey
         )
       );
+      console.log("Hint State: ", craftState.hint);
+      console.log("Current Items: ", currItems);
+      console.log("Combinable Items: ", combinableItems);
+      console.log("Filtered Contents: ", filteredContents);
+  
       console.log(filteredContents);
       let backpackItems = filteredContents;
       return backpackItems;
@@ -559,6 +566,7 @@ export function getCombinableItemKeys(toolId, callback) {
     .then((response) => response.json())
     .then((data) => {
       callback(data);
+      console.log("Combinable items:", data);
     })
     .catch((error) => console.error("Error fetching combinable items:", error));
 }
