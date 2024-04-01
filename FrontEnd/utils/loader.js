@@ -78,6 +78,14 @@ export const load = {
     loadSprite("yarn", "./assets/yarn.png");
     loadSprite("patch", "./assets/patch.png");
 
+    loadSprite("notebook", "./assets/notebook.png");
+    loadSprite("magnifyingGlass", "./assets/magnifyingGlass.png");
+    loadSprite("nail", "./assets/nail.png");
+    loadSprite("envelope", "./assets/envelope.png");  
+    loadSprite("metalSculpture", "./assets/metalSculpture.png");
+    loadSprite("birdhouse", "./assets/birdhouse.png");
+    loadSprite("table", "./assets/table.png");
+
     loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
     loadSprite("backpack", "./assets/backpack.png");
@@ -101,6 +109,9 @@ export const load = {
     loadSprite("mountains", "./assets/pixelbg2.jpeg");
 
     // !Metal Trail
+    loadSprite("metalBars", "./assets/metalBars.png")
+    loadSprite("hat","./assets/hat.png")
+    loadSprite("lightbulb","./assets/lightbulb.png")
     loadSprite("metal", "./assets/metal.png");
     loadSprite("metalSheet", "./assets/metalSheet.png");
     loadSprite("aluminum", "./assets/aluminum.png");

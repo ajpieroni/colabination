@@ -1,4 +1,5 @@
 export default function Tools() {
+  
   // !Tables
   const block_size = 64;
 
@@ -332,10 +333,12 @@ export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
 
   if (toolState.lastStored.size < inventoryState.vendingContents.length) {
+    console.log(inventoryState.vendingContents.length);
     console.log(
       `Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`
     );
     if (inventoryState.vendingContents.length % 10 === 0) {
+      toolState.adding = true;
       console.log("adding new tool");
       addNewTool(toolState, true, inventoryState);
     }
@@ -358,7 +361,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500 - 50),
-    z(11),
+    z(50),
   ]);
   const toolAlert = add([
     "toolAlert",
@@ -370,21 +373,21 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500),
-    z(11),
+    z(50),
   ]);
   const toolAlertBox = add([
     rect(500 + 200 + 200, 50 * 2),
     area(),
     anchor("center"),
     pos(500, 500 + 100 - 500 - 25),
-    z(5),
+    z(49),
     color(242, 140, 40),
     "toolAlert",
   ]);
   const exitAlert = add([
     "toolAlert",
     // rgb for black is (0, 0, 0)
-    text("Press [ Enter ] To Dismiss", {
+    text("Press [ Q ] To Dismiss", {
       size: 16,
       outline: 4,
       color: (0, 0, 0),
@@ -392,7 +395,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     area(),
     anchor("center"),
     pos(500, 500 + 100 + 50 - 500),
-    z(11),
+    z(49),
   ]);
 
   const exitButton = add([
@@ -415,7 +418,7 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     isBright = !isBright;
   }, 250); // the button color will toggle every 500ms
   // after pressing enter, destroy the alert
-  onKeyPress("enter", () => {
+  onKeyPress("q", () => {
     destroyAll("toolAlert");
   });
 }
