@@ -280,7 +280,8 @@ class CharacterMovement {
     });
     onKeyPress("h", () => {
       if (craftState.current === "crafting") {
-        craftState.hint = true;
+        // toggle true and false
+        craftState.hint = !craftState.hint;
         console.log(toolState.currentTool.id);
         let hintId = toolState.currentTool.id;
         craftState.hintId = hintId;
