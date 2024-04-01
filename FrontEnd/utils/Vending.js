@@ -252,85 +252,76 @@ export function vendingLeft(inventoryState, craftState, toolState) {
   }
 }
 // Right selection in backpack
-export async function vendingRight(inventoryState, craftState, toolState) {
-  try {
-    // Await the Promise from getBackpackItems
-    let backpackItems = await getBackpackItems(
-      inventoryState,
-      craftState,
-      toolState
-    );
-    let totalcontents = chunkArray(backpackItems, 9);
-    let currentPage = inventoryState.vendingPage;
-    let contents = totalcontents[currentPage];
+export function vendingRight(inventoryState, craftState, toolState) {
+  // Pagination logic
+  let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
+  let totalcontents = chunkArray(backpackItems, 9);
+  let currentPage = inventoryState.vendingPage;
+  let contents = totalcontents[currentPage];
 
-    if (craftState.popUp) {
-      // If the current selection is the last item in the backpack, go to the next vendingPage
-      if (
-        inventoryState.vendingSelect === 8 &&
-        inventoryState.vendingPage < totalcontents.length - 1
-      ) {
-        inventoryState.vendingPage++;
-        inventoryState.vendingSelect = 0;
-        destroyAll("itemText");
-        destroyAll("selected");
-        closeBackpack();
-        await openBackpack(inventoryState, craftState, toolState); // Make sure openBackpack is also async if it performs async operations
-        // If the current selection is not the last item in the backpack, increment the selection
-      } else if (inventoryState.vendingSelect < contents.length - 1) {
-        inventoryState.vendingSelect++;
+  if (craftState.popUp) {
+    // If the current selection is the last item in the backpack, go to the next vendingPage
+    if (
+      inventoryState.vendingSelect === 8 &&
+      inventoryState.vendingPage < totalcontents.length - 1
+    ) {
+      inventoryState.vendingPage++;
+      inventoryState.vendingSelect = 0;
+      destroyAll("itemText");
+      destroyAll("selected");
+      closeBackpack();
+      openBackpack(inventoryState, craftState, toolState);
+      // If the current selection is not the last item in the backpack, increment the selection
+    } else if (inventoryState.vendingSelect < contents.length - 1) {
+      inventoryState.vendingSelect++;
 
-        // Pagination logic, get the actual index in the vendingContents array of the current selection
-        const itemsPerPage = 9;
-        const startIndex = inventoryState.vendingPage * itemsPerPage;
-        const actualIndex = startIndex + inventoryState.vendingSelect;
-        let itemText = backpackItems[actualIndex]?.itemKey;
+      // Pagination logic, get the actual index in the vendingContents array of the current selection
+      const itemsPerPage = 9;
+      const startIndex = inventoryState.vendingPage * itemsPerPage;
+      const actualIndex = startIndex + inventoryState.vendingSelect;
+      let itemText = backpackItems[actualIndex]?.itemKey;
 
-        // Destroy the selected box and add a new one
-        destroyAll("selected");
-        let gridX = inventoryState.vendingSelect % 3;
-        let gridY = Math.floor(inventoryState.vendingSelect / 3);
-        const selected = add([
-          rect(75, 75),
-          pos(393 - 200 + gridX * 86, 305 + gridY * 100),
-          z(19),
-          opacity(0.75),
-          color(WHITE),
-          outline(4, BLACK),
-          "selected",
+      // Destroy the selected box and add a new one
+      destroyAll("selected");
+      let gridX = inventoryState.vendingSelect % 3;
+      let gridY = Math.floor(inventoryState.vendingSelect / 3);
+      const selected = add([
+        rect(75, 75),
+        pos(393 - 200 + gridX * 86, 305 + gridY * 100),
+        z(19),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
+        "selected",
+      ]);
+      // Destroy the item text and add a new one
+      destroyAll("itemText");
+
+      if (itemText) {
+        itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
+        let resultDisplay = itemText
+          // space
+          .replace(/([A-Z])/g, " $1")
+          //trim
+          .split(" ")
+          .map(
+            (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+          )
+          .join(" ");
+        const selectedText = add([
+          "itemText",
+          text(resultDisplay, {
+            size: 24,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(310, 625),
+          z(20),
         ]);
-        // Destroy the item text and add a new one
-        destroyAll("itemText");
-
-        if (itemText) {
-          itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
-          let resultDisplay = itemText
-            // space
-            .replace(/([A-Z])/g, " $1")
-            //trim
-            .split(" ")
-            .map(
-              (word) =>
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            )
-            .join(" ");
-          const selectedText = add([
-            "itemText",
-            text(resultDisplay, {
-              size: 24,
-              outline: 4,
-              color: (0, 0, 0),
-            }),
-            area(),
-            anchor("center"),
-            pos(310, 625),
-            z(20),
-          ]);
-        }
       }
     }
-  } catch (error) {
-    console.error("An error occurred:", error);
   }
 }
 // Down selection in backpack
@@ -541,39 +532,36 @@ export function addItemToBackpack(inventoryState, resultItem) {
   }
 }
 
-export async function getBackpackItems(inventoryState, craftState, toolState) {
+export function getBackpackItems(inventoryState, craftState, toolState) {
+  // console.log("here is tool state!!!", toolState);
   console.log("here is craft state!!!", craftState.current);
   if (craftState.hint) {
+
     console.log(craftState.hintId);
-    try {
-      // Await the Promise from getCombinableItemKeys
-      let combinableItems = await getCombinableItemKeys(craftState.hintId);
+    getCombinableItemKeys(craftState.hintId, (combinableItems) => {
       let currItems = inventoryState.vendingContents;
       let filteredContents = currItems.filter((backpackItem) =>
         combinableItems.some(
           (combinableItem) => combinableItem.itemKey === backpackItem.itemKey
         )
       );
-
-      console.log("Hint State: ", craftState.hint);
-      console.log("Current Items: ", currItems);
-      console.log("Combinable Items: ", combinableItems);
-      console.log("Filtered Contents: ", filteredContents);
-
-      // You can now return filteredContents directly, since we are in an async function
-      return filteredContents;
-    } catch (error) {
-      console.error("An error occurred:", error);
-      return []; // Return an empty array or handle as appropriate
-    }
+      
+      console.log(filteredContents);
+      let backpackItems = filteredContents;
+      return backpackItems;
+    });
   } else {
-    console.log("No hint, returning all items");
-    return inventoryState.vendingContents;
+    let backpackItems = inventoryState.vendingContents;
+    // console.log(backpackItems);
+    return backpackItems;
   }
 }
 
-export function getCombinableItemKeys(toolId) {
-  return fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
+export function getCombinableItemKeys(toolId, callback) {
+  fetch(`http://localhost:8081/tools/${toolId}/combinable_items`)
     .then((response) => response.json())
+    .then((data) => {
+      callback(data);
+    })
     .catch((error) => console.error("Error fetching combinable items:", error));
 }
