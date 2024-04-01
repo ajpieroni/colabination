@@ -6,7 +6,7 @@
  * @param {object} craftState - The state of the crafting system.
  */
 export function openBackpack(inventoryState, craftState, toolState) {
-  console.log("hint state:", craftState.hint);
+  //("hint state:", craftState.hint);
   // contents is an array, index into the array to get the current vendingPage, where the vendingPage is 9 items long
   inventoryState.vendingContents.sort((a, b) =>
     a.itemKey.localeCompare(b.itemKey)
@@ -163,7 +163,7 @@ export function chunkArray(array, chunkSize) {
     console.error("Invalid array:", array);
     return [];
   }
-  console.log(array.length, chunkSize);
+  //(array.length, chunkSize);
   let result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
     let chunk = array.slice(i, i + chunkSize);
@@ -180,8 +180,8 @@ export function closeBackpack() {
 }
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState, toolState) {
-  // console.log(toolState.currentTool)
-  console.log("PRESSED LEFT");
+  // //(toolState.currentTool)
+  //("PRESSED LEFT");
   let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
   let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
@@ -322,7 +322,7 @@ export function vendingRight(inventoryState, craftState, toolState) {
 }
 // Down selection in backpack
 export function vendingDown(inventoryState, craftState, toolState) {
-  console.log("pressed down");
+  //("pressed down");
   let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
 
   let totalcontents = chunkArray(backpackItems, 9);
@@ -349,7 +349,7 @@ export function vendingDown(inventoryState, craftState, toolState) {
       if (nextPageContents[nextPageIndex % 9] !== undefined) {
         // If item exists, set selection to the corresponding index
         inventoryState.vendingSelect = nextPageIndex % 9;
-        console.log("hit if");
+        //("hit if");
       } else {
         // Find first available index on the next page if no item at corresponding index
         let nextAvailableIndex = nextPageContents.findIndex(
@@ -361,7 +361,7 @@ export function vendingDown(inventoryState, craftState, toolState) {
           // If no available index on the next page, set selection to 0
           inventoryState.vendingSelect = 0;
         }
-        console.log("hit else");
+        //("hit else");
       }
 
       destroyAll("itemText");
@@ -372,7 +372,7 @@ export function vendingDown(inventoryState, craftState, toolState) {
     // If the current selection is not the last row in the backpack, increment the selection by 3
     else if (inventoryState.vendingSelect + 3 < contents.length) {
       inventoryState.vendingSelect += 3;
-      console.log("hit else if");
+      //("hit else if");
       // Destroy the selected box and add a new one
       destroyAll("itemText");
       destroyAll("selected");
@@ -495,8 +495,12 @@ export function vendingUp(inventoryState, craftState, toolState) {
   }
 }
 
-export function getCurrentItemInBackpack(inventoryState, craftState, toolState) {
-  console.log("current tool id is ", toolState.currentTool.toolId);
+export function getCurrentItemInBackpack(
+  inventoryState,
+  craftState,
+  toolState
+) {
+  //("current tool id is ", toolState.currentTool.toolId);
   let backpackItems = getBackpackItems(inventoryState, craftState, toolState);
   const itemsPerPage = 9;
   let startIndex;
@@ -532,26 +536,33 @@ export function addItemToBackpack(inventoryState, resultItem) {
 export function getBackpackItems(inventoryState, craftState, toolState) {
   let backpackItems = inventoryState.vendingContents;
   if (craftState.hint) {
-    console.log("Hint ID: ", craftState.hintId);
+    if (!toolState.currentTool) {
+      console.error("Current tool is undefined.");
+      return [];
+    }
+
+    //("Hint ID: ", craftState.hintId);
     // TOOL IS UNDEFINEDDD
     const toolId = toolState.currentTool.toolId;
-    console.log("current tool id is ", toolState.currentTool.toolId);
+    //("current tool id is ", toolState.currentTool.toolId);
 
     // filter backpack items by if combinable item key is in backpack items
-    let combinableItemKeys = craftState.combinable[toolId].map(item => item.itemKey);
-    console.log("combinable items: ", combinableItemKeys);
-    console.log("backpack items: ", backpackItems);
+    let combinableItemKeys = craftState.combinable[toolId].map(
+      (item) => item.itemKey
+    );
+    //("combinable items: ", combinableItemKeys);
+    //("backpack items: ", backpackItems);
     for (let i = 0; i < backpackItems.length; i++) {
-      console.log(backpackItems[i].itemKey);
+      //(backpackItems[i].itemKey);
     }
-    // console.log(combinableItems);
+    // //(combinableItems);
     let filteredContents = backpackItems.filter((item) =>
-    combinableItemKeys.includes(item.itemKey)
-  );
+      combinableItemKeys.includes(item.itemKey)
+    );
     filteredContents.forEach((element) => {
-      console.log(element.itemKey);
+      //(element.itemKey);
     });
-    console.log("filtered contents: ", filteredContents);
+    //("filtered contents: ", filteredContents);
     return filteredContents;
 
     // Ensure that combinable items for the current tool are loaded
@@ -559,7 +570,7 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
     // Get the itemKey from craftState.combinable at hintId
   } else {
     let backpackItems = inventoryState.vendingContents;
-    // console.log(backpackItems);
+    // //(backpackItems);
     return backpackItems;
   }
 }

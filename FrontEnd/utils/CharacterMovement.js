@@ -76,10 +76,10 @@ class CharacterMovement {
       color(0, 256, 0),
       area(),
       body({ isStatic: true }),
-      pos(260, 260 + 200 - 75 + 15-140),
+      pos(260, 260 + 200 - 75 + 15 - 140),
       z(1),
       // note that this block will be destroyed after scissors
-      "temp"
+      "temp",
     ]);
     add([sprite("tables"), pos(0, 0), z(2), scale(0.5)]);
     map();
@@ -197,23 +197,23 @@ class CharacterMovement {
           // optional object
           size: 24,
           outline: 4,
-          color: (25,25,112),
+          color: (25, 25, 112),
           // can specify font here,
         }),
         area(),
         anchor("center"),
-        pos(525,100),
+        pos(525, 100),
         z(500),
         // scale(.5)
       ]);
       const blueBox = add([
-        rect(500+200+200,100),
+        rect(500 + 200 + 200, 100),
         area(),
         anchor("center"),
         pos(525, 100),
         z(19),
         color(1, 33, 105),
-        "alert"
+        "alert",
       ]);
     }
     function messageCreateMenu(message) {
@@ -223,7 +223,7 @@ class CharacterMovement {
           // optional object
           size: 24,
           outline: 4,
-          color: (25,25,112),
+          color: (25, 25, 112),
           // can specify font here,
         }),
         area(),
@@ -233,13 +233,13 @@ class CharacterMovement {
         // scale(.5)
       ]);
       const blueBox = add([
-        rect(450,100),
+        rect(450, 100),
         area(),
         anchor("center"),
         pos(475, 775),
         z(19),
         color(1, 33, 105),
-        "alert"
+        "alert",
       ]);
     }
 
@@ -279,17 +279,14 @@ class CharacterMovement {
       addNewTool(toolState, true, inventoryState);
     });
     onKeyPress("h", () => {
-      if(craftState.current === "crafting"){
-
-      craftState.hint = true;
-      console.log(toolState.currentTool.id)
-      let hintId = toolState.currentTool.id;
-      craftState.hintId = hintId;
-      closeBackpack();
-      openBackpack(inventoryState, craftState, toolState);
+      if (craftState.current === "crafting") {
+        craftState.hint = true;
+        console.log(toolState.currentTool.id);
+        let hintId = toolState.currentTool.id;
+        craftState.hintId = hintId;
+        closeBackpack();
+        openBackpack(inventoryState, craftState, toolState);
       }
-
-
     });
     // !NEW CRAFT
     onKeyPress("enter", () => {
@@ -470,7 +467,6 @@ class CharacterMovement {
             inventoryState.currFinals,
             inventoryState.hasSavedFinal
           );
-          
         }
         if (volumeSetting) {
           play("bubble");
