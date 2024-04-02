@@ -286,7 +286,10 @@ class CharacterMovement {
       onToolCollide(craftState, toolState, inventoryState, s, w);
     });
 
-    onCollideEnd("player", "tool", () => {
+    onCollideEnd("player", "tool", (
+
+
+    ) => {
       onToolCollideEnd(toolState, inventoryState);
     });
 

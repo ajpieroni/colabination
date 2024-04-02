@@ -107,11 +107,6 @@ export function intiailizeUser(inventoryState, toolState){
     });
 }
 
-
-// load in tools
-
-// InitialItems();
-
 export function fetchUserTools(username) {
     let curr_user = localStorage.getItem("username");
 
