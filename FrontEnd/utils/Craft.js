@@ -203,7 +203,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState, craftState);
+  openBackpack(inventoryState, craftState, toolState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -213,6 +213,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
   // Add tool text object
+  console.log("current tool id is ", toolState.currentTool.toolId);
   add([
     text(toolDisplay, { size: 24 }),
     pos(100 + 500 + 50, 100 + 50),
@@ -246,6 +247,16 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "craft",
     "newCraft",
   ]);
+  add([
+    text("Press [ H ] for Compatible Crafting Items ", { size: 16 }),
+    pos(100 + 500 - 50 + 50-50, 100 + 50 + 500 - 100 + 50 - 50-50),
+    color(255, 255, 255),
+    z(500),
+    "craft",
+    "newCraft",
+  ]);
+  
+  
 
   // Popup is Visible
   craftState.popUp = true;
@@ -269,7 +280,8 @@ export function selectItem(craftState, inventoryState, music, toolState) {
   // If the popup is open and it's not the first time it's opened
 
   if (craftState.popUp) {
-    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+    console.log("current tool id is ", toolState.currentTool.toolId);
+    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState, toolState);
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
       addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
