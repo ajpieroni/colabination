@@ -133,6 +133,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 2,
       x: block_size * 1.65,
       y: block_size * 1,
+      info: "You can find wrenches, pliers, screwdrivers, hammers, and measuring   tapes at the TEC!",
     },
     {
       name: "solderingStation",
@@ -148,6 +149,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 6,
       x: block_size * 2.25,
       y: block_size,
+      info: "The soldering iron is also useful for embedding threaded inserts in 3D prints."
     },
     {
       name: "sewingMachine",
@@ -164,6 +166,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 5,
       x: block_size * 1.5,
       y: block_size,
+      info: "The Singer Heavy Duty 4423 excels with tough materials like leather,  while the Brother CS7000X offers versatility for various fabrics."
     },
     {
       name: "cricut",
@@ -179,6 +182,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 4,
       x: block_size,
       y: block_size,
+      info: "Craft effortlessly with the Cricut Cutter: cut vinyl, paper, fabric.  Save settings, add offsets, laminate for durability. Bring your laptop and materials!",
     },
     {
       name: "printer1",
@@ -194,6 +198,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolId: 7,
       x: block_size,
       y: block_size * 2,
+      info: "Use the Ultimaker S3 for 3D printing with free PLA, available 24/7 at TEC. For diverse materials, try Ultimaker S5 at TEC."
     },
     {
       name: "printer2",
@@ -239,9 +244,10 @@ export function addNewTool(toolState, showAlert, inventoryState) {
         anchor("center"),
         pos(500, 500 + 100 - 500 - 25),
         z(5),
-        color(242, 140, 40),
+        color(242, 140, 30),
         "toolAlert",
       ]);
+      
       const exitAlert = add([
         "toolAlert",
         // rgb for black is (0, 0, 0)
@@ -287,12 +293,13 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       toolState.hasDiscovered.add(tools[i].toolKey);
       addToolToGame(tools[i]);
       destroyAll("temp");
-      currentToolToBeAdded = tools[i].toolKey;
+      let currentToolNameToBeAdded = tools[i].toolKey;
+      currentToolToBeAdded = tools[i];
 
       // if added printer 1, also add printer 2
       if (tools[i].toolKey === "printer1") {
         addToolToGame(tools[i + 1]);
-        currentToolToBeAdded = "3d Printers";
+        currentToolNameToBeAdded = "3d Printers";
       }
       break;
     }
@@ -317,6 +324,7 @@ export function addToolToGame(newTool) {
     { toolKey: `${newTool.toolKey}` },
     { access: false },
     { toolId: newTool.toolId },
+    { info: newTool.info },
   ]);
   console.log(`${newTool.toolKey}table`);
   const toolSprite = add([
@@ -347,7 +355,22 @@ export function checkForToolAddition(inventoryState, toolState) {
 
 export function addToolAlert(showAlert, addedTool, inventoryState) {
   destroyAll("toolAlert");
-  let toolName = parseRegexString(addedTool);
+  let toolName = parseRegexString(addedTool.toolKey);
+  console.log(toolName)
+  console.log(addedTool.info.length)
+  let toolInfo = addedTool.info;
+  let toolInfoExtend = null;
+  // if the tool info is too long, add it to another text vairable adn add another block
+  
+  if(toolInfo.length > 50){
+    toolInfo = toolInfo.substring(0, 70)
+    toolInfoExtend = addedTool.info.substring(70, addedTool.info.length)
+  }
+  
+  // if (tools[i].toolKey === "printer1") {
+  //   addToolToGame(tools[i + 1]);
+  //   currentToolToBeAdded = "3d Printers";
+  // }
   const itemAlert = add([
     "toolAlert",
     text(
@@ -374,6 +397,41 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     anchor("center"),
     pos(500, 500 + 100 - 500),
     z(50),
+  ]);
+  const toolInfoText = add([
+    "toolAlert",
+    text(`${toolInfo}`, {
+      size: 16,
+      outline: 4,
+      color: (0, 0, 0),
+    }),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100),
+    z(11),
+  ]);
+  if(toolInfoExtend){
+    const toolInfoText = add([
+      "toolAlert",
+      text(`${toolInfoExtend}`, {
+        size: 16,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500 + 100+50),
+      z(11),
+    ]);
+  }
+  const toolInfoBlock = add([
+    rect(500 + 200 + 200, 60 * 2),
+    area(),
+    anchor("center"),
+    pos(500, 500 + 100+25),
+    z(10),
+    color(242, 140, 40),
+    "toolAlert",
   ]);
   const toolAlertBox = add([
     rect(500 + 200 + 200, 50 * 2),
