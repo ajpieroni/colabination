@@ -125,7 +125,28 @@ class UIManager {
       const enteredUsername = usernameInput.value;
       const enteredPassword = passwordInput.value;
 
-      // Send a POST request to the login route
+      // Check if the username or password is empty
+      if (!enteredUsername || !enteredPassword) {
+        let errorMessage = "";
+        if (!enteredUsername && !enteredPassword) {
+          errorMessage = "Username and password are required";
+        } else if (!enteredUsername) {
+          errorMessage = "Username is required";
+        } else {
+          errorMessage = "Password is required";
+        }
+        add([
+          text(errorMessage),
+          pos(335, 300), 
+          z(51),
+          color(0, 0, 0),
+          scale(0.5),
+          "alert",
+        ]);
+
+        return; 
+      }
+
       const response = await fetch("http://localhost:8081/login", {
         method: "POST",
         headers: {
@@ -141,22 +162,19 @@ class UIManager {
 
       if (data.status === "success") {
         destroyAll("alert");
-        // Remove the login form from the body
         if (document.body.contains(loginForm)) {
           document.body.removeChild(loginForm);
         }
 
-        // Store the username in local storage
         localStorage.setItem("username", enteredUsername);
 
         // Go to the menu scene
         go("menu");
       } else {
-        // Show an error message
         let alertMessage = "Invalid username or password";
         add([
           text(alertMessage),
-          pos(415 - 100 + 50, 175 + 100 + 25),
+          pos(365, 300), 
           z(51),
           color(0, 0, 0),
           scale(0.5),
@@ -165,110 +183,96 @@ class UIManager {
       }
     }
 
-    async function signUp(usernameInput, passwordInput, confirmPasswordInput) {
-      destroyAll("alert");
+  async function signUp(usernameInput, passwordInput, confirmPasswordInput) {
+    destroyAll("alert");
 
-      const enteredUsername = usernameInput.value;
-      const enteredPassword = passwordInput.value;
-      const enteredConfirmPassword = confirmPasswordInput.value;
-      // Validation for matching passwords
-      if (enteredPassword !== enteredConfirmPassword) {
-        let alertMessage = "Passwords do not match.";
+    const enteredUsername = usernameInput.value;
+    const enteredPassword = passwordInput.value;
+    const enteredConfirmPassword = confirmPasswordInput.value;
+
+    // Check if any of the fields are empty
+    if (!enteredUsername || !enteredPassword || !enteredConfirmPassword) {
+      let errorMessage = "";
+      if (!enteredUsername && !enteredPassword  && !enteredConfirmPassword) {
+        errorMessage = "Username and password are required";
+      } else if (!enteredUsername) {
+        errorMessage = "Username is required";
+      } else if (!enteredPassword) {
+        errorMessage = "Password is required";
+      }
+      add([
+        text(errorMessage),
+        pos(415 - 100 + 50, 175 + 100 + 25),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "alert",
+      ]);
+      return;
+    }
+
+    if (enteredPassword !== enteredConfirmPassword) {
+      let alertMessage = "Passwords do not match.";
+      add([
+        text(alertMessage),
+        pos(415 - 100 + 50, 175 + 100 + 25),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "alert",
+      ]);
+      return;
+    }
+
+    // Validation for numeric password (PIN)
+    if (isNaN(enteredPassword)) {
+      let alertMessage = "PIN must only contain numbers";
+      add([
+        text(alertMessage),
+        pos(415 - 100 + 50, 175 + 100 + 25),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "alert",
+      ]);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8081/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: enteredUsername,
+          pin: enteredPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      // Check response status
+      if (data.status === "success") {
+        let alertMessage = `Registration successful. Sign in as ${data.username}`;
         add([
           text(alertMessage),
-          pos(415 - 100 + 50 + 25, 175 + 100 + 25),
+          pos(415 - 100 + 50, 175 + 100 + 25),
           z(51),
           color(0, 0, 0),
           scale(0.5),
           "alert",
         ]);
-        return;
-      }
-      if (isNaN(enteredPassword)) {
-        let alertMessage = "PIN must only contain numbers";
-        add([
-          text(alertMessage),
-          pos(415 - 100 + 50 + 25, 175 + 100 + 25),
-          z(51),
-          color(0, 0, 0),
-          scale(0.5),
-          "alert",
-        ]);
-        return;
-      }
 
-      try {
-        const response = await fetch("http://localhost:8081/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: enteredUsername,
-            pin: enteredPassword,
-          }),
-        });
+        // Clear the form
+        usernameInput.value = '';
+        passwordInput.value = '';
+        confirmPasswordInput.value = '';
 
-        const data = await response.json();
-        console.log("data," + data);
-
-        // Check response status
-        if (data.status === "success") {
-          let alertMessage = `Registration successful. Sign in as ${data.username}`;
-          add([
-            text(alertMessage),
-            pos(415 - 100 + 50, 175 + 100 + 25),
-            z(51),
-            color(0, 0, 0),
-            scale(0.5),
-            "alert",
-          ]);
-          // alert("Registration successful. User ID: " + data.user_id);
-
-          // Clear the form
-          usernameInput.value = "";
-          passwordInput.value = "";
-          confirmPasswordInput.value = "";
-
-          toggleForms(loginForm, signUpForm);
-          destroyAll("alert");
-        } else {
-          // Handling different error cases
-          if (data.username) {
-            let alertMessage = `Username ${data.username.join(", ")}`;
-            add([
-              text(alertMessage),
-              pos(415 - 100 + 50 - 10, 175 + 100 + 25 - 10),
-              z(51),
-              color(0, 0, 0),
-              scale(0.5),
-              "alert",
-            ]);
-          } else if (data.pin) {
-            let alertMessage = `Error: Pin ${data.pin.join(", ")}`;
-            add([
-              text(alertMessage),
-              pos(415 - 100 + 50 - 25 - 25, 175 + 100 + 25),
-              z(51),
-              color(0, 0, 0),
-              scale(0.35),
-              "alert",
-            ]);
-          } else {
-            let alertMessage = `"An unknown error occurred."`;
-            add([
-              text(alertMessage),
-              pos(415 - 100 + 50, 175 + 100 + 25),
-              z(51),
-              color(0, 0, 0),
-              scale(0.5),
-              "alert",
-            ]);
-          }
-        }
-      } catch (error) {
-        console.error("Error during sign-up:", error);
-        let alertMessage = "Failed to sign up. Please try again later.";
+        toggleForms(loginForm, signUpForm);
+        destroyAll("alert");
+      } else {
+        let alertMessage = "An unknown error occurred.";
         add([
           text(alertMessage),
           pos(415 - 100 + 50, 175 + 100 + 25),
@@ -278,7 +282,20 @@ class UIManager {
           "alert",
         ]);
       }
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      let alertMessage = "Failed to sign up. Please try again later.";
+      add([
+        text(alertMessage),
+        pos(415 - 100 + 50, 175 + 100 + 25),
+        z(51),
+        color(0, 0, 0),
+        scale(0.5),
+        "alert",
+      ]);
     }
+  }
+
   }
   displayBlinkingUIMessageLogin(content, position) {
     // PARAMS:
