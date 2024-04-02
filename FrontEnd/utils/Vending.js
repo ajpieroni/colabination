@@ -20,6 +20,9 @@ export function openBackpack(inventoryState, craftState) {
 
   // Arrows
   if (totalcontents.length > 1) {
+    let total_items = inventoryState.vendingContents.length;
+    // 55 total items
+
     const pageText = add([
       text(`Page ${currentPage + 1}`, {
         size: 24,
@@ -29,6 +32,16 @@ export function openBackpack(inventoryState, craftState) {
       pos(
         450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10,
         400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
+      ),
+      z(100),
+      "vending",
+    ]);
+
+    const itemTotal = add([
+      text(`Items: ${total_items}/55`, { size: 16 }),
+      pos(
+        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10-50+20+10,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15-500-100+20+5
       ),
       z(100),
       "vending",
@@ -105,10 +118,12 @@ export function openBackpack(inventoryState, craftState) {
 
     // Add the white box
     const selected = add([
-      rect(70, 70),
+      rect(75, 75),
       pos(393 - 200 + gridX * 86, 305 + gridY * 100),
       z(19),
-      color(255, 255, 255),
+      opacity(0.75),
+      color(WHITE),
+      outline(4, BLACK),
       "selected",
     ]);
     // Add the items into the backpack
@@ -156,6 +171,7 @@ export function closeBackpack() {
   destroyAll("vending");
   destroyAll("itemText");
   destroyAll("selected");
+  
 }
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState) {
@@ -187,10 +203,12 @@ export function vendingLeft(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       destroyAll("itemText");
@@ -256,10 +274,12 @@ export function vendingRight(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       // Destroy the item text and add a new one
@@ -382,10 +402,12 @@ export function vendingDown(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
     }
@@ -419,10 +441,12 @@ export function vendingUp(inventoryState, craftState) {
       let gridX = inventoryState.vendingSelect % 3;
       let gridY = Math.floor(inventoryState.vendingSelect / 3);
       const selected = add([
-        rect(70, 70),
+        rect(75, 75),
         pos(393 - 200 + gridX * 86, 305 + gridY * 100),
         z(19),
-        color(255, 255, 255),
+        opacity(0.75),
+        color(WHITE),
+        outline(4, BLACK),
         "selected",
       ]);
       destroyAll("itemText");

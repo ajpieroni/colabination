@@ -60,7 +60,7 @@ export function craftingBackend(
   } else {
     toolId = 3;
   }
-  
+
   console.log("Crafting backend...");
 
   let item1sprite = ingredients[0];
@@ -113,7 +113,9 @@ function fetchCombination(
   craftState,
   inventoryState
 ) {
-  console.log(`Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`)
+  console.log(
+    `Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`
+  );
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -352,7 +354,6 @@ export function addItemToCraftWindow(
       },
     ]);
     inventoryState.ingredients.push(currentItem);
-   
 
     secondItemPosition.used = true;
   }
@@ -417,7 +418,6 @@ export function executeCraft(
 ) {
   craftState.current = "executed";
 
-
   craftingBackend(
     toolState,
     inventoryState.ingredients,
@@ -426,7 +426,6 @@ export function executeCraft(
     music
   );
   destroyAll("newCraft");
-  
 }
 export function updateCraftUI(craftState, inventoryState, toolState) {
   if (music.volume) {
@@ -557,14 +556,26 @@ export function addReCraftButton(craftState) {
 }
 // !Restart sequence, current = "crafting"
 export function restartCraft(craftState, inventoryState, toolState) {
+  checkForToolAddition(inventoryState, toolState);
+
   destroyAll("executedCraft");
   craftState.readyToCraft = false;
   craftState.resultReady = false;
   craftState.current = "crafting";
-  closeBackpack();
-  openCraftWindow(craftState, inventoryState, toolState);
-  craftState.result = {};
-  inventoryState.ingredients = [];
+  if (toolState.adding) {
+    closeCraftWindow(craftState, inventoryState, toolState);
+    closeBackpack();
+    destroyAll("vending");
+    destroyAll("craft");
+    destroyAll("itemText");
+    destroyAll("selected");
+    toolState.adding = false;
+  } else {
+    closeBackpack();
+    openCraftWindow(craftState, inventoryState, toolState);
+    craftState.result = {};
+    inventoryState.ingredients = [];
+  }
 }
 // !End craft sequence, current = "moving"
 export function closeCraftWindow(craftState, inventoryState, toolState) {
@@ -581,8 +592,6 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   inventoryState.vendingSelect = 0;
   craftState.isAddingItem = false;
   craftState.current = "moving"; // Change state back to characterMovement
-  checkForToolAddition(inventoryState, toolState);
-
 }
 export function removeItemFromCraft(inventoryState, music) {
   if (

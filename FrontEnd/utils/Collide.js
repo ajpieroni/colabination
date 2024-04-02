@@ -100,7 +100,7 @@ export function onToolCollide(craftState, toolState, inventoryState, s, w) {
       area(),
       anchor("center"),
       pos(500, 500 + 100),
-      z(11),
+      z(8),
       // scale(.5)
     ]);
     craftState.craftSelected = true;

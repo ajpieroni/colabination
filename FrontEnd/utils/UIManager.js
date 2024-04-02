@@ -400,7 +400,14 @@ class UIManager{
             // kaboom, offers ability to make vec2
             vec2(center().x, center().y + 100)
         )
-        
+        // add disclaimer: This game features open-source, handmade, and AI-generated imagery.
+        add([
+            text("This game features open-source, handmade, and AI-generated imagery.", {
+                size: 16,
+                color: (0,0,0),
+            }),
+            pos(415-175, 175+100+400),
+        ])
     }
 
     
