@@ -5,13 +5,13 @@ import { handleSavingData } from "./Save.js";
 import { checkForToolAddition } from "./Tools.js";
 let firstItemPosition = {
   x: 605,
-  y: 295,
+  y: 295+25,
   used: false,
 };
 
 let secondItemPosition = {
   x: 605 + 200,
-  y: 295,
+  y: 295+25,
   used: false,
 };
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
@@ -186,7 +186,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
 
     const trailCircle1 = add([
       circle(64),
-      pos(500 + 200 - 100 + 40, 500 - 200 + 35),
+      pos(500 + 200 - 100 + 40, 500 - 200 + 35+25),
       z(20),
       color(228, 228, 228),
       "craft",
@@ -194,7 +194,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     ]);
     const trailCircle2 = add([
       circle(64),
-      pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35),
+      pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35+25),
       z(20),
       color(228, 228, 228),
       "craft",
@@ -225,7 +225,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Backspace ] To Close", { size: 20 }),
-    pos(100 + 500 - 50, 100 + 50 + 500),
+    pos(100 + 500 - 50, 100 + 50 + 500+15),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -233,7 +233,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
 
   add([
     text("Press [ Q ] To Remove Items", { size: 16 }),
-    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
+    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50+15),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -241,15 +241,15 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50 - 50),
+    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50 - 50+15),
     color(255, 255, 255),
     z(500),
     "craft",
     "newCraft",
   ]);
   add([
-    text("Press [ H ] for Compatible Crafting Items ", { size: 16 }),
-    pos(100 + 500 - 50 + 50-50, 100 + 50 + 500 - 100 + 50 - 50-50),
+    text("Press [ H ] To Toggle Hint Mode ", { size: 16 }),
+    pos(100 + 500 - 50 + 50-50+25+10, 100 + 50 + 500 - 100 + 50 - 50-50+15),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -402,7 +402,7 @@ export function addCraftButton(craftState) {
 
   add([
     text("Press [ Space ] To Craft!", { size: 20 }),
-    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25+25),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -428,6 +428,8 @@ export function executeCraft(
   inventoryState,
   tableState
 ) {
+  destroyAll("hint")
+
   craftState.current = "executed";
 
   craftingBackend(
@@ -440,6 +442,8 @@ export function executeCraft(
   destroyAll("newCraft");
 }
 export function updateCraftUI(craftState, inventoryState, toolState) {
+  destroyAll("hint")
+
   if (music.volume) {
     play("craftFX");
   }
@@ -594,6 +598,7 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
+  destroyAll("hint"); 
   inventoryState.ingredients = [];
 
   setSpeed(300);

@@ -61,6 +61,15 @@ export function openBackpack(inventoryState, craftState, toolState) {
       "newCraft",
       "hint"
     ]);
+    add([
+      rect(250/2, 50),
+      area(),
+      anchor("center"),
+      pos(100 + 500 - 50 + 50-50+100+25+25+50-15+5+5, 100 + 50 + 500 - 100 + 50 - 50-50-300+5),
+      z(49),
+      color(242, 140, 40),
+      "hint",
+    ]);
   }
   if (backpackItems.length > 9 && currentPage < totalcontents.length - 1) {
     const downArrow = add([
