@@ -274,11 +274,7 @@ class CharacterMovement {
     //   openBackpack(inventoryState,craftState);
     // });
 
-    // Add tool to scene when 1 is pressed
-    onKeyPress("1", () => {
-      destroyAll("toolAlert");
-      addNewTool(toolState, true, inventoryState);
-    });
+
     onKeyPress("h", () => {
       if (craftState.current === "crafting") {
         // toggle true and false
