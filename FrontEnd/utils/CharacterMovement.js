@@ -281,6 +281,7 @@ class CharacterMovement {
     });
     onKeyPress("h", () => {
       if (craftState.current === "crafting") {
+        inventoryState.vendingSelect = 0;
         // toggle true and false
         craftState.hint = !craftState.hint;
         
