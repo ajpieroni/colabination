@@ -227,7 +227,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   // crafting control instructions
   const baseX = 100,
     baseY = 100,
-    offsetX = 50,
+    offsetX = 25,
     offsetY = 30,
     zLevel = 500;
   const colorWhite = color(255, 255, 255);
