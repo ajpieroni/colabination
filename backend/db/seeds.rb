@@ -140,6 +140,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
     # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
 
+# Item.where.not(isFinal: true).count
 
 
 # # Hat press is only used for one item: bowl
