@@ -138,8 +138,7 @@ class CharacterMovement {
       table_y: 550,
       onItemsOnTable: 0,
     };
-
-    intiailizeUser(inventoryState);
+    
     function messageCreate(message) {
       const alertMessage = add([
         "alert",
@@ -193,6 +192,171 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
+
+    player.onCollide("helpStation", () => {
+      console.log("Collided with help station");
+      displayControlsOnPress();
+      
+    });
+    player.onCollideEnd("helpStation", () => {
+      console.log("Collidedend with help station");
+      destroyAll("controls");
+    });
+    function displayControlsOnPress(){
+      add([
+        rect(600, 550),
+        pos((1024 - 600) / 2, 175),
+        color(255, 255, 255),
+        opacity(0.8),
+        outline(6, rgb(255, 255, 255)),
+        "box",
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Controls"),
+        pos((1024 - 170) / 2, 210),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Keyboard", {
+          size: 28,
+        }),
+        pos((1024 - 140) / 2, 275),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Move ---------- WASD/Arrow Keys", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 310),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Select ------------------ Enter", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 345),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Back Pack --------------- Space", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 380),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Drop ------------------------ Q", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 415),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Menu ------------------------ M", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 450),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+      add([
+        text("Game Cabinet", {
+          size: 28,
+        }),
+        pos((1024 - 160) / 2, 500),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Move ----------------- Joystick", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 535),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Select ---------------------- A", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 570),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Back Pack ------------------- A", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 605),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Drop ------------------------ B", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 640),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+      add([
+        text("Menu --------------------- Menu", {
+          size: 24,
+          width: 460,
+        }),
+        pos((1024 - 450) / 2, 675),
+        color(70, 70, 70),
+        area(),
+        z(11),
+        "controls",
+      ]);
+    }
+
 
     // Logout
     // Function to check session status
@@ -248,7 +412,7 @@ class CharacterMovement {
         "alert"
       ]);
     }
-    function messageCreateMenu(message) {
+function messageCreateMenu(message) {
       const alertMessage = add([
         "alert",
         text(message, {

@@ -49,10 +49,6 @@ class Tutorial {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-    this.music = play("soundtrack", {
-      volume: volumeSetting,
-      loop: true,
-    });
     // Initialize Tools
     Tools();
     // Map Sprites
