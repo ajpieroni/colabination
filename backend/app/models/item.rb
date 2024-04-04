@@ -9,4 +9,9 @@ class Item < ApplicationRecord
     has_many :item2s, :class_name => 'Combination', :foreign_key => 'item2_id'
     has_many :creations, :class_name => 'Combination', :foreign_key => 'creation_id'
     
+    scope :creations_by_tool, ->(tool_id) {
+    where(id: 
+      Combination.where(tool_id: tool_id).select(:creation_id)
+    )
+  }
 end

@@ -76,10 +76,10 @@ class CharacterMovement {
       color(0, 256, 0),
       area(),
       body({ isStatic: true }),
-      pos(260, 260 + 200 - 75 + 15-140),
+      pos(260, 260 + 200 - 75 + 15 - 140),
       z(1),
       // note that this block will be destroyed after scissors
-      "temp"
+      "temp",
     ]);
     add([sprite("tables"), pos(0, 0), z(2), scale(0.5)]);
     map();
@@ -104,6 +104,9 @@ class CharacterMovement {
       current: "moving",
       // There is either one or two items placed in the crafting window
       readyToCraft: false,
+      hint: false,
+      hintId: "",
+      combinable: {},
     };
 
     // Inventory Control
@@ -393,23 +396,23 @@ class CharacterMovement {
           // optional object
           size: 24,
           outline: 4,
-          color: (25,25,112),
+          color: (25, 25, 112),
           // can specify font here,
         }),
         area(),
         anchor("center"),
-        pos(525,100),
+        pos(525, 100),
         z(500),
         // scale(.5)
       ]);
       const blueBox = add([
-        rect(500+200+200,100),
+        rect(500 + 200 + 200, 100),
         area(),
         anchor("center"),
         pos(525, 100),
         z(19),
         color(1, 33, 105),
-        "alert"
+        "alert",
       ]);
     }
 function messageCreateMenu(message) {
@@ -419,7 +422,7 @@ function messageCreateMenu(message) {
           // optional object
           size: 24,
           outline: 4,
-          color: (25,25,112),
+          color: (25, 25, 112),
           // can specify font here,
         }),
         area(),
@@ -429,13 +432,13 @@ function messageCreateMenu(message) {
         // scale(.5)
       ]);
       const blueBox = add([
-        rect(450,100),
+        rect(450, 100),
         area(),
         anchor("center"),
         pos(475, 775),
         z(19),
         color(1, 33, 105),
-        "alert"
+        "alert",
       ]);
     }
 
@@ -472,10 +475,22 @@ function messageCreateMenu(message) {
     //   openBackpack(inventoryState,craftState);
     // });
 
-    // Add tool to scene when 1 is pressed
-    onKeyPress("1", () => {
-      destroyAll("toolAlert");
-      addNewTool(toolState, true, inventoryState);
+
+    onKeyPress("h", () => {
+      if (craftState.current === "crafting") {
+        inventoryState.vendingSelect = 0;
+        // toggle true and false
+        craftState.hint = !craftState.hint;
+        
+        console.log(toolState.currentTool.id);
+        let hintId = toolState.currentTool.id;
+        craftState.hintId = hintId;
+        closeBackpack();
+        openBackpack(inventoryState, craftState, toolState);
+        if(!craftState.hint){
+          destroyAll("hint"); 
+        }
+      }
     });
     // !NEW CRAFT
     onKeyPress("enter", () => {
@@ -573,7 +588,7 @@ function messageCreateMenu(message) {
       if (craftState.current == "documentation") {
         docuLeft(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingLeft(inventoryState, craftState);
+        vendingLeft(inventoryState, craftState, toolState);
       }
       console.log(inventoryState.vendingSelect);
     });
@@ -582,7 +597,7 @@ function messageCreateMenu(message) {
       if (craftState.current == "documentation") {
         docuRight(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingRight(inventoryState, craftState);
+        vendingRight(inventoryState, craftState, toolState);
       }
     });
 
@@ -591,7 +606,7 @@ function messageCreateMenu(message) {
       if (craftState.current == "documentation") {
         docuDown(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingDown(inventoryState, craftState);
+        vendingDown(inventoryState, craftState, toolState);
       }
     });
 
@@ -599,7 +614,7 @@ function messageCreateMenu(message) {
       if (craftState.current == "documentation") {
         docuUp(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
-        vendingUp(inventoryState, craftState);
+        vendingUp(inventoryState, craftState, toolState);
       }
     });
 

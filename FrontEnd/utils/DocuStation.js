@@ -4,14 +4,14 @@ export function showFinalItems(inventoryState, craftState) {
     rect(500, 600),
     pos(325, 150),
     z(11),
-    color(204, 229, 255),
+    color(127, 127, 191),
     outline(4),
     scale(0.75),
     "final",
   ]);
   let count = inventoryState.areFinal.length;
   const achievement = add([
-    text(`Final Items: ${count}/26`, { size: 16 }),
+    text(`Final Items: ${count}/27`, { size: 16 }),
     pos(425, 625),
     color(255, 255, 255),
     z(500),
@@ -104,13 +104,23 @@ export function showFinalItems(inventoryState, craftState) {
     });
 
     // Add the white box
+    // const selected = add([
+    //   rect(70, 70),
+    //   pos(startX + gridX * 100, startY + gridY * 100),
+    //   z(19),
+    //   color(255, 255, 255),
+    //   "selected",
+    //   "final",
+    // ]);
     const selected = add([
       rect(70, 70),
       pos(startX + gridX * 100, startY + gridY * 100),
       z(19),
-      color(255, 255, 255),
+      opacity(0.75),
+      color(WHITE),
+      outline(4, BLACK),
       "selected",
-      "final",
+      "final"
     ]);
 
     // Add the items into documentation station

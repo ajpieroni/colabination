@@ -5,13 +5,13 @@ import { handleSavingData } from "./Save.js";
 import { checkForToolAddition } from "./Tools.js";
 let firstItemPosition = {
   x: 605,
-  y: 295,
+  y: 295 + 25,
   used: false,
 };
 
 let secondItemPosition = {
   x: 605 + 200,
-  y: 295,
+  y: 295 + 25,
   used: false,
 };
 export function checkCraftable(toolState, inventoryState, volumeSetting) {
@@ -186,7 +186,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
 
     const trailCircle1 = add([
       circle(64),
-      pos(500 + 200 - 100 + 40, 500 - 200 + 35),
+      pos(500 + 200 - 100 + 40, 500 - 200 + 35 + 25),
       z(20),
       color(228, 228, 228),
       "craft",
@@ -194,7 +194,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     ]);
     const trailCircle2 = add([
       circle(64),
-      pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35),
+      pos(500 + 200 - 100 + 200 + 40, 500 - 200 + 35 + 25),
       z(20),
       color(228, 228, 228),
       "craft",
@@ -203,7 +203,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   }
   setSpeed(0);
   // Open backpack with current contents
-  openBackpack(inventoryState, craftState);
+  openBackpack(inventoryState, craftState, toolState);
   // Add label for the crafting tool
   let toolDisplay = toolState.currentTool.toolKey
     // space
@@ -213,6 +213,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
   // Add tool text object
+  console.log("current tool id is ", toolState.currentTool.toolId);
   add([
     text(toolDisplay, { size: 24 }),
     pos(100 + 500 + 50, 100 + 50),
@@ -222,30 +223,83 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "craft",
     "newCraft",
   ]);
-  add([
-    text("Press [ Backspace ] To Close", { size: 20 }),
-    pos(100 + 500 - 50, 100 + 50 + 500),
-    color(255, 255, 255),
-    z(500),
-    "craft",
-  ]);
+
+  // crafting control instructions
+  const baseX = 100,
+    baseY = 100,
+    offsetX = 25,
+    offsetY = 30,
+    zLevel = 500;
+  const colorWhite = color(255, 255, 255);
+
+  // Base positions
+  const posX = baseX + 500 -25;
+  const posY = baseY + 500;
 
   add([
+    text("Press [ Backspace ] To Close", { size: 20 }),
+    pos(posX, posY),
+    colorWhite,
+    z(zLevel),
+    "craft",
+  ]);
+  add([
     text("Press [ Q ] To Remove Items", { size: 16 }),
-    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
-    color(255, 255, 255),
-    z(500),
+    pos(posX + offsetX, posY + offsetY),
+    colorWhite,
+    z(zLevel),
     "craft",
     "newCraft",
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50 - 50),
-    color(255, 255, 255),
-    z(500),
+    pos(posX + offsetX-5, posY + 2 * offsetY),
+    colorWhite,
+    z(zLevel),
     "craft",
     "newCraft",
   ]);
+  add([
+    text("Press [ H ] To Toggle Hint Mode", { size: 16 }),
+    pos(posX + offsetX-15, posY + 3 * offsetY),
+    colorWhite,
+    z(zLevel),
+    "craft",
+    "newCraft",
+  ]);
+
+  // add([
+  //   text("Press [ Backspace ] To Close", { size: 20 }),
+  //   pos(100 + 500 - 50, 100 + 50 + 500+15),
+  //   color(255, 255, 255),
+  //   z(500),
+  //   "craft",
+  // ]);
+
+  // add([
+  //   text("Press [ Q ] To Remove Items", { size: 16 }),
+  //   pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50+15+15),
+  //   color(255, 255, 255),
+  //   z(500),
+  //   "craft",
+  //   "newCraft",
+  // ]);
+  // add([
+  //   text("Press [ Enter ] To Add Items", { size: 16 }),
+  //   pos(100 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50 - 50+15+15+5),
+  //   color(255, 255, 255),
+  //   z(500),
+  //   "craft",
+  //   "newCraft",
+  // ]);
+  // add([
+  //   text("Press [ H ] To Toggle Hint Mode ", { size: 16 }),
+  //   pos(100 + 500 - 50 + 50-50+25+10, 100 + 50 + 500 - 100 + 50 - 50-50+15+15+5+5),
+  //   color(255, 255, 255),
+  //   z(500),
+  //   "craft",
+  //   "newCraft",
+  // ]);
 
   // Popup is Visible
   craftState.popUp = true;
@@ -269,7 +323,12 @@ export function selectItem(craftState, inventoryState, music, toolState) {
   // If the popup is open and it's not the first time it's opened
 
   if (craftState.popUp) {
-    let selectedItem = getCurrentItemInBackpack(inventoryState, craftState);
+    console.log("current tool id is ", toolState.currentTool.toolId);
+    let selectedItem = getCurrentItemInBackpack(
+      inventoryState,
+      craftState,
+      toolState
+    );
     //  If position 1 is unfilled, use that
     if (!firstItemPosition.used) {
       addItemToCraftWindow(selectedItem, inventoryState, craftState, toolState);
@@ -390,7 +449,7 @@ export function addCraftButton(craftState) {
 
   add([
     text("Press [ Space ] To Craft!", { size: 20 }),
-    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25),
+    pos(100 + 500 + 50 - 50, 100 + 50 + 100 - 25 + 25),
     color(255, 255, 255),
     z(500),
     "craft",
@@ -416,6 +475,8 @@ export function executeCraft(
   inventoryState,
   tableState
 ) {
+  destroyAll("hint");
+
   craftState.current = "executed";
 
   craftingBackend(
@@ -428,6 +489,8 @@ export function executeCraft(
   destroyAll("newCraft");
 }
 export function updateCraftUI(craftState, inventoryState, toolState) {
+  destroyAll("hint");
+
   if (music.volume) {
     play("craftFX");
   }
@@ -535,7 +598,7 @@ export function addReCraftButton(craftState) {
 
   add([
     text("Press [ Space ] To Craft Again!", { size: 20 }),
-    pos(100 - 50 + 500 - 50 + 50, 100 + 50 + 500 - 100 + 50),
+    pos(100 - 50 + 500 - 50 + 50+5, 100 + 50 + 500 - 100),
 
     color(255, 255, 255),
     z(500),
@@ -582,6 +645,7 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
+  destroyAll("hint");
   inventoryState.ingredients = [];
 
   setSpeed(300);
