@@ -104,7 +104,7 @@ fairytale = Item.create(name:'fairytale', description: "Dreams come true!", item
 # !UNKNOWN
 lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
 brokenScissors = Item.create(name:'brokenScissors', description: "Not useful anymore.", item_type: 'material', rarity: 1, isFinal: true)
-wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
+wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: true)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
@@ -142,6 +142,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
     # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
 
+# Item.where.not(isFinal: true).count
 
 
 # # Hat press is only used for one item: bowl
