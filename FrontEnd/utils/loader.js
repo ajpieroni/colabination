@@ -137,6 +137,7 @@ export const load = {
     loadSprite("stoplight", "./assets/stoplight.png");
     loadSprite("tire", "./assets/tire.png");
     loadSprite("flatTire", "./assets/flatTire.png");
+    loadSprite("rubber", "./assets/rubber.png");
     loadSprite("vinylCD", "./assets/vinylCD.png");
     loadSprite("crown", "./assets/crown.png");
     loadSprite("knight", "./assets/knight.png");
