@@ -109,8 +109,9 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
 birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 'material', rarity: 1, isFinal: true)
-goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: true)
-
+goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
+pictureFrame = Item.create(name:'pictureFrame', description: "For memories!", item_type: 'material', rarity: 1, isFinal: true)
+goldFrame = Item.create(name:'goldFrame', description: "Fancy!", item_type: 'material', rarity: 1, isFinal: true)
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
@@ -183,6 +184,8 @@ goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'mater
     # also make broken scissors for 2 metal
     Combination.create(tool: scissors, item1: metal, item2: metal, creation: brokenScissors)
     # also for metalSheet
+    Combination.create(tool: hammer, item1: woodPlank, item2: glass, creation: pictureFrame)
+    Combination.create(tool: hands, item1: pictureFrame, item2: goldFoil, creation: goldFrame)
     Combination.create(tool: scissors, item1: metalSheet, item2: nothing, creation: brokenScissors)
     Combination.create(tool: scissors, item1: metalSheet, item2: metalSheet, creation: brokenScissors)
     # cardboard

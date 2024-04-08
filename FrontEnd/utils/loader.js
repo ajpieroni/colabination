@@ -78,7 +78,8 @@ export const load = {
     loadSprite("yarn", "./assets/yarn.png");
     loadSprite("patch", "./assets/patch.png");
     loadSprite("goldFoil", "./assets/goldFoil.png");
-
+    loadSprite("goldFrame", "./assets/goldFrame.png");
+    loadSprite("pictureFrame", "./assets/pictureFrame.png");  
     loadSprite("notebook", "./assets/notebook.png");
     loadSprite("magnifyingGlass", "./assets/magnifyingGlass.png");
     loadSprite("nail", "./assets/nail.png");
@@ -134,7 +135,7 @@ export const load = {
     loadSprite("cauldron", "./assets/cauldron.png");
     loadSprite("diningTable", "./assets/diningTable.png");
     loadSprite("stoplight", "./assets/stoplight.png");
-
+    loadSprite("tire", "./assets/tire.png");
     loadSprite("vinylCD", "./assets/vinylCD.png");
     loadSprite("crown", "./assets/crown.png");
     loadSprite("knight", "./assets/knight.png");
