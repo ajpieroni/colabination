@@ -109,6 +109,7 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
 birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 'material', rarity: 1, isFinal: true)
+goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: true)
 
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
@@ -207,6 +208,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedGlass)
     Combination.create(tool: solderingStation, item1: glass, item2: metal, creation: magnifyingGlass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
+    Combination.create(tool: hammer, item1: gold, item2: gold, creation: goldFoil)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
     # hands & sandpaper + woodPlank = wheel
