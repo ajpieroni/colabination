@@ -24,6 +24,12 @@ export default function InitialItems(itemsToAdd) {
       image: "metal",
       itemKey: "metal",
     },
+    plastic: {
+      sprite: "plastic",
+      position: center().x + 300,
+      image: "plastic",
+      itemKey: "plastic",
+    }
 
   };
 

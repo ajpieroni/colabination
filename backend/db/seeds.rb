@@ -127,6 +127,7 @@ goldFrame = Item.create(name:'goldFrame', description: "Fancy!", item_type: 'mat
     shirt = Item.create(name: 'shirt', description: "Garment that covers your torso", item_type: "material", rarity: 1, isFinal: false)
     patch = Item.create(name: 'patch', description: "Fixes holes in clothes", item_type: "material", rarity: 1, isFinal: true)
     tire = Item.create(name: 'tire', description: "For cars!", item_type: "material", rarity: 1, isFinal: false)
+    rubber = Item.create(name: 'rubber', description: "For bouncing!", item_type: "material", rarity: 1, isFinal: false)
     # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
@@ -252,8 +253,10 @@ goldFrame = Item.create(name:'goldFrame', description: "Fancy!", item_type: 'mat
     Combination.create(tool: solderingStation, item1: metalBars, item2: thread, creation: chains)
 
     Combination.create(tool: hands, item1: metalSheet, item2: sandpaper, creation: bowl)
+    Combination.create(tool: hands, item1: plastic, item2: sandpaper, creation: rubber)
     Combination.create(tool: hammer, item1: tire, item2: wagon, creation: car)
     Combination.create(tool: hammer, item1: nail, item2: tire, creation: flatTire)
+    Combination.create(tool: hammer, item1: metal, item2: rubber, creation: tire)
 
 
     # Metal: level 3
