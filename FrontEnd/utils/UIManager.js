@@ -408,6 +408,13 @@ class UIManager{
             }),
             pos(415-175, 175+100+400),
         ])
+        add([
+            text("This game is for desktop use only.", {
+                size: 16,
+                color: (0,0,0),
+            }),
+            pos(center().x - 150, center().y + 300), 
+        ])
     }
 
     
