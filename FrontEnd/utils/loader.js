@@ -87,6 +87,8 @@ export const load = {
     loadSprite("metalSculpture", "./assets/metalSculpture.png");
     loadSprite("birdhouse", "./assets/birdhouse.png");
     loadSprite("table", "./assets/table.png");
+    loadSprite("cardboardBox", "./assets/cardboardBox.png");
+    loadSprite("puzzle", "./assets/puzzle.png");
 
     loadSprite("solderingStation", "./assets/solderingStationtable.PNG");
     loadSprite("woodArtMario", "./assets/woodartmario.PNG");
