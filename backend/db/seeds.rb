@@ -123,6 +123,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     scarecrow = Item.create(name: 'scarecrow', description: "Almost human... scares the crows!", item_type: "material", rarity: 1, isFinal: true)
     shirt = Item.create(name: 'shirt', description: "Garment that covers your torso", item_type: "material", rarity: 1, isFinal: false)
     patch = Item.create(name: 'patch', description: "Fixes holes in clothes", item_type: "material", rarity: 1, isFinal: true)
+    cardboardBox = Item.create(name: 'cardboardBox', description: "For storage!", item_type: "material", rarity: 1, isFinal: true)
+    puzzle = Item.create(name: 'puzzle', description: "For fun!", item_type: "material", rarity: 1, isFinal: true)
 
     # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
@@ -179,6 +181,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: hammer, item1: wood, item2: wood, creation: paper)
     Combination.create(tool: scissors, item1: metal, item2: nothing, creation: brokenScissors)
     Combination.create(tool: sewingmachine, item1:paper, item2: thread, creation: notebook )
+    Combination.create(tool: hammer, item1: cardboard, item2: cardboard, creation: cardboardBox)
+    Combination.create(tool: scissors, item1: cardboard, item2: nothing, creation: puzzle)
     # also make broken scissors for 2 metal
     Combination.create(tool: scissors, item1: metal, item2: metal, creation: brokenScissors)
     # also for metalSheet
