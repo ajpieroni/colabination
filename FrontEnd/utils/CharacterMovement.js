@@ -218,148 +218,124 @@ class CharacterMovement {
         "controls",
       ]);
   
-      add([
-        text("Controls"),
-        pos((1024 - 170) / 2, 210),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-  
-      add([
-        text("Keyboard", {
-          size: 28,
-        }),
-        pos((1024 - 140) / 2, 275),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Move ---------- WASD/Arrow Keys", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 310),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Select ------------------ Enter", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 345),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Back Pack --------------- Space", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 380),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Drop ------------------------ Q", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 415),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Menu ------------------------ M", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 450),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-  
-      add([
-        text("Game Cabinet", {
-          size: 28,
-        }),
-        pos((1024 - 160) / 2, 500),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Move ----------------- Joystick", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 535),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Select ---------------------- A", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 570),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Back Pack ------------------- A", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 605),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Drop ------------------------ B", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 640),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-      add([
-        text("Menu --------------------- Menu", {
-          size: 24,
-          width: 460,
-        }),
-        pos((1024 - 450) / 2, 675),
-        color(70, 70, 70),
-        area(),
-        z(11),
-        "controls",
-      ]);
-    }
+          add([
+      text("Controls"),
+      pos((1024 - 170) / 2, 210),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
 
+    add([
+      text("Keyboard", {
+        size: 28,
+      }),
+      pos((1024 - 140) / 2, 275),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ---------- WASD/Arrow Keys", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 310),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ------------------ Enter", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 345),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu ------------------------ M", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 380),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Game Cabinet", {
+        size: 28,
+      }),
+      pos((1024 - 160) / 2, 415),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ----------------- Joystick", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 450),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ---------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 485),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Back Pack ------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 520),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Drop ------------------------ B", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 555),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu --------------------- Menu", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 590),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+  }
 
     // Logout
     // Function to check session status
