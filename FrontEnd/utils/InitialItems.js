@@ -26,7 +26,7 @@ export default function InitialItems(itemsToAdd) {
     },
     plastic: {
       sprite: "plastic",
-      position: center().x + 300,
+      position: center().x,
       image: "plastic",
       itemKey: "plastic",
     }
