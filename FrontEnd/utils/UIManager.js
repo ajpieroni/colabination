@@ -366,9 +366,14 @@ class UIManager {
     ]);
 
     // kaboom event listeners (key, funciton)
-    onKeyPress("enter", () => {
-      go("characterMovement");
-    });
+        onKeyPress("enter", () => {
+            go("characterMovement");
+            localStorage.setItem("tutorial", "false");
+        });
+        onKeyPress("z", () => {
+            go("tutorial");
+            localStorage.setItem("tutorial", "true");
+        });
 
     message.onStateEnter("flash-up", async () => {
       // tweening: a component that allows you to gradually change the value from x to y
@@ -401,26 +406,47 @@ class UIManager {
     });
   }
 
-  displayMainMenu() {
-    // add creates game object to be displayed on the screen
-    // add function returns game objects, can store in const or var
-    add([sprite("colabdoors"), scale(0.85)]);
-    add([
-      sprite("colablogo"),
-      // area component will create a hitbox over the game object
-      // will also enable anchor component
-      area(),
-      anchor("center"),
-      // moves logo up
-      pos(center().x, center().y - 200),
-      scale(0.75),
-    ]);
-    this.displayBlinkingUIMessage(
-      "Press [ Enter ] to Start Game",
-      // kaboom, offers ability to make vec2
-      vec2(center().x, center().y + 100)
-    );
-  }
+
+    displayMainMenu(){
+        // add creates game object to be displayed on the screen
+        // add function returns game objects, can store in const or var
+        add([
+            sprite("colabdoors"),
+            scale(.85),
+        ])
+        add([
+            sprite("colablogo"),
+            // area component will create a hitbox over the game object
+            // will also enable anchor component
+            area(),
+            anchor("center"),
+            // moves logo up
+            pos(center().x, center().y-200),
+            scale(.75),
+        ])
+        this.displayBlinkingUIMessage(
+            "Press [ Enter ] to Start Game or [ Z ] for Tutorial",
+            // kaboom, offers ability to make vec2
+            vec2(center().x, center().y + 100)
+        )
+        // add disclaimer: This game features open-source, handmade, and AI-generated imagery.
+        add([
+            text("This game features open-source, handmade, and AI-generated imagery.", {
+                size: 16,
+                color: (0,0,0),
+            }),
+            pos(415-175, 175+100+400),
+        ])
+        add([
+            text("This game is for desktop use only.", {
+                size: 16,
+                color: (0,0,0),
+            }),
+            pos(center().x - 150, center().y + 300), 
+        ])
+    }
+
+    
 }
 
 export const uiManager = new UIManager();

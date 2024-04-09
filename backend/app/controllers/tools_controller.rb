@@ -19,9 +19,35 @@ class ToolsController < ApplicationController
     @tool = Tool.new
   end
 
+  def combinable_items
+  combinable_item_ids = Combination
+    .where(tool_id: params[:id])
+    .distinct
+    .pluck(:item1_id, :item2_id)
+    .flatten
+    .uniq
+  combinable_items = Item.where(id: combinable_item_ids).select(:name, :isFinal).map do |item|
+    { itemKey: item.name, isFinal: item.isFinal }
+  end
+
+  render json: combinable_items
+end
+
+
   # GET /tools/1/edit
   def edit
   end
+ # GET /tools/:id/creations
+ def show_creations
+  creations = Item.creations_by_tool(params[:id])
+  if creations.any?
+    render json: creations
+  else
+    render json: { message: "No creations found for this tool." }, status: :not_found
+  end
+end
+
+
 
   # POST /tools or /tools.json
   def create
@@ -63,6 +89,7 @@ class ToolsController < ApplicationController
   end
 
   def find_by_name
+
 @tool = Tool.find_by(name: params[:name])
     
     if @tool
@@ -75,9 +102,12 @@ class ToolsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tool
-      @tool = Tool.find(params[:id])
+      @tool = Tool.find_by(id: params[:id])
+      if @tool.nil?
+        render json: { error: "Tool not found" }, status: :not_found
+        return
+      end
     end
-
     # Only allow a list of trusted parameters through.
     def tool_params
       params.require(:tool).permit(:name, :description, :spriteLocation, :globalCount, :sprite)

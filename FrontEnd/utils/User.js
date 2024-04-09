@@ -1,6 +1,8 @@
 
 import InitialItems from "./InitialItems.js";
-export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal) {
+import { addNewTool } from "./Tools.js";
+
+export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal, toolState) {
     let curr_user = localStorage.getItem("username");
 
   console.log(`Fetching for ${username}`);
@@ -13,14 +15,23 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         return response.json();
       })
       .then((data) => {
+        console.log(localStorage.getItem("tutorial"));
         const items = data.items; 
         console.log("items", items);
-        let containsPaper = items.some((subArray) =>
-          subArray.includes("wood")
-        );
-        if (items.length == 0) {
+        if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
+        console.log("tutorial is true");
+        InitialItems(["wood"]);
+        }else{
+          InitialItems([]);
+        }
+        // let containsPaper = items.some((subArray) =>
+        //   subArray.includes("paper")
+        // );
+        console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
+        if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
           InitialItems(["glass", "thread", "wood", "metal"]);
         }
+
         if (items.length !== 0) {
           const materials = ["glass", "thread", "wood", "metal"];
 
@@ -32,22 +43,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
           });
         }
 
+        // Add the items to the game
         items.forEach((item) => {
           const itemName = item[0];
           const isFinal = item[1];
-          // console.log(itemName, isFinal);
           const savedItem = add([
-            // rect(item.width, item.height) ,
             pos(0, 0),
             pos(0, 0),
             z(0),
-            // color(item.color.r, item.color.g, item.color.b),
             sprite(`${itemName}`),
-            // rect(10,10),
-            // sprite(`${image}`),
             scale(1.5),
             area(),
-            // z(11),
             "material",
             {
               itemKey: itemName,
@@ -57,11 +63,17 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
           if (!savedItem.isFinal) {
             hasSavedItems.push(itemName);
             vendingKeys.push(savedItem.itemKey);
+            
             vendingContents.push(savedItem);
           } else {
             if (!areFinal.includes(itemName)) {
               areFinal.push(itemName);
             }
+          }
+          // Add a new tool if the user has discovered 10 new items
+          if(vendingContents.length % 10 == 0){
+            // addNewTool(toolState, showAlert);
+            addNewTool(toolState, false);
           }
         });
         // resolve(itemNames);
@@ -71,13 +83,13 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       });
   });
 }
-export function intiailizeUser(inventoryState){
+export function intiailizeUser(inventoryState, toolState){
   fetchUserItems(
     inventoryState.curr_user,
     inventoryState.hasSavedItems,
     inventoryState.vendingKeys,
     inventoryState.vendingContents,
-    inventoryState.areFinal
+    inventoryState.areFinal, toolState
   )
     .then((itemNames) => {
       console.log(itemNames);
