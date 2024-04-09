@@ -144,7 +144,16 @@ export const load = {
     loadSprite("witch", "./assets/witch.png");
     loadSprite("family", "./assets/family.png");
     loadSprite("street", "./assets/street.png");
-
+    loadSprite("acrylic", "./assets/acrylic.png");
+    loadSprite("plasticSheet", "./assets/plasticSheet.png");
+    loadSprite("acrylicSheet", "./assets/acrylicSheet.png");
+    loadSprite("acrylicPaint", "./assets/acrylicPaint.png");
+    loadSprite("monaLisa", "./assets/monaLisa.png");
+    loadSprite("nailPolish", "./assets/nailPolish.png");
+    loadSprite("fairyLights", "./assets/fairyLights.png");
+    loadSprite("vinylSticker", "./assets/vinylSticker.png");
+    loadSprite("mysteryObject", "./assets/mysteryObject.png");
+    loadSprite("vinyl", "./assets/vinyl.png");
     loadSprite("monarchDoll", "./assets/monarchDoll.png");
     loadSprite("kingdom", "./assets/kingdom.png");
     loadSprite("home", "./assets/home.png");
