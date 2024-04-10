@@ -107,6 +107,10 @@ class CharacterMovement {
       hint: false,
       hintId: "",
       combinable: {},
+      achievements: {
+        mystery: false,
+        allItems: false,
+      },
     };
 
     // Inventory Control

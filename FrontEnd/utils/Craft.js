@@ -503,6 +503,10 @@ export function updateCraftUI(craftState, inventoryState, toolState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 
+  if (resultDisplay === "Mystery Object") {
+    craftState.achievement.mystery = true;
+  }
+
   if (craftState.result.itemKey.length < 6) {
     const resultText = add([
       text(`You made ${resultDisplay}!`, { size: 24 }),
