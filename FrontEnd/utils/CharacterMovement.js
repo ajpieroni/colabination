@@ -337,7 +337,7 @@ class CharacterMovement {
       closeCraftWindow(craftState, inventoryState, toolState);
       if(craftState.achievements.mystery){
         const alertMessage = add([
-          "alert",
+          "achievement",
           text("You have unlocked the mystery achievement!", {
             // optional object
             size: 24,
