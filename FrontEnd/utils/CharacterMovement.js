@@ -335,6 +335,23 @@ class CharacterMovement {
     onKeyPress("backspace", () => {
       console.log("Pressed");
       closeCraftWindow(craftState, inventoryState, toolState);
+      if(craftState.achievements.mystery){
+        const alertMessage = add([
+          "alert",
+          text("You have unlocked the mystery achievement!", {
+            // optional object
+            size: 24,
+            outline: 4,
+            color: (25, 25, 112),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(525, 100),
+          z(500),
+          // scale(.5)
+        ]);
+      }
 
       console.log("should be checking for tool ");
       console.log(inventoryState.vendingContents.length)
