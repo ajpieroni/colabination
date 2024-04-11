@@ -100,6 +100,7 @@ puts 'seeding'
     city = Item.create(name:'city', description: "Big apple!", item_type: 'material', rarity: 1, isFinal: true)
 # level 5
 fairytale = Item.create(name:'fairytale', description: "Dreams come true!", item_type: 'material', rarity: 1, isFinal: true)
+flatTire = Item.create(name:'flatTire', description: "Uh oh.", item_type: 'material', rarity: 1, isFinal: true)
 
 # !UNKNOWN
 lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
@@ -109,7 +110,20 @@ building = Item.create(name:'building', description: "Store stuff!", item_type: 
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
 birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 'material', rarity: 1, isFinal: true)
+goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
+pictureFrame = Item.create(name:'pictureFrame', description: "For memories!", item_type: 'material', rarity: 1, isFinal: true)
+goldFrame = Item.create(name:'goldFrame', description: "Fancy!", item_type: 'material', rarity: 1, isFinal: true)
 
+# plastic trail
+acrylic = Item.create(name:'acrylic', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
+plasticSheet = Item.create(name:'plasticSheet', description: "For plastic things!", item_type: 'material', rarity: 1, isFinal: false)
+acrylicSheet = Item.create(name:'acrylicSheet', description: "For acrylic things!", item_type: 'material', rarity: 1, isFinal: false)
+acrylicPaint = Item.create(name:'acrylicPaint', description: "For painting!", item_type: 'material', rarity: 1, isFinal: false)
+monaLisa = Item.create(name:'monaLisa', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
+nailPolish = Item.create(name:'nailPolish', description: "For nails!", item_type: 'material', rarity: 1, isFinal: true)
+fairyLights = Item.create(name:'fairyLights', description: "For lighting!", item_type: 'material', rarity: 1, isFinal: true)
+vinylSticker = Item.create(name:'vinylSticker', description: "For sticking!", item_type: 'material', rarity: 1, isFinal: true)
+mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-Lab to print your own ideas!", item_type: 'material', rarity: 1, isFinal: true)
 # Creating thread trail
     threadBall = Item.create(name:'threadBall', description: "Ball of thread!", item_type: 'material', rarity: 1, isFinal: false)
     macrame = Item.create(name:'macrame', description: "Fancy knots!", item_type: 'material', rarity: 1, isFinal: true)
@@ -125,7 +139,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     patch = Item.create(name: 'patch', description: "Fixes holes in clothes", item_type: "material", rarity: 1, isFinal: true)
     cardboardBox = Item.create(name: 'cardboardBox', description: "For storage!", item_type: "material", rarity: 1, isFinal: true)
     puzzle = Item.create(name: 'puzzle', description: "For fun!", item_type: "material", rarity: 1, isFinal: true)
-
+    tire = Item.create(name: 'tire', description: "For cars!", item_type: "material", rarity: 1, isFinal: false)
+    rubber = Item.create(name: 'rubber', description: "For bouncing!", item_type: "material", rarity: 1, isFinal: false)
     # Creating tools
     hammer = Tool.create(name: 'hammer', description: 'Useful for hammering things', globalCount: 100)
     scissors = Tool.create(name: 'scissors', description: 'Useful for cutting paper', globalCount: 150)
@@ -186,6 +201,8 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     # also make broken scissors for 2 metal
     Combination.create(tool: scissors, item1: metal, item2: metal, creation: brokenScissors)
     # also for metalSheet
+    Combination.create(tool: hammer, item1: woodPlank, item2: glass, creation: pictureFrame)
+    Combination.create(tool: hands, item1: pictureFrame, item2: goldFoil, creation: goldFrame)
     Combination.create(tool: scissors, item1: metalSheet, item2: nothing, creation: brokenScissors)
     Combination.create(tool: scissors, item1: metalSheet, item2: metalSheet, creation: brokenScissors)
     # cardboard
@@ -211,6 +228,7 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: solderingStation, item1: window, item2: nothing, creation: stainedGlass)
     Combination.create(tool: solderingStation, item1: glass, item2: metal, creation: magnifyingGlass)
     Combination.create(tool: hammer, item1: brokenGlass, item2: brokenGlass, creation: sand)
+    Combination.create(tool: hammer, item1: gold, item2: gold, creation: goldFoil)
     # hands & sand + paper  = sandpaper
     Combination.create(tool: hands, item1: sand, item2: paper, creation: sandpaper)
     # hands & sandpaper + woodPlank = wheel
@@ -250,7 +268,10 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: solderingStation, item1: metalBars, item2: thread, creation: chains)
 
     Combination.create(tool: hands, item1: metalSheet, item2: sandpaper, creation: bowl)
-    # Combination.create(tool: mill, item1: metalSheet, item2: wagon, creation: car)
+    Combination.create(tool: hands, item1: plastic, item2: sandpaper, creation: rubber)
+    Combination.create(tool: hammer, item1: tire, item2: wagon, creation: car)
+    Combination.create(tool: hammer, item1: nail, item2: tire, creation: flatTire)
+    Combination.create(tool: hammer, item1: metal, item2: rubber, creation: tire)
 
 
     # Metal: level 3
@@ -312,9 +333,16 @@ birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 
     Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
     Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
 
-
-
-
+    # Plastic
+    Combination.create(tool: solderingStation, item1: glass, item2: plastic, creation: acrylic)
+    Combination.create(tool: hammer, item1: plastic, item2: plastic, creation: plasticSheet)
+    Combination.create(tool: hammer, item1: acrylic, item2: acrylic, creation: acrylicSheet)
+    Combination.create(tool: solderingStation, item1: acrylic, item2: acrylic, creation: acrylicPaint)
+    Combination.create(tool: hands, item1: paper, item2: acrylicPaint, creation: monaLisa)
+    Combination.create(tool: hands, item1: jewelry, item2: acrylicPaint, creation: nailPolish)
+    Combination.create(tool: solderingStation, item1: plasticSheet, item2: lightbulb, creation: fairyLights)
+    Combination.create(tool: cricut, item1: vinyl, item2: nothing, creation: vinylSticker)
+    Combination.create(tool: printer, item1: plastic, item2: nothing, creation: mysteryObject)
 
 puts 'successfully seeded'
 
