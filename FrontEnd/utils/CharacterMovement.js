@@ -421,6 +421,7 @@ function messageCreateMenu(message) {
     if (localStorage.getItem("tutorial") === "true") {
       messageCreate("Welcome to the main game!");
       messageCreateMenu("Press M to open the menu");
+      localStorage.setItem("tutorial", "false");
     }
     onKeyPress(() => {
       destroyAll("alert");
