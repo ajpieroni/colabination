@@ -278,20 +278,19 @@ class CharacterMovement {
     //   openBackpack(inventoryState,craftState);
     // });
 
-
     onKeyPress("h", () => {
       if (craftState.current === "crafting") {
         inventoryState.vendingSelect = 0;
         // toggle true and false
         craftState.hint = !craftState.hint;
-        
+
         console.log(toolState.currentTool.id);
         let hintId = toolState.currentTool.id;
         craftState.hintId = hintId;
         closeBackpack();
         openBackpack(inventoryState, craftState, toolState);
-        if(!craftState.hint){
-          destroyAll("hint"); 
+        if (!craftState.hint) {
+          destroyAll("hint");
         }
       }
     });
@@ -335,7 +334,8 @@ class CharacterMovement {
     onKeyPress("backspace", () => {
       console.log("Pressed");
       closeCraftWindow(craftState, inventoryState, toolState);
-      if(craftState.achievements.mystery){
+      if (craftState.achievements.mystery) {
+        this.music.paused = true;
         const alertMessage = add([
           "achievement",
           text("You have unlocked the mystery achievement!", {
@@ -354,7 +354,7 @@ class CharacterMovement {
       }
 
       console.log("should be checking for tool ");
-      console.log(inventoryState.vendingContents.length)
+      console.log(inventoryState.vendingContents.length);
       if (craftState.current === "documentation") {
         closeDocumentationStation(craftState, inventoryState);
       }
