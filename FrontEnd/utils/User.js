@@ -29,11 +29,11 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         // );
         console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
         if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
-          InitialItems(["glass", "thread", "wood", "metal"]);
+          InitialItems(["glass", "thread", "wood", "metal", "plastic"]);
         }
 
         if (items.length !== 0) {
-          const materials = ["glass", "thread", "wood", "metal"];
+          const materials = ["glass", "thread", "wood", "metal", "plastic"];
 
           materials.forEach((material) => {
             if (!items.some((subArray) => subArray.includes(material))) {
