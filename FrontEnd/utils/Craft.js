@@ -504,7 +504,7 @@ export function updateCraftUI(craftState, inventoryState, toolState) {
     .join(" ");
 
   if (resultDisplay === "Mystery Object") {
-    craftState.achievement.mystery = true;
+    craftState.achievements.mystery = true;
   }
 
   if (craftState.result.itemKey.length < 6) {
