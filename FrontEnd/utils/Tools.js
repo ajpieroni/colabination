@@ -112,7 +112,28 @@ export default function Tools() {
     "documentationStation",
     { access: false },
   ]);
+
+  const helpButton = add([
+    rect(block_size, block_size),
+    pos(900, 700),
+    area(),
+    body({ isStatic: true }),
+    color(89, 118, 212),
+    "helpStation",
+    { access: false },
+    z(1),
+  ]);
+    add([
+      sprite("questionMark"),
+      pos(900, 700),
+      scale(0.45),
+      "helpStation",
+      { access: false },
+      z(10),
+    ]);
+
 }
+
 
 // Checks if a new tool should be added to the game, and if so, adds it
 export function addNewTool(toolState, showAlert, inventoryState) {
