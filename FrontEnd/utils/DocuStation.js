@@ -51,7 +51,7 @@ export function showFinalItems(inventoryState, craftState) {
   if (inventoryState.areFinal.length > 9) {
     const rightArrow = add([
       sprite("rightArrow"),
-      pos(450, 400),
+      pos(650, 300),
       z(100),
       outline(4),
       "final",

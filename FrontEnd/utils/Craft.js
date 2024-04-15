@@ -214,6 +214,9 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     .join(" ");
   // Add tool text object
   console.log("current tool id is ", toolState.currentTool.toolId);
+  if (toolDisplay === "Printer1" || toolDisplay === "Printer2") {
+    toolDisplay = "3D Printer";
+  }
   add([
     text(toolDisplay, { size: 24 }),
     pos(100 + 500 + 50, 100 + 50),

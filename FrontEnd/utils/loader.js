@@ -202,5 +202,7 @@ export const load = {
 
     //controls
     loadSprite("coolBG", "./assets/coolClouds.png");
+
+    loadSprite("questionMark", "./assets/questionMark.png");
   },
 };

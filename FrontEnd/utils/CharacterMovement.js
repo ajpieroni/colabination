@@ -149,7 +149,40 @@ class CharacterMovement {
       table_y: 550,
       onItemsOnTable: 0,
     };
+    
+    function messageCreate(message) {
+      const alertMessage = add([
+        "alert",
+        text(message, {
+          // optional object
+          size: 24,
+          outline: 4,
+          color: (25,25,112),
+          // can specify font here,
+        }),
+        area(),
+        anchor("center"),
+        pos(525,100),
+        z(500),
+        // scale(.5)
+      ]);
+      const blueBox = add([
+        rect(500+200+200,100),
+        area(),
+        anchor("center"),
+        pos(525, 100),
+        z(19),
+        color(1, 33, 105),
+        "alert"
+      ]);
+    }
 
+    if (localStorage.getItem("tutorial") === "true") {
+      messageCreate("Welcome to the main game!");
+    }
+    onKeyPress(() => {
+      destroyAll("alert");
+    });
     // Music
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
@@ -185,6 +218,147 @@ class CharacterMovement {
       ]);
       craftState.achievements.corgi.populated = true;
     }
+
+    player.onCollide("helpStation", () => {
+      console.log("Collided with help station");
+      displayControlsOnPress();
+      
+    });
+    player.onCollideEnd("helpStation", () => {
+      console.log("Collidedend with help station");
+      destroyAll("controls");
+    });
+    function displayControlsOnPress(){
+      add([
+        rect(600, 550),
+        pos((1024 - 600) / 2, 175),
+        color(255, 255, 255),
+        opacity(0.8),
+        outline(6, rgb(255, 255, 255)),
+        "box",
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+          add([
+      text("Controls"),
+      pos((1024 - 170) / 2, 210),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+
+    add([
+      text("Keyboard", {
+        size: 28,
+      }),
+      pos((1024 - 140) / 2, 275),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ---------- WASD/Arrow Keys", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 310),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ------------------ Enter", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 345),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu ------------------------ M", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 380),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Game Cabinet", {
+        size: 28,
+      }),
+      pos((1024 - 160) / 2, 415),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ----------------- Joystick", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 450),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ---------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 485),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Back Pack ------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 520),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Drop ------------------------ B", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 555),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu --------------------- Menu", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 590),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+  }
 
     // Logout
     // Function to check session status
@@ -241,7 +415,7 @@ class CharacterMovement {
         "alert",
       ]);
     }
-    function messageCreateMenu(message) {
+function messageCreateMenu(message) {
       const alertMessage = add([
         "alert",
         text(message, {
@@ -271,6 +445,7 @@ class CharacterMovement {
     if (localStorage.getItem("tutorial") === "true") {
       messageCreate("Welcome to the main game!");
       messageCreateMenu("Press M to open the menu");
+      localStorage.setItem("tutorial", "false");
     }
     onKeyPress(() => {
       destroyAll("alert");
@@ -280,7 +455,10 @@ class CharacterMovement {
       onToolCollide(craftState, toolState, inventoryState, s, w);
     });
 
-    onCollideEnd("player", "tool", () => {
+    onCollideEnd("player", "tool", (
+
+
+    ) => {
       onToolCollideEnd(toolState, inventoryState);
     });
 

@@ -1,11 +1,9 @@
 import InitialItems from "./InitialItems.js";
 import Tools, {
-  addToolToGame,
   addNewTool,
-  checkForToolAddition,
 } from "./Tools.js";
 import map from "./map.js";
-import { resetInactivityTimer, logout, handleSavingData } from "./Save.js";
+import { resetInactivityTimer, handleSavingData } from "./Save.js";
 import {
   closeDocumentationStation,
   showFinalItems,
@@ -16,20 +14,15 @@ import {
 } from "./DocuStation.js";
 import { getSpeed, setSpeed } from "./Player.js";
 import {
-  craftingBackend,
   openCraftWindow,
   closeCraftWindow,
   removeItemFromCraft,
   executeCraft,
   restartCraft,
 } from "./Craft.js";
-import { getCurrentItemInBackpack } from "./Vending.js";
-import { closeBackpack } from "./Vending.js";
-import { addItemToCraftWindow, selectItem } from "./Craft.js";
+import { selectItem } from "./Craft.js";
 import { handleCollideDocumentationStationEnd } from "./Collide.js";
-
 import {
-  openBackpack,
   vendingLeft,
   vendingRight,
   vendingDown,
@@ -43,13 +36,8 @@ import {
 } from "./Collide.js";
 import { checkCraftable } from "./Craft.js";
 
-/**
- * Represents the character movement class.
- * This class acts as the main control for character movement and interactions.
- */
 class Tutorial {
-  // This file acts as our main control.
-  // It initializes the game, and controls the player's movement.
+
   music = null;
   constructor() {
     this.level = null;
@@ -61,10 +49,6 @@ class Tutorial {
     let volumeSetting = localStorage.getItem("soundTogg")
       ? parseFloat(localStorage.getItem("soundTogg"))
       : 1;
-    this.music = play("soundtrack", {
-      volume: volumeSetting,
-      loop: true,
-    });
     // Initialize Tools
     Tools();
     // Map Sprites
@@ -92,6 +76,7 @@ class Tutorial {
       current: "moving",
       // There is either one or two items placed in the crafting window
       readyToCraft: false,
+      isCorrectlyCrafted: false,
     };
 
     // Inventory Control
@@ -253,33 +238,42 @@ class Tutorial {
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
+      userActivity();
     });
     onKeyDown("d", () => {
       player.move(getSpeed(), 0);
+      userActivity();
     });
 
     onKeyDown("w", () => {
       player.move(0, -getSpeed());
+      userActivity();
     });
 
     onKeyDown("s", () => {
       player.move(0, getSpeed());
+      userActivity();
     });
     // Arrow Keys
     onKeyDown("left", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
+      userActivity();
     });
     onKeyDown("right", () => {
       player.move(getSpeed(), 0);
+      userActivity();
     });
 
     onKeyDown("up", () => {
       player.move(0, -getSpeed());
+      userActivity();
     });
 
     onKeyDown("down", () => {
       player.move(0, getSpeed());
+      userActivity();
+  
     });
 
     onCollideEnd("player", "craftingTable", () => {
@@ -324,23 +318,6 @@ class Tutorial {
       }
     });
 
-    // Open Menu
-    onKeyPress("m", () => {
-      this.music.paused = true;
-      handleSavingData(
-        inventoryState.vendingKeys,
-        inventoryState.hasSavedItems,
-        inventoryState.areFinal,
-        inventoryState.currItems,
-        inventoryState.currTools,
-        inventoryState.currFinals,
-        inventoryState.hasSavedFinal
-      );
-      go("settings");
-    });
-
-    // !TODO: export to doc statino file
-
     player.onCollide("documentationStation", () => {
       handleCollideDocumentationStation(
         collisionState,
@@ -356,6 +333,16 @@ class Tutorial {
         inventoryState,
         craftState
       );
+    });
+
+    player.onCollide("helpStation", () => {
+      console.log("Collided with help station");
+      displayControlsOnPress();
+      
+    });
+    player.onCollideEnd("helpStation", () => {
+      console.log("Collidedend with help station");
+      destroyAll("controls");
     });
 
     // Collide with Material
@@ -400,17 +387,185 @@ class Tutorial {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
     });
+    function displayControlsOnPress(){
+      add([
+        rect(600, 550),
+        pos((1024 - 600) / 2, 175),
+        color(255, 255, 255),
+        opacity(0.8),
+        outline(6, rgb(255, 255, 255)),
+        "box",
+        area(),
+        z(11),
+        "controls",
+      ]);
+  
+       add([
+      text("Controls"),
+      pos((1024 - 170) / 2, 210),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+
+    add([
+      text("Keyboard", {
+        size: 28,
+      }),
+      pos((1024 - 140) / 2, 275),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ---------- WASD/Arrow Keys", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 310),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ------------------ Enter", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 345),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu ------------------------ M", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 380),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Game Cabinet", {
+        size: 28,
+      }),
+      pos((1024 - 160) / 2, 415),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Move ----------------- Joystick", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 450),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Select ---------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 485),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Back Pack ------------------- A", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 520),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Drop ------------------------ B", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 555),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    add([
+      text("Menu --------------------- Menu", {
+        size: 24,
+        width: 460,
+      }),
+      pos((1024 - 450) / 2, 590),
+      color(0, 0, 0),
+      area(),
+      z(12),
+      "controls",
+    ]);
+    }
+    function clearCraftState() {
+      craftState.result.itemKey = "";
+    }
+    let idleTime = 0;
+    let movingPrompted = false;
+
+    function resetIdleTime() {
+      idleTime = 0;
+      movingPrompted = false;
+      if (lastSignificantMessage) {
+        destroyAll("alert");
+        messageCreate(lastSignificantMessage, false); // Re-display the significant message without updating it
+      }
+  }
+    function userActivity() {
+      resetIdleTime();
+  }
+    function checkIdle() {
+      idleTime++;
+      if (idleTime >= 15 && craftState.current === 'moving' && !movingPrompted) {
+          movingPrompted = true;
+          destroyAll("alert");
+          messageCreate("Use Arrow Keys or WASD to move.", false); // False because it's not a significant message
+      }
+    }
+    
+    setInterval(checkIdle, 1000);
+      function playerMovement() {
+        resetIdleTime();
+    }
+    
+    function userActivity() {
+      playerMovement(); 
+    }
+
     let readyToCraft = false;
     let isTutorialDone = false;
     
-    function waitForCondition(conditionFunc) {
+    function waitForCondition(conditionFunc, attemptFunc, failMessage, stepRequired) {
       return new Promise((resolve) => {
         const checkCondition = () => {
           if (conditionFunc()) {
             resolve();
-          } else {
-            setTimeout(checkCondition, 100); 
+          } else if (currentStep === stepRequired && attemptFunc && typeof attemptFunc === 'function' && attemptFunc()) {
+            destroyAll("alert");
+            messageCreate(failMessage, false);
           }
+          setTimeout(checkCondition, 100);
         };
         checkCondition();
       });
@@ -422,62 +577,84 @@ class Tutorial {
       return waitForCondition(() => toolState.currentTool.toolKey === "hammer");
     }
     function waitForPaper() {
-      return waitForCondition(() => craftState.result.itemKey === "paper");
+      return waitForCondition(
+        () => craftState.result.itemKey === "paper",
+        () => craftState.result.itemKey && craftState.result.itemKey !== "paper",
+          "Oops, that's not paper, try again!",
+          3
+        );
     }
     function waitForCraftingTable() {
       return waitForCondition(() => toolState.currentTool.toolKey === "craftingTable");
     }
     function waitForCard() { 
-      return waitForCondition(() => craftState.result.itemKey === "card");
+      return waitForCondition(
+        () => craftState.result.itemKey === "card",
+        () => craftState.result.itemKey && craftState.result.itemKey !== "card",
+        "Oops, that's not a card, try again!",
+        7  // stepRequired for card crafting check
+      );
     }
     function waitForOrigami() {
-      return waitForCondition(() => craftState.result.itemKey === "origami");
+      return waitForCondition(
+        () => craftState.result.itemKey === "origami",
+        () => craftState.result.itemKey && craftState.result.itemKey !== "origami",
+        "Oops, that's not origami, try again!",
+        8
+      );
     }
     function waitForBook() {
-      return waitForCondition(() => craftState.result.itemKey === "book");
+      return waitForCondition(
+        () => craftState.result.itemKey === "book",
+        () => craftState.result.itemKey && craftState.result.itemKey !== "book",
+        "Oops, that's not a book, try again!",
+        9
+      );
     }
+    let lastSignificantMessage = "";  // To remember the last significant game-related message
 
-    function messageCreate(message) {
-      add([
-        "alert",
-        text(message, {
-          // optional object
-          size: 24,
-          outline: 4,
-          color: (25,25,112),
-          // can specify font here,
-        }),
-        area(),
-        anchor("center"),
-        pos(525,100),
-        z(500),
-        // scale(.5)
-      ]);
-      add([
-        rect(500+200+200,100),
-        area(),
-        anchor("center"),
-        pos(525, 100),
-        z(19),
-        color(1, 33, 105),
-        "alert"
-      ]);
+    function messageCreate(message, isSignificant = true) {
+        add([
+            "alert",
+            text(message, {
+                size: 24,
+                outline: 4,
+                color: (46,139,87),
+            }),
+            area(),
+            anchor("center"),
+            pos(525,100),
+            z(500),
+        ]);
+        add([
+            rect(500+200+200, 100),
+            area(),
+            anchor("center"),
+            pos(525, 100),
+            z(19),
+            color(46,139,87),
+            "alert"
+        ]);
+
+        if (isSignificant) {
+            lastSignificantMessage = message;
+        }
     }
-    function playBubble() {
-      if (volumeSetting) {
-        play("bubble");
+      function playBubble() {
+        if (volumeSetting) {
+          play("bubble");
+        }
       }
-    }
-
-    let currentStep = 0; // Initialize a step counter
-    let readyToComplete = false;
+      let currentStep = 0; // Initialize a step counter
+      let readyToComplete = false;
+      let message = "";
 
 
     async function tutorialStart() {
       
       setSpeed(0);
     
-      let message = "Welcome to the tutorial! Let's get started.";
+      message = "Welcome to the tutorial! Let's get started.";
       playBubble();
       messageCreate(message);
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -514,19 +691,21 @@ class Tutorial {
         }
       });
       await waitForPaper();
+      clearCraftState();
       destroyAll("alert");
       message = "Great job! You've made paper! Close out of Hammer!";
       playBubble();
       messageCreate(message);
+      currentStep = 4;
      
     
       onKeyPress("backspace", () => {
-        if (currentStep === 3) {
+        if (currentStep === 4) {
           destroyAll("alert");
           message = "Awesome! Now, let's head to the Crafting Table!";
           playBubble();
           messageCreate(message);
-          currentStep = 4; 
+          currentStep = 5; 
         }
       });
       await waitForCraftingTable();
@@ -534,46 +713,50 @@ class Tutorial {
       message = "Press 'Enter' and let's craft something else!";
       playBubble();
       messageCreate(message);
+      currentStep = 6;
     
       onKeyPress("enter", () => {
-        if (currentStep === 4) {
+        if (currentStep === 6) {
           destroyAll("alert");
           message = "Nice! Try making a card!";
           playBubble();
           messageCreate(message);
           readyToCraft = true;
-          currentStep = 5; 
+          currentStep = 7; 
         }
       });
     
       await waitForCard();
+      clearCraftState();
       destroyAll("alert");
       message = "Great job! You've made a card! Now do origami!";
       playBubble();
       messageCreate(message);
-      currentStep = 6; 
+      currentStep = 8; 
     
       await waitForOrigami();
+      clearCraftState();
       destroyAll("alert");
       message = "You've made origami! Now let's make a book!";
       playBubble();
       messageCreate(message);
-      currentStep = 7; 
+      currentStep = 9; 
     
       await waitForBook();
+      clearCraftState();    
       destroyAll("alert");
       message = "Great job! You've made a book! Close out of Crafting Table!";
       playBubble();
       messageCreate(message);
-      currentStep = 8;
+      currentStep = 10;
       
       onKeyPress("backspace", () => {
-       if (currentStep === 8) {
+       if (currentStep === 10) {
           destroyAll("alert");
           message = "Congrats! You've completed the tutorial!";
           playBubble();
           messageCreate(message);
-          currentStep = 9;
+          currentStep = 11;
           readyToComplete = true;
         }
       });
@@ -582,13 +765,13 @@ class Tutorial {
       message = "Congrats! You've completed the tutorial!";
       playBubble();
       messageCreate(message);
-      currentStep = 9; 
+      currentStep = 12; 
 
       await new Promise((resolve) => setTimeout(resolve, 3000));
       destroyAll("alert");
 
       isTutorialDone = true;
-      currentStep = 10;
+      currentStep = 13;
 
       message = "Press 'Enter' to continue to the main game!";
       playBubble();
@@ -602,8 +785,6 @@ class Tutorial {
         }
       });
     }
-
-    
     tutorialStart();
     
   }}
