@@ -98,14 +98,14 @@ export function fetchUserItems(
       });
   });
 }
-export function intiailizeUser(inventoryState, toolState) {
+export function initializeUser(inventoryState, toolState, craftState) {
   fetchUserItems(
     inventoryState.curr_user,
     inventoryState.hasSavedItems,
     inventoryState.vendingKeys,
     inventoryState.vendingContents,
     inventoryState.areFinal,
-    toolState
+    toolState, craftState
   )
     .then((itemNames) => {
       console.log(itemNames);

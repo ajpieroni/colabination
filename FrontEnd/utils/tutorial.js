@@ -174,7 +174,7 @@ class Tutorial {
       lastStored: new Set(),
     };
 
-    intiailizeUser(inventoryState, toolState);
+    initializeUser(inventoryState, toolState,craftState);
 
     onCollide("player", "tool", (s, w) => {
       onToolCollide(craftState, toolState, inventoryState, s, w);

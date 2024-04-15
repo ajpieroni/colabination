@@ -213,7 +213,7 @@ class CharacterMovement {
       adding: false,
     };
 
-    intiailizeUser(inventoryState, toolState);
+    initializeUser(inventoryState, toolState,craftState);
     console.log(inventoryState.areFinal);
     console.log("Array length:", inventoryState.areFinal.length);
     console.log(typeof inventoryState.areFinal.forEach);
@@ -443,57 +443,11 @@ class CharacterMovement {
         });
         // Add Corgi on Achievement
         craftState.achievements.corgi.discovered = true;
-        if (
-          craftState.achievements.corgi.discovered &&
-          !craftState.achievements.corgi.populated
-        ) {
-          const corgi = add([
-            sprite("corgi"),
-            // scale(0.25),
-            pos(player.pos.x, player.pos.y + 10),
-            "corgi",
-            area(),
-            body(),
-            z(10),
-          ]);
+        addCorgi(craftState);
+        console.log(inventoryState.vendingContents.length);
+        if (craftState.current === "documentation") {
+          closeDocumentationStation(craftState, inventoryState);
         }
-        onKeyDown("a", () => {
-          // .move() is provided by pos() component, move by pixels per second
-          corgi.move(-getSpeed(), 0);
-        });
-        onKeyDown("d", () => {
-          corgi.move(getSpeed(), 0);
-        });
-
-        onKeyDown("w", () => {
-          corgi.move(0, -getSpeed());
-        });
-
-        onKeyDown("s", () => {
-          corgi.move(0, getSpeed());
-        });
-        // Arrow Keys
-        onKeyDown("left", () => {
-          // .move() is provided by pos() component, move by pixels per second
-          corgi.move(-getSpeed(), 0);
-        });
-        onKeyDown("right", () => {
-          corgi.move(getSpeed(), 0);
-        });
-
-        onKeyDown("up", () => {
-          corgi.move(0, -getSpeed());
-        });
-
-        onKeyDown("down", () => {
-          corgi.move(0, getSpeed());
-        });
-      }
-
-      console.log("should be checking for tool ");
-      console.log(inventoryState.vendingContents.length);
-      if (craftState.current === "documentation") {
-        closeDocumentationStation(craftState, inventoryState);
       }
     });
 
@@ -647,6 +601,54 @@ class CharacterMovement {
       tableState.atCraftingTable = false;
       checkCraftable(toolState, inventoryState, volumeSetting);
     });
+    function addCorgi(craftState) {
+      if (
+        craftState.achievements.corgi.discovered &&
+        !craftState.achievements.corgi.populated
+      ) {
+        const corgi = add([
+          sprite("corgi"),
+          // scale(0.25),
+          pos(player.pos.x, player.pos.y + 10),
+          "corgi",
+          area(),
+          body(),
+          z(10),
+        ]);
+        craftState.achievements.corgi.populated = true;
+        onKeyDown("a", () => {
+          // .move() is provided by pos() component, move by pixels per second
+          corgi.move(-getSpeed(), 0);
+        });
+        onKeyDown("d", () => {
+          corgi.move(getSpeed(), 0);
+        });
+
+        onKeyDown("w", () => {
+          corgi.move(0, -getSpeed());
+        });
+
+        onKeyDown("s", () => {
+          corgi.move(0, getSpeed());
+        });
+        // Arrow Keys
+        onKeyDown("left", () => {
+          // .move() is provided by pos() component, move by pixels per second
+          corgi.move(-getSpeed(), 0);
+        });
+        onKeyDown("right", () => {
+          corgi.move(getSpeed(), 0);
+        });
+
+        onKeyDown("up", () => {
+          corgi.move(0, -getSpeed());
+        });
+
+        onKeyDown("down", () => {
+          corgi.move(0, getSpeed());
+        });
+      }
+    }
   }
 }
 export const characterMovement = new CharacterMovement();
