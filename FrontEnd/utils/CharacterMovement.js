@@ -213,20 +213,7 @@ class CharacterMovement {
       adding: false,
     };
 
-    initializeUser(inventoryState, toolState,craftState);
-    console.log(inventoryState.areFinal);
-    console.log("Array length:", inventoryState.areFinal.length);
-    console.log(typeof inventoryState.areFinal.forEach);
-    console.log(inventoryState);
-    inventoryState.areFinal.forEach((item) => {
-      console.log(item);
-    });
-
-    if (inventoryState.areFinal.includes("origami")) {
-      craftState.achievements.mystery = true;
-      craftState.achievements.corgi.discovered = true;
-      console.log("hit");
-    }
+    initializeUser(inventoryState, toolState, craftState);
 
     function messageCreate(message) {
       const alertMessage = add([
@@ -458,33 +445,41 @@ class CharacterMovement {
     onKeyDown("a", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
+      addCorgi(craftState);
     });
     onKeyDown("d", () => {
       player.move(getSpeed(), 0);
+      addCorgi(craftState);
     });
 
     onKeyDown("w", () => {
       player.move(0, -getSpeed());
+      addCorgi(craftState);
     });
 
     onKeyDown("s", () => {
       player.move(0, getSpeed());
+      addCorgi(craftState);
     });
     // Arrow Keys
     onKeyDown("left", () => {
       // .move() is provided by pos() component, move by pixels per second
       player.move(-getSpeed(), 0);
+      addCorgi(craftState);
     });
     onKeyDown("right", () => {
       player.move(getSpeed(), 0);
+      addCorgi(craftState);
     });
 
     onKeyDown("up", () => {
       player.move(0, -getSpeed());
+      addCorgi(craftState);
     });
 
     onKeyDown("down", () => {
       player.move(0, getSpeed());
+      addCorgi(craftState);
     });
 
     onCollideEnd("player", "craftingTable", () => {

@@ -7,7 +7,8 @@ export function fetchUserItems(
   vendingKeys,
   vendingContents,
   areFinal,
-  toolState, craftState
+  toolState,
+  craftState
 ) {
   let curr_user = localStorage.getItem("username");
 
@@ -79,6 +80,7 @@ export function fetchUserItems(
           } else {
             if (!areFinal.includes(itemName)) {
               areFinal.push(itemName);
+              console.log(itemName);
               if (itemName === "mysteryObject") {
                 craftState.achievements.mystery = true;
                 craftState.achievements.corgi.discovered = true;
@@ -105,7 +107,8 @@ export function initializeUser(inventoryState, toolState, craftState) {
     inventoryState.vendingKeys,
     inventoryState.vendingContents,
     inventoryState.areFinal,
-    toolState, craftState
+    toolState,
+    craftState
   )
     .then((itemNames) => {
       console.log(itemNames);
@@ -153,3 +156,4 @@ export function fetchUserTools(username) {
       });
   });
 }
+
