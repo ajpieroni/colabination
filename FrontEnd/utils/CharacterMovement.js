@@ -110,6 +110,7 @@ class CharacterMovement {
       achievements: {
         mystery: false,
         allItems: false,
+        corgi: false,
       },
     };
 
@@ -166,6 +167,17 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
+    if(craftState.achievements.corgi){
+      const corgi = add([
+        sprite("corgi"),
+        // scale(0.25),
+        pos(player.pos.x, player.pos.y+10),
+        "corgi",
+        area(),
+        body(),
+        z(10),
+      ]);
+    }
 
     // Logout
     // Function to check session status
@@ -347,7 +359,23 @@ class CharacterMovement {
           }),
           area(),
           anchor("center"),
-          pos(525, 100),
+          pos(525, 100-35),
+          z(500),
+          // scale(.5)
+          "toolAlert"
+        ]);
+        const alertMessageDetail = add([
+          "achievement",
+          text("Congratulations on using every tool! A corgi has joined you in your adventure.", {
+            // optional object
+            size: 16,
+            outline: 4,
+            color: (25, 25, 112),
+            // can specify font here,
+          }),
+          area(),
+          anchor("center"),
+          pos(525, 100-35+15+5+5),
           z(500),
           // scale(.5)
           "toolAlert"
@@ -402,6 +430,48 @@ class CharacterMovement {
         onKeyPress("q", () => {
           destroyAll("toolAlert");
         });
+        // Add Corgi on Achievement
+        const corgi = add([
+          sprite("corgi"),
+          // scale(0.25),
+          pos(player.pos.x, player.pos.y+10),
+          "corgi",
+          area(),
+          body(),
+          z(10),
+        ]);
+        onKeyDown("a", () => {
+          // .move() is provided by pos() component, move by pixels per second
+          corgi.move(-getSpeed(), 0);
+        });
+        onKeyDown("d", () => {
+          corgi.move(getSpeed(), 0);
+        });
+    
+        onKeyDown("w", () => {
+          corgi.move(0, -getSpeed());
+        });
+    
+        onKeyDown("s", () => {
+          corgi.move(0, getSpeed());
+        });
+        // Arrow Keys
+        onKeyDown("left", () => {
+          // .move() is provided by pos() component, move by pixels per second
+          corgi.move(-getSpeed(), 0);
+        });
+        onKeyDown("right", () => {
+          corgi.move(getSpeed(), 0);
+        });
+    
+        onKeyDown("up", () => {
+          corgi.move(0, -getSpeed());
+        });
+    
+        onKeyDown("down", () => {
+          corgi.move(0, getSpeed());
+        });
+    
       }
 
       console.log("should be checking for tool ");
