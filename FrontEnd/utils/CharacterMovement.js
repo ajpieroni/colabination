@@ -350,7 +350,55 @@ class CharacterMovement {
           pos(525, 100),
           z(500),
           // scale(.5)
+          "toolAlert"
         ]);
+        const toolAlertBox = add([
+          rect(500 + 200 + 200, 50 * 2),
+          area(),
+          anchor("center"),
+          pos(500, 500 + 100 - 500 - 25),
+          z(5),
+          color(242, 140, 30),
+          "toolAlert",
+        ]);
+
+        const exitAlert = add([
+          "toolAlert",
+          // rgb for black is (0, 0, 0)
+          text("Press [ Enter ] To Dismiss", {
+            size: 16,
+            outline: 4,
+            color: (0, 0, 0),
+          }),
+          area(),
+          anchor("center"),
+          pos(500, 500 + 100 + 50 - 500),
+          z(11),
+        ]);
+
+        const exitButton = add([
+          rect(300, 40),
+          pos(500 - 25 - 100 - 25, 500 + 100 + 50 - 500 - 25 + 5),
+          z(5),
+          color(228, 228, 228),
+          "toolAlert",
+        ]);
+
+        // key press flash
+        // Craft Button Flash
+        let isBright = true;
+        setInterval(() => {
+          if (isBright) {
+            exitButton.color = rgb(228, 228, 228); // less bright color
+          } else {
+            exitButton.color = rgb(80, 80, 80); // original color
+          }
+          isBright = !isBright;
+        }, 250); // the button color will toggle every 500ms
+        // after pressing enter, destroy the alert
+        onKeyPress("enter", () => {
+          destroyAll("toolAlert");
+        });
       }
 
       console.log("should be checking for tool ");

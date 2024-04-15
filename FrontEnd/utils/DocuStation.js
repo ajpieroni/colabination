@@ -17,6 +17,7 @@ export function showFinalItems(inventoryState, craftState) {
     z(500),
     "final",
   ]);
+  
 
   // Add the title
   const closeText = add([
