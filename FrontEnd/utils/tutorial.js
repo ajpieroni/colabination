@@ -35,7 +35,7 @@ import {
   vendingDown,
   vendingUp,
 } from "./Vending.js";
-import { fetchUserItems, fetchUserTools, intiailizeUser } from "./User.js";
+import { fetchUserItems, fetchUserTools, initializeUser } from "./User.js";
 import {
   handleCollideDocumentationStation,
   onToolCollide,
