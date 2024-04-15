@@ -1,9 +1,15 @@
-
 import InitialItems from "./InitialItems.js";
 import { addNewTool } from "./Tools.js";
 
-export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal, toolState) {
-    let curr_user = localStorage.getItem("username");
+export function fetchUserItems(
+  username,
+  hasSavedItems,
+  vendingKeys,
+  vendingContents,
+  areFinal,
+  toolState
+) {
+  let curr_user = localStorage.getItem("username");
 
   console.log(`Fetching for ${username}`);
   return new Promise((resolve, reject) => {
@@ -16,19 +22,24 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       })
       .then((data) => {
         console.log(localStorage.getItem("tutorial"));
-        const items = data.items; 
+        const items = data.items;
         console.log("items", items);
-        if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
-        console.log("tutorial is true");
-        InitialItems(["wood"]);
-        }else{
+        if (
+          localStorage.getItem("tutorial") == "true" &&
+          localStorage.getItem("inProgress") == "false"
+        ) {
+          console.log("tutorial is true");
+          InitialItems(["wood"]);
+        } else {
           InitialItems([]);
         }
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
         // );
-        console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
-        if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
+        console.log(
+          items.length == 0 && !localStorage.getItem("tutorial") == "true"
+        );
+        if (items.length == 0 && localStorage.getItem("tutorial") == "false") {
           InitialItems(["glass", "thread", "wood", "metal", "plastic"]);
         }
 
@@ -63,15 +74,19 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
           if (!savedItem.isFinal) {
             hasSavedItems.push(itemName);
             vendingKeys.push(savedItem.itemKey);
-            
+
             vendingContents.push(savedItem);
           } else {
             if (!areFinal.includes(itemName)) {
               areFinal.push(itemName);
+              if (itemName === "mysteryObject") {
+                craftState.achievements.mystery = true;
+                craftState.achievements.corgi.discovered = true;
+              }
             }
           }
           // Add a new tool if the user has discovered 10 new items
-          if(vendingContents.length % 10 == 0){
+          if (vendingContents.length % 10 == 0) {
             // addNewTool(toolState, showAlert);
             addNewTool(toolState, false);
           }
@@ -83,13 +98,14 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
       });
   });
 }
-export function intiailizeUser(inventoryState, toolState){
+export function intiailizeUser(inventoryState, toolState) {
   fetchUserItems(
     inventoryState.curr_user,
     inventoryState.hasSavedItems,
     inventoryState.vendingKeys,
     inventoryState.vendingContents,
-    inventoryState.areFinal, toolState
+    inventoryState.areFinal,
+    toolState
   )
     .then((itemNames) => {
       console.log(itemNames);
@@ -107,13 +123,12 @@ export function intiailizeUser(inventoryState, toolState){
     });
 }
 
-
 // load in tools
 
 // InitialItems();
 
 export function fetchUserTools(username) {
-    let curr_user = localStorage.getItem("username");
+  let curr_user = localStorage.getItem("username");
 
   return new Promise((resolve, reject) => {
     fetch(`http://localhost:8081/user_tools?username=${username}`)

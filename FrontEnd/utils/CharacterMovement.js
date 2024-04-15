@@ -110,7 +110,10 @@ class CharacterMovement {
       achievements: {
         mystery: false,
         allItems: false,
-        corgi: false,
+        corgi: {
+          discovered: false,
+          populated: false,
+        },
       },
     };
 
@@ -167,16 +170,20 @@ class CharacterMovement {
       body(),
       z(10),
     ]);
-    if(craftState.achievements.corgi){
+    if (
+      craftState.achievements.corgi.discovered &&
+      !craftState.achievements.corgi.populated
+    ) {
       const corgi = add([
         sprite("corgi"),
         // scale(0.25),
-        pos(player.pos.x, player.pos.y+10),
+        pos(player.pos.x, player.pos.y + 10),
         "corgi",
         area(),
         body(),
         z(10),
       ]);
+      craftState.achievements.corgi.populated = true;
     }
 
     // Logout
@@ -207,6 +214,20 @@ class CharacterMovement {
     };
 
     intiailizeUser(inventoryState, toolState);
+    console.log(inventoryState.areFinal);
+    console.log("Array length:", inventoryState.areFinal.length);
+    console.log(typeof inventoryState.areFinal.forEach);
+    console.log(inventoryState);
+    inventoryState.areFinal.forEach((item) => {
+      console.log(item);
+    });
+
+    if (inventoryState.areFinal.includes("origami")) {
+      craftState.achievements.mystery = true;
+      craftState.achievements.corgi.discovered = true;
+      console.log("hit");
+    }
+
     function messageCreate(message) {
       const alertMessage = add([
         "alert",
@@ -275,20 +296,6 @@ class CharacterMovement {
     onCollideEnd("player", "tool", () => {
       onToolCollideEnd(toolState, inventoryState);
     });
-
-    // !TODO: remove, instead introduce pagination with arrows
-    // onKeyPress("2", () => {
-    //   inventoryState.page = inventoryState.page + 1;
-    //   closeBackpack();
-    //   openBackpack(inventoryState,craftState);
-    // });
-    // onKeyPress("1", () => {
-    //   if(inventoryState.page > 0){
-    //   inventoryState.page = inventoryState.page - 1;
-    //   }
-    //   closeBackpack();
-    //   openBackpack(inventoryState,craftState);
-    // });
 
     onKeyPress("h", () => {
       if (craftState.current === "crafting") {
@@ -359,27 +366,31 @@ class CharacterMovement {
           }),
           area(),
           anchor("center"),
-          pos(525, 100-35),
+          pos(525, 100 - 35),
           z(500),
           // scale(.5)
-          "toolAlert"
+          "toolAlert",
         ]);
         const alertMessageDetail = add([
           "achievement",
-          text("Congratulations on using every tool! A corgi has joined you in your adventure.", {
-            // optional object
-            size: 16,
-            outline: 4,
-            color: (25, 25, 112),
-            // can specify font here,
-          }),
+          text(
+            "Congratulations on using every tool! A corgi has joined you in your adventure.",
+            {
+              // optional object
+              size: 16,
+              outline: 4,
+              color: (25, 25, 112),
+              // can specify font here,
+            }
+          ),
           area(),
           anchor("center"),
-          pos(525, 100-35+15+5+5),
+          pos(525, 100 - 35 + 15 + 5 + 5),
           z(500),
           // scale(.5)
-          "toolAlert"
+          "toolAlert",
         ]);
+
         const toolAlertBox = add([
           rect(500 + 200 + 200, 50 * 2),
           area(),
@@ -431,15 +442,21 @@ class CharacterMovement {
           destroyAll("toolAlert");
         });
         // Add Corgi on Achievement
-        const corgi = add([
-          sprite("corgi"),
-          // scale(0.25),
-          pos(player.pos.x, player.pos.y+10),
-          "corgi",
-          area(),
-          body(),
-          z(10),
-        ]);
+        craftState.achievements.corgi.discovered = true;
+        if (
+          craftState.achievements.corgi.discovered &&
+          !craftState.achievements.corgi.populated
+        ) {
+          const corgi = add([
+            sprite("corgi"),
+            // scale(0.25),
+            pos(player.pos.x, player.pos.y + 10),
+            "corgi",
+            area(),
+            body(),
+            z(10),
+          ]);
+        }
         onKeyDown("a", () => {
           // .move() is provided by pos() component, move by pixels per second
           corgi.move(-getSpeed(), 0);
@@ -447,11 +464,11 @@ class CharacterMovement {
         onKeyDown("d", () => {
           corgi.move(getSpeed(), 0);
         });
-    
+
         onKeyDown("w", () => {
           corgi.move(0, -getSpeed());
         });
-    
+
         onKeyDown("s", () => {
           corgi.move(0, getSpeed());
         });
@@ -463,15 +480,14 @@ class CharacterMovement {
         onKeyDown("right", () => {
           corgi.move(getSpeed(), 0);
         });
-    
+
         onKeyDown("up", () => {
           corgi.move(0, -getSpeed());
         });
-    
+
         onKeyDown("down", () => {
           corgi.move(0, getSpeed());
         });
-    
       }
 
       console.log("should be checking for tool ");
