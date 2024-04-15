@@ -7,7 +7,7 @@ export function fetchUserItems(
   vendingKeys,
   vendingContents,
   areFinal,
-  toolState
+  toolState, craftState
 ) {
   let curr_user = localStorage.getItem("username");
 
