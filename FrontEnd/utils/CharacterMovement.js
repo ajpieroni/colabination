@@ -365,7 +365,7 @@ class CharacterMovement {
         const exitAlert = add([
           "toolAlert",
           // rgb for black is (0, 0, 0)
-          text("Press [ Enter ] To Dismiss", {
+          text("Press [ Q ] To Dismiss", {
             size: 16,
             outline: 4,
             color: (0, 0, 0),
@@ -397,6 +397,9 @@ class CharacterMovement {
         }, 250); // the button color will toggle every 500ms
         // after pressing enter, destroy the alert
         onKeyPress("enter", () => {
+          destroyAll("toolAlert");
+        });
+        onKeyPress("q", () => {
           destroyAll("toolAlert");
         });
       }
