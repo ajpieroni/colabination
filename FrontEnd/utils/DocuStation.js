@@ -82,8 +82,20 @@ export function showFinalItems(inventoryState, craftState) {
   if (inventoryState.areFinal.length > 9 && currentPage < totalcontents.length - 1) {
     const rightArrow = add([
       sprite("rightArrow"),
-      pos(650, 300),
+      pos(currentX +150+15, currentY + 200+150),
       z(100),
+      rotate(90),
+      outline(4),
+      "final",
+    ]);
+    
+  }
+  if(currentPage > 0){
+    const rightArrow = add([
+      sprite("rightArrow"),
+      pos(currentX +150+15-50, currentY ),
+      z(100),
+      rotate(90*3),
       outline(4),
       "final",
     ]);
@@ -275,7 +287,7 @@ export function docuDown(inventoryState, craftState) {
     // Move to the top row of the next page
     currentPage++;
     inventoryState.docuPage = currentPage;
-    inventoryState.docuSelect = 0;
+    inventoryState.docuSelect = inventoryState.docuSelect - itemsOnCurrentPage + 3;
   }
 
   closeDocumentationStation(craftState, inventoryState);
