@@ -217,15 +217,51 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   if (toolDisplay === "Printer1" || toolDisplay === "Printer2") {
     toolDisplay = "3D Printer";
   }
-  add([
+  if (toolDisplay === "Crafting Table"){
+    add([
     text(toolDisplay, { size: 24 }),
-    pos(100 + 500 + 50, 100 + 50),
+    pos(100 + 500 + 35, 100 + 50),
     color(255, 255, 255),
     z(500),
     "craftingitem",
     "craft",
     "newCraft",
   ]);
+}
+  if (toolDisplay === "Hammer"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(100 + 500 + 95, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+  }
+  if (toolDisplay === "Scissors"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(100 + 500 + 77.5, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+  }
+  if (toolDisplay === "Soldering Station"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(100 + 500 + 15, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+}
+
 
   // crafting control instructions
   const baseX = 100,
