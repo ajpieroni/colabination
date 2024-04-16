@@ -11,7 +11,7 @@ export function showFinalItems(inventoryState, craftState) {
   ]);
   let count = inventoryState.areFinal.length;
   const achievement = add([
-    text(`Final Items: ${count}/35`, { size: 16 }), 
+    text(`Final Items: ${count}/35`, { size: 16 }),
     pos(425, 625),
     color(255, 255, 255),
     z(500),
@@ -32,14 +32,13 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
-  let currentPage = inventoryState.finalPage;
+  let currentPage = inventoryState.docuPage;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
   // console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.docuSelect % 3;
   let gridY = Math.floor(inventoryState.docuSelect / 3);
-  if(totalcontents.length > 1){
-  
+  if (totalcontents.length > 1) {
     const pageText = add([
       text(`Page ${currentPage + 1}`, {
         size: 24,
@@ -47,13 +46,30 @@ export function showFinalItems(inventoryState, craftState) {
         color: (0, 0, 0),
       }),
       pos(
-        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10+250-50-25+5+5,
+        450 -
+          100 -
+          25 +
+          10 +
+          5 -
+          10 -
+          10 -
+          10 -
+          25 -
+          10 +
+          250 -
+          50 -
+          25 +
+          5 +
+          5,
         400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
       ),
       z(100),
       "final",
     ]);
   }
+
+  console.log("Current Page:", currentPage);
+  console.log("Contents:", contents);
 
   // Grid
   const startX = docPop.pos.x + 42.5;
@@ -136,11 +152,11 @@ export function showFinalItems(inventoryState, craftState) {
       color(WHITE),
       outline(4, BLACK),
       "selected",
-      "final"
+      "final",
     ]);
 
     // Add the items into documentation station
-    for (let i = 0; i < contents.length; i++) {
+    for (let i = 0; i < totalcontents[inventoryState.docuPage].length; i++) {
       let item = inventoryState.areFinal[i];
 
       // New Row
@@ -202,7 +218,7 @@ export function docuRight(inventoryState, craftState) {
   let currentPage = inventoryState.docuPage;
   let itemsPerPage = 9;
   let maxIndex = itemsPerPage - 1;
-  let actualIndex = (currentPage * itemsPerPage) + inventoryState.docuSelect;
+  let actualIndex = currentPage * itemsPerPage + inventoryState.docuSelect;
 
   if (actualIndex < inventoryState.areFinal.length - 1) {
     if (inventoryState.docuSelect === maxIndex) {
@@ -227,7 +243,7 @@ export function docuUp(inventoryState, craftState) {
     // Move to the bottom row of the previous page
     currentPage--;
     inventoryState.docuPage = currentPage;
-    inventoryState.docuSelect += (totalcontents[currentPage].length - 3);
+    inventoryState.docuSelect += totalcontents[currentPage].length - 3;
   }
 
   closeDocumentationStation(craftState, inventoryState);
@@ -252,7 +268,6 @@ export function docuDown(inventoryState, craftState) {
   closeDocumentationStation(craftState, inventoryState);
   showFinalItems(inventoryState, craftState);
 }
-
 
 export function fetchItemDescription(item) {
   return fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
