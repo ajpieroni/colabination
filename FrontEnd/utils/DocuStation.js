@@ -38,6 +38,22 @@ export function showFinalItems(inventoryState, craftState) {
   // console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.docuSelect % 3;
   let gridY = Math.floor(inventoryState.docuSelect / 3);
+  if(totalcontents.length > 1){
+  
+    const pageText = add([
+      text(`Page ${currentPage + 1}`, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      pos(
+        450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10+250-50-25+5+5,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
+      ),
+      z(100),
+      "final",
+    ]);
+  }
 
   // Grid
   const startX = docPop.pos.x + 42.5;
