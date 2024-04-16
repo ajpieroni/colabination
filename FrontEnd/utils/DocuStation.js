@@ -79,7 +79,7 @@ export function showFinalItems(inventoryState, craftState) {
   let currRow = 0;
 
   // Arrows, if there are more than 9 items
-  if (inventoryState.areFinal.length > 9) {
+  if (inventoryState.areFinal.length > 9 && currentPage < totalcontents.length - 1) {
     const rightArrow = add([
       sprite("rightArrow"),
       pos(650, 300),
@@ -91,7 +91,17 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Add items to documentation station
   if (contents) {
-    let itemText = inventoryState.areFinal[inventoryState.docuSelect];
+    const itemsPerPage = 9;
+
+    // Calculate the actual index in the array for the selected item
+    let actualIndex =
+      inventoryState.docuPage * itemsPerPage + inventoryState.docuSelect;
+
+    // Ensure the actualIndex does not exceed the total number of items
+    if (actualIndex >= inventoryState.areFinal.length) {
+      actualIndex = inventoryState.areFinal.length - 1; // adjust to stay within bounds
+    }
+    let itemText = inventoryState.areFinal[actualIndex];
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
     let resultDisplay = itemText
       // space
@@ -159,7 +169,7 @@ export function showFinalItems(inventoryState, craftState) {
     for (let i = 0; i < contents.length; i++) {
       // console.log(item)
       // if on item index greater than 8
-      
+
       let item = contents[i];
 
       // New Row
