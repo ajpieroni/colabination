@@ -518,7 +518,7 @@ function messageCreateMenu(message) {
     onKeyPress("backspace", () => {
       console.log("Pressed");
       closeCraftWindow(craftState, inventoryState, toolState);
-      if (craftState.achievements.mystery) {
+      if (craftState.achievements.mystery && !craftState.achievements.corgi.populated) {
         this.music.paused = true;
         const alertMessage = add([
           "achievement",
