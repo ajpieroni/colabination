@@ -156,8 +156,11 @@ export function showFinalItems(inventoryState, craftState) {
     ]);
 
     // Add the items into documentation station
-    for (let i = 0; i < totalcontents[inventoryState.docuPage].length; i++) {
-      let item = inventoryState.areFinal[i];
+    for (let i = 0; i < contents.length; i++) {
+      // console.log(item)
+      // if on item index greater than 8
+      
+      let item = contents[i];
 
       // New Row
       if (currRow === 3) {
