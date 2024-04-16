@@ -184,64 +184,75 @@ export function chunkArray(array, chunkSize) {
 // Documentation Station Movement
 // left
 export function docuLeft(inventoryState, craftState) {
-  // Pagination Logic
-  let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
 
-  if (inventoryState.docuSelect > 0) {
+  if (inventoryState.docuSelect === 0 && currentPage > 0) {
+    // Move to previous page
+    inventoryState.docuPage--;
+    inventoryState.docuSelect = 8; // Last item of the previous page
+  } else if (inventoryState.docuSelect > 0) {
     inventoryState.docuSelect--;
-
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
   }
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
 // right
 export function docuRight(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
-  if (inventoryState.docuSelect < inventoryState.areFinal.length - 1) {
-    inventoryState.docuSelect++;
+  let itemsPerPage = 9;
+  let maxIndex = itemsPerPage - 1;
+  let actualIndex = (currentPage * itemsPerPage) + inventoryState.docuSelect;
+
+  if (actualIndex < inventoryState.areFinal.length - 1) {
+    if (inventoryState.docuSelect === maxIndex) {
+      // Move to next page
+      inventoryState.docuPage++;
+      inventoryState.docuSelect = 0;
+    } else {
+      inventoryState.docuSelect++;
+    }
     closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }
 export function docuUp(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
+
   if (inventoryState.docuSelect > 2) {
+    // Move up in the current page
     inventoryState.docuSelect -= 3;
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
+  } else if (currentPage > 0) {
+    // Move to the bottom row of the previous page
+    currentPage--;
+    inventoryState.docuPage = currentPage;
+    inventoryState.docuSelect += (totalcontents[currentPage].length - 3);
   }
+
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
+
 export function docuDown(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
-  if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
+  let itemsOnCurrentPage = totalcontents[currentPage].length;
+
+  if (inventoryState.docuSelect < itemsOnCurrentPage - 3) {
+    // Move down in the current page
     inventoryState.docuSelect += 3;
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
+  } else if (currentPage < totalcontents.length - 1) {
+    // Move to the top row of the next page
+    currentPage++;
+    inventoryState.docuPage = currentPage;
+    inventoryState.docuSelect = 0;
   }
+
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
+
 
 export function fetchItemDescription(item) {
   return fetch(`http://localhost:8081/items/find_description_by_name/${item}`)
