@@ -261,7 +261,39 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     "newCraft",
   ]);
 }
-
+  if (toolDisplay === "Sewing Machine"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(635, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+  }
+  if (toolDisplay === "Cricut"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(100 + 500 + 95, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+  }
+  if (toolDisplay === "3D Printer"){
+    add([
+    text(toolDisplay, { size: 24 }),
+    pos(665, 100 + 50),
+    color(255, 255, 255),
+    z(500),
+    "craftingitem",
+    "craft",
+    "newCraft",
+  ]);
+  }
 
   // crafting control instructions
   const baseX = 100,
