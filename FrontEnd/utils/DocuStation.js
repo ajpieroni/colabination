@@ -11,7 +11,7 @@ export function showFinalItems(inventoryState, craftState) {
   ]);
   let count = inventoryState.areFinal.length;
   const achievement = add([
-    text(`Final Items: ${count}/29`, { size: 16 }), 
+    text(`Final Items: ${count}/35`, { size: 16 }), 
     pos(425, 625),
     color(255, 255, 255),
     z(500),
@@ -50,7 +50,7 @@ export function showFinalItems(inventoryState, craftState) {
   if (inventoryState.areFinal.length > 9) {
     const rightArrow = add([
       sprite("rightArrow"),
-      pos(450, 400),
+      pos(650, 300),
       z(100),
       outline(4),
       "final",

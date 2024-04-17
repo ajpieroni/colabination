@@ -42,7 +42,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
     ]);
   }
   const itemTotal = add([
-    text(`Items: ${total_items}/55`, { size: 16 }),
+    text(`Items: ${total_items}/62`, { size: 16 }),
     pos(
       450 - 100 - 25 + 10 + 5 - 10 - 10 - 10 - 25 - 10 - 50 + 20 + 10,
       400 + 400 - 300 + 100 + 50 + 25 + 10 + 15 - 500 - 100 + 20 + 5

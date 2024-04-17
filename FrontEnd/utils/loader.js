@@ -77,7 +77,9 @@ export const load = {
     loadSprite("hammerAlert", "./assets/hammer.png");
     loadSprite("yarn", "./assets/yarn.png");
     loadSprite("patch", "./assets/patch.png");
-
+    loadSprite("goldFoil", "./assets/goldFoil.png");
+    loadSprite("goldFrame", "./assets/goldFrame.png");
+    loadSprite("pictureFrame", "./assets/pictureFrame.png");  
     loadSprite("notebook", "./assets/notebook.png");
     loadSprite("magnifyingGlass", "./assets/magnifyingGlass.png");
     loadSprite("nail", "./assets/nail.png");
@@ -135,14 +137,25 @@ export const load = {
     loadSprite("cauldron", "./assets/cauldron.png");
     loadSprite("diningTable", "./assets/diningTable.png");
     loadSprite("stoplight", "./assets/stoplight.png");
-
+    loadSprite("tire", "./assets/tire.png");
+    loadSprite("flatTire", "./assets/flatTire.png");
+    loadSprite("rubber", "./assets/rubber.png");
     loadSprite("vinylCD", "./assets/vinylCD.png");
     loadSprite("crown", "./assets/crown.png");
     loadSprite("knight", "./assets/knight.png");
     loadSprite("witch", "./assets/witch.png");
     loadSprite("family", "./assets/family.png");
     loadSprite("street", "./assets/street.png");
-
+    loadSprite("acrylic", "./assets/acrylic.png");
+    loadSprite("plasticSheet", "./assets/plasticSheet.png");
+    loadSprite("acrylicSheet", "./assets/acrylicSheet.png");
+    loadSprite("acrylicPaint", "./assets/acrylicPaint.png");
+    loadSprite("monaLisa", "./assets/monaLisa.png");
+    loadSprite("nailPolish", "./assets/nailPolish.png");
+    loadSprite("fairyLights", "./assets/fairyLights.png");
+    loadSprite("vinylSticker", "./assets/vinylSticker.png");
+    loadSprite("mysteryObject", "./assets/mysteryObject.png");
+    loadSprite("vinyl", "./assets/vinyl.png");
     loadSprite("monarchDoll", "./assets/monarchDoll.png");
     loadSprite("kingdom", "./assets/kingdom.png");
     loadSprite("home", "./assets/home.png");
@@ -188,5 +201,7 @@ export const load = {
 
     //controls
     loadSprite("coolBG", "./assets/coolClouds.png");
+
+    loadSprite("questionMark", "./assets/questionMark.png");
   },
 };
