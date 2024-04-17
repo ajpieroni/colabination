@@ -65,7 +65,7 @@ puts 'seeding'
     metalBars = Item.create(name:'metalBars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
-    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
+    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: false)
     musicCD = Item.create(name:'musicCD', description: "Pump the jams!", item_type: 'material', rarity: 1, isFinal: false)
 
     CD = Item.create(name:'CD', description: "DJ time!", item_type: 'material', rarity: 1, isFinal: false)
