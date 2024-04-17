@@ -205,7 +205,7 @@ class Tutorial {
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
-      console.log(`Current ingredient: ${inventoryState.ingredients}`);
+      // console.log(`Current ingredient: ${inventoryState.ingredients}`);
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
@@ -213,7 +213,7 @@ class Tutorial {
 
     // ON key press space, craft
     onKeyPress("space", () => {
-      console.log("Current state:", craftState.current);
+      // console.log("Current state:", craftState.current);
       if (craftState.current === "crafting" && craftState.readyToCraft) {
         executeCraft(toolState, craftState, inventoryState, tableState, music);
       } else if (craftState.current === "executed") {
@@ -222,10 +222,10 @@ class Tutorial {
     });
     onKeyPress("backspace", () => {
       
-      console.log("Pressed")
+      // console.log("Pressed")
       closeCraftWindow(craftState, inventoryState, toolState);
 
-      console.log("should be checking for tool ");
+      // console.log("should be checking for tool ");
       if(craftState.current === "documentation"){
         closeDocumentationStation(craftState, inventoryState);
       }
@@ -290,7 +290,7 @@ class Tutorial {
       } else if (craftState.current !== "executed") {
         vendingLeft(inventoryState, craftState);
       }
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
@@ -302,7 +302,7 @@ class Tutorial {
     });
 
     onKeyPress("down", () => {
-      // console.log("down");
+      // // console.log("down");
       if (craftState.current == "documentation") {
         docuDown(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
@@ -336,12 +336,12 @@ class Tutorial {
     });
 
     player.onCollide("helpStation", () => {
-      console.log("Collided with help station");
+      // console.log("Collided with help station");
       displayControlsOnPress();
       
     });
     player.onCollideEnd("helpStation", () => {
-      console.log("Collidedend with help station");
+      // console.log("Collidedend with help station");
       destroyAll("controls");
     });
 
@@ -349,7 +349,7 @@ class Tutorial {
     let collidedWood = false;
     player.onCollide("material", (materialEntity) => {
       if (inventoryState.tableItems.length == 0) {
-        console.log("Collided with material", materialEntity.itemKey);
+        // console.log("Collided with material", materialEntity.itemKey);
         if (materialEntity.itemKey === "wood") {
           collidedWood = true;
         }
@@ -357,7 +357,7 @@ class Tutorial {
           !inventoryState.vendingContents.includes(materialEntity) &&
           !inventoryState.vendingKeys.includes(materialEntity.itemKey)
         ) {
-          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+          // console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
           handleSavingData(

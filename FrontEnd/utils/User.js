@@ -5,7 +5,7 @@ import { addNewTool } from "./Tools.js";
 export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingContents, areFinal, toolState) {
     let curr_user = localStorage.getItem("username");
 
-  console.log(`Fetching for ${username}`);
+  // console.log(`Fetching for ${username}`);
   return new Promise((resolve, reject) => {
     fetch(`http://localhost:8081/user_items?username=${username}`)
       .then((response) => {
@@ -15,11 +15,11 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         return response.json();
       })
       .then((data) => {
-        console.log(localStorage.getItem("tutorial"));
+        // console.log(localStorage.getItem("tutorial"));
         const items = data.items; 
-        console.log("items", items);
+        // console.log("items", items);
         if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
-        console.log("tutorial is true");
+        // console.log("tutorial is true");
         InitialItems(["wood"]);
         }else{
           InitialItems([]);
@@ -27,7 +27,7 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
         // );
-        console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
+        // console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
         if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
           InitialItems(["glass", "thread", "wood", "metal", "plastic"]);
         }
@@ -37,7 +37,7 @@ export function fetchUserItems(username, hasSavedItems, vendingKeys, vendingCont
 
           materials.forEach((material) => {
             if (!items.some((subArray) => subArray.includes(material))) {
-              console.log(`doesn't have ${material}`);
+              // console.log(`doesn't have ${material}`);
               InitialItems([material]);
             }
           });
@@ -92,7 +92,7 @@ export function intiailizeUser(inventoryState, toolState){
     inventoryState.areFinal, toolState
   )
     .then((itemNames) => {
-      console.log(itemNames);
+      // console.log(itemNames);
     })
     .catch((error) => {
       console.error("Error fetching user items:", error);
@@ -100,7 +100,7 @@ export function intiailizeUser(inventoryState, toolState){
     });
   fetchUserTools(inventoryState.curr_user)
     .then((itemTools) => {
-      console.log(itemTools);
+      // console.log(itemTools);
     })
     .catch((error) => {
       console.error("Error fetching user items:", error);

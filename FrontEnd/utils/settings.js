@@ -12,7 +12,7 @@ class Settings {
   setGlobalVolume(volume) {
     this.soundTog = volume;
     localStorage.setItem("soundTogg", volume);
-    // console.log(`Sound set to ${volume}`)
+    // // console.log(`Sound set to ${volume}`)
     // this.changeSettings();
   }
 
@@ -140,11 +140,11 @@ class Settings {
     ]);
 
     onKeyPress("enter", (exit) => {
-      console.log("here index:", index);
+      // console.log("here index:", index);
 
       // save
       if (index == 0) {
-        console.log("save clicked");
+        // console.log("save clicked");
 
         const saveText = add([
           text("Saving in progress..."),
@@ -166,7 +166,7 @@ class Settings {
 
       // exit
       if (index == -1) {
-        console.log("exit clicked");
+        // console.log("exit clicked");
         const exitCheck = add([
           text("Are you sure you want to exit the game?"),
           "exitPopUp",
@@ -235,14 +235,14 @@ class Settings {
 
         onKeyPress("enter", () => {
           if (exitN == 0) {
-            console.log("cancel:", exitN);
+            // console.log("cancel:", exitN);
             destroyAll("exitPopUp"),
               destroyAll("cancelExit"),
               destroyAll("exitfr"),
               destroyAll("exitBox");
             exitN = -1;
           } else if (exitN == 1) {
-            console.log("exitfr:", exitN);
+            // console.log("exitfr:", exitN);
             go("characterMovement");
           }
         });
@@ -250,13 +250,13 @@ class Settings {
 
       // controls
       if (index == -2) {
-        console.log("here are controls!"), go("controls");
+        // console.log("here are controls!"), go("controls");
       }
 
       // sounds
       let volTogg;
       if (index == -3) {
-        console.log("here are sounds");
+        // console.log("here are sounds");
         // overlay.classList.toggle("show"),
 
         if (this.soundTog == 1) {
@@ -264,7 +264,7 @@ class Settings {
           soundsBtn.pos = vec2((1024 - 215) / 2, 375);
           this.soundTog = 0;
           // (this.audio.volume = this.soundTog);
-          // console.log("sounds: ", this.soundTog);
+          // // console.log("sounds: ", this.soundTog);
           // turning sounds off
           this.setGlobalVolume(0);
           this.changeSettings();
@@ -273,7 +273,7 @@ class Settings {
           volTogg = 1;
           soundsBtn.pos = vec2((1024 - 195) / 2, 375);
           this.soundTog = 1;
-          // console.log("sounds: ", this.soundTog);
+          // // console.log("sounds: ", this.soundTog);
           // turning sounds off
           // volTogg = 1;
           this.setGlobalVolume(1);
@@ -284,7 +284,7 @@ class Settings {
       }
       //about us
       if (index == -4) {
-        console.log("here are developers!"), go("aboutUs");
+        // console.log("here are developers!"), go("aboutUs");
       }
     });
     // save goes here
@@ -929,7 +929,7 @@ class Settings {
   changeSettings = () => {
     // *SHOW IN MEETING
     let volTogg = this.getGlobalVolume();
-    // console.log("here is gotten volume", volTogg);
+    // // console.log("here is gotten volume", volTogg);
     localStorage.setItem("soundTogg", volTogg);
 
     let music = {
@@ -937,7 +937,7 @@ class Settings {
       loop: true,
     };
 
-    // console.log("here's music:", music)
+    // // console.log("here's music:", music)
 
     return music;
   };

@@ -187,7 +187,7 @@ class UIManager{
                 });
         
                 const data = await response.json();
-                console.log("data," + data);
+                // console.log("data," + data);
         
                 // Check response status
                 if (data.status === 'success') {

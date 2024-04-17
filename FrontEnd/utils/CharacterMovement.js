@@ -197,12 +197,12 @@ class CharacterMovement {
     ]);
 
     player.onCollide("helpStation", () => {
-      console.log("Collided with help station");
+      // console.log("Collided with help station");
       displayControlsOnPress();
       
     });
     player.onCollideEnd("helpStation", () => {
-      console.log("Collidedend with help station");
+      // console.log("Collidedend with help station");
       destroyAll("controls");
     });
     function displayControlsOnPress(){
@@ -459,7 +459,7 @@ function messageCreateMenu(message) {
         // toggle true and false
         craftState.hint = !craftState.hint;
         
-        console.log(toolState.currentTool.id);
+        // console.log(toolState.currentTool.id);
         let hintId = toolState.currentTool.id;
         craftState.hintId = hintId;
         closeBackpack();
@@ -490,7 +490,7 @@ function messageCreateMenu(message) {
 
     // ON key press q, remove item from craft window
     onKeyPress("q", () => {
-      console.log(`Current ingredient: ${inventoryState.ingredients}`);
+      // console.log(`Current ingredient: ${inventoryState.ingredients}`);
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
@@ -498,7 +498,7 @@ function messageCreateMenu(message) {
 
     // ON key press space, craft
     onKeyPress("space", () => {
-      console.log("Current state:", craftState.current);
+      // console.log("Current state:", craftState.current);
       if (craftState.current === "crafting" && craftState.readyToCraft) {
         executeCraft(toolState, craftState, inventoryState, tableState, music);
       } else if (craftState.current === "executed") {
@@ -507,11 +507,11 @@ function messageCreateMenu(message) {
     });
 
     onKeyPress("backspace", () => {
-      console.log("Pressed");
+      // console.log("Pressed");
       closeCraftWindow(craftState, inventoryState, toolState);
 
-      console.log("should be checking for tool ");
-      console.log(inventoryState.vendingContents.length)
+      // console.log("should be checking for tool ");
+      // console.log(inventoryState.vendingContents.length)
       if (craftState.current === "documentation") {
         closeDocumentationStation(craftState, inventoryState);
       }
@@ -567,7 +567,7 @@ function messageCreateMenu(message) {
       } else if (craftState.current !== "executed") {
         vendingLeft(inventoryState, craftState, toolState);
       }
-      console.log(inventoryState.vendingSelect);
+      // console.log(inventoryState.vendingSelect);
     });
 
     onKeyPress("right", () => {
@@ -579,7 +579,7 @@ function messageCreateMenu(message) {
     });
 
     onKeyPress("down", () => {
-      // console.log("down");
+      // // console.log("down");
       if (craftState.current == "documentation") {
         docuDown(inventoryState, craftState);
       } else if (craftState.current !== "executed") {
@@ -632,12 +632,12 @@ function messageCreateMenu(message) {
     // Collide with Material
     player.onCollide("material", (materialEntity) => {
       if (inventoryState.tableItems.length == 0) {
-        console.log("Collided with material", materialEntity.itemKey);
+        // console.log("Collided with material", materialEntity.itemKey);
         if (
           !inventoryState.vendingContents.includes(materialEntity) &&
           !inventoryState.vendingKeys.includes(materialEntity.itemKey)
         ) {
-          console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
+          // console.log(`Pushing ${materialEntity.itemKey} to vending machine`);
           inventoryState.vendingContents.push(materialEntity);
           inventoryState.vendingKeys.push(materialEntity.itemKey);
           handleSavingData(

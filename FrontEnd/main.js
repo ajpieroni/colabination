@@ -15,13 +15,13 @@ kaboom({
 // let testValue = settings.changeSettings();
 // let soundSettings = settings.changeSettings();
 // localStorage.setItem('soundTog', 1);
-// console.log('Before getting soundTog:', localStorage.getItem('soundTog'));
+// // console.log('Before getting soundTog:', localStorage.getItem('soundTog'));
 // let volumeSetting = localStorage.getItem('soundTog') ? parseFloat(localStorage.getItem('soundTog')) : 1;
-// console.log('After getting soundTog, volumeSetting is:', volumeSetting);
+// // console.log('After getting soundTog, volumeSetting is:', volumeSetting);
 
 // let soundSettings = {volume: volumeSetting, loop: true};
 
-// console.log("soundsettings in main", soundSettings);
+// // console.log("soundsettings in main", soundSettings);
 
 load.assets()
 
@@ -43,7 +43,7 @@ const scenes = {
     // level 1: base colab
     // level 2: garage unlocked
     characterMovement: () =>{
-        // console.log("here are sound settings in cm", soundSettings);
+        // // console.log("here are sound settings in cm", soundSettings);
         characterMovement.display()
         characterMovement.play()
         
@@ -56,7 +56,7 @@ const scenes = {
     settings: () =>{
         settings.displaySettingsMenu()
         // soundSettings = settings.changeSettings();
-        // console.log("soundsettings in main", soundSettings);
+        // // console.log("soundsettings in main", soundSettings);
 
     }, 
     aboutUs: () =>{
