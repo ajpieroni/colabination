@@ -18,6 +18,17 @@ export function openBackpack(inventoryState, craftState, toolState) {
   let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
+  if(craftState.hint){
+    // if the current page that I'm on has contents that are undefined, start on the first apge
+    if(contents === undefined){
+      currentPage = 0;
+      inventoryState.vendingPage = 0;
+      contents = totalcontents[currentPage];
+    }
+  }
+  console.log(totalcontents)
+  console.log(currentPage)
+  console.log("contents", contents);
   // inventoryState.vendingSelect = 0;
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -575,6 +586,7 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
     let filteredContents = backpackItems.filter((item) =>
       combinableItemKeys.includes(item.itemKey)
     );
+
     return filteredContents;
   } else {
     let backpackItems = inventoryState.vendingContents;

@@ -236,7 +236,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   const colorWhite = color(255, 255, 255);
 
   // Base positions
-  const posX = baseX + 500 -25;
+  const posX = baseX + 500 - 25;
   const posY = baseY + 500;
 
   add([
@@ -256,7 +256,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ Enter ] To Add Items", { size: 16 }),
-    pos(posX + offsetX-5, posY + 2 * offsetY),
+    pos(posX + offsetX - 5, posY + 2 * offsetY),
     colorWhite,
     z(zLevel),
     "craft",
@@ -264,7 +264,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
   ]);
   add([
     text("Press [ H ] To Toggle Hint Mode", { size: 16 }),
-    pos(posX + offsetX-15, posY + 3 * offsetY),
+    pos(posX + offsetX - 15, posY + 3 * offsetY),
     colorWhite,
     z(zLevel),
     "craft",
@@ -601,7 +601,7 @@ export function addReCraftButton(craftState) {
 
   add([
     text("Press [ Space ] To Craft Again!", { size: 20 }),
-    pos(100 - 50 + 500 - 50 + 50+5, 100 + 50 + 500 - 100),
+    pos(100 - 50 + 500 - 50 + 50 + 5, 100 + 50 + 500 - 100),
 
     color(255, 255, 255),
     z(500),
@@ -648,8 +648,12 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
   console.log("Destroying all craft items.");
   destroyAll("craft");
+
   destroyAll("hint");
-  inventoryState.ingredients = [];
+  // Reset hint
+  craftState.hint = false;
+  craftState.hintId = "";
+  craftState.combinable = {};
 
   setSpeed(300);
   closeBackpack();
