@@ -281,6 +281,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: hammer, item1: woodPlank, item2: nail, creation: table)
     Combination.create(tool: solderingStation, item1: chains, item2: metalBars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
+    Combination.create(tool: sewingmachine, item1: shirt, item2: shirt, creation: jacket)
     Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
     Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
