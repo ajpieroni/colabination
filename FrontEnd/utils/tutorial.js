@@ -619,8 +619,8 @@ class Tutorial {
             text(message, {
                 size: 24,
                 outline: 4,
-                color: (46,139,87),
             }),
+            color(255,255,255),
             area(),
             anchor("center"),
             pos(525,100),
@@ -630,9 +630,9 @@ class Tutorial {
             rect(500+200+200, 100),
             area(),
             anchor("center"),
-            pos(525, 100),
+            pos(530, 100),
             z(19),
-            color(46,139,87),
+            color(143,210,119),
             "alert"
         ]);
 
