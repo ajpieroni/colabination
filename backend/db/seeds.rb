@@ -156,6 +156,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
     printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
     # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    hayBale = Item.create(name: 'hayBale', description: "For horses!", item_type: "material", rarity: 1, isFinal: true)
 
 # Item.where.not(isFinal: true).count
 
@@ -332,6 +333,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: sewingmachine, item1: cutCloth, item2: nothing, creation: shirt)
     Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
     Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
+    Combination.create(tool: hands, item1: straw, item2: straw, creation: hayBale)
 
     # Plastic
     Combination.create(tool: solderingStation, item1: glass, item2: plastic, creation: acrylic)
