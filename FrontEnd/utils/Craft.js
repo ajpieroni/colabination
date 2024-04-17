@@ -181,6 +181,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
       "craft-container",
       "craft",
       color(119,143,210),
+      outline(5, 255,255,255)
     ]);
     //  Add white boxes for selection
 
