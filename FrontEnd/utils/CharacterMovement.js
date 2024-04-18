@@ -494,6 +494,7 @@ function messageCreateMenu(message) {
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
+      destroyAll("toolAlert")
     });
 
     // ON key press space, craft
