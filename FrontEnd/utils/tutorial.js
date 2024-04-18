@@ -28,7 +28,7 @@ import {
   vendingDown,
   vendingUp,
 } from "./Vending.js";
-import {intiailizeUser } from "./User.js";
+import { fetchUserItems, fetchUserTools, initializeUser } from "./User.js";
 import {
   handleCollideDocumentationStation,
   onToolCollide,
@@ -159,7 +159,7 @@ class Tutorial {
       lastStored: new Set(),
     };
 
-    intiailizeUser(inventoryState, toolState);
+    initializeUser(inventoryState, toolState,craftState);
 
     onCollide("player", "tool", (s, w) => {
       onToolCollide(craftState, toolState, inventoryState, s, w);

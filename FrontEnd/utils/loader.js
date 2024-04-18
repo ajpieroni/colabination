@@ -198,6 +198,7 @@ export const load = {
 
     loadSprite("AlexBee", "./assets/bee.png");
     loadSprite("KelvinMeow", "./assets/KelvinMeow.png");
+    loadSprite("corgi", "./assets/corgi.png");
     loadSprite("hayBale","./assets/hayBale.png");
     loadSprite("strawHat","./assets/strawHat.png");
     //controls
