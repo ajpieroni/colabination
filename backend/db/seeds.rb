@@ -105,13 +105,13 @@ flatTire = Item.create(name:'flatTire', description: "Uh oh.", item_type: 'mater
 # !UNKNOWN
 lightbulb = Item.create(name:'lightbulb', description: "An idea!", item_type: 'material', rarity: 1, isFinal: false)
 brokenScissors = Item.create(name:'brokenScissors', description: "Not useful anymore.", item_type: 'material', rarity: 1, isFinal: true)
-wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: true)
+wagon = Item.create(name:'wagon', description: "Pull stuff!", item_type: 'material', rarity: 1, isFinal: false)
 building = Item.create(name:'building', description: "Store stuff!", item_type: 'material', rarity: 1, isFinal: false)
 envelope = Item.create(name:'envelope', description: "For mailing!", item_type: 'material', rarity: 1, isFinal: true)
 metalSculpture = Item.create(name:'metalSculpture', description: "Art!", item_type: 'material', rarity: 1, isFinal: true)
 birdhouse = Item.create(name:'birdhouse', description: "For birds!", item_type: 'material', rarity: 1, isFinal: true)
 goldFoil = Item.create(name:'goldFoil', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
-pictureFrame = Item.create(name:'pictureFrame', description: "For memories!", item_type: 'material', rarity: 1, isFinal: true)
+pictureFrame = Item.create(name:'pictureFrame', description: "For memories!", item_type: 'material', rarity: 1, isFinal: false)
 goldFrame = Item.create(name:'goldFrame', description: "Fancy!", item_type: 'material', rarity: 1, isFinal: true)
 
 # plastic trail
