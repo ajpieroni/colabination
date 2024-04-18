@@ -411,7 +411,7 @@ class CharacterMovement {
         anchor("center"),
         pos(525, 100),
         z(19),
-        color(1, 33, 105),
+        color(46,139,87),
         "alert",
       ]);
     }
@@ -437,7 +437,7 @@ function messageCreateMenu(message) {
         anchor("center"),
         pos(475, 775),
         z(19),
-        color(1, 33, 105),
+        color(46,139,87),     
         "alert",
       ]);
     }
@@ -503,6 +503,7 @@ function messageCreateMenu(message) {
       if (craftState.current === "crafting") {
         removeItemFromCraft(inventoryState, music);
       }
+      destroyAll("toolAlert")
     });
 
     // ON key press space, craft
