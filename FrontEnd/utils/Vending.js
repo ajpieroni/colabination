@@ -21,7 +21,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
   // inventoryState.vendingSelect = 0;
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
-  let total_items = backpackItems.length;
+  let total_items = inventoryState.vendingContents.length;
 
   // Arrows
   if (totalcontents.length > 1) {
