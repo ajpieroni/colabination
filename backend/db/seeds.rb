@@ -65,7 +65,7 @@ puts 'seeding'
     metalBars = Item.create(name:'metalBars', description: "Metal, but bars of it.", item_type: 'material', rarity: 1, isFinal: false)
     copper = Item.create(name:'copper', description: "Shiny!", item_type: 'material', rarity: 1, isFinal: false)
     gold = Item.create(name:'gold', description: "Will make you rich!", item_type: 'material', rarity: 1, isFinal: false)
-    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: true)
+    wire = Item.create(name:'wire', description: "Go fishing!", item_type: 'material', rarity: 1, isFinal: false)
     musicCD = Item.create(name:'musicCD', description: "Pump the jams!", item_type: 'material', rarity: 1, isFinal: false)
 
     CD = Item.create(name:'CD', description: "DJ time!", item_type: 'material', rarity: 1, isFinal: false)
@@ -156,6 +156,8 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     solderingStation = Tool.create(name: "solderingStation", description: "Melts things together", globalCount: 1)
     printer = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
     # printer2 = Tool.create(name: "printer1", description: "Prints things", globalCount: 1)
+    hayBale = Item.create(name: 'hayBale', description: "For horses!", item_type: "material", rarity: 1, isFinal: true)
+    strawHat = Item.create(name: 'strawHat', description: "For sun protection!", item_type: "material", rarity: 1, isFinal: true)
 
 # Item.where.not(isFinal: true).count
 
@@ -237,6 +239,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: hammer, item1: wheel, item2: box, creation: wagon)
     # box = hammer & woodPlank + woodPlank
     Combination.create(tool: hammer, item1: woodPlank, item2: woodPlank, creation: box)
+    Combination.create(tool: hands, item1: straw, item2: bowl, creation: strawHat)
 
 # !Metal Combos:
     Combination.create(tool: hammer, item1: metal, item2: metal, creation: aluminum)
@@ -281,6 +284,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: hammer, item1: woodPlank, item2: nail, creation: table)
     Combination.create(tool: solderingStation, item1: chains, item2: metalBars, creation: prison)
     Combination.create(tool: sewingmachine, item1: chains, item2: jacket, creation: armor)
+    Combination.create(tool: sewingmachine, item1: shirt, item2: shirt, creation: jacket)
     Combination.create(tool: solderingStation, item1: bowl, item2: bowl, creation: cauldron)
     Combination.create(tool: hands, item1: bowl, item2: table, creation: diningTable)
     Combination.create(tool: hammer, item1: car, item2: lamp, creation: stoplight)
@@ -332,6 +336,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: sewingmachine, item1: cutCloth, item2: nothing, creation: shirt)
     Combination.create(tool: hands, item1: yarn, item2: dress, creation: doll)
     Combination.create(tool: hands, item1: doll, item2: straw, creation: scarecrow)
+    Combination.create(tool: hands, item1: straw, item2: straw, creation: hayBale)
 
     # Plastic
     Combination.create(tool: solderingStation, item1: glass, item2: plastic, creation: acrylic)

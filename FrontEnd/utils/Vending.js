@@ -21,7 +21,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
   // inventoryState.vendingSelect = 0;
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
-  let total_items = backpackItems.length;
+  let total_items = inventoryState.vendingContents.length;
 
   // Arrows
   if (totalcontents.length > 1) {
@@ -54,7 +54,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
     // console.log("hint mode is on")
     add([
       text("Hint Mode", { size: 16 }),
-      pos(100 + 500 - 50 + 50-50+100+25+25, 100 + 50 + 500 - 100 + 50 - 50-50-300),
+      pos(100 + 500 - 55 + 50-50+100+25+25, 100 + 50 + 500 - 100 + 50 - 50-50-305),
       color(255, 255, 255),
       z(500),
       "craft",
@@ -65,7 +65,7 @@ export function openBackpack(inventoryState, craftState, toolState) {
       rect(250/2, 50),
       area(),
       anchor("center"),
-      pos(100 + 500 - 50 + 50-50+100+25+25+50-15+5+5, 100 + 50 + 500 - 100 + 50 - 50-50-300+5),
+      pos(100 + 500 - 47.5+100+25+25+50-15, 100 + 50 + 500 - 100 + 50 - 50-50-300+5),
       z(49),
       color(242, 140, 40),
       "hint",

@@ -272,7 +272,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
       const exitAlert = add([
         "toolAlert",
         // rgb for black is (0, 0, 0)
-        text("Press [ Enter ] To Dismiss", {
+        text("Press [ Q ] To Dismiss", {
           size: 16,
           outline: 4,
           color: (0, 0, 0),
