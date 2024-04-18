@@ -85,7 +85,7 @@ puts 'seeding'
 
     # level 3
     vinylCD = Item.create(name:'vinylCD', description: "For music all night long.", item_type: 'material', rarity: 1, isFinal: true)
-    jewelry = Item.create(name:'jewelry', description: "For decoration of the self.", item_type: 'material', rarity: 1, isFinal: true)
+    jewelry = Item.create(name:'jewelry', description: "For decoration of the self.", item_type: 'material', rarity: 1, isFinal: false)
     crown = Item.create(name:'crown', description: "You're royalty!", item_type: 'material', rarity: 1, isFinal: false)
     aluminumFoil = Item.create(name:'aluminumFoil', description: "For wrapping things!", item_type: 'material', rarity: 1, isFinal: false)
     knight = Item.create(name:'knight', description: "Hero in shining armor!", item_type: 'material', rarity: 1, isFinal: false)
@@ -94,7 +94,7 @@ puts 'seeding'
     street = Item.create(name:'street', description: "To ride on!", item_type: 'material', rarity: 1, isFinal: false)
     
 #    level 4
-    monarchDoll = Item.create(name:'monarchDoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: true)
+    monarchDoll = Item.create(name:'monarchDoll', description: "Dolls on dolls.", item_type: 'material', rarity: 1, isFinal: false)
     kingdom = Item.create(name:'kingdom', description: "I used to rule the world...", item_type: 'material', rarity: 1, isFinal: false)
     home = Item.create(name:'home', description: "Humble abode!", item_type: 'material', rarity: 1, isFinal: true)
     city = Item.create(name:'city', description: "Big apple!", item_type: 'material', rarity: 1, isFinal: true)
