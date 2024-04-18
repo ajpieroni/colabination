@@ -312,6 +312,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     # Kingdom
     Combination.create(tool: hands, item1: knight, item2: monarchDoll, creation: kingdom)
     # Home
+    Combination.create(tool: hammer, item1: window, item2: woodPlank, creation: building)
     Combination.create(tool: hammer, item1: family, item2: building, creation: home)
 
     # City
