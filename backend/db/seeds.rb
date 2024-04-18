@@ -278,7 +278,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
 
 
     # Metal: level 3
-    # Combination.create(tool: lasercutter, item1: CD, item2: nothing, creation: musicCD)
+    Combination.create(tool: cricut, item1: CD, item2: nothing, creation: musicCD)
     Combination.create(tool: hammer, item1: copper, item2: copper, creation: gold)
     Combination.create(tool: sewingmachine, item1: copper, item2: thread, creation: wire)
     Combination.create(tool: hammer, item1: woodPlank, item2: nail, creation: table)
@@ -291,7 +291,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
 
 
     # Metal: level 4
-    Combination.create(tool: solderingStation, item1: musicCD, item2: vinyl, creation: vinylCD)
+    Combination.create(tool: solderingStation, item1: musicCD, item2: plastic, creation: vinylCD)
     Combination.create(tool: sewingmachine, item1: gold, item2: thread, creation: jewelry)
     Combination.create(tool: hammer, item1: gold, item2: hat, creation: crown)
     Combination.create(tool: hammer, item1: bowl, item2: cloth, creation: hat)
