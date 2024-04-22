@@ -347,7 +347,7 @@ mysteryObject = Item.create(name:'mysteryObject', description: "Come to the Co-L
     Combination.create(tool: hands, item1: paper, item2: acrylicPaint, creation: monaLisa)
     Combination.create(tool: hands, item1: jewelry, item2: acrylicPaint, creation: nailPolish)
     Combination.create(tool: solderingStation, item1: plasticSheet, item2: lightbulb, creation: fairyLights)
-    Combination.create(tool: cricut, item1: vinyl, item2: nothing, creation: vinylSticker)
+    Combination.create(tool: cricut, item1: plastic, item2: nothing, creation: vinylSticker)
     Combination.create(tool: printer, item1: plastic, item2: nothing, creation: mysteryObject)
 
 puts 'successfully seeded'
