@@ -726,7 +726,7 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Reset hint
   craftState.hint = false;
   craftState.hintId = "";
-  craftState.combinable = {};
+  // craftState.combinable = {};
 
   setSpeed(300);
   closeBackpack();
