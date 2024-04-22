@@ -580,6 +580,9 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
       return [];
     }
     const toolId = toolState.currentTool.toolId;
+    console.log("toolId", toolId);
+    // how to debug reading map is undefined
+    console.log(craftState.combinable[toolId]);
     let combinableItemKeys = craftState.combinable[toolId].map(
       (item) => item.itemKey
     );
