@@ -328,7 +328,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
 
   // show an alert if the user has discovered a new tool
   if (showAlert && !noMoreTools) {
-    addToolAlert(true, currentToolToBeAdded, inventoryState);
+    addToolAlert(true, currentToolToBeAdded, inventoryState, toolState);
   }
 }
 
@@ -374,7 +374,7 @@ export function checkForToolAddition(inventoryState, toolState) {
   }
 }
 
-export function addToolAlert(showAlert, addedTool, inventoryState) {
+export function addToolAlert(showAlert, addedTool, inventoryState, toolState) {
   destroyAll("toolAlert");
   let toolName = parseRegexString(addedTool.toolKey);
   // console.log(toolName)
@@ -431,6 +431,23 @@ export function addToolAlert(showAlert, addedTool, inventoryState) {
     pos(500, 500 + 100),
     z(11),
   ]);
+  if(toolState.toolsLeft > 0){
+    const toolNumAlert = add([
+      "toolAlert",
+      text(`${toolState.toolsLeft} tools left to discover!`, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      area(),
+      anchor("center"),
+      pos(500, 500 + 100 - 500+400),
+      z(50),
+    ]);
+  
+  }
+  
+  
   if(toolInfoExtend){
     const toolInfoText = add([
       "toolAlert",

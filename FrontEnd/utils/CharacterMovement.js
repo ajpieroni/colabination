@@ -385,6 +385,7 @@ class CharacterMovement {
       hasDiscovered: new Set(),
       lastStored: new Set(),
       adding: false,
+      toolsLeft: 5,
     };
 
     initializeUser(inventoryState, toolState, craftState);
