@@ -11,7 +11,7 @@ export function showFinalItems(inventoryState, craftState) {
   ]);
   let count = inventoryState.areFinal.length;
   const achievement = add([
-    text(`Final Items: ${count}/35`, { size: 16 }), 
+    text(`Final Items: ${count}/35`, { size: 16 }),
     pos(425, 625),
     color(255, 255, 255),
     z(500),
@@ -33,12 +33,44 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
-  let currentPage = inventoryState.finalPage;
+  let currentPage = inventoryState.docuPage;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
   // // console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.docuSelect % 3;
   let gridY = Math.floor(inventoryState.docuSelect / 3);
+  if (totalcontents.length > 1) {
+    const pageText = add([
+      text(`Page ${currentPage + 1}`, {
+        size: 24,
+        outline: 4,
+        color: (0, 0, 0),
+      }),
+      pos(
+        450 -
+          100 -
+          25 +
+          10 +
+          5 -
+          10 -
+          10 -
+          10 -
+          25 -
+          10 +
+          250 -
+          50 -
+          25 +
+          5 +
+          5,
+        400 + 400 - 300 + 100 + 50 + 25 + 10 + 15
+      ),
+      z(100),
+      "final",
+    ]);
+  }
+
+  console.log("Current Page:", currentPage);
+  console.log("Contents:", contents);
 
   // Grid
   const startX = docPop.pos.x + 42.5;
@@ -48,11 +80,23 @@ export function showFinalItems(inventoryState, craftState) {
   let currRow = 0;
 
   // Arrows, if there are more than 9 items
-  if (inventoryState.areFinal.length > 9) {
+  if (inventoryState.areFinal.length > 9 && currentPage < totalcontents.length - 1) {
     const rightArrow = add([
       sprite("rightArrow"),
-      pos(650, 300),
+      pos(currentX +150+15, currentY + 200+150),
       z(100),
+      rotate(90),
+      outline(4),
+      "final",
+    ]);
+    
+  }
+  if(currentPage > 0){
+    const rightArrow = add([
+      sprite("rightArrow"),
+      pos(currentX +150+15-50, currentY ),
+      z(100),
+      rotate(90*3),
       outline(4),
       "final",
     ]);
@@ -60,7 +104,17 @@ export function showFinalItems(inventoryState, craftState) {
 
   // Add items to documentation station
   if (contents) {
-    let itemText = inventoryState.areFinal[inventoryState.docuSelect];
+    const itemsPerPage = 9;
+
+    // Calculate the actual index in the array for the selected item
+    let actualIndex =
+      inventoryState.docuPage * itemsPerPage + inventoryState.docuSelect;
+
+    // Ensure the actualIndex does not exceed the total number of items
+    if (actualIndex >= inventoryState.areFinal.length) {
+      actualIndex = inventoryState.areFinal.length - 1; // adjust to stay within bounds
+    }
+    let itemText = inventoryState.areFinal[actualIndex];
     itemText = itemText.charAt(0).toUpperCase() + itemText.slice(1);
     let resultDisplay = itemText
       // space
@@ -121,12 +175,15 @@ export function showFinalItems(inventoryState, craftState) {
       color(WHITE),
       outline(4, BLACK),
       "selected",
-      "final"
+      "final",
     ]);
 
     // Add the items into documentation station
     for (let i = 0; i < contents.length; i++) {
-      let item = inventoryState.areFinal[i];
+      // console.log(item)
+      // if on item index greater than 8
+
+      let item = contents[i];
 
       // New Row
       if (currRow === 3) {
@@ -169,63 +226,73 @@ export function chunkArray(array, chunkSize) {
 // Documentation Station Movement
 // left
 export function docuLeft(inventoryState, craftState) {
-  // Pagination Logic
-  let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
 
-  if (inventoryState.docuSelect > 0) {
+  if (inventoryState.docuSelect === 0 && currentPage > 0) {
+    // Move to previous page
+    inventoryState.docuPage--;
+    inventoryState.docuSelect = 8; // Last item of the previous page
+  } else if (inventoryState.docuSelect > 0) {
     inventoryState.docuSelect--;
-
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
   }
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
 // right
 export function docuRight(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
-  if (inventoryState.docuSelect < inventoryState.areFinal.length - 1) {
-    inventoryState.docuSelect++;
+  let itemsPerPage = 9;
+  let maxIndex = itemsPerPage - 1;
+  let actualIndex = currentPage * itemsPerPage + inventoryState.docuSelect;
+
+  if (actualIndex < inventoryState.areFinal.length - 1) {
+    if (inventoryState.docuSelect === maxIndex) {
+      // Move to next page
+      inventoryState.docuPage++;
+      inventoryState.docuSelect = 0;
+    } else {
+      inventoryState.docuSelect++;
+    }
     closeDocumentationStation(craftState, inventoryState);
     showFinalItems(inventoryState, craftState);
   }
 }
 export function docuUp(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
+
   if (inventoryState.docuSelect > 2) {
+    // Move up in the current page
     inventoryState.docuSelect -= 3;
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
+  } else if (currentPage > 0) {
+    // Move to the bottom row of the previous page
+    currentPage--;
+    inventoryState.docuPage = currentPage;
+    inventoryState.docuSelect += totalcontents[currentPage].length - 3;
   }
+
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
+
 export function docuDown(inventoryState, craftState) {
-  // Pagination Logic
   let totalcontents = chunkArray(inventoryState.areFinal, 9);
   let currentPage = inventoryState.docuPage;
-  let contents = totalcontents[currentPage];
-  const itemsPerPage = 9;
-  const startIndex = inventoryState.docuPage * itemsPerPage;
-  const actualIndex = startIndex + inventoryState.docuSelect;
-  if (inventoryState.docuSelect < inventoryState.areFinal.length - 3) {
+  let itemsOnCurrentPage = totalcontents[currentPage].length;
+
+  if (inventoryState.docuSelect < itemsOnCurrentPage - 3) {
+    // Move down in the current page
     inventoryState.docuSelect += 3;
-    closeDocumentationStation(craftState, inventoryState);
-    showFinalItems(inventoryState, craftState);
+  } else if (currentPage < totalcontents.length - 1) {
+    // Move to the top row of the next page
+    currentPage++;
+    inventoryState.docuPage = currentPage;
+    inventoryState.docuSelect = inventoryState.docuSelect - itemsOnCurrentPage + 3;
   }
+
+  closeDocumentationStation(craftState, inventoryState);
+  showFinalItems(inventoryState, craftState);
 }
 
 export function fetchItemDescription(item) {

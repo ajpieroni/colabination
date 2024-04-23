@@ -18,6 +18,17 @@ export function openBackpack(inventoryState, craftState, toolState) {
   let totalcontents = chunkArray(backpackItems, 9);
   let currentPage = inventoryState.vendingPage;
   let contents = totalcontents[currentPage];
+  if(craftState.hint){
+    // if the current page that I'm on has contents that are undefined, start on the first apge
+    if(contents === undefined){
+      currentPage = 0;
+      inventoryState.vendingPage = 0;
+      contents = totalcontents[currentPage];
+    }
+  }
+  console.log(totalcontents)
+  console.log(currentPage)
+  console.log("contents", contents);
   // inventoryState.vendingSelect = 0;
   let gridX = inventoryState.vendingSelect % 3;
   let gridY = Math.floor(inventoryState.vendingSelect / 3);
@@ -54,18 +65,24 @@ export function openBackpack(inventoryState, craftState, toolState) {
     // console.log("hint mode is on")
     add([
       text("Hint Mode", { size: 16 }),
-      pos(100 + 500 - 55 + 50-50+100+25+25, 100 + 50 + 500 - 100 + 50 - 50-50-305),
+      pos(
+        100 + 500 - 50 + 50 - 50 + 100 + 25 + 25,
+        100 + 50 + 500 - 100 + 50 - 50 - 50 - 300
+      ),
       color(255, 255, 255),
       z(500),
       "craft",
       "newCraft",
-      "hint"
+      "hint",
     ]);
     add([
-      rect(250/2, 50),
+      rect(250 / 2, 50),
       area(),
       anchor("center"),
-      pos(100 + 500 - 47.5+100+25+25+50-15, 100 + 50 + 500 - 100 + 50 - 50-50-300+5),
+      pos(
+        100 + 500 - 50 + 50 - 50 + 100 + 25 + 25 + 50 - 15 + 5 + 5,
+        100 + 50 + 500 - 100 + 50 - 50 - 50 - 300 + 5
+      ),
       z(49),
       color(242, 140, 40),
       "hint",
@@ -197,7 +214,6 @@ export function closeBackpack() {
   destroyAll("vending");
   destroyAll("itemText");
   destroyAll("selected");
-  
 }
 // Left selection in backpack
 export function vendingLeft(inventoryState, craftState, toolState) {
@@ -563,37 +579,20 @@ export function getBackpackItems(inventoryState, craftState, toolState) {
       );
       return [];
     }
-
-    //("Hint ID: ", craftState.hintId);
-    // TOOL IS UNDEFINEDDD
     const toolId = toolState.currentTool.toolId;
-    //("current tool id is ", toolState.currentTool.toolId);
-
-    // filter backpack items by if combinable item key is in backpack items
+    console.log("toolId", toolId);
+    // how to debug reading map is undefined
+    console.log(craftState.combinable[toolId]);
     let combinableItemKeys = craftState.combinable[toolId].map(
       (item) => item.itemKey
     );
-    //("combinable items: ", combinableItemKeys);
-    //("backpack items: ", backpackItems);
-    for (let i = 0; i < backpackItems.length; i++) {
-      //(backpackItems[i].itemKey);
-    }
-    // //(combinableItems);
     let filteredContents = backpackItems.filter((item) =>
       combinableItemKeys.includes(item.itemKey)
     );
-    filteredContents.forEach((element) => {
-      //(element.itemKey);
-    });
-    //("filtered contents: ", filteredContents);
-    return filteredContents;
 
-    // Ensure that combinable items for the current tool are loaded
-    // if (craftState.combinable && craftState.combinable[toolId]) {
-    // Get the itemKey from craftState.combinable at hintId
+    return filteredContents;
   } else {
     let backpackItems = inventoryState.vendingContents;
-    // //(backpackItems);
     return backpackItems;
   }
 }

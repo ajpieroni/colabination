@@ -721,8 +721,12 @@ export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
   // console.log("Destroying all craft items.");
   destroyAll("craft");
+
   destroyAll("hint");
-  inventoryState.ingredients = [];
+  // Reset hint
+  craftState.hint = false;
+  craftState.hintId = "";
+  // craftState.combinable = {};
 
   setSpeed(300);
   closeBackpack();
