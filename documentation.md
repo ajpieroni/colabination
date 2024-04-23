@@ -44,8 +44,8 @@ Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-inso
   * `docker system prune` -- delete all images and volumes to free up space
 
 ### 4. In docker container “backend” 
-    1. rails db:drop db:create db:migrate
-    2. rails db:seed
+    rails db:drop db:create db:migrate
+    rails db:seed
 
 ## Files
 
@@ -66,10 +66,10 @@ This folder contains the most essential part of the game! Each file has its func
 ### Backend
 
 ##### /colab-games/backend/app/models
-This directory contains the models for your application. Models in a Ruby on Rails application are used to define the structure of your database tables and the relationships between them
+This directory contains the models for your application. Models in a Ruby on Rails application are used to define the structure of your database tables and the relationships between them.
 
 ##### /colab-games/backend/app/contollers
-The Rails controller is the logical center of your application. It coordinates the interaction between the user, the views, and the model
+The Rails controller is the logical center of your application. It coordinates the interaction between the user, the views, and the model.
 
 ##### /colab-games/backend/config/routes.rb
 This file defines the routes of your application. Routes are rules written to map incoming requests to controllers and actions.
