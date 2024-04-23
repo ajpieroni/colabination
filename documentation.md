@@ -58,6 +58,7 @@ Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-inso
  
 ##### /colab-games/FrontEnd/assets
 This folder contains all the sprites, images, and art that is used throughout the game. We used a combination of open-source, handmade, and AI-generated imagery. 
+
 Note that all the item sprites are 50x50 pixels!
 
 ##### /colab-games/FrontEnd/utils
