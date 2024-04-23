@@ -12,8 +12,7 @@ Colabination is developed using Kaboom.js and Ruby on Rails, with Docker. MySQL 
 **Framework**: [Kaboom.js](https://kaboomjs.com)
 
 ### Backend
-**Framework**: [Ruby on Rails](https://rubyonrails.org)
+**Framework**: [Ruby on Rails](https://rubyonrails.org)\
 **Database**: [MySQL](https://www.mysql.com)
-
 ### Source Control
-- Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-insomnia-dev/colab-games) for access to the current codebase.
+Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-insomnia-dev/colab-games) for access to the current codebase.
