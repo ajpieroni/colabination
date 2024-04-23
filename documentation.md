@@ -75,7 +75,7 @@ The Rails controller is the logical center of your application. It coordinates t
 This file defines the routes of your application. Routes are rules written to map incoming requests to controllers and actions.
 
 ##### /colab-games/backend/db/seeds.rb
-* This file is used to populate the database with initial data during setup.
+This file is used to populate the database with initial data during setup.
 
 
 ## Want to make improvements?
