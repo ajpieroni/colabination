@@ -81,3 +81,6 @@ This file is used to populate the database with initial data during setup.
 
 ## Want to make improvements?
 
+This project is far from perfect, and we are excited that others are continuing the legacy of it! Here are some [issues](https://gitlab.oit.duke.edu/colab-insomnia-dev/colab-games/-/issues) that we did not get to during our time working on Colabination.
+
+We added labels to the issues, such as _Future ✨_, which are enhancements that will add new features, _A Bug!_, which are critical fixes, and _Bonus 🧸_, which are less critical but nice-to-have additions. These labels allow us to organize and prioritize what to work on next.
