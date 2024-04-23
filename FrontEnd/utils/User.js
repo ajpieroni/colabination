@@ -22,34 +22,20 @@ export function fetchUserItems(
         return response.json();
       })
       .then((data) => {
-        console.log(localStorage.getItem("tutorial"));
+        // console.log(localStorage.getItem("tutorial"));
         const items = data.items;
-        console.log("items", items);
-        if (
-          localStorage.getItem("tutorial") == "true" &&
-          localStorage.getItem("inProgress") == "false"
-        ) {
-          console.log("tutorial is true");
+        // console.log("items", items);
+        if (localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false") {
+          // console.log("tutorial is true");
           InitialItems(["wood"]);
         } else {
-        // console.log(localStorage.getItem("tutorial"));
-        const items = data.items; 
-        // console.log("items", items);
-        if(localStorage.getItem("tutorial") == "true" && localStorage.getItem("inProgress") == "false"){
-        // console.log("tutorial is true");
-        InitialItems(["wood"]);
-        }else{
           InitialItems([]);
         }
         // let containsPaper = items.some((subArray) =>
         //   subArray.includes("paper")
         // );
-        console.log(
-          items.length == 0 && !localStorage.getItem("tutorial") == "true"
-        );
-        if (items.length == 0 && localStorage.getItem("tutorial") == "false") {
         // console.log(items.length == 0 && !localStorage.getItem("tutorial") == "true")
-        if (items.length == 0 && localStorage.getItem("tutorial") == "false"){
+        if (items.length == 0 && localStorage.getItem("tutorial") == "false") {
           InitialItems(["glass", "thread", "wood", "metal", "plastic"]);
         }
 
