@@ -19,20 +19,18 @@ Colabination is developed using Kaboom.js and Ruby on Rails, with Docker. MySQL 
 Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-insomnia-dev/colab-games) for access to the current codebase.
 
 ## How to run the project
-
-### Local Development
-1. Installation
+### 1. Installation
   * Clone project from Gitlab: https://gitlab.oit.duke.edu/colab-insomnia-dev/colab-games
   * Install Docker: https://docs.docker.com/get-docker/
 
-2. Set up Enviornment
+### 2. Set up Enviornment
   * Build docker image and start application
     * `cd path/to/colab-games`
     * `docker-compose build` - builds the images
     * `docker-compose up` - command to start the application
   * Go to localhost:3000 in your browser
 
-3. docker-compose commands
+### 3. docker-compose commands
   * `docker-compose build` - builds the images. This must be run if we install more npm packages
   * `docker-compose up` - starts the containers (react, express, mongo)
   * `docker-compose down` - tears down  the containers, run this when done
@@ -43,5 +41,6 @@ Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-inso
 
 ## Files
 
+### App Structure
 
 ## Want to make improvements?
