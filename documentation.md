@@ -43,6 +43,10 @@ Managed through Git. [Link to repository](https://gitlab.oit.duke.edu/colab-inso
   * `docker container ls` — views all the running containers
   * `docker system prune` -- delete all images and volumes to free up space
 
+### 4. In docker container “backend” 
+    1. rails db:drop db:create db:migrate
+    2. rails db:seed
+
 ## Files
 
 ### App Structure
@@ -57,7 +61,22 @@ This folder contains all the sprites, images, and art that is used throughout th
 Note that all the item sprites are 50x50 pixels!
 
 ##### /colab-games/FrontEnd/utils
-This folder contains the most important part of the game! Each file has its own function. For example, CharacterMovement.js has code that is specific to the character movement. The same as the tutorial.js file contains code that pertains only to the tutorial feature of the game 
+This folder contains the most essential part of the game! Each file has its function. For example, CharacterMovement.js has code specific to character movement. The same tutorial.js file contains code that pertains only to the tutorial feature of the game. Different files for different functionality helped increase the readability of code and file length. 
+
+### Backend
+
+##### /colab-games/backend/app/models
+This directory contains the models for your application. Models in a Ruby on Rails application are used to define the structure of your database tables and the relationships between them
+
+##### /colab-games/backend/app/contollers
+The Rails controller is the logical center of your application. It coordinates the interaction between the user, the views, and the model
+
+##### /colab-games/backend/config/routes.rb
+This file defines the routes of your application. Routes are rules written to map incoming requests to controllers and actions.
+
+##### /colab-games/backend/db/seeds.rb
+* This file is used to populate the database with initial data during setup.
+
 
 ## Want to make improvements?
 
