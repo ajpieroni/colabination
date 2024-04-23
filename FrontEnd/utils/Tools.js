@@ -245,7 +245,7 @@ export function addNewTool(toolState, showAlert, inventoryState) {
   for (let i = 0; i < tools.length; i++) {
     // if there are no more tools to add, break
     if (i === tools.length - 1) {
-      console.log("No more tools to add");
+      // console.log("No more tools to add");
       noMoreTools = true;
       const toolAlert = add([
         "toolAlert",
@@ -347,7 +347,7 @@ export function addToolToGame(newTool) {
     { toolId: newTool.toolId },
     { info: newTool.info },
   ]);
-  console.log(`${newTool.toolKey}table`);
+  // console.log(`${newTool.toolKey}table`);
   const toolSprite = add([
     sprite(`${newTool.toolKey}table`),
     pos(0, 0),
@@ -362,13 +362,13 @@ export function checkForToolAddition(inventoryState, toolState) {
   // whenever a user discovers items, in increments of 10, add a new tool
 
   if (toolState.lastStored.size < inventoryState.vendingContents.length) {
-    console.log(inventoryState.vendingContents.length);
-    console.log(
-      `Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`
-    );
+    // console.log(inventoryState.vendingContents.length);
+    // console.log(
+    //   `Adding new tool since lastStored: ${toolState.lastStored.size} < vendingContents: ${inventoryState.vendingContents.length}`
+    // );
     if (inventoryState.vendingContents.length % 10 === 0) {
       toolState.adding = true;
-      console.log("adding new tool");
+      // console.log("adding new tool");
       addNewTool(toolState, true, inventoryState);
     }
   }
@@ -377,8 +377,8 @@ export function checkForToolAddition(inventoryState, toolState) {
 export function addToolAlert(showAlert, addedTool, inventoryState) {
   destroyAll("toolAlert");
   let toolName = parseRegexString(addedTool.toolKey);
-  console.log(toolName)
-  console.log(addedTool.info.length)
+  // console.log(toolName)
+  // console.log(addedTool.info.length)
   let toolInfo = addedTool.info;
   let toolInfoExtend = null;
   // if the tool info is too long, add it to another text vairable adn add another block

@@ -61,8 +61,8 @@ export function openBackpack(inventoryState, craftState, toolState) {
     z(100),
     "vending",
   ]);
-  if (craftState.hint) {
-    console.log("hint mode is on");
+  if(craftState.hint){
+    // console.log("hint mode is on")
     add([
       text("Hint Mode", { size: 16 }),
       pos(

@@ -57,12 +57,12 @@ function getCombinableItemKeys(toolId, craftState) {
 
 export function onToolCollide(craftState, toolState, inventoryState, s, w) {
   inventoryState.finalCraftCheck = true;
-  console.log(w.toolKey);
+  // console.log(w.toolKey);
   toolState.currToolY = w.pos.y;
   toolState.currentTool = w;
   toolState.toolAccess = true;
-  console.log(toolState.currentTool.toolId);
-  console.log(craftState.combinable)
+  // console.log(toolState.currentTool.toolId);
+  // console.log(craftState.combinable)
   getCombinableItemKeys(toolState.currentTool.toolId, craftState).then((data) => {
     if (!craftState.combinable) {
       craftState.combinable = {};

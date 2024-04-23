@@ -36,7 +36,7 @@ export function showFinalItems(inventoryState, craftState) {
   let currentPage = inventoryState.docuPage;
   let contents = totalcontents[currentPage];
   // inventoryState.vendingSelect = 0;
-  // console.log(inventoryState.vendingSelect);
+  // // console.log(inventoryState.vendingSelect);
   let gridX = inventoryState.docuSelect % 3;
   let gridY = Math.floor(inventoryState.docuSelect / 3);
   if (totalcontents.length > 1) {

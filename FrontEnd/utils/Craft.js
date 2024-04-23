@@ -61,7 +61,7 @@ export function craftingBackend(
     toolId = 3;
   }
 
-  console.log("Crafting backend...");
+  // console.log("Crafting backend...");
 
   let item1sprite = ingredients[0];
 
@@ -113,9 +113,9 @@ function fetchCombination(
   craftState,
   inventoryState
 ) {
-  console.log(
-    `Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`
-  );
+  // console.log(
+  //   `Fetching combination for tool ${toolId}, item1 ${item1Id}, item2 ${item2Id}.`
+  // );
   fetch(
     `http://localhost:8081/combinations?tool=${toolId}&item1=${item1Id}&item2=${item2Id}`
   )
@@ -135,7 +135,7 @@ function fetchCombination(
         })
         .then((additionalData) => {
           craftState.resultReady = true;
-          console.log(additionalData.data.description);
+          // console.log(additionalData.data.description);
 
           callback(
             data.creation,
@@ -214,7 +214,7 @@ export function openCraftWindow(craftState, inventoryState, toolState) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
   // Add tool text object
-  console.log("current tool id is ", toolState.currentTool.toolId);
+  // console.log("current tool id is ", toolState.currentTool.toolId);
   if (toolDisplay === "Printer1" || toolDisplay === "Printer2") {
     toolDisplay = "3D Printer";
   }
@@ -395,7 +395,7 @@ export function selectItem(craftState, inventoryState, music, toolState) {
   // If the popup is open and it's not the first time it's opened
 
   if (craftState.popUp) {
-    console.log("current tool id is ", toolState.currentTool.toolId);
+    // console.log("current tool id is ", toolState.currentTool.toolId);
     let selectedItem = getCurrentItemInBackpack(
       inventoryState,
       craftState,
@@ -435,7 +435,7 @@ export function addItemToCraftWindow(
   craftState,
   toolState
 ) {
-  console.log(`Adding ${currentItem} to the crafting window.`);
+  // console.log(`Adding ${currentItem} to the crafting window.`);
   if (
     !firstItemPosition.used ||
     (!firstItemPosition.used && !secondItemPosition.used)
@@ -638,12 +638,12 @@ export function updateCraftUI(craftState, inventoryState, toolState) {
   );
   craftState.readyToCraft = true;
   craftState.resultReady = false;
-  console.log("Crafting complete!");
+  // console.log("Crafting complete!");
   addReCraftButton(craftState);
 }
 
 export function addReCraftButton(craftState) {
-  console.log("Adding recraft button...");
+  // console.log("Adding recraft button...");
   const reCraftButton = add([
     rect(150, 50),
     pos(
@@ -719,7 +719,7 @@ export function restartCraft(craftState, inventoryState, toolState) {
 // !End craft sequence, current = "moving"
 export function closeCraftWindow(craftState, inventoryState, toolState) {
   // Close the craft window after pressing backspace
-  console.log("Destroying all craft items.");
+  // console.log("Destroying all craft items.");
   destroyAll("craft");
 
   destroyAll("hint");
@@ -752,19 +752,19 @@ export function removeItemFromCraft(inventoryState, music) {
       play("bubble");
     }
     secondItemPosition.used = false;
-    console.log(inventoryState.ingredients);
+    // console.log(inventoryState.ingredients);
     inventoryState.ingredients.splice(1, 1);
-    console.log(inventoryState.ingredients);
+    // console.log(inventoryState.ingredients);
   } else if (firstItemPosition.used) {
     destroyAll("item1");
     firstItemPosition.used = false;
     if (music.volume) {
       play("bubble");
     }
-    console.log(inventoryState.ingredients);
+    // console.log(inventoryState.ingredients);
 
     inventoryState.ingredients = [];
-    console.log(inventoryState.ingredients);
+    // console.log(inventoryState.ingredients);
   }
 }
 
@@ -778,7 +778,7 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
     !inventoryState.vendingKeys.includes(craftState.result.itemKey) &&
     !craftState.result.isFinal
   ) {
-    // console.log("passed", !craftState.result.isFinal);
+    // // console.log("passed", !craftState.result.isFinal);
     inventoryState.vendingContents.push(resultItem);
 
     inventoryState.vendingKeys.push(resultItem.itemKey);
@@ -787,7 +787,7 @@ export function addItemToBackpack(inventoryState, craftState, resultItem) {
     craftState.result.isFinal &&
     !inventoryState.areFinal.includes(craftState.result.itemKey)
   ) {
-    // console.log(`${craftState.result.itemKey} pushed to documentation station.`);
+    // // console.log(`${craftState.result.itemKey} pushed to documentation station.`);
     inventoryState.areFinal.push(resultItem.itemKey);
   }
 }
